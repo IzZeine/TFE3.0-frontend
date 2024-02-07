@@ -18,6 +18,7 @@
         sessionID = sessionStorage.getItem("sessionID");
         socket.on("connect", () => {
             console.log("Connected to server")
+            socket.emit("sessionID", sessionID)
         });
         // Écouter l'événement de réponse du serveur après la création d'utilisateur
         socket.on("userCreated", (data) => {
@@ -25,6 +26,10 @@
             console.log("User created with ID:", userID);
             sessionStorage.setItem("sessionID", userID);
         });
+
+        socket.on("redirect",(data)=>{
+            window.location.href = "/errors" + data
+        })
         
         user = await getUser()
 

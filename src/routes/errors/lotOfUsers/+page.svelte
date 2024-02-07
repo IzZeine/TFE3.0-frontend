@@ -1,0 +1,1 @@
+<h1>Trop de joueurs, vous avez été déconnecté</h1>
