@@ -46,22 +46,24 @@
 
 <!-- html ici -->
 
+<img src="./src/assets/img/logo.png" class="fluidimg" alt="Logo">
+
 {#if sessionID}
     {#if user}
         <h2>Welcome {user.username}</h2>
-        <button><a href="/game">jouer</a></button>
+        <button class="btnPrimary"><a href="/game">Jouer</a></button>
         <button on:click={clearStorage}>RESET</button>
         {:else}
             <p>User not found</p>
         <button on:click={clearStorage}>RESET</button>
     {/if}
     {:else}
-        <form class="form-example" on:submit|preventDefault={onFormSubmit}>
-            <div class="form-example">
+        <form on:submit|preventDefault={onFormSubmit}>
+            <div>
                 <label for="username">Enter your username:</label>
                 <input type="text" name="username" id="username" required bind:value={username}/>
             </div>
-            <button>submit</button>
+            <button class="btnPrimary">Jouer</button>
         </form>
 {/if}
         
