@@ -13,7 +13,12 @@ VARIABLES
 FONTS
 --------------------------------------------------------------------------*/
 
-@import url('https://fonts.googleapis.com/css?family=Source Serif 4');
+@font-face {
+	font-family: 'Deutsch';
+	src:
+		url('../../assets/fonts/Deutsch.woff') format('woff'),
+		url('../../assets/fonts/Deutsch.woff2') format('woff2');
+}
 
 /*--------------------------------------------------------------------------
 Reset HTML
@@ -24,6 +29,15 @@ Reset HTML
 	list-style: none;
 	outline: unset;
 	border: none;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+a:focus,
+a:active,
+a:visited {
+	color: var(--txtPrimary);
+	text-decoration: none;
 }
 
 /*--------------------------------------------------------------------------
@@ -33,6 +47,25 @@ body {
 	background-color: var(--BG);
 	color: var(--txtPrimary);
 	padding: 60px;
+	font-family: 'Source Sans 3', sans-serif;
+	font-weight: 200;
+}
+
+/*--------------------------------------------------------------------------
+TITLES
+--------------------------------------------------------------------------*/
+.h1 {
+	font-family: 'Deutsch', serif;
+	letter-spacing: 0.2rem;
+	font-weight: 400;
+	color: var(--primary);
+	font-size: 30px;
+}
+
+.h2 {
+	font-family: 'Source Serif 4', serif;
+	font-weight: 600;
+	font-size: 24px;
 }
 
 /*--------------------------------------------------------------------------
@@ -51,6 +84,130 @@ BTN PRIMARY
 	border-bottom: solid 1px var(--txtPrimary);
 	background-color: var(--BGTranspary);
 	color: var(--txtPrimary);
-	box-shadow: 10px 10px 5px var(--black);
-	font-family: 'Source Serif 4', sans-serif;
+	box-shadow: 3px 3px 6px var(--black);
+	font-family: 'Source Serif 4', serif;
+	font-weight: 600;
+	font-size: 18px;
+	transition: 0.1s;
+}
+
+.btnPrimary:disabled {
+	color: gray;
+	border-color: grey;
+}
+
+.btnPrimary:active {
+	box-shadow: none;
+	transform: translate(3px, 3px);
+}
+
+.btnPrimary:disabled:active {
+	box-shadow: 3px 3px 6px var(--black);
+	transform: none;
+}
+
+/*--------------------------------------------------------------------------
+MainPage
+--------------------------------------------------------------------------*/
+.logoImg {
+	max-width: 210px;
+	display: block;
+	margin: 0 auto;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.labelForm {
+	text-align: center;
+	display: block;
+	width: 100%;
+}
+
+.inputForm {
+	margin-top: 6px;
+	width: 100%;
+	height: 24px;
+	color: var(--txtPrimary);
+	background-color: var(--BGTranspary);
+	box-shadow: 1px 1px 6px var(--black);
+	text-align: center;
+	font-family: 'Deutsch', serif;
+	letter-spacing: 0.2rem;
+}
+
+.inputForm::placeholder {
+	/* padding-left: 12px; */
+	text-align: center;
+}
+
+.btnForm {
+	margin-top: 24px;
+}
+
+/*--------------------------------------------------------------------------
+HowToPlay
+--------------------------------------------------------------------------*/
+.howToPlay {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.howToPlay-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.btnRules {
+	position: fixed;
+	bottom: 60px;
+}
+
+.rulesList {
+	margin-top: 60px;
+}
+
+.rulesItem:before {
+	content: '';
+	background: url('../../assets/img/listArrow.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	transform: translate(-100%, 50%);
+	padding-left: 6px;
+}
+
+/*--------------------------------------------------------------------------
+ChooseHero
+--------------------------------------------------------------------------*/
+.chooseHero {
+	display: flex;
+	flex-direction: column;
+}
+.heroesList {
+	/* display: flex; */
+}
+.heroItem {
+}
+.heroImg {
+	width: 360px;
+}
+.arrowNavigate {
+	display: flex;
+}
+
+.arrowNavigate > button {
+	background-color: unset;
+}
+.arrowNavigate-item {
+	width: 24px;
 }

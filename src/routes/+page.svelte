@@ -6,6 +6,7 @@
     import { io } from "socket.io-client";
     import { getUser } from "$lib";
     import { clearStorage } from "$lib";
+    import { redirect } from '@sveltejs/kit';
 
     const socket = io("http://localhost:3000");
     
@@ -40,13 +41,19 @@
             // Gérer les erreurs ici
         }
         //reload la page quand le form à été envoyé pour avoir le btn "jouer"
-        location.reload(true);
+        // location.reload(true);
+        window.location.href = '/game';
     };
+
+    // disabled btn if the input is empty
+	function isDirty(username) {
+        return username == ''
+    }
 </script>
 
 <!-- html ici -->
 
-<img src="./src/assets/img/logo.png" class="fluidimg" alt="Logo">
+<img src="./src/assets/img/logo.png" class="fluidimg logoImg" alt="Logo">
 
 {#if sessionID}
     {#if user}
@@ -55,15 +62,14 @@
         <button on:click={clearStorage}>RESET</button>
         {:else}
             <p>User not found</p>
-        <button on:click={clearStorage}>RESET</button>
+            <button on:click={clearStorage}>RESET</button>
     {/if}
     {:else}
-        <form on:submit|preventDefault={onFormSubmit}>
+        <form on:submit|preventDefault={onFormSubmit} class="form">
             <div>
-                <label for="username">Enter your username:</label>
-                <input type="text" name="username" id="username" required bind:value={username}/>
+                <label for="username" class="labelForm">Enter your username:</label>
+                <input type="text" name="username" id="username" class="inputForm" placeholder="ex : IzZeine" maxlength="12" autocomplete='off' data-lpignore="true" data-form-type="other" required bind:value={username}/>
             </div>
-            <button class="btnPrimary">Jouer</button>
+            <button class="btnPrimary btnForm" disabled='{isDirty(username)}'>Jouer</button>
         </form>
 {/if}
-        
