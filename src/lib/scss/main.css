@@ -49,6 +49,7 @@ body {
 	padding: 60px;
 	font-family: 'Source Sans 3', sans-serif;
 	font-weight: 200;
+	overflow-y: hidden;
 }
 
 /*--------------------------------------------------------------------------
@@ -89,6 +90,8 @@ BTN PRIMARY
 	font-weight: 600;
 	font-size: 18px;
 	transition: 0.1s;
+	position: absolute;
+	bottom: 60px;
 }
 
 .btnPrimary:disabled {
@@ -170,20 +173,30 @@ HowToPlay
 	bottom: 60px;
 }
 
+.btnRules > button {
+	position: relative;
+	bottom: 0;
+}
+
 .rulesList {
 	margin-top: 60px;
+	height: 270px;
+	overflow-y: scroll;
+}
+
+.rulesItem {
+	position: relative;
 }
 
 .rulesItem:before {
 	content: '';
 	background: url('../../assets/img/listArrow.svg');
+	background-position: center;
 	background-size: contain;
 	background-repeat: no-repeat;
-	width: 12px;
-	height: 12px;
-	position: absolute;
-	transform: translate(-100%, 50%);
-	padding-left: 6px;
+	padding-left: 9px;
+	margin-right: 6px;
+	margin-top: 6px;
 }
 
 /*--------------------------------------------------------------------------
@@ -192,12 +205,9 @@ ChooseHero
 .chooseHero {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 }
-.heroesList {
-	/* display: flex; */
-}
-.heroItem {
-}
+
 .heroImg {
 	width: 360px;
 }
@@ -210,4 +220,13 @@ ChooseHero
 }
 .arrowNavigate-item {
 	width: 24px;
+}
+.abilityTitle {
+	font-family: 'Source Serif 4', serif;
+	font-weight: 400;
+	margin-top: 24px;
+}
+.heroDescription {
+	text-align: center;
+	margin-top: 12px;
 }

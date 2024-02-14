@@ -42,8 +42,9 @@
     }
 
     function sentHeroToServer(event){
-        hero = event.detail.ChooseHero.selectedHero;
-        socket.emit("selectedHero", hero)
+        console.log(event)
+        hero = event.detail.hero;
+        socket.emit("selectedHero", hero.name)
     }
 </script>
 
@@ -54,7 +55,8 @@
             <button on:click={readyToChangeStep}>Jouer</button>
         {/if}        
         {#if gameStep == 2}
-            <ChooseHero on:ChooseHero={() => { readyToChangeStep(); sentHeroToServer(); }} />
+            <!-- <ChooseHero on:ChooseHero={(evt) => { readyToChangeStep(); sentHeroToServer(evt); }} /> -->
+            <ChooseHero on:ChooseHero={(evt) => { console.log(evt); sentHeroToServer(evt); }} />
         {/if}
         {#if gameStep == 3}
             <Map />
