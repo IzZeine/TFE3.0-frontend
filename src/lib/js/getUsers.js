@@ -3,7 +3,6 @@
 async function getUser() {
 	let sessionID = sessionStorage.getItem('sessionID');
 	let user = '';
-	console.log('function done');
 	try {
 		const response = await fetch('http://localhost:3000/users');
 		const usersJson = await response.json();

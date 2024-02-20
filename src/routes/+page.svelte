@@ -6,7 +6,6 @@
     import { io } from "socket.io-client";
     import { getUser } from "$lib";
     import { clearStorage } from "$lib";
-    import { redirect } from '@sveltejs/kit';
 
     const socket = io("http://localhost:3000");
     
@@ -14,6 +13,7 @@
     let username = "";
     let userID = "";
     let user = "";
+    let OnlineUsers = 0;
     
     onMount(async() => {
         sessionID = sessionStorage.getItem("sessionID");
@@ -26,6 +26,10 @@
             console.log("User created with ID:", userID);
             sessionStorage.setItem("sessionID", userID);
         });
+
+        socket.on("updateUsersCount", (data)=>{
+            OnlineUsers = data
+        })
         
         user = await getUser()
 
@@ -41,7 +45,6 @@
             // Gérer les erreurs ici
         }
         //reload la page quand le form à été envoyé pour avoir le btn "jouer"
-        // location.reload(true);
         window.location.href = '/game';
     };
 
@@ -70,6 +73,7 @@
                 <label for="username" class="labelForm">Enter your username:</label>
                 <input type="text" name="username" id="username" class="inputForm" placeholder="ex : IzZeine" maxlength="12" autocomplete='off' data-lpignore="true" data-form-type="other" required bind:value={username}/>
             </div>
+            <div><span>{OnlineUsers}</span>/6</div>
             <button class="btnPrimary btnForm" disabled='{isDirty(username)}'>Jouer</button>
         </form>
 {/if}
