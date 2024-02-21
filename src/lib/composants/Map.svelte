@@ -1,5 +1,8 @@
 <script>
+    // @ts-nocheck
+    export let user = user;
+    console.log("user", user)
 
 </script>
 
-<h1>MAP</h1>
+<h1>Your room : {user.room}</h1>

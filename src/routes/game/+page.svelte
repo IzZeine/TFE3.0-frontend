@@ -1,5 +1,5 @@
 <script>
-// @ts-nocheck
+    // @ts-nocheck
     import { onMount } from "svelte";
     import { io } from "socket.io-client";
     import { getHeroes, getItems, getUser, clearStorage } from "$lib";
@@ -11,9 +11,9 @@
 
     const socket = io("http://localhost:3000");
     
+    // @TODO : créer un page game pour chaque partie avec l'ID de la game à la fin de l'url
+    let gameID = ""; // tout doit être relatif à la partie en cours
     let sessionID = "";    
-    let username = "";
-    let userID = "";
     let user = "";
     let gameStep = 1;
     let hero = '';
@@ -23,7 +23,9 @@
     
     onMount(async() => {
         sessionID = sessionStorage.getItem("sessionID");
+        gameID = sessionStorage.getItem("gameID")
         console.log("session Id :",sessionID)
+        console.log('gameID', gameID)
 
         socket.on('connect', () => {
             console.log('Connected to server');
@@ -41,6 +43,8 @@
         
         // trouver l'utilisateur
         user = await getUser()
+        //  TODO : doesnt work
+        console.log(user)
         //importer les heros
         listOfItems = await getItems()
         //importer les items
@@ -62,6 +66,11 @@
         socket.emit("selectedHero", hero.name)
     }
 
+    // mettre à jour le user quand le hero a été choisi et enregistré dans la db
+    socket.on("registeredHero", async()=>{
+        user = await getUser();
+    })
+
     function wantToDoSomething () {
         socket.emit("wantToDoSomething")
     }
@@ -78,11 +87,10 @@
                 {/if}        
                 {#if gameStep == 2}
                     <ChooseHero on:ChooseHero={(evt) => { wantToDoSomething(); sentHeroToServer(evt); }} />
-                    <!-- <ChooseHero on:ChooseHero={(evt) => { console.log(evt); sentHeroToServer(evt); }} /> -->
                 {/if}
                 {#if gameStep == 3}
                     {#if user.hero}
-                        <Map />
+                        <Map {user} />
                     {:else}
                         <p>Vous n'avez pas de hero</p>
                         <button><a href="/">Retour</a></button>
