@@ -42,7 +42,7 @@
         })
         
         // trouver l'utilisateur
-        user = await getUser()
+        user = await getUser(socket)
         //  TODO : doesnt work
         console.log(user)
         //importer les heros
@@ -68,7 +68,7 @@
 
     // mettre à jour le user quand le hero a été choisi et enregistré dans la db
     socket.on("registeredHero", async()=>{
-        user = await getUser();
+        user = await getUser(socket);
     })
 
     function wantToDoSomething () {

@@ -22,18 +22,20 @@
         socket.on("connect", () => {
             console.log("Connected to server")
         });
+
         // Écouter l'événement de réponse du serveur après la création d'utilisateur
-        socket.on("userCreated", (data) => {
-            userID = data.userID;
+        socket.on("userCreated", (id) => {
+            console.log(id)
+            userID = id;
             console.log("User created with ID:", userID);
             sessionStorage.setItem("sessionID", userID);
         });
 
-        socket.on("updateUsersCount", (data)=>{
-            OnlineUsers = data
+        socket.on("updateUsersCount", (count)=>{
+            OnlineUsers = count
         })
         
-        user = await getUser()
+        user = await getUser(socket)
 
     });
 
@@ -46,6 +48,8 @@
             console.error("Error creating user:", error);
             // Gérer les erreurs ici
         }
+
+
         //reload la page quand le form à été envoyé pour avoir le btn "jouer"
         window.location.href = '/game';
     };
@@ -54,6 +58,8 @@
 	function isDirty(username) {
         return username == ''
     }
+
+
 
     let createGame = async ()=>{
         console.log("creation de la game")
@@ -89,9 +95,9 @@
                 <div><span>{OnlineUsers}</span>/6</div>
                 <button class="btnPrimary btnForm" disabled='{isDirty(username)}'>Jouer</button>
             </form>
+            <button on:click={clearStorage}>reset</button>
     {/if}
     <!-- rediriger vers la partie en question -->
-    <p>oui</p>
     {:else}
         <button on:click={createGame} class="">Créer</button>
         <button class="">Rejoindre</button>
