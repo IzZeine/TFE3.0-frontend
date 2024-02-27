@@ -6,6 +6,7 @@ VARIABLES
 	--BG: rgb(53, 46, 45);
 	--BGTranspary: rgba(0, 0, 0, 0.3);
 	--txtPrimary: #fdeabf;
+	--txtGrey: #8a817f;
 	--black: #000;
 }
 
@@ -46,10 +47,15 @@ BODY
 body {
 	background-color: var(--BG);
 	color: var(--txtPrimary);
-	padding: 60px;
 	font-family: 'Source Sans 3', sans-serif;
 	font-weight: 200;
 	overflow-y: hidden;
+	height: 100vh;
+	width: 100vw;
+}
+
+.container {
+	padding: 60px;
 }
 
 /*--------------------------------------------------------------------------
@@ -90,8 +96,9 @@ BTN PRIMARY
 	font-weight: 600;
 	font-size: 18px;
 	transition: 0.1s;
-	position: absolute;
-	bottom: 60px;
+	/* position: absolute; */
+	/* bottom: 60px; */
+	margin-top: 18px;
 }
 
 .btnPrimary:disabled {
@@ -152,6 +159,91 @@ MainPage
 	margin-top: 24px;
 }
 
+.btnsGames {
+	display: flex;
+	flex-direction: column;
+}
+
+.activeGames,
+.createGame {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: red;
+	transition: 0.2s;
+	transform: translate(100%, 0);
+	background-color: var(--BG);
+}
+
+.activeGames.is-active,
+.createGame.is-active {
+	transform: translate(0, 0);
+}
+
+.activeGames > .content > .btns {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 30px;
+}
+
+.btn-menuGames {
+	background: unset;
+	transition: 0.2s;
+}
+
+.btn-menuGames.return:active {
+	transform: translate(-3px, 0);
+}
+.btn-menuGames.refresh:active {
+	transform: rotate(360deg);
+}
+
+.btn-joinGames {
+	background: unset;
+	background-color: var(--BGTranspary);
+	padding: 6px 12px;
+	margin-top: 12px;
+	border-bottom: solid 1px var(--txtPrimary);
+	color: var(--txtPrimary);
+	box-shadow: 3px 3px 6px var(--black);
+	width: 100%;
+}
+
+.btn-joinGames:active {
+	box-shadow: none;
+	transform: translate(3px, 3px);
+}
+
+.activeGames > .content,
+.createGame > .content {
+	padding: 60px;
+}
+
+.btn-joinGames_statut {
+	margin-top: 6px;
+}
+
+.gameNameForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.gameNameForm_content {
+	width: 100%;
+	text-align: center;
+}
+
+.errorCreateGame {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+	color: var(--txtGrey);
+}
+
 /*--------------------------------------------------------------------------
 HowToPlay
 --------------------------------------------------------------------------*/
@@ -159,6 +251,7 @@ HowToPlay
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 60px;
 }
 
 .howToPlay-content {
@@ -206,6 +299,7 @@ ChooseHero
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 60px;
 }
 
 .heroImg {

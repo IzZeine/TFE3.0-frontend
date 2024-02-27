@@ -28,6 +28,7 @@ async function getUser(socket) {
 
 		// Attendre que la promesse soit résolue avec les données utilisateur
 		let user = await userDataPromise;
+		console.log(user);
 		return user;
 	} catch (error) {
 		console.error('Erreur lors de la récupération des utilisateurs :', error);

@@ -9,49 +9,46 @@
 
     const socket = io("http://localhost:3000");
     
-    let sessionID = "";    
-    let gameID = ""
-    let userID = "";
+    let sessionID = "";   
+    let gameID = "";
+    let gameName = "";
     let username = "";
     let user = "";
     let OnlineUsers = 0;
+    let activeGames = [];
+    let errorMessage = "";
     
     onMount(async() => {
         sessionID = sessionStorage.getItem("sessionID");
         gameID = sessionStorage.getItem("gameID")
-        socket.on("connect", () => {
+        socket.on("connect", async() => {
             console.log("Connected to server")
         });
 
         // Écouter l'événement de réponse du serveur après la création d'utilisateur
         socket.on("userCreated", (id) => {
             console.log(id)
-            userID = id;
-            console.log("User created with ID:", userID);
-            sessionStorage.setItem("sessionID", userID);
+            sessionStorage.setItem("sessionID", id);
         });
 
         socket.on("updateUsersCount", (count)=>{
             OnlineUsers = count
         })
         
-        user = await getUser(socket)
+        console.log(sessionID)
 
+        user = await getUser(socket)
     });
 
     const onFormSubmit = async () => {
         try {
-            console.log("Welcome " + username);
             // Envoyer le nom d'utilisateur au serveur pour créer l'utilisateur
-            socket.emit("createUser", { username, gameID });
+            socket.emit("createUser", username);
         } catch (error) {
             console.error("Error creating user:", error);
-            // Gérer les erreurs ici
         }
-
-
         //reload la page quand le form à été envoyé pour avoir le btn "jouer"
-        window.location.href = '/game';
+        window.location.reload();
     };
 
     // disabled btn if the input is empty
@@ -59,32 +56,118 @@
         return username == ''
     }
 
-
+    let joinGame = (id) =>{
+        socket.emit("joinGame", id)
+    }
 
     let createGame = async ()=>{
-        console.log("creation de la game")
-        const response = await fetch('http://localhost:3000/creategame');
-        const gameJson = await response.json();
-        console.log(gameJson)
-        gameID = gameJson.gameId
-        sessionStorage.setItem("gameID", gameID)
-        window.location.reload()
+        console.log("My game's name " + gameName);
+
+        const response = await fetch("http://localhost:3000/creategame", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: gameName })
+        });
+
+        if (response.ok) {
+            // Gérer la réponse si nécessaire
+            console.log("Game created successfully");
+            const gameJson = await response.json();
+            console.log(gameJson)
+            gameID = gameJson.gameId
+            sessionStorage.setItem("gameID", gameID)
+            let path = "/game/"+gameID
+            window.location.href = path
+            joinGame(gameID)
+        } else {
+            console.error("Failed to create game");
+            errorMessage = "Ce nom existe dejà !";
+        }
+
+
     }
+
+    let askActiveGames = async ()=>{
+        const response = await fetch('http://localhost:3000/activegames');
+        const activeGamesJson = await response.json();
+        activeGames = [...activeGamesJson]
+    }
+
+    let displayGames = () =>{
+        const display = document.querySelector(".activeGames")
+        display.classList.add("is-active")
+    }
+
+    let hideGames = () =>{
+        const display = document.querySelector(".activeGames")
+        display.classList.remove("is-active")
+    }
+
+    let displayCreateGames = () =>{
+        const display = document.querySelector(".createGame")
+        display.classList.add("is-active")
+    }
+
+    let hideCreateGames = () =>{
+        const display = document.querySelector(".createGame")
+        display.classList.remove("is-active")
+    }
+
 </script>
 
 <!-- html ici -->
 
-<img src="./src/assets/img/logo.png" class="fluidimg logoImg" alt="Logo">
+<div class="container">
+    <img src="./src/assets/img/logo.png" class="fluidimg logoImg" alt="Logo">
 
-{#if gameID}
     {#if sessionID}
         {#if user}
-            <h2>Welcome {user.username}</h2>
-            <button class="btnPrimary"><a href="/game">Jouer</a></button>
-            <button on:click={clearStorage}>RESET</button>
-            {:else}
-                <p>User not found</p>
-                <button on:click={clearStorage}>RESET</button>
+            {#if gameID}
+                <a href="/game/{gameID}"><button>jouer</button></a>
+                {:else}
+                    <p>Welcome {user.username}</p>
+                    <div class="btnsGames">
+                        <button on:click={displayCreateGames} class="btnPrimary">Créer</button>
+                        <button on:click={(evt) => { askActiveGames(); displayGames(evt); }} class="btnPrimary">Rejoindre</button>
+                    </div>
+        
+                    <div class="createGame">
+                        <div class="content">
+                            <div class="btns">
+                                <button class="btn-menuGames return" on:click={hideCreateGames}><img src="./src/assets/img/return.svg" alt="return"></button>
+                            </div>
+                            
+                            <form on:submit|preventDefault={createGame} class="gameNameForm">
+                                <div class="gameNameForm_content">
+                                    <label for="gameName" class="gameNameLabel">Enter your game's name:</label>
+                                    <input type="text" name="gameName" id="gameName" class="inputForm" placeholder="ex : IzZeine's game" maxlength="15" autocomplete='off' data-lpignore="true" data-form-type="other" required bind:value={gameName}/>
+                                    {#if errorMessage}
+                                        <p class="errorCreateGame">{errorMessage}</p>
+                                    {/if}
+                                </div>
+                                <button class="btnPrimary btnForm" disabled='{isDirty(gameName)}'>Jouer</button>
+                            </form>
+                        </div>
+                    </div>
+        
+                    <div class="activeGames">
+                        <div class="content">
+                            <div class="btns">
+                                <button class="btn-menuGames return" on:click={hideGames}><img src="./src/assets/img/return.svg" alt="return"></button>
+                                <button class="btn-menuGames refresh" on:click={askActiveGames}><img src="./src/assets/img/refresh.svg" alt="refresh"></button>
+                            </div>
+                            <ul>
+                            {#each activeGames as game}
+                                <li>
+                                    <a href="/game/{game.gameId}"><button on:click={joinGame(game.gameId)} class="btn-joinGames">{game.name} <p class="btn-joinGames_statut">{game.statut}</p></button></a>
+                                </li>
+                            {/each}
+                            </ul>
+                        </div>
+                    </div>
+            {/if}
         {/if}
         {:else}
             <form on:submit|preventDefault={onFormSubmit} class="form">
@@ -97,8 +180,4 @@
             </form>
             <button on:click={clearStorage}>reset</button>
     {/if}
-    <!-- rediriger vers la partie en question -->
-    {:else}
-        <button on:click={createGame} class="">Créer</button>
-        <button class="">Rejoindre</button>
-{/if}
+</div>
