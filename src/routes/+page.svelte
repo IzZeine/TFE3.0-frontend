@@ -59,6 +59,7 @@
 
     let joinGame = (id) =>{
         socket.emit("joinGame", id)
+        sessionStorage.setItem("gameID", id)
     }
 
     let createGame = async ()=>{
@@ -162,7 +163,12 @@
                             <ul>
                             {#each activeGames as game}
                                 <li>
-                                    <a href="/game/{game.gameId}"><button on:click={joinGame(game.gameId)} class="btn-joinGames">{game.name} <p class="btn-joinGames_statut">{game.statut}</p></button></a>
+                                    <a href="/game/{game.gameId}">
+                                        <button on:click={joinGame(game.gameId)} class="btn-joinGames">
+                                            <p>{game.name}</p>
+                                            <p class="btn-joinGames_statut">{game.statut} <span>{game.users}/6</span></p>
+                                        </button>
+                                    </a>
                                 </li>
                             {/each}
                             </ul>
@@ -176,9 +182,7 @@
                     <label for="username" class="labelForm">Enter your username:</label>
                     <input type="text" name="username" id="username" class="inputForm" placeholder="ex : IzZeine" maxlength="12" autocomplete='off' data-lpignore="true" data-form-type="other" required bind:value={username}/>
                 </div>
-                <div><span>{OnlineUsers}</span>/6</div>
                 <button class="btnPrimary btnForm" disabled='{isDirty(username)}'>Jouer</button>
             </form>
-            <button on:click={clearStorage}>reset</button>
     {/if}
 </div>
