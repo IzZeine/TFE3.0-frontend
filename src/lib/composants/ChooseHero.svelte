@@ -49,17 +49,17 @@
         
           {#each heroes as hero}
               <div class="heroItem">
-                  <img class="fluidimg heroImg" src="./src/assets/img/{hero.img}" alt={hero.name}/>
+                  <img class="fluidimg heroImg" src="/src/assets/img/{hero.img}" alt={hero.name}/>
               </div>
           {/each}
 
         <div class="arrowNavigate" slot="prev">
             <!-- <img src="./src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item prev"> -->
-            <button on:click={handlePrevClick}><img src="./src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item prev"></button>
+            <button on:click={handlePrevClick}><img src="/src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item prev"></button>
         </div>
         <div class="arrowNavigate" slot="next">
             <!-- <img src="./src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item prev"> -->
-            <button on:click={handleNextClick}><img src="./src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item next" style="transform: scale(-1);"></button>
+            <button on:click={handleNextClick}><img src="/src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item next" style="transform: scale(-1);"></button>
         </div>
         <div slot="dots">
             <!--delete dots-->

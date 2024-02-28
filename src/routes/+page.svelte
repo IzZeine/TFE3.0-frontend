@@ -1,4 +1,3 @@
-<!-- Page de connection -->
 <script>
 // @ts-nocheck
 
@@ -17,6 +16,8 @@
     let OnlineUsers = 0;
     let activeGames = [];
     let errorMessage = "";
+
+    //@TODO vérifier la page de l'écran et rediriger ou un clip-rect
     
     onMount(async() => {
         sessionID = sessionStorage.getItem("sessionID");
