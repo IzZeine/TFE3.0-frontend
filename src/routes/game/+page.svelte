@@ -4,20 +4,24 @@
     import { onMount } from "svelte";
     import { io } from "socket.io-client";
     import { getUser } from "$lib";
+    import { clearStorage } from "$lib";
 
     const socket = io("http://localhost:3000");
     
     let sessionID = "";   
+    let user = "";
     let gameID = "";
     let gameName = "";
-    let user = "";
     let OnlineUsers = 0;
     let activeGames = [];
     let errorMessage = "";
+    let isWaitingUser = true;
+    let theWindow;
     
     onMount(async() => {
         sessionID = sessionStorage.getItem("sessionID");
         gameID = sessionStorage.getItem("gameID")
+        theWindow = window
         socket.on("connect", async() => {
             console.log("Connected to server")
         });
@@ -37,6 +41,9 @@
         }
 
         user = await getUser(socket)
+        isWaitingUser = false;
+        console.log(isWaitingUser)
+
     });
 
 
@@ -161,11 +168,15 @@
                     </div>
             {/if}
             {:else}
-                <!-- ?? -->
-                <!-- {window.location.href = "/"} -->
+                {#if !isWaitingUser}
+                    {clearStorage()}
+                    {window.location.href = "/"} <!-- pas sur que ça se fasse de rediriger ici -->
+                {/if}
         {/if}
         {:else}
-            <!-- pourquoi lui il ne marche pas? gnéé -->
-            <!-- {window.location.href = "/"} -->
+            {#if !isWaitingUser}
+                {clearStorage()}
+                {window.location.href = "/"} <!-- pas sur que ça se fasse de rediriger ici -->
+            {/if}
     {/if}
 </div>
