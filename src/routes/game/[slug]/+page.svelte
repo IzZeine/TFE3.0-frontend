@@ -1,75 +1,80 @@
 <script>
-  // @ts-nocheck
-  import { onMount } from "svelte";
-  import { io } from "socket.io-client";
-  import { getHeroes, getItems, getUser, clearStorage } from "$lib";
-  import GameRules from "$lib/composants/GameRules.svelte";
-  import ChooseHero from "$lib/composants/ChooseHero.svelte";
-  import Wait from "$lib/composants/Wait.svelte";
-  import Map from "$lib/composants/Map.svelte";
+    // @ts-nocheck
+    import { onMount } from "svelte";
+    import { io } from "socket.io-client";
+    import { getHeroes, getItems, getUser, clearStorage } from "$lib";
+    import GameRules from "$lib/composants/GameRules.svelte";
+    import ChooseHero from "$lib/composants/ChooseHero.svelte";
+    import Wait from "$lib/composants/Wait.svelte";
+    import Map from "$lib/composants/Map.svelte";
 
-  const socket = io("http://localhost:3000");
-  
-  let gameID = ""; // tout doit être relatif à la partie en cours
-  let sessionID = "";    
-  let user = "";
-  let gameStep = 1;
-  let hero = '';
-  let listOfItems = '';
-  let listOfHeroes = '';
-  let wait = false;
-  
-  onMount(async() => {
-      sessionID = sessionStorage.getItem("sessionID");
-      gameID = sessionStorage.getItem("gameID")
-      console.log("session Id :",sessionID)
-      console.log('gameID', gameID)
+    const socket = io("http://localhost:3000");
+    
+    let gameID = ""; // tout doit être relatif à la partie en cours
+    let sessionID = "";    
+    let user = "";
+    let gameStep = 1;
+    let hero = '';
+    let listOfItems = '';
+    let listOfHeroes = '';
+    let wait = false;
+    
+    onMount(async() => {
+        sessionID = sessionStorage.getItem("sessionID");
+        gameID = sessionStorage.getItem("gameID")
+        console.log("session Id :",sessionID)
+        console.log('gameID', gameID)
 
-      socket.on('connect', () => {
-          console.log('Connected to server');
-          if (sessionID) {
-              socket.emit('MyID', sessionID);
-          }
+        socket.on('connect', () => {
+            console.log('Connected to server');
+            if (sessionID) {
+                socket.emit('MyID', sessionID);
+            }
+        });
+
+        // @deco intempestives...
+        socket.on("deco", () => {
+            alert("a lot of users")
+            clearStorage();
+            window.location.href = '/';
+        })
+
+        if (screen.width > 500){
+            {window.location.href = "/boardGame"}
+        }
+
+        
+        // trouver l'utilisateur
+        user = await getUser(socket)
+        //importer les heros
+        listOfItems = await getItems()
+        //importer les items
+        listOfHeroes = await getHeroes()
+
     });
 
-      // @deco intempestives...
-      socket.on("deco", () => {
-          alert("a lot of users")
-          clearStorage();
-          window.location.href = '/';
-      })
-      
-      // trouver l'utilisateur
-      user = await getUser(socket)
-      //importer les heros
-      listOfItems = await getItems()
-      //importer les items
-      listOfHeroes = await getHeroes()
+    socket.on("gameStep", (data)=>{
+        gameStep = data;
+        wait = false
+    })
 
-  });
+    socket.on ("wait", ()=>{
+        wait = true;
+    })
 
-  socket.on("gameStep", (data)=>{
-      gameStep = data;
-      wait = false
-  })
+    function sentHeroToServer(event){
+        hero = event.detail.hero;
+        socket.emit("selectedHero", hero.name)
+    }
 
-  socket.on ("wait", ()=>{
-      wait = true;
-  })
+    // mettre à jour le user quand le hero a été choisi et enregistré dans la db
+    socket.on("registeredHero", async()=>{
+        user = await getUser(socket);
+    })
 
-  function sentHeroToServer(event){
-      hero = event.detail.hero;
-      socket.emit("selectedHero", hero.name)
-  }
-
-  // mettre à jour le user quand le hero a été choisi et enregistré dans la db
-  socket.on("registeredHero", async()=>{
-      user = await getUser(socket);
-  })
-
-  function wantToDoSomething () {
-      socket.emit("wantToDoSomething")
-  }
+    function wantToDoSomething () {
+        socket.emit("wantToDoSomething")
+    }
 </script>
 
 {#if sessionID}
