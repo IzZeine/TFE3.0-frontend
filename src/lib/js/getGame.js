@@ -14,4 +14,4 @@ async function getGame() {
 	}
 }
 
-export { getgame };
+export { getGame };

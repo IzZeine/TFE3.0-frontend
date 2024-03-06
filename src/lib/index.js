@@ -11,3 +11,6 @@ export { getHeroes };
 
 import { getItems } from './js/getItems';
 export { getItems };
+
+import { getGame } from './js/getGame';
+export { getGame };

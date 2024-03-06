@@ -3,7 +3,7 @@
 
 	import { onMount } from "svelte";
     import { io } from "socket.io-client";
-    import { getUser } from "$lib";
+    import { clearStorage, getUser } from "$lib";
 
     const socket = io("http://localhost:3000");
     
@@ -15,7 +15,13 @@
     
     onMount(async() => {
         sessionID = sessionStorage.getItem("sessionID");
+        if(sessionID){
+            window.location.href = "/game"
+        }
         gameID = sessionStorage.getItem("gameID")
+        if(gameID){
+            window.location.href = "/game" + gameID
+        }
         socket.on("connect", async() => {
             console.log("Connected to server")
         });
@@ -30,13 +36,15 @@
             OnlineUsers = count
         })
         
-        console.log(screen.width)
-
         if (screen.width > 500){
-            {window.location.href = "/boardGame"}
+            window.location.href = "/boardGame"
         }
 
         user = await getUser(socket)
+        if(user){
+            window.location.href = "/game"
+        }
+
     });
 
     const onFormSubmit = async () => {
@@ -59,20 +67,11 @@
 
 <div class="container">
     <img src="./src/assets/img/logo.png" class="fluidimg logoImg" alt="Logo">
-    {#if sessionID}
-        {#if user}
-            {#if gameID}
-                {window.location.href = "/game/{gameID}"}
-            {/if}
-            {window.location.href = "/game"}
-        {/if}
-        {:else}
-            <form on:submit|preventDefault={onFormSubmit} class="form">
-                <div>
-                    <label for="username" class="labelForm">Enter your username:</label>
-                    <input type="text" name="username" id="username" class="inputForm" placeholder="ex : IzZeine" maxlength="12" autocomplete='off' data-lpignore="true" data-form-type="other" required bind:value={username}/>
-                </div>
-                <button class="btnPrimary btnForm" disabled='{isDirty(username)}'>Jouer</button>
-            </form>
-    {/if}
+    <form on:submit|preventDefault={onFormSubmit} class="form">
+        <div>
+            <label for="username" class="labelForm">Enter your username:</label>
+            <input type="text" name="username" id="username" class="inputForm" placeholder="ex : IzZeine" maxlength="12" autocomplete='off' data-lpignore="true" data-form-type="other" required bind:value={username}/>
+        </div>
+        <button class="btnPrimary btnForm" disabled='{isDirty(username)}'>Jouer</button>
+    </form>
 </div>

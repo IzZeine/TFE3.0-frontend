@@ -4,6 +4,9 @@
   import Carousel from "svelte-carousel";
 	import { getHeroes } from '$lib';
 
+
+  // @TODO : récupérer le user et son camp 
+  // @TODO : si c'est le boss alors afficher les boss possible
   let heroes = ""
   let selectedHero = ""
 

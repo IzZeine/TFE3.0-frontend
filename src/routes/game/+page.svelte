@@ -15,13 +15,17 @@
     let OnlineUsers = 0;
     let activeGames = [];
     let errorMessage = "";
-    let isWaitingUser = true;
-    let theWindow;
     
     onMount(async() => {
         sessionID = sessionStorage.getItem("sessionID");
+        if(!sessionID){
+            clearStorage()
+            window.location.href = "/"
+        }
         gameID = sessionStorage.getItem("gameID")
-        theWindow = window
+        if(gameID){
+            window.location.href = "/game/" + gameID
+        }
         socket.on("connect", async() => {
             console.log("Connected to server")
         });
@@ -37,12 +41,14 @@
         })
 
         if (screen.width > 500){
-            {window.location.href = "/boardGame"}
+            window.location.href = "/boardGame"
         }
 
         user = await getUser(socket)
-        isWaitingUser = false;
-        console.log(isWaitingUser)
+        if(!user){
+            clearStorage()
+            window.location.href = "/"
+        }
 
     });
 
@@ -116,67 +122,55 @@
 
 <div class="container">
     <img src="./src/assets/img/logo.png" class="fluidimg logoImg" alt="Logo">
-    {#if sessionID}
+    <p> Welcome
         {#if user}
-            {#if gameID}
-                {window.location.href = "/game/{gameID}"}
-                {:else}
-                    <p>Welcome {user.username}</p>
-                    <div class="btnsGames">
-                        <button on:click={displayCreateGames} class="btnPrimary">Créer</button>
-                        <button on:click={(evt) => { askActiveGames(); displayGames(evt); }} class="btnPrimary">Rejoindre</button>
-                    </div>
-        
-                    <div class="createGame">
-                        <div class="content">
-                            <div class="btns">
-                                <button class="btn-menuGames return" on:click={hideCreateGames}><img src="./src/assets/img/return.svg" alt="return"></button>
-                            </div>
-                            
-                            <form on:submit|preventDefault={createGame} class="gameNameForm">
-                                <div class="gameNameForm_content">
-                                    <label for="gameName" class="gameNameLabel">Enter your game's name:</label>
-                                    <input type="text" name="gameName" id="gameName" class="inputForm" placeholder="ex : IzZeine's game" maxlength="15" autocomplete='off' data-lpignore="true" data-form-type="other" required bind:value={gameName}/>
-                                    {#if errorMessage}
-                                        <p class="errorCreateGame">{errorMessage}</p>
-                                    {/if}
-                                </div>
-                                <button class="btnPrimary btnForm" disabled='{isDirty(gameName)}'>Jouer</button>
-                            </form>
-                        </div>
-                    </div>
-        
-                    <div class="activeGames">
-                        <div class="content">
-                            <div class="btns">
-                                <button class="btn-menuGames return" on:click={hideGames}><img src="./src/assets/img/return.svg" alt="return"></button>
-                                <button class="btn-menuGames refresh" on:click={askActiveGames}><img src="./src/assets/img/refresh.svg" alt="refresh"></button>
-                            </div>
-                            <ul>
-                            {#each activeGames as game}
-                                <li>
-                                    <a href="/game/{game.gameId}">
-                                        <button on:click={joinGame(game.gameId)} class="btn-joinGames">
-                                            <p>{game.name}</p>
-                                            <p class="btn-joinGames_statut">{game.statut} <span>{game.users}/6</span></p>
-                                        </button>
-                                    </a>
-                                </li>
-                            {/each}
-                            </ul>
-                        </div>
-                    </div>
-            {/if}
-            {:else}
-                {#if !isWaitingUser}
-                    {clearStorage()}
-                    {window.location.href = "/"} <!-- pas sur que ça se fasse de rediriger ici -->
-                {/if}
+            {user.username}
         {/if}
-        {:else}
-            {#if !isWaitingUser}
-                {clearStorage()}
-                {window.location.href = "/"} <!-- pas sur que ça se fasse de rediriger ici -->
-            {/if}
-    {/if}
+    </p>
+    <div class="btnsGames">
+        <button on:click={displayCreateGames} class="btnPrimary">Créer</button>
+        <button on:click={(evt) => { askActiveGames(); displayGames(evt); }} class="btnPrimary">Rejoindre</button>
+    </div>
+
+    <div class="createGame">
+        <div class="content">
+            <div class="btns">
+                <button class="btn-menuGames return" on:click={hideCreateGames}><img src="./src/assets/img/return.svg" alt="return"></button>
+            </div>
+            
+            <!-- @TODO : c'est la boardGame qui gère la création de game -->
+            <form on:submit|preventDefault={createGame} class="gameNameForm">
+                <div class="gameNameForm_content">
+                    <label for="gameName" class="gameNameLabel">Enter your game's name:</label>
+                    <input type="text" name="gameName" id="gameName" class="inputForm" placeholder="ex : IzZeine's game" maxlength="15" autocomplete='off' data-lpignore="true" data-form-type="other" required bind:value={gameName}/>
+                    {#if errorMessage}
+                        <p class="errorCreateGame">{errorMessage}</p>
+                    {/if}
+                </div>
+                <button class="btnPrimary btnForm" disabled='{isDirty(gameName)}'>Jouer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- @TODO : laisser ça ici ou le mettre sur /game/join ? -->
+    <div class="activeGames">
+        <div class="content">
+            <div class="btns">
+                <button class="btn-menuGames return" on:click={hideGames}><img src="./src/assets/img/return.svg" alt="return"></button>
+                <button class="btn-menuGames refresh" on:click={askActiveGames}><img src="./src/assets/img/refresh.svg" alt="refresh"></button>
+            </div>
+            <ul>
+            {#each activeGames as game}
+                <li>
+                    <a href="/game/{game.gameId}">
+                        <button on:click={joinGame(game.gameId)} class="btn-joinGames">
+                            <p>{game.name}</p>
+                            <p class="btn-joinGames_statut">{game.statut} <span>{game.users}/6</span></p>
+                        </button>
+                    </a>
+                </li>
+            {/each}
+            </ul>
+        </div>
+    </div>
 </div>
