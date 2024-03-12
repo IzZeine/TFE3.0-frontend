@@ -18,6 +18,7 @@
     let hero = '';
     let listOfItems = '';
     let listOfHeroes = '';
+    // @TODO : il faut que tout s'actualise tout le temps
     let wait = true;
     
     onMount(async() => {
@@ -35,12 +36,12 @@
 
         socket.on('connect', () => {
             console.log('Connected to server');
-            if (sessionID) {
-                socket.emit('MyID', sessionID);
+            if (gameID) {
+                socket.emit("joinGame", gameID)
             }
         });
 
-        // @deco intempestives...
+        // @TODO : deco intempestives...
         socket.on("deco", () => {
             alert("a lot of users")
             clearStorage();

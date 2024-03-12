@@ -164,8 +164,7 @@ MainPage
 	flex-direction: column;
 }
 
-.activeGames,
-.createGame {
+.activeGames {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -177,8 +176,7 @@ MainPage
 	background-color: var(--BG);
 }
 
-.activeGames.is-active,
-.createGame.is-active {
+.activeGames.is-active {
 	transform: translate(0, 0);
 }
 
@@ -233,7 +231,6 @@ MainPage
 }
 
 .gameNameForm_content {
-	width: 100%;
 	text-align: center;
 }
 

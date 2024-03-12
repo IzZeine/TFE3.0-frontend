@@ -1,19 +1,5 @@
 // @ts-nocheck
 
-// async function getUser() {
-// 	let sessionID = sessionStorage.getItem('sessionID');
-// 	let user = '';
-// 	try {
-// 		const response = await fetch('http://localhost:3000/users');
-// 		const usersJson = await response.json();
-// 		user = usersJson.find((user) => user.Id == sessionID);
-// 		console.log('user : ', user);
-// 		return user;
-// 	} catch (error) {
-// 		console.error('Erreur lors de la récupération des utilisateurs :', error);
-// 		// Gérer l'erreur ici
-// 	}
-// }
 async function getUser(socket) {
 	let sessionID = sessionStorage.getItem('sessionID');
 	try {

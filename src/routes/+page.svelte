@@ -3,7 +3,7 @@
 
 	import { onMount } from "svelte";
     import { io } from "socket.io-client";
-    import { clearStorage, getUser } from "$lib";
+    import { getUser } from "$lib";
 
     const socket = io("http://localhost:3000");
     
@@ -20,7 +20,7 @@
         }
         gameID = sessionStorage.getItem("gameID")
         if(gameID){
-            window.location.href = "/game" + gameID
+            window.location.href = "/game/" + gameID
         }
         socket.on("connect", async() => {
             console.log("Connected to server")
