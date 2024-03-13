@@ -56,20 +56,21 @@
         // trouver l'utilisateur
         user = await getUser(socket)
         if(!user){
+            clearStorage()
             window.location.href = "/"
         }
         //trouver la game
         game = await getGame()
+        console.log(game)
         //importer les heros
-        listOfItems = await getItems()
-        //importer les items
         listOfHeroes = await getHeroes()
+        //importer les items
+        listOfItems = await getItems()
 
     });
 
-    socket.on("gameStep", (data)=>{
-        gameStep = data;
-        // wait = false
+    socket.on("updateGame", (data)=>{
+        game = data
     })
 
     socket.on ("wait", ()=>{
@@ -86,28 +87,22 @@
         user = await getUser(socket);
     })
 
-    function wantToDoSomething () {
-        socket.emit("wantToDoSomething")
+    function upGameStep () {
+        gameStep++
+        console.log(gameStep)
     }
 </script>
 
 {#if sessionID}
     {#if user}
-        {#if wait == true}
-            <Wait {game} />
-            {:else}
-                <!-- @TODO : laisser ici ou faire /game/gameID/Gamerules ?  same shit pour les autres steps-->
-                {#if gameStep == 1}
-                    <GameRules />
-                    <button on:click={wantToDoSomething}>Jouer</button>
-                {/if}
-                {#if gameStep == 2}
-                    <!-- @TODO : faire passer le user -->
-                    <ChooseHero on:ChooseHero={(evt) => { wantToDoSomething(); sentHeroToServer(evt); }} />
-                {/if}
-                {#if gameStep == 3}
-                    <Map {user} />
-                {/if}
+        {#if game.statut == "waiting"}
+            <GameRules />
+        {/if}
+        {#if game.statut == "closed"}
+            <ChooseHero {user} on:ChooseHero={(evt) => { upGameStep(); sentHeroToServer(evt); }} />
+        {/if}
+        {#if game.statut == "started"}
+            <Map {user} />
         {/if}
     {/if}       
 {/if}

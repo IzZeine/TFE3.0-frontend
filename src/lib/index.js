@@ -9,6 +9,9 @@ export { clearStorage };
 import { getHeroes } from './js/getHeroes';
 export { getHeroes };
 
+import { getBoss } from './js/getBoss';
+export { getBoss };
+
 import { getItems } from './js/getItems';
 export { getItems };
 

@@ -2,19 +2,30 @@
   // @ts-nocheck
   import { createEventDispatcher, onMount } from 'svelte';
   import Carousel from "svelte-carousel";
-	import { getHeroes } from '$lib';
+	import { getHeroes, getBoss } from '$lib';
 
 
   // @TODO : récupérer le user et son camp 
+  export let user = user;
+  console.log("user", user)
   // @TODO : si c'est le boss alors afficher les boss possible
   let heroes = ""
+  let boss = ""
   let selectedHero = ""
-
+  
   onMount(async() => {
     heroes = await getHeroes(); // get Json
     heroes = Object.values(heroes) // change Json to array
-    console.log(heroes)
-    selectedHero = heroes[0];
+    boss = await getBoss(); // get Json
+    boss = Object.values(boss) // change Json to array
+
+    if(user.team == "hero"){
+      selectedHero = heroes[0];
+    }
+    if (user.team == "boss"){
+      selectedHero = boss[0];
+      console.log(selectedHero)
+    }
   })
 
   const dispatch = createEventDispatcher();
@@ -37,31 +48,44 @@
 </script>
 
 <div class="chooseHero">
-    <h1 class="h1">Tu es un hero !</h1>
+    {#if user.team == "hero"}    
+      <h1 class="h1">Tu es un hero !</h1>
+      {:else}
+        <h1 class="h1">Tu es le boss !</h1>
+    {/if}
     <h2 class="h2">Lequel choisis-tu ?</h2>
-    {#if heroes}
+    {#if heroes && boss && user}
     <Carousel
         bind:this={carousel}
         on:pageChange={
             (event) => {
+              if(user.tem == "hero"){
                 selectedHero = heroes[event.detail]
-                console.log(selectedHero)
+              }else{
+                selectedHero = boss[event.detail]
+              }
+              console.log(selectedHero)
             }
-        }   
+        }
     >   
-        
+        {#if user.team == "hero"}    
           {#each heroes as hero}
               <div class="heroItem">
                   <img class="fluidimg heroImg" src="/src/assets/img/{hero.img}" alt={hero.name}/>
               </div>
           {/each}
+          {:else}
+            {#each boss as oneBoss}
+              <div class="heroItem">
+                  <img class="fluidimg heroImg" src="/src/assets/img/{oneBoss.img}" alt={oneBoss.name}/>
+              </div>
+            {/each} 
+        {/if}
 
         <div class="arrowNavigate" slot="prev">
-            <!-- <img src="./src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item prev"> -->
             <button on:click={handlePrevClick}><img src="/src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item prev"></button>
         </div>
         <div class="arrowNavigate" slot="next">
-            <!-- <img src="./src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item prev"> -->
             <button on:click={handleNextClick}><img src="/src/assets/img/arrow.svg" alt="prev" class="fluidimg arrowNavigate-item next" style="transform: scale(-1);"></button>
         </div>
         <div slot="dots">
@@ -70,9 +94,15 @@
     </Carousel>
     {/if}
 
-    <p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
-    <p class="abilityTitle">Habilité :</p>
-    <p class="heroDescription" >{selectedHero.ability}</p>
+    {#if user.team == "hero"}    
+      <p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
+      <p class="abilityTitle">Habilité :</p>
+      <p class="heroDescription" >{selectedHero.ability}</p>
+      {:else}
+        <p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
+        <p class="abilityTitle">Habilité :</p>
+        <p class="heroDescription" >{selectedHero.ability}</p>
+    {/if}
     <button on:click={chooseHero} class="btnPrimary">Choose</button>
 
 </div>
