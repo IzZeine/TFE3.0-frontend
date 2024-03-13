@@ -26,6 +26,7 @@
         socket.emit("isActiveUsers", game.gameId)
        
         socket.on('updateUsers', (data) => {
+            console.log(data)
             activeUsers = data
             let conditionHero = (currentValue) => currentValue.hero
             if(activeUsers.length >= 2 && game.statut == "waiting"){

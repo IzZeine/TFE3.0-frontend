@@ -16,6 +16,7 @@
     
     onMount(async() => {
         sessionID = sessionStorage.getItem("sessionID");
+        console.log(sessionID)
         if(!sessionID){
             clearStorage()
             window.location.href = "/"

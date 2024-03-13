@@ -34,9 +34,17 @@
         console.log("session Id :",sessionID)
         console.log('gameID', gameID)
 
-        socket.on('connect', () => {
+        
+
+        socket.on('connect', async() => {
             console.log('Connected to server');
             if (gameID) {
+                // trouver l'utilisateur
+                user = await getUser(socket)
+                if(!user){
+                    clearStorage()
+                    window.location.href = "/"
+                }
                 socket.emit("joinGame", gameID)
             }
         });
@@ -53,12 +61,7 @@
         }
 
         
-        // trouver l'utilisateur
-        user = await getUser(socket)
-        if(!user){
-            clearStorage()
-            window.location.href = "/"
-        }
+
         //trouver la game
         game = await getGame()
         console.log(game)
