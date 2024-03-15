@@ -332,3 +332,27 @@ Boardgame - Waiting users
 	display: flex;
 	gap: 30px;
 }
+
+/*--------------------------------------------------------------------------
+Boardgame - boardgame display
+--------------------------------------------------------------------------*/
+
+.boardGame {
+	position: relative;
+}
+
+.boardGameImg {
+	position: absolute;
+	z-index: -1;
+}
+
+.userPawn {
+	position: absolute;
+	display: inline-flex;
+	width: 2.25%;
+	border: 1px solid red;
+}
+
+.userPawn_name {
+	width: fit-content;
+}

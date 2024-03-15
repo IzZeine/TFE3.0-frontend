@@ -61,8 +61,6 @@
             {window.location.href = "/boardGame"}
         }
 
-        
-
         //trouver la game
         game = await getGame()
         console.log(game)

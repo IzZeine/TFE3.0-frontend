@@ -66,7 +66,9 @@
 </script>
 
 {#if game.statut == "started"}
-    <BoardGame />
+    {#if activeUsers.length>0}
+        <BoardGame {activeUsers} />
+    {/if}
     {:else}            
         <div class="container">
         <h1 class="h1">{game.name}</h1>
