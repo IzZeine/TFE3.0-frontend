@@ -23,7 +23,6 @@
 
         socket.on("updateUsersCount", (count)=>{
             OnlineUsers = count
-            console.log(OnlineUsers)
         })
 
         if (screen.width < 500){

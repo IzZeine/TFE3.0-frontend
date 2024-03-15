@@ -4,11 +4,7 @@
   import Carousel from "svelte-carousel";
 	import { getHeroes, getBoss } from '$lib';
 
-
-  // @TODO : récupérer le user et son camp 
   export let user = user;
-  console.log("user", user)
-  // @TODO : si c'est le boss alors afficher les boss possible
   let heroes = ""
   let boss = ""
   let selectedHero = ""
@@ -50,8 +46,9 @@
 <div class="chooseHero">
     {#if user.team == "hero"}    
       <h1 class="h1">Tu es un hero !</h1>
-      {:else}
-        <h1 class="h1">Tu es le boss !</h1>
+    {/if}
+    {#if user.team == "boss"}
+      <h1 class="h1">Tu es le boss !</h1>
     {/if}
     <h2 class="h2">Lequel choisis-tu ?</h2>
     {#if heroes && boss && user}
@@ -59,12 +56,12 @@
         bind:this={carousel}
         on:pageChange={
             (event) => {
-              if(user.tem == "hero"){
+              if(user.team == "hero"){
                 selectedHero = heroes[event.detail]
-              }else{
+              }
+              if(user.team == "boss"){
                 selectedHero = boss[event.detail]
               }
-              console.log(selectedHero)
             }
         }
     >   
@@ -74,12 +71,14 @@
                   <img class="fluidimg heroImg" src="/src/assets/img/{hero.img}" alt={hero.name}/>
               </div>
           {/each}
-          {:else}
-            {#each boss as oneBoss}
-              <div class="heroItem">
-                  <img class="fluidimg heroImg" src="/src/assets/img/{oneBoss.img}" alt={oneBoss.name}/>
-              </div>
-            {/each} 
+        {/if}
+
+        {#if user.team == "boss"}
+          {#each boss as oneBoss}
+            <div class="heroItem">
+              <img class="fluidimg heroImg" src="/src/assets/img/{oneBoss.img}" alt={oneBoss.name}/>
+            </div>
+          {/each} 
         {/if}
 
         <div class="arrowNavigate" slot="prev">
@@ -98,11 +97,15 @@
       <p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
       <p class="abilityTitle">Habilité :</p>
       <p class="heroDescription" >{selectedHero.ability}</p>
-      {:else}
-        <p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
-        <p class="abilityTitle">Habilité :</p>
-        <p class="heroDescription" >{selectedHero.ability}</p>
     {/if}
+
+    {#if user.team == "boss"}
+      <!-- content here -->
+      <p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
+      <p class="abilityTitle">Habilité :</p>
+      <p class="heroDescription" >{selectedHero.ability}</p>
+    {/if}
+
     <button on:click={chooseHero} class="btnPrimary">Choose</button>
 
 </div>

@@ -27,20 +27,21 @@
             clearStorage()
             window.location.href = "/"
         }
+
         gameID = sessionStorage.getItem("gameID")
         if(!gameID){
             window.location.href = "/game"
         }
+
         console.log("session Id :",sessionID)
         console.log('gameID', gameID)
-
-        
 
         socket.on('connect', async() => {
             console.log('Connected to server');
             if (gameID) {
                 // trouver l'utilisateur
                 user = await getUser(socket)
+                // console.log(user)
                 if(!user){
                     clearStorage()
                     window.location.href = "/"
@@ -70,6 +71,10 @@
         //importer les items
         listOfItems = await getItems()
 
+        socket.on("updateUsers", async (data)=>{
+           user = await getUser(socket)
+        })
+
     });
 
     socket.on("updateGame", (data)=>{
@@ -90,19 +95,16 @@
         user = await getUser(socket);
     })
 
-    function upGameStep () {
-        gameStep++
-        console.log(gameStep)
-    }
 </script>
 
 {#if sessionID}
     {#if user}
+        {user.username}
         {#if game.statut == "waiting"}
             <GameRules />
         {/if}
         {#if game.statut == "closed"}
-            <ChooseHero {user} on:ChooseHero={(evt) => { upGameStep(); sentHeroToServer(evt); }} />
+            <ChooseHero {user} on:ChooseHero={sentHeroToServer} />
         {/if}
         {#if game.statut == "started"}
             <Map {user} />
