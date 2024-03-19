@@ -45,7 +45,6 @@
 
     socket.on("updateGame", (data)=>{
         game = data
-        console.log(data)
     })
 
     let closeGame = () => {

@@ -41,7 +41,7 @@
             if (gameID) {
                 // trouver l'utilisateur
                 user = await getUser(socket)
-                // console.log(user)
+                console.log(user)
                 if(!user){
                     clearStorage()
                     window.location.href = "/"
@@ -63,7 +63,6 @@
 
         //trouver la game
         game = await getGame()
-        console.log(game)
         //importer les heros
         listOfHeroes = await getHeroes()
         //importer les items

@@ -1,29 +1,68 @@
-<script>
+<script>    
     // @ts-nocheck
 	import BoardGameSVG from "$lib/composants/BoardGameSVG.svelte";
     import {onMount } from 'svelte';
-    // import { io } from "socket.io-client";
+    import { io } from "socket.io-client";
 
-    // const socket = io("http://localhost:3000");
+    const socket = io("http://localhost:3000");
 
     export let activeUsers = activeUsers;
-    let TargetX, TargetY;
 
     onMount(async() => {
-        let target = document.querySelector("#player1")
-        TargetX = target.getBoundingClientRect().x
-        TargetY = target.getBoundingClientRect().y
+        positionOfPlayers()
+    })
 
+    let positionOfPlayers = () => {
+        for(let player of activeUsers){
+            let target = "room" + player.room + "_" + player.player
+            console.log(target)
+
+            if(player.room == 39) target = "room" + (player.room -1 ) + "_" + player.player
+
+            let myPlayerDiv = document.querySelector("#" + player.player)
+            let targetDiv = document.querySelector("#" + target)
+
+            console.log(targetDiv)
+
+            let targetBoundingClientRect = targetDiv.getBoundingClientRect()
+            let TargetX = targetBoundingClientRect.x
+            let TargetY = targetBoundingClientRect.y
+
+            myPlayerDiv.style.top = TargetY + "px"
+            myPlayerDiv.style.left = TargetX + "px"
+        }
+    }
+
+    let playerMove = (userId) => {
+        let userMove = activeUsers.find(id => id.id === userId)
+        console.log(userMove)
+        let target = "room" + userMove.room + "_" + userMove.player
+        console.log(target)
+
+        let myPlayerDiv = document.querySelector("#" + userMove.player)
+        let targetDiv = document.querySelector("#" + target)
+
+        console.log(targetDiv)
+
+        let targetBoundingClientRect = targetDiv.getBoundingClientRect()
+        let TargetX = targetBoundingClientRect.x
+        let TargetY = targetBoundingClientRect.y
+
+        myPlayerDiv.style.top = TargetY + "px"
+        myPlayerDiv.style.left = TargetX + "px"
+    }
+
+    socket.on("movePlayer", (userId)=>{
+        playerMove(userId)
     })
 
 </script>
 
 <div class="boardGame">
     <ul class="usersPawnList">
-        {#each activeUsers as user, index}
-            <li class="userPawn" id="PawnPlayer{index+1}" style="left: {TargetX}px; top: {TargetY}px">
-                <!-- @TODO : afficher l'img en fonction du hero -->
-                <img class="fluidimg userPawn_img" src="/src/assets/img/rodeur.png" alt="pawn icon">
+        {#each activeUsers as user}
+            <li class="userPawn" id="{user.player}">
+                <img class="fluidimg userPawn_img" src="/src/assets/img/{user.heroImg}" alt="pawn icon">
             </li>
         {/each}
     </ul>

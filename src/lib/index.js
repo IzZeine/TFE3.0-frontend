@@ -17,3 +17,6 @@ export { getItems };
 
 import { getGame } from './js/getGame';
 export { getGame };
+
+import { getRoomsConnections } from './js/getRoomsConnections';
+export { getRoomsConnections };
