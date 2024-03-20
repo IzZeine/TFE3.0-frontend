@@ -15,12 +15,13 @@
     boss = await getBoss(); // get Json
     boss = Object.values(boss) // change Json to array
 
-    if(user.team == "hero"){
-      selectedHero = heroes[0];
-    }
-    if (user.team == "boss"){
-      selectedHero = boss[0];
-      console.log(selectedHero)
+    if(user.team){
+      if(user.team == "hero"){
+        selectedHero = heroes[0];
+      }
+      if (user.team == "boss"){
+        selectedHero = boss[0];
+      }
     }
   })
 
@@ -51,7 +52,7 @@
       <h1 class="h1">Tu es le boss !</h1>
     {/if}
     <h2 class="h2">Lequel choisis-tu ?</h2>
-    {#if heroes && boss && user}
+    {#if heroes && boss && user.team}
     <Carousel
         bind:this={carousel}
         on:pageChange={

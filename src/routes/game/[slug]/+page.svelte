@@ -5,7 +5,6 @@
     import { getHeroes, getItems, getUser, clearStorage, getGame } from "$lib";
     import GameRules from "$lib/composants/GameRules.svelte";
     import ChooseHero from "$lib/composants/ChooseHero.svelte";
-    import Wait from "$lib/composants/Wait.svelte";
     import Map from "$lib/composants/Map.svelte";
 
     const socket = io("http://localhost:3000");
@@ -14,7 +13,6 @@
     let sessionID = "";    
     let user = "";
     let game = "";
-    let gameStep = 1;
     let hero = '';
     let listOfItems = '';
     let listOfHeroes = '';
@@ -41,7 +39,6 @@
             if (gameID) {
                 // trouver l'utilisateur
                 user = await getUser(socket)
-                console.log(user)
                 if(!user){
                     clearStorage()
                     window.location.href = "/"
@@ -108,3 +105,5 @@
         {/if}
     {/if}       
 {/if}
+<button on:click={clearStorage}>Clear</button>
+

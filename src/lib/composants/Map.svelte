@@ -1,6 +1,6 @@
 <script>
     // @ts-nocheck
-	import { clearStorage, getRoomsConnections, getUser } from "$lib";
+	import { clearStorage, getItems, getRoomsConnections, getUser } from "$lib";
 	import { onMount } from "svelte";
     import { io } from "socket.io-client";
 
@@ -13,7 +13,12 @@
     //@TODO : quand il veut changer de room il fait un request au serveur et le serveur envoie les infos au gameboard
 
     let roomsConnections,directions;
+    let allRooms;
     let myRoom = '';
+    let myInventory = [];
+    let countOfItems;
+    let itemInRoom;
+    let dice1,dice2;
 
     onMount(async() => {        
         sessionID = sessionStorage.getItem("sessionID");
@@ -24,7 +29,6 @@
             if (gameID) {
                 // trouver l'utilisateur
                 user = await getUser(socket)
-                console.log(user)
                 if(!user){
                     clearStorage()
                     window.location.href = "/"
@@ -34,18 +38,61 @@
             }
         });
 
+        updateInventory(user)
         disabledArrowDirections()
 
         socket.on("youAskedRooms", (rooms)=>{
-            console.log(user)
-            myRoom = rooms[user.room]
-            console.log(myRoom)
+            allRooms = rooms
+            myRoom = allRooms[user.room]
+            itemInRoom = myRoom.item
+            itemInRoom = JSON.parse(itemInRoom)
+            console.log(itemInRoom)
         })
 
-        socket.on("movePlayer", (userID)=>{
-            disabledArrowDirections()
+        socket.on("movePlayer", async (userID)=>{
+            disabledArrowDirections()            
+            user = await getUser(socket)
+            myRoom = allRooms[user.room]
+            itemInRoom = myRoom.item
+            itemInRoom = JSON.parse(itemInRoom) // convert string to json
+            console.log(itemInRoom)
+        })
+
+        socket.on("updateUser", (user) => {
+            updateInventory(user)
         })
     })
+
+    let updateInventory = (user) => {
+        let inventory = user.inventory
+        console.log(inventory)
+        if(!inventory) return;
+        myInventory = []
+        inventory = inventory.split("/")
+        console.log(JSON.parse(inventory[0]))
+        for (let item of inventory){
+            item = JSON.parse(item)
+            myInventory.push(item)
+        }
+        console.log(myInventory)
+
+        countOfItems = compterObjetsIdentiques(myInventory)
+        countOfItems= Object.entries(countOfItems).map(([cle, valeur]) => ({ [cle]: valeur }));
+        console.log(countOfItems)
+    }
+
+    let compterObjetsIdentiques = (array) => {
+        const compteur = {}; // Objet pour stocker les occurrences des objets
+        // Parcourir le tableau d'objets
+        array.forEach(item => {
+            // Convertir l'objet en une chaîne JSON pour le représenter comme une clé
+            const cle = item.nameId;
+            console.log(cle)
+            // Incrémenter le compteur pour cette clé
+            compteur[cle] = (compteur[cle] || 0) + 1;
+        });
+        return compteur;
+    }
 
     let disabledArrowDirections = async()=>{
         roomsConnections = await getRoomsConnections()
@@ -57,19 +104,44 @@
         for(let direction of diectionsKeys){
             let arrow = document.querySelector("#"+ direction)
             if(directions[direction] != 'null') arrow.removeAttribute("disabled")
+            if(directions[direction] == 'null') arrow.setAttribute("disabled", true)
         }
     }
 
     let askToChangeRoom = ()=>{
         let direction = event.target.id
+        console.log(direction)
         let targetRoom = directions[direction]
+        if(targetRoom == "null") return;
         socket.emit("askToChangeRoom", targetRoom)
     }
-    // @TODO : quand il change de room, si il y a un item dans la salle :
-        // @TODO : Quand il lance les dés : généréer 2 nbre aléatoire entre 1 et 6
-        // @TODO : si dé1+dé2 > condition de rareté (ex : légendaire -> 10)
-            // @TODO : récupère l'item et l'envoyé au serveur pour l'ajouter au user
-            // @TODO : else : peut relancer les dés ou partir
+
+    let tryToGetItemInRoom = () => {
+        let condition = itemInRoom.condition
+        let pointsDices = rollDice()
+        console.log(pointsDices)
+        if(pointsDices<condition) return;
+        console.log(myRoom)
+        socket.emit("getItemInRoom", myRoom)
+    }
+
+    let rollDice = () => {
+        dice1 = Math.floor(Math.random() * 6)+1;
+        dice2 = Math.floor(Math.random() * 6)+1;
+        console.log(dice1, dice2)
+        return (dice1+dice2)
+    }
+
+    
+    let displayCardHero = () =>{
+        const display = document.querySelector(".cardHero")
+        display.classList.add("is-active")
+    }
+
+    let hideGames = () =>{
+        const display = document.querySelector(".cardHero")
+        display.classList.remove("is-active")
+    }
 
     // @TODO : quand le combat se lance :
         // @TODO : prendre la vie du boss et le total des atk des users
@@ -88,27 +160,67 @@
 </script>
 
 <p>{user.hero}</p>
-<h1>Your room : {user.room}</h1>
+<div class="container mapUserContainer">
+    <h1 class="h1">Your room : {user.room}</h1>
 
-<div class="directionsArrows">
-    <button class="directionArrow directionArrow_top" id="top" disabled on:click={askToChangeRoom}>
-        top
+    <div class="directionsArrows">
+        <button class="directionArrow directionArrow_top" id="top" disabled on:click={askToChangeRoom}>
+            <img class="directionArrow_img" src="/src/assets/img/top.svg" alt="top" >
+        </button>
+        <button class="directionArrow directionArrow_right" id="right" disabled on:click={askToChangeRoom}>
+            <img class="directionArrow_img" src="/src/assets/img/right.svg" alt="top">
+        </button>
+        <button class="directionArrow directionArrow_bot" id="bot" disabled on:click={askToChangeRoom}>
+            <img class="directionArrow_img" src="/src/assets/img/bot.svg" alt="top">
+        </button>
+        <button class="directionArrow directionArrow_left" id="left" disabled on:click={askToChangeRoom}>
+            <img class="directionArrow_img" src="/src/assets/img/left.svg" alt="top">
+        </button>
+    </div>
+
+    {#if myRoom}
+        <div class="itemInRoom">
+            {#if itemInRoom}
+                <img class="fluidimg" src="/src/assets/img/{itemInRoom.nameId}.PNG" alt="{itemInRoom.nameId}">
+                <p>{itemInRoom.name}</p>
+                <p>{itemInRoom.rarity}</p>
+                <p>{itemInRoom.condition}</p>
+                {#if dice1 && dice2}
+                    <p><span>{dice1}</span> ; <span>{dice2}</span> <span> => </span> <span>{dice1+dice2}</span></p>
+                {/if}
+                <button on:click={tryToGetItemInRoom}>Attraper</button>
+                {:else}
+                    <p>no item here</p>
+            {/if}
+        </div>
+    {/if}
+</div>
+<div class="sideBarUser">
+    <button class="showCardHero" on:click={displayCardHero}>
+        <img style="width: 60px; height: auto;" src="/src/assets/img/inventory.PNG" alt="inventory">
     </button>
-    <button class="directionArrow directionArrow_right" id="right" disabled on:click={askToChangeRoom}>
-        right
-    </button>
-    <button class="directionArrow directionArrow_bot" id="bot" disabled on:click={askToChangeRoom}>
-        bot
-    </button>
-    <button class="directionArrow directionArrow_left" id="left" disabled on:click={askToChangeRoom}>
-        left
+    <button class="showCardHero">
+        habilité
     </button>
 </div>
-<!-- @TODO : il a accès à sa carte perso et son inventaire (composant) @TODO : implémenter les abilities -->
+<div class="cardHero">
+    <button on:click={hideGames}>
+        <img style="width: 60px; height: auto;" src="/src/assets/img/inventory.PNG" alt="inventory">
+    </button>
+    {#if countOfItems}
+        <ul class="inventory">
+            {#each countOfItems as item,index}
+                <li class="inventory_item">
+                    <img style="width: 30px; height : auto;" src="/src/assets/img/{Object.keys(countOfItems[index])[0]}.PNG" alt="{Object.keys(countOfItems[index])[0]}">
+                    <p><span> x {countOfItems[index][Object.keys(countOfItems[index])[0]]}</span></p>
+                </li>
+            {/each}
+        </ul>
+    {/if}
+</div>
 
-<!-- @TODO : quand il change de room, si il y a un item dans la salle : -->
-    <!-- @TODO : afficher les dés à lancer et les items avec leur rareté (et condition) (composant) et les flèches s'il veut partir -->
-    <!-- @TODO : afficher le résultat des dés -->
+
+<!-- @TODO : implémenter les abilities -->
 
 <!-- @TODO : quand le boss arrive dans la même salle : -->
     <!-- @TODO : un combat se lance (composant) -->

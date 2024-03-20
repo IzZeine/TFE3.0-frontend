@@ -10,6 +10,10 @@
 
     onMount(async() => {
         positionOfPlayers()
+        socket.on('updateUsers', (data) => {
+            activeUsers = data
+            positionOfPlayers()
+        })
     })
 
     let positionOfPlayers = () => {
@@ -17,12 +21,8 @@
             let target = "room" + player.room + "_" + player.player
             console.log(target)
 
-            if(player.room == 39) target = "room" + (player.room -1 ) + "_" + player.player
-
             let myPlayerDiv = document.querySelector("#" + player.player)
             let targetDiv = document.querySelector("#" + target)
-
-            console.log(targetDiv)
 
             let targetBoundingClientRect = targetDiv.getBoundingClientRect()
             let TargetX = targetBoundingClientRect.x
@@ -35,14 +35,10 @@
 
     let playerMove = (userId) => {
         let userMove = activeUsers.find(id => id.id === userId)
-        console.log(userMove)
         let target = "room" + userMove.room + "_" + userMove.player
-        console.log(target)
 
         let myPlayerDiv = document.querySelector("#" + userMove.player)
         let targetDiv = document.querySelector("#" + target)
-
-        console.log(targetDiv)
 
         let targetBoundingClientRect = targetDiv.getBoundingClientRect()
         let TargetX = targetBoundingClientRect.x
@@ -53,6 +49,9 @@
     }
 
     socket.on("movePlayer", (userId)=>{
+        socket.on('updateUsers', (data) => {
+            activeUsers = data
+        })
         playerMove(userId)
     })
 

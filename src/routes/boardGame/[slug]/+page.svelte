@@ -60,6 +60,7 @@
     let startGame = () => {
         socket.emit("startGame", game.gameId)
         console.log("start")
+        window.location.reload()
     }
 
 </script>
@@ -100,3 +101,5 @@
         {/if}
     </div>
 {/if}
+
+<button on:click={clearStorage}>Clear</button>

@@ -356,3 +356,76 @@ Boardgame - boardgame display
 .userPawn_name {
 	width: fit-content;
 }
+
+/*--------------------------------------------------------------------------
+userMap
+--------------------------------------------------------------------------*/
+
+.mapUserContainer {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.directionsArrows {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+}
+
+.directionArrow_img {
+	pointer-events: none;
+}
+
+.directionArrow_top {
+	grid-area: 1/2/1/3;
+}
+
+.directionArrow_bot {
+	grid-area: 3/2/3/3;
+}
+
+.directionArrow_left {
+	grid-area: 2/1/2/1;
+}
+
+.directionArrow_right {
+	grid-area: 2/3/2/3;
+}
+
+.directionArrow {
+	background-color: unset;
+}
+
+.directionArrow:disabled {
+	opacity: 20%;
+}
+
+.sideBarUser {
+	position: absolute;
+	display: flex;
+	gap: 60px;
+	bottom: 0;
+}
+
+.cardHero {
+	background-color: #fff;
+	position: absolute;
+	top: 100%;
+	height: 100%;
+	width: 100%;
+	transition: 0.2s;
+}
+
+.cardHero.is-active {
+	background-color: #fff;
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.inventory {
+	display: flex;
+	justify-content: center;
+}
