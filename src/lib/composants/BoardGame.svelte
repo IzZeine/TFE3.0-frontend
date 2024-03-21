@@ -14,6 +14,7 @@
             activeUsers = data
             positionOfPlayers()
         })
+
     })
 
     let positionOfPlayers = () => {
@@ -72,7 +73,8 @@
 <style>
 	:global(svg) {
 		max-width: 100%;
-        height : 100%;
+        height : auto;
 		display: block;
+        color: rgba(255, 255, 255, 0);
 	}
 </style>

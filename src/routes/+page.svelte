@@ -30,6 +30,7 @@
         socket.on("userCreated", (id) => {
             console.log(id)
             sessionStorage.setItem("sessionID", id);
+            window.location.reload();
         });
 
         socket.on("updateUsersCount", (count)=>{
@@ -55,7 +56,6 @@
             console.error("Error creating user:", error);
         }
         //reload la page quand le form à été envoyé pour avoir le btn "jouer"
-        window.location.reload();
     };
 
     // disabled btn if the input is empty

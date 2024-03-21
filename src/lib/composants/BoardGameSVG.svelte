@@ -40,316 +40,316 @@
     <path id="37" d="M3891.62 635.497C3888.75 635.497 3886.21 635.006 3883.98 634.023C3881.77 633.029 3880.03 631.662 3878.76 629.922C3877.5 628.182 3876.86 626.181 3876.85 623.92H3886.79C3886.8 624.619 3887.01 625.246 3887.43 625.803C3887.86 626.347 3888.44 626.773 3889.17 627.081C3889.9 627.389 3890.74 627.543 3891.69 627.543C3892.6 627.543 3893.41 627.383 3894.11 627.063C3894.8 626.732 3895.35 626.276 3895.74 625.696C3896.13 625.116 3896.32 624.453 3896.31 623.707C3896.32 622.973 3896.09 622.322 3895.63 621.754C3895.18 621.186 3894.55 620.742 3893.73 620.423C3892.92 620.103 3891.97 619.943 3890.91 619.943H3887.22V613.125H3890.91C3891.89 613.125 3892.76 612.965 3893.5 612.646C3894.26 612.326 3894.84 611.882 3895.26 611.314C3895.69 610.746 3895.89 610.095 3895.88 609.361C3895.89 608.651 3895.72 608.023 3895.37 607.479C3895.01 606.934 3894.51 606.508 3893.87 606.2C3893.25 605.893 3892.52 605.739 3891.69 605.739C3890.79 605.739 3889.99 605.898 3889.28 606.218C3888.58 606.538 3888.03 606.982 3887.62 607.55C3887.22 608.118 3887.01 608.769 3887 609.503H3877.56C3877.57 607.277 3878.18 605.312 3879.39 603.608C3880.6 601.903 3882.27 600.566 3884.39 599.595C3886.51 598.625 3888.94 598.139 3891.69 598.139C3894.38 598.139 3896.75 598.595 3898.81 599.506C3900.88 600.418 3902.5 601.673 3903.66 603.271C3904.83 604.857 3905.41 606.674 3905.4 608.722C3905.42 610.758 3904.72 612.427 3903.3 613.729C3901.89 615.031 3900.11 615.8 3897.94 616.037V616.321C3900.88 616.641 3903.08 617.54 3904.56 619.02C3906.04 620.488 3906.77 622.334 3906.75 624.56C3906.76 626.69 3906.12 628.578 3904.83 630.224C3903.55 631.869 3901.77 633.159 3899.49 634.094C3897.21 635.03 3894.59 635.497 3891.62 635.497ZM3912.79 635L3927.06 606.733V606.52H3910.3V598.636H3937.29V606.52L3922.94 635H3912.79Z" fill="white"/>
     <path id="38" d="M3704.62 49.4972C3701.75 49.4972 3699.21 49.0059 3696.98 48.0234C3694.77 47.0291 3693.03 45.6619 3691.76 43.9219C3690.5 42.1818 3689.86 40.1813 3689.85 37.9205H3699.79C3699.8 38.6188 3700.01 39.2462 3700.43 39.8026C3700.86 40.3471 3701.44 40.7732 3702.17 41.081C3702.9 41.3887 3703.74 41.5426 3704.69 41.5426C3705.6 41.5426 3706.41 41.3828 3707.11 41.0632C3707.8 40.7318 3708.35 40.276 3708.74 39.696C3709.13 39.116 3709.32 38.4531 3709.31 37.7074C3709.32 36.9735 3709.09 36.3224 3708.63 35.7543C3708.18 35.1861 3707.55 34.7422 3706.73 34.4226C3705.92 34.103 3704.97 33.9432 3703.91 33.9432H3700.22V27.125H3703.91C3704.89 27.125 3705.76 26.9652 3706.5 26.6456C3707.26 26.326 3707.84 25.8821 3708.26 25.3139C3708.69 24.7457 3708.89 24.0947 3708.88 23.3608C3708.89 22.6506 3708.72 22.0232 3708.37 21.4787C3708.01 20.9342 3707.51 20.508 3706.87 20.2003C3706.25 19.8925 3705.52 19.7386 3704.69 19.7386C3703.79 19.7386 3702.99 19.8984 3702.28 20.218C3701.58 20.5376 3701.03 20.9815 3700.62 21.5497C3700.22 22.1179 3700.01 22.7689 3700 23.5028H3690.56C3690.57 21.2775 3691.18 19.3125 3692.39 17.608C3693.6 15.9034 3695.27 14.5658 3697.39 13.5952C3699.51 12.6245 3701.94 12.1392 3704.69 12.1392C3707.38 12.1392 3709.75 12.5949 3711.81 13.5064C3713.88 14.4178 3715.5 15.6726 3716.66 17.2706C3717.83 18.8568 3718.41 20.6738 3718.4 22.7216C3718.42 24.7576 3717.72 26.4266 3716.3 27.7287C3714.89 29.0308 3713.11 29.8002 3710.94 30.0369V30.321C3713.88 30.6406 3716.08 31.5402 3717.56 33.0199C3719.04 34.4877 3719.77 36.3343 3719.75 38.5597C3719.76 40.6903 3719.12 42.5784 3717.83 44.2237C3716.55 45.8691 3714.77 47.1593 3712.49 48.0945C3710.21 49.0296 3707.59 49.4972 3704.62 49.4972ZM3739 49.4972C3736.06 49.4972 3733.44 49.0414 3731.13 48.13C3728.84 47.2185 3727.03 45.9815 3725.7 44.419C3724.39 42.8565 3723.73 41.0928 3723.73 39.1278C3723.73 37.6245 3724.1 36.2514 3724.85 35.0085C3725.61 33.7656 3726.62 32.7358 3727.9 31.919C3729.18 31.0904 3730.61 30.5578 3732.18 30.321V30.0369C3730.11 29.6818 3728.4 28.7644 3727.07 27.2848C3725.74 25.7933 3725.08 24.0355 3725.08 22.0114C3725.08 20.1056 3725.68 18.4129 3726.89 16.9332C3728.1 15.4418 3729.75 14.2699 3731.84 13.4176C3733.94 12.5653 3736.32 12.1392 3739 12.1392C3741.67 12.1392 3744.06 12.5713 3746.15 13.4354C3748.25 14.2876 3749.9 15.4595 3751.11 16.951C3752.32 18.4306 3752.92 20.1174 3752.92 22.0114C3752.92 24.0473 3752.24 25.8052 3750.9 27.2848C3749.55 28.7644 3747.85 29.6818 3745.82 30.0369V30.321C3747.38 30.5578 3748.8 31.0904 3750.08 31.919C3751.36 32.7358 3752.37 33.7656 3753.13 35.0085C3753.89 36.2514 3754.27 37.6245 3754.27 39.1278C3754.27 41.0928 3753.61 42.8565 3752.28 44.419C3750.97 45.9815 3749.16 47.2185 3746.85 48.13C3744.55 49.0414 3741.93 49.4972 3739 49.4972ZM3739 42.679C3739.93 42.679 3740.76 42.4896 3741.48 42.1108C3742.21 41.732 3742.77 41.2112 3743.19 40.5483C3743.62 39.8736 3743.83 39.116 3743.83 38.2756C3743.83 37.4351 3743.62 36.6894 3743.19 36.0384C3742.77 35.3873 3742.21 34.8783 3741.48 34.5114C3740.76 34.1326 3739.93 33.9432 3739 33.9432C3738.08 33.9432 3737.25 34.1326 3736.51 34.5114C3735.79 34.8783 3735.22 35.3873 3734.79 36.0384C3734.38 36.6894 3734.17 37.4351 3734.17 38.2756C3734.17 39.116 3734.38 39.8677 3734.79 40.5305C3735.22 41.1934 3735.79 41.7202 3736.51 42.1108C3737.25 42.4896 3738.08 42.679 3739 42.679ZM3739 27.125C3739.83 27.125 3740.56 26.9534 3741.2 26.6101C3741.84 26.2668 3742.34 25.7933 3742.71 25.1896C3743.08 24.5859 3743.26 23.9053 3743.26 23.1477C3743.26 22.3902 3743.08 21.7214 3742.71 21.1413C3742.34 20.5495 3741.84 20.0878 3741.2 19.7564C3740.56 19.4131 3739.83 19.2415 3739 19.2415C3738.18 19.2415 3737.45 19.4131 3736.8 19.7564C3736.16 20.0878 3735.65 20.5495 3735.29 21.1413C3734.92 21.7214 3734.74 22.3902 3734.74 23.1477C3734.74 23.9053 3734.92 24.5859 3735.29 25.1896C3735.65 25.7815 3736.16 26.255 3736.8 26.6101C3737.45 26.9534 3738.18 27.125 3739 27.125Z" fill="white"/>
     <g id="room0">
-    <circle id="room0_player1" cx="241" cy="2064" r="45" transform="rotate(-90 241 2064)" fill="#D9D9D9"/>
-    <circle id="room0_player2" cx="499" cy="2064" r="45" transform="rotate(-90 499 2064)" fill="#D9D9D9"/>
-    <circle id="room0_player3" cx="533" cy="1954" r="45" transform="rotate(-90 533 1954)" fill="#D9D9D9"/>
-    <circle id="room0_player4" cx="370" cy="2064" r="45" transform="rotate(-90 370 2064)" fill="#D9D9D9"/>
-    <circle id="room0_player5" cx="275" cy="1954" r="45" transform="rotate(-90 275 1954)" fill="#D9D9D9"/>
-    <circle id="room0_boss" cx="404" cy="1954" r="45" transform="rotate(-90 404 1954)" fill="#D9D9D9"/>
+    <circle id="room0_player1" cx="241" cy="2064" r="45" transform="rotate(-90 241 2064)" fill="currentColor"/>
+    <circle id="room0_player2" cx="499" cy="2064" r="45" transform="rotate(-90 499 2064)" fill="currentColor"/>
+    <circle id="room0_player3" cx="533" cy="1954" r="45" transform="rotate(-90 533 1954)" fill="currentColor"/>
+    <circle id="room0_player4" cx="370" cy="2064" r="45" transform="rotate(-90 370 2064)" fill="currentColor"/>
+    <circle id="room0_player5" cx="275" cy="1954" r="45" transform="rotate(-90 275 1954)" fill="currentColor"/>
+    <circle id="room0_boss" cx="404" cy="1954" r="45" transform="rotate(-90 404 1954)" fill="currentColor"/>
     </g>
     <g id="room1">
-    <circle id="room1_player1" cx="305" cy="1615" r="45" transform="rotate(-90 305 1615)" fill="#D9D9D9"/>
-    <circle id="room1_player2" cx="408" cy="1615" r="45" transform="rotate(-90 408 1615)" fill="#D9D9D9"/>
-    <circle id="room1_player3" cx="450" cy="1523" r="45" transform="rotate(-90 450 1523)" fill="#D9D9D9"/>
-    <circle id="room1_player4" cx="346" cy="1523" r="45" transform="rotate(-90 346 1523)" fill="#D9D9D9"/>
-    <circle id="room1_player5" cx="305" cy="1429" r="45" transform="rotate(-90 305 1429)" fill="#D9D9D9"/>
-    <circle id="room1_boss" cx="408" cy="1429" r="45" transform="rotate(-90 408 1429)" fill="#D9D9D9"/>
+    <circle id="room1_player1" cx="305" cy="1615" r="45" transform="rotate(-90 305 1615)" fill="currentColor"/>
+    <circle id="room1_player2" cx="408" cy="1615" r="45" transform="rotate(-90 408 1615)" fill="currentColor"/>
+    <circle id="room1_player3" cx="450" cy="1523" r="45" transform="rotate(-90 450 1523)" fill="currentColor"/>
+    <circle id="room1_player4" cx="346" cy="1523" r="45" transform="rotate(-90 346 1523)" fill="currentColor"/>
+    <circle id="room1_player5" cx="305" cy="1429" r="45" transform="rotate(-90 305 1429)" fill="currentColor"/>
+    <circle id="room1_boss" cx="408" cy="1429" r="45" transform="rotate(-90 408 1429)" fill="currentColor"/>
     </g>
     <g id="room2">
-    <circle id="room2_player1" cx="363" cy="1167" r="45" transform="rotate(180 363 1167)" fill="#D9D9D9"/>
-    <circle id="room2_player2" cx="363" cy="1064" r="45" transform="rotate(180 363 1064)" fill="#D9D9D9"/>
-    <circle id="room2_player3" cx="270" cy="1039" r="45" transform="rotate(180 270 1039)" fill="#D9D9D9"/>
-    <circle id="room2_player4" cx="270" cy="1143" r="45" transform="rotate(180 270 1143)" fill="#D9D9D9"/>
-    <circle id="room2_player5" cx="177" cy="1167" r="45" transform="rotate(180 177 1167)" fill="#D9D9D9"/>
-    <circle id="room2_boss" cx="177" cy="1064" r="45" transform="rotate(180 177 1064)" fill="#D9D9D9"/>
+    <circle id="room2_player1" cx="363" cy="1167" r="45" transform="rotate(180 363 1167)" fill="currentColor"/>
+    <circle id="room2_player2" cx="363" cy="1064" r="45" transform="rotate(180 363 1064)" fill="currentColor"/>
+    <circle id="room2_player3" cx="270" cy="1039" r="45" transform="rotate(180 270 1039)" fill="currentColor"/>
+    <circle id="room2_player4" cx="270" cy="1143" r="45" transform="rotate(180 270 1143)" fill="currentColor"/>
+    <circle id="room2_player5" cx="177" cy="1167" r="45" transform="rotate(180 177 1167)" fill="currentColor"/>
+    <circle id="room2_boss" cx="177" cy="1064" r="45" transform="rotate(180 177 1064)" fill="currentColor"/>
     </g>
     <g id="room7">
-    <circle id="room7_player1" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 898 947)" fill="#D9D9D9"/>
-    <circle id="room7_player2" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 898 1050)" fill="#D9D9D9"/>
-    <circle id="room7_player3" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 805 1075)" fill="#D9D9D9"/>
-    <circle id="room7_player4" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 805 971)" fill="#D9D9D9"/>
-    <circle id="room7_player5" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 712 947)" fill="#D9D9D9"/>
-    <circle id="room7_boss" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 712 1050)" fill="#D9D9D9"/>
+    <circle id="room7_player1" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 898 947)" fill="currentColor"/>
+    <circle id="room7_player2" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 898 1050)" fill="currentColor"/>
+    <circle id="room7_player3" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 805 1075)" fill="currentColor"/>
+    <circle id="room7_player4" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 805 971)" fill="currentColor"/>
+    <circle id="room7_player5" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 712 947)" fill="currentColor"/>
+    <circle id="room7_boss" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 712 1050)" fill="currentColor"/>
     </g>
     <g id="room3">
-    <circle id="room3_player1" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 512 697)" fill="#D9D9D9"/>
-    <circle id="room3_player2" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 514 801)" fill="#D9D9D9"/>
-    <circle id="room3_player3" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 408 801)" fill="#D9D9D9"/>
-    <circle id="room3_player4" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 406 697)" fill="#D9D9D9"/>
-    <circle id="room3_player5" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 300 697)" fill="#D9D9D9"/>
-    <circle id="room3_boss" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 302 801)" fill="#D9D9D9"/>
+    <circle id="room3_player1" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 512 697)" fill="currentColor"/>
+    <circle id="room3_player2" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 514 801)" fill="currentColor"/>
+    <circle id="room3_player3" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 408 801)" fill="currentColor"/>
+    <circle id="room3_player4" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 406 697)" fill="currentColor"/>
+    <circle id="room3_player5" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 300 697)" fill="currentColor"/>
+    <circle id="room3_boss" cx="45" cy="45" r="45" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 302 801)" fill="currentColor"/>
     </g>
     <g id="room9">
-    <circle id="room9_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 926 404)" fill="#D9D9D9"/>
-    <circle id="room9_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 809 406)" fill="#D9D9D9"/>
-    <circle id="room9_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 809 300)" fill="#D9D9D9"/>
-    <circle id="room9_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 926 298)" fill="#D9D9D9"/>
-    <circle id="room9_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 926 192)" fill="#D9D9D9"/>
-    <circle id="room9_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 809 194)" fill="#D9D9D9"/>
+    <circle id="room9_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 926 404)" fill="currentColor"/>
+    <circle id="room9_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 809 406)" fill="currentColor"/>
+    <circle id="room9_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 809 300)" fill="currentColor"/>
+    <circle id="room9_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 926 298)" fill="currentColor"/>
+    <circle id="room9_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 926 192)" fill="currentColor"/>
+    <circle id="room9_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 809 194)" fill="currentColor"/>
     </g>
     <g id="room16">
-    <circle id="room16_player1" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1566 720)" fill="#D9D9D9"/>
-    <circle id="room16_player2" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1564 603)" fill="#D9D9D9"/>
-    <circle id="room16_player3" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1662 673)" fill="#D9D9D9"/>
-    <circle id="room16_player4" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1664 790)" fill="#D9D9D9"/>
-    <circle id="room16_player5" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1764 720)" fill="#D9D9D9"/>
-    <circle id="room16_boss" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1762 603)" fill="#D9D9D9"/>
+    <circle id="room16_player1" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1566 720)" fill="currentColor"/>
+    <circle id="room16_player2" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1564 603)" fill="currentColor"/>
+    <circle id="room16_player3" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1662 673)" fill="currentColor"/>
+    <circle id="room16_player4" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1664 790)" fill="currentColor"/>
+    <circle id="room16_player5" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1764 720)" fill="currentColor"/>
+    <circle id="room16_boss" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 1762 603)" fill="currentColor"/>
     </g>
     <g id="room20">
-    <circle id="room20_player1" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2022 785)" fill="#D9D9D9"/>
-    <circle id="room20_player2" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2022 695)" fill="#D9D9D9"/>
-    <circle id="room20_player3" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2139 695)" fill="#D9D9D9"/>
-    <circle id="room20_player4" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2139 785)" fill="#D9D9D9"/>
-    <circle id="room20_player5" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2024 605)" fill="#D9D9D9"/>
-    <circle id="room20_boss" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2139 603)" fill="#D9D9D9"/>
+    <circle id="room20_player1" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2022 785)" fill="currentColor"/>
+    <circle id="room20_player2" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2022 695)" fill="currentColor"/>
+    <circle id="room20_player3" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2139 695)" fill="currentColor"/>
+    <circle id="room20_player4" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2139 785)" fill="currentColor"/>
+    <circle id="room20_player5" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2024 605)" fill="currentColor"/>
+    <circle id="room20_boss" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2139 603)" fill="currentColor"/>
     </g>
     <g id="room13">
-    <circle id="room13_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1311 428)" fill="#D9D9D9"/>
-    <circle id="room13_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1181 428)" fill="#D9D9D9"/>
-    <circle id="room13_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1213 327)" fill="#D9D9D9"/>
-    <circle id="room13_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1343 327)" fill="#D9D9D9"/>
-    <circle id="room13_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1311 224)" fill="#D9D9D9"/>
-    <circle id="room13_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1181 224)" fill="#D9D9D9"/>
+    <circle id="room13_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1311 428)" fill="currentColor"/>
+    <circle id="room13_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1181 428)" fill="currentColor"/>
+    <circle id="room13_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1213 327)" fill="currentColor"/>
+    <circle id="room13_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1343 327)" fill="currentColor"/>
+    <circle id="room13_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1311 224)" fill="currentColor"/>
+    <circle id="room13_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1181 224)" fill="currentColor"/>
     </g>
     <g id="room12">
-    <circle id="room12_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1277 980)" fill="#D9D9D9"/>
-    <circle id="room12_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1163 980)" fill="#D9D9D9"/>
-    <circle id="room12_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1195 879)" fill="#D9D9D9"/>
-    <circle id="room12_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1309 879)" fill="#D9D9D9"/>
-    <circle id="room12_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1277 776)" fill="#D9D9D9"/>
-    <circle id="room12_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1163 776)" fill="#D9D9D9"/>
+    <circle id="room12_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1277 980)" fill="currentColor"/>
+    <circle id="room12_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1163 980)" fill="currentColor"/>
+    <circle id="room12_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1195 879)" fill="currentColor"/>
+    <circle id="room12_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1309 879)" fill="currentColor"/>
+    <circle id="room12_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1277 776)" fill="currentColor"/>
+    <circle id="room12_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1163 776)" fill="currentColor"/>
     </g>
     <g id="room17">
-    <circle id="room17_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 2071 383)" fill="#D9D9D9"/>
-    <circle id="room17_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1957 383)" fill="#D9D9D9"/>
-    <circle id="room17_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1989 282)" fill="#D9D9D9"/>
-    <circle id="room17_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 2103 282)" fill="#D9D9D9"/>
-    <circle id="room17_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 2071 179)" fill="#D9D9D9"/>
-    <circle id="room17_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1957 179)" fill="#D9D9D9"/>
+    <circle id="room17_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 2071 383)" fill="currentColor"/>
+    <circle id="room17_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1957 383)" fill="currentColor"/>
+    <circle id="room17_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1989 282)" fill="currentColor"/>
+    <circle id="room17_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 2103 282)" fill="currentColor"/>
+    <circle id="room17_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 2071 179)" fill="currentColor"/>
+    <circle id="room17_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 1957 179)" fill="currentColor"/>
     </g>
     <g id="room25">
-    <circle id="room25_player1" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2647 351)" fill="#D9D9D9"/>
-    <circle id="room25_player2" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2647 237)" fill="#D9D9D9"/>
-    <circle id="room25_player3" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2748 269)" fill="#D9D9D9"/>
-    <circle id="room25_player4" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2748 383)" fill="#D9D9D9"/>
-    <circle id="room25_player5" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2851 351)" fill="#D9D9D9"/>
-    <circle id="room25_boss" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2851 237)" fill="#D9D9D9"/>
+    <circle id="room25_player1" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2647 351)" fill="currentColor"/>
+    <circle id="room25_player2" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2647 237)" fill="currentColor"/>
+    <circle id="room25_player3" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2748 269)" fill="currentColor"/>
+    <circle id="room25_player4" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2748 383)" fill="currentColor"/>
+    <circle id="room25_player5" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2851 351)" fill="currentColor"/>
+    <circle id="room25_boss" cx="45" cy="45" r="45" transform="matrix(1 0 0 -1 2851 237)" fill="currentColor"/>
     </g>
     <g id="room33">
-    <circle id="room33_player1" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3493 175)" fill="#D9D9D9"/>
-    <circle id="room33_player2" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3493 289)" fill="#D9D9D9"/>
-    <circle id="room33_player3" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3392 257)" fill="#D9D9D9"/>
-    <circle id="room33_player4" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3392 143)" fill="#D9D9D9"/>
-    <circle id="room33_player5" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3289 175)" fill="#D9D9D9"/>
-    <circle id="room33_boss" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3289 289)" fill="#D9D9D9"/>
+    <circle id="room33_player1" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3493 175)" fill="currentColor"/>
+    <circle id="room33_player2" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3493 289)" fill="currentColor"/>
+    <circle id="room33_player3" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3392 257)" fill="currentColor"/>
+    <circle id="room33_player4" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3392 143)" fill="currentColor"/>
+    <circle id="room33_player5" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3289 175)" fill="currentColor"/>
+    <circle id="room33_boss" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3289 289)" fill="currentColor"/>
     </g>
     <g id="room32">
-    <circle id="room32_player1" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3548 500)" fill="#D9D9D9"/>
-    <circle id="room32_player2" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3548 614)" fill="#D9D9D9"/>
-    <circle id="room32_player3" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3447 614)" fill="#D9D9D9"/>
-    <circle id="room32_player4" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3447 500)" fill="#D9D9D9"/>
-    <circle id="room32_player5" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3344 500)" fill="#D9D9D9"/>
-    <circle id="room32_boss" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3344 614)" fill="#D9D9D9"/>
+    <circle id="room32_player1" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3548 500)" fill="currentColor"/>
+    <circle id="room32_player2" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3548 614)" fill="currentColor"/>
+    <circle id="room32_player3" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3447 614)" fill="currentColor"/>
+    <circle id="room32_player4" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3447 500)" fill="currentColor"/>
+    <circle id="room32_player5" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3344 500)" fill="currentColor"/>
+    <circle id="room32_boss" cx="45" cy="45" r="45" transform="matrix(-1 0 0 1 3344 614)" fill="currentColor"/>
     </g>
     <g id="room37">
-    <circle id="room37_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3887 929)" fill="#D9D9D9"/>
-    <circle id="room37_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3792 929)" fill="#D9D9D9"/>
-    <circle id="room37_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3816 839)" fill="#D9D9D9"/>
-    <circle id="room37_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3911 839)" fill="#D9D9D9"/>
-    <circle id="room37_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3887 749)" fill="#D9D9D9"/>
-    <circle id="room37_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3792 749)" fill="#D9D9D9"/>
+    <circle id="room37_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3887 929)" fill="currentColor"/>
+    <circle id="room37_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3792 929)" fill="currentColor"/>
+    <circle id="room37_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3816 839)" fill="currentColor"/>
+    <circle id="room37_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3911 839)" fill="currentColor"/>
+    <circle id="room37_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3887 749)" fill="currentColor"/>
+    <circle id="room37_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 3792 749)" fill="currentColor"/>
     </g>
     <g id="room36">
-    <circle id="room36_player1" cx="3560" cy="1203" r="45" transform="rotate(-90 3560 1203)" fill="#D9D9D9"/>
-    <circle id="room36_player2" cx="3655" cy="1203" r="45" transform="rotate(-90 3655 1203)" fill="#D9D9D9"/>
-    <circle id="room36_player3" cx="3631" cy="1113" r="45" transform="rotate(-90 3631 1113)" fill="#D9D9D9"/>
-    <circle id="room36_player4" cx="3536" cy="1113" r="45" transform="rotate(-90 3536 1113)" fill="#D9D9D9"/>
-    <circle id="room36_player5" cx="3560" cy="1023" r="45" transform="rotate(-90 3560 1023)" fill="#D9D9D9"/>
-    <circle id="room36_boss" cx="3655" cy="1023" r="45" transform="rotate(-90 3655 1023)" fill="#D9D9D9"/>
+    <circle id="room36_player1" cx="3560" cy="1203" r="45" transform="rotate(-90 3560 1203)" fill="currentColor"/>
+    <circle id="room36_player2" cx="3655" cy="1203" r="45" transform="rotate(-90 3655 1203)" fill="currentColor"/>
+    <circle id="room36_player3" cx="3631" cy="1113" r="45" transform="rotate(-90 3631 1113)" fill="currentColor"/>
+    <circle id="room36_player4" cx="3536" cy="1113" r="45" transform="rotate(-90 3536 1113)" fill="currentColor"/>
+    <circle id="room36_player5" cx="3560" cy="1023" r="45" transform="rotate(-90 3560 1023)" fill="currentColor"/>
+    <circle id="room36_boss" cx="3655" cy="1023" r="45" transform="rotate(-90 3655 1023)" fill="currentColor"/>
     </g>
     <g id="room8">
-    <circle id="room8_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 881 793)" fill="#D9D9D9"/>
-    <circle id="room8_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 791 793)" fill="#D9D9D9"/>
-    <circle id="room8_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 791 703)" fill="#D9D9D9"/>
-    <circle id="room8_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 881 703)" fill="#D9D9D9"/>
-    <circle id="room8_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 881 613)" fill="#D9D9D9"/>
-    <circle id="room8_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 791 613)" fill="#D9D9D9"/>
+    <circle id="room8_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 881 793)" fill="currentColor"/>
+    <circle id="room8_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 791 793)" fill="currentColor"/>
+    <circle id="room8_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 791 703)" fill="currentColor"/>
+    <circle id="room8_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 881 703)" fill="currentColor"/>
+    <circle id="room8_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 881 613)" fill="currentColor"/>
+    <circle id="room8_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 791 613)" fill="currentColor"/>
     </g>
     <g id="room6">
-    <circle id="room6_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 896 1639)" fill="#D9D9D9"/>
-    <circle id="room6_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 793 1639)" fill="#D9D9D9"/>
-    <circle id="room6_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 768 1546)" fill="#D9D9D9"/>
-    <circle id="room6_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 872 1546)" fill="#D9D9D9"/>
-    <circle id="room6_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 896 1453)" fill="#D9D9D9"/>
-    <circle id="room6_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 793 1453)" fill="#D9D9D9"/>
+    <circle id="room6_player1" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 896 1639)" fill="currentColor"/>
+    <circle id="room6_player2" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 793 1639)" fill="currentColor"/>
+    <circle id="room6_player3" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 768 1546)" fill="currentColor"/>
+    <circle id="room6_player4" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 872 1546)" fill="currentColor"/>
+    <circle id="room6_player5" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 896 1453)" fill="currentColor"/>
+    <circle id="room6_boss" cx="45" cy="45" r="45" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 793 1453)" fill="currentColor"/>
     </g>
     <g id="room15">
-    <circle id="room15_player1" cx="1444" cy="1457" r="45" transform="rotate(-90 1444 1457)" fill="#D9D9D9"/>
-    <circle id="room15_player2" cx="1547" cy="1457" r="45" transform="rotate(-90 1547 1457)" fill="#D9D9D9"/>
-    <circle id="room15_player3" cx="1572" cy="1364" r="45" transform="rotate(-90 1572 1364)" fill="#D9D9D9"/>
-    <circle id="room15_player4" cx="1468" cy="1364" r="45" transform="rotate(-90 1468 1364)" fill="#D9D9D9"/>
-    <circle id="room15_player5" cx="1444" cy="1271" r="45" transform="rotate(-90 1444 1271)" fill="#D9D9D9"/>
-    <circle id="room15_boss" cx="1547" cy="1271" r="45" transform="rotate(-90 1547 1271)" fill="#D9D9D9"/>
+    <circle id="room15_player1" cx="1444" cy="1457" r="45" transform="rotate(-90 1444 1457)" fill="currentColor"/>
+    <circle id="room15_player2" cx="1547" cy="1457" r="45" transform="rotate(-90 1547 1457)" fill="currentColor"/>
+    <circle id="room15_player3" cx="1572" cy="1364" r="45" transform="rotate(-90 1572 1364)" fill="currentColor"/>
+    <circle id="room15_player4" cx="1468" cy="1364" r="45" transform="rotate(-90 1468 1364)" fill="currentColor"/>
+    <circle id="room15_player5" cx="1444" cy="1271" r="45" transform="rotate(-90 1444 1271)" fill="currentColor"/>
+    <circle id="room15_boss" cx="1547" cy="1271" r="45" transform="rotate(-90 1547 1271)" fill="currentColor"/>
     </g>
     <g id="room22">
-    <circle id="room22_player1" cx="2649" cy="1642" r="45" transform="rotate(180 2649 1642)" fill="#D9D9D9"/>
-    <circle id="room22_player2" cx="2649" cy="1539" r="45" transform="rotate(180 2649 1539)" fill="#D9D9D9"/>
-    <circle id="room22_player3" cx="2556" cy="1514" r="45" transform="rotate(180 2556 1514)" fill="#D9D9D9"/>
-    <circle id="room22_player4" cx="2556" cy="1618" r="45" transform="rotate(180 2556 1618)" fill="#D9D9D9"/>
-    <circle id="room22_player5" cx="2463" cy="1642" r="45" transform="rotate(180 2463 1642)" fill="#D9D9D9"/>
-    <circle id="room22_boss" cx="2463" cy="1539" r="45" transform="rotate(180 2463 1539)" fill="#D9D9D9"/>
+    <circle id="room22_player1" cx="2649" cy="1642" r="45" transform="rotate(180 2649 1642)" fill="currentColor"/>
+    <circle id="room22_player2" cx="2649" cy="1539" r="45" transform="rotate(180 2649 1539)" fill="currentColor"/>
+    <circle id="room22_player3" cx="2556" cy="1514" r="45" transform="rotate(180 2556 1514)" fill="currentColor"/>
+    <circle id="room22_player4" cx="2556" cy="1618" r="45" transform="rotate(180 2556 1618)" fill="currentColor"/>
+    <circle id="room22_player5" cx="2463" cy="1642" r="45" transform="rotate(180 2463 1642)" fill="currentColor"/>
+    <circle id="room22_boss" cx="2463" cy="1539" r="45" transform="rotate(180 2463 1539)" fill="currentColor"/>
     </g>
     <g id="room26">
-    <circle id="room26_player1" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3150 2092)" fill="#D9D9D9"/>
-    <circle id="room26_player2" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3047 2092)" fill="#D9D9D9"/>
-    <circle id="room26_player3" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3022 1999)" fill="#D9D9D9"/>
-    <circle id="room26_player4" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3126 1999)" fill="#D9D9D9"/>
-    <circle id="room26_player5" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3150 1906)" fill="#D9D9D9"/>
-    <circle id="room26_boss" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3047 1906)" fill="#D9D9D9"/>
+    <circle id="room26_player1" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3150 2092)" fill="currentColor"/>
+    <circle id="room26_player2" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3047 2092)" fill="currentColor"/>
+    <circle id="room26_player3" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3022 1999)" fill="currentColor"/>
+    <circle id="room26_player4" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3126 1999)" fill="currentColor"/>
+    <circle id="room26_player5" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3150 1906)" fill="currentColor"/>
+    <circle id="room26_boss" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3047 1906)" fill="currentColor"/>
     </g>
     <g id="room30">
-    <circle id="room30_player1" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3593 2110)" fill="#D9D9D9"/>
-    <circle id="room30_player2" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3490 2110)" fill="#D9D9D9"/>
-    <circle id="room30_player3" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3452 2021)" fill="#D9D9D9"/>
-    <circle id="room30_player4" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3556 2021)" fill="#D9D9D9"/>
-    <circle id="room30_player5" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3593 1934)" fill="#D9D9D9"/>
-    <circle id="room30_boss" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3490 1934)" fill="#D9D9D9"/>
+    <circle id="room30_player1" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3593 2110)" fill="currentColor"/>
+    <circle id="room30_player2" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3490 2110)" fill="currentColor"/>
+    <circle id="room30_player3" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3452 2021)" fill="currentColor"/>
+    <circle id="room30_player4" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3556 2021)" fill="currentColor"/>
+    <circle id="room30_player5" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3593 1934)" fill="currentColor"/>
+    <circle id="room30_boss" cx="45" cy="45" r="45" transform="matrix(-1.19249e-08 -1 -1 1.19249e-08 3490 1934)" fill="currentColor"/>
     </g>
     <g id="room34">
-    <circle id="room34_player1" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3687 1844)" fill="#D9D9D9"/>
-    <circle id="room34_player2" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3790 1844)" fill="#D9D9D9"/>
-    <circle id="room34_player3" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3828 1933)" fill="#D9D9D9"/>
-    <circle id="room34_player4" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3724 1933)" fill="#D9D9D9"/>
-    <circle id="room34_player5" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3687 2020)" fill="#D9D9D9"/>
-    <circle id="room34_boss" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3790 2020)" fill="#D9D9D9"/>
+    <circle id="room34_player1" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3687 1844)" fill="currentColor"/>
+    <circle id="room34_player2" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3790 1844)" fill="currentColor"/>
+    <circle id="room34_player3" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3828 1933)" fill="currentColor"/>
+    <circle id="room34_player4" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3724 1933)" fill="currentColor"/>
+    <circle id="room34_player5" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3687 2020)" fill="currentColor"/>
+    <circle id="room34_boss" cx="45" cy="45" r="45" transform="matrix(1.19249e-08 1 1 -1.19249e-08 3790 2020)" fill="currentColor"/>
     </g>
     <g id="room5">
-    <circle id="room5_player1" cx="741" cy="2058" r="45" transform="rotate(-90 741 2058)" fill="#D9D9D9"/>
-    <circle id="room5_player2" cx="999" cy="2058" r="45" transform="rotate(-90 999 2058)" fill="#D9D9D9"/>
-    <circle id="room5_player3" cx="1033" cy="1948" r="45" transform="rotate(-90 1033 1948)" fill="#D9D9D9"/>
-    <circle id="room5_player4" cx="870" cy="2058" r="45" transform="rotate(-90 870 2058)" fill="#D9D9D9"/>
-    <circle id="room5_player5" cx="775" cy="1948" r="45" transform="rotate(-90 775 1948)" fill="#D9D9D9"/>
-    <circle id="room5_boss" cx="904" cy="1948" r="45" transform="rotate(-90 904 1948)" fill="#D9D9D9"/>
+    <circle id="room5_player1" cx="741" cy="2058" r="45" transform="rotate(-90 741 2058)" fill="currentColor"/>
+    <circle id="room5_player2" cx="999" cy="2058" r="45" transform="rotate(-90 999 2058)" fill="currentColor"/>
+    <circle id="room5_player3" cx="1033" cy="1948" r="45" transform="rotate(-90 1033 1948)" fill="currentColor"/>
+    <circle id="room5_player4" cx="870" cy="2058" r="45" transform="rotate(-90 870 2058)" fill="currentColor"/>
+    <circle id="room5_player5" cx="775" cy="1948" r="45" transform="rotate(-90 775 1948)" fill="currentColor"/>
+    <circle id="room5_boss" cx="904" cy="1948" r="45" transform="rotate(-90 904 1948)" fill="currentColor"/>
     </g>
     <g id="room14">
-    <circle id="room14_player1" cx="1694" cy="2140" r="45" transform="rotate(-90 1694 2140)" fill="#D9D9D9"/>
-    <circle id="room14_player2" cx="1934" cy="2140" r="45" transform="rotate(-90 1934 2140)" fill="#D9D9D9"/>
-    <circle id="room14_player3" cx="1971" cy="2050" r="45" transform="rotate(-90 1971 2050)" fill="#D9D9D9"/>
-    <circle id="room14_player4" cx="1814" cy="2140" r="45" transform="rotate(-90 1814 2140)" fill="#D9D9D9"/>
-    <circle id="room14_player5" cx="1731" cy="2050" r="45" transform="rotate(-90 1731 2050)" fill="#D9D9D9"/>
-    <circle id="room14_boss" cx="1851" cy="2050" r="45" transform="rotate(-90 1851 2050)" fill="#D9D9D9"/>
+    <circle id="room14_player1" cx="1694" cy="2140" r="45" transform="rotate(-90 1694 2140)" fill="currentColor"/>
+    <circle id="room14_player2" cx="1934" cy="2140" r="45" transform="rotate(-90 1934 2140)" fill="currentColor"/>
+    <circle id="room14_player3" cx="1971" cy="2050" r="45" transform="rotate(-90 1971 2050)" fill="currentColor"/>
+    <circle id="room14_player4" cx="1814" cy="2140" r="45" transform="rotate(-90 1814 2140)" fill="currentColor"/>
+    <circle id="room14_player5" cx="1731" cy="2050" r="45" transform="rotate(-90 1731 2050)" fill="currentColor"/>
+    <circle id="room14_boss" cx="1851" cy="2050" r="45" transform="rotate(-90 1851 2050)" fill="currentColor"/>
     </g>
     <g id="room23">
-    <circle id="room23_player1" cx="2585" cy="1110" r="45" transform="rotate(-90 2585 1110)" fill="#D9D9D9"/>
-    <circle id="room23_player2" cx="2805" cy="1110" r="45" transform="rotate(-90 2805 1110)" fill="#D9D9D9"/>
-    <circle id="room23_player3" cx="2805" cy="999" r="45" transform="rotate(-90 2805 999)" fill="#D9D9D9"/>
-    <circle id="room23_player4" cx="2695" cy="1110" r="45" transform="rotate(-90 2695 1110)" fill="#D9D9D9"/>
-    <circle id="room23_player5" cx="2585" cy="999" r="45" transform="rotate(-90 2585 999)" fill="#D9D9D9"/>
-    <circle id="room23_boss" cx="2695" cy="999" r="45" transform="rotate(-90 2695 999)" fill="#D9D9D9"/>
+    <circle id="room23_player1" cx="2585" cy="1110" r="45" transform="rotate(-90 2585 1110)" fill="currentColor"/>
+    <circle id="room23_player2" cx="2805" cy="1110" r="45" transform="rotate(-90 2805 1110)" fill="currentColor"/>
+    <circle id="room23_player3" cx="2805" cy="999" r="45" transform="rotate(-90 2805 999)" fill="currentColor"/>
+    <circle id="room23_player4" cx="2695" cy="1110" r="45" transform="rotate(-90 2695 1110)" fill="currentColor"/>
+    <circle id="room23_player5" cx="2585" cy="999" r="45" transform="rotate(-90 2585 999)" fill="currentColor"/>
+    <circle id="room23_boss" cx="2695" cy="999" r="45" transform="rotate(-90 2695 999)" fill="currentColor"/>
     </g>
     <g id="room19">
-    <circle id="room19_player1" cx="1966" cy="1182" r="45" transform="rotate(-90 1966 1182)" fill="#D9D9D9"/>
-    <circle id="room19_player2" cx="2162" cy="1182" r="45" transform="rotate(-90 2162 1182)" fill="#D9D9D9"/>
-    <circle id="room19_player3" cx="2162" cy="1067" r="45" transform="rotate(-90 2162 1067)" fill="#D9D9D9"/>
-    <circle id="room19_player4" cx="2066" cy="1244" r="45" transform="rotate(-90 2066 1244)" fill="#D9D9D9"/>
-    <circle id="room19_player5" cx="1976" cy="1075" r="45" transform="rotate(-90 1976 1075)" fill="#D9D9D9"/>
-    <circle id="room19_boss" cx="2066" cy="1019" r="45" transform="rotate(-90 2066 1019)" fill="#D9D9D9"/>
+    <circle id="room19_player1" cx="1966" cy="1182" r="45" transform="rotate(-90 1966 1182)" fill="currentColor"/>
+    <circle id="room19_player2" cx="2162" cy="1182" r="45" transform="rotate(-90 2162 1182)" fill="currentColor"/>
+    <circle id="room19_player3" cx="2162" cy="1067" r="45" transform="rotate(-90 2162 1067)" fill="currentColor"/>
+    <circle id="room19_player4" cx="2066" cy="1244" r="45" transform="rotate(-90 2066 1244)" fill="currentColor"/>
+    <circle id="room19_player5" cx="1976" cy="1075" r="45" transform="rotate(-90 1976 1075)" fill="currentColor"/>
+    <circle id="room19_boss" cx="2066" cy="1019" r="45" transform="rotate(-90 2066 1019)" fill="currentColor"/>
     </g>
     <g id="room28">
-    <circle id="room28_player1" cx="3060" cy="1113" r="45" transform="rotate(-90 3060 1113)" fill="#D9D9D9"/>
-    <circle id="room28_player2" cx="3240" cy="1113" r="45" transform="rotate(-90 3240 1113)" fill="#D9D9D9"/>
-    <circle id="room28_player3" cx="3240" cy="1002" r="45" transform="rotate(-90 3240 1002)" fill="#D9D9D9"/>
-    <circle id="room28_player4" cx="3150" cy="1062" r="45" transform="rotate(-90 3150 1062)" fill="#D9D9D9"/>
-    <circle id="room28_player5" cx="3060" cy="1002" r="45" transform="rotate(-90 3060 1002)" fill="#D9D9D9"/>
-    <circle id="room28_boss" cx="3150" cy="951" r="45" transform="rotate(-90 3150 951)" fill="#D9D9D9"/>
+    <circle id="room28_player1" cx="3060" cy="1113" r="45" transform="rotate(-90 3060 1113)" fill="currentColor"/>
+    <circle id="room28_player2" cx="3240" cy="1113" r="45" transform="rotate(-90 3240 1113)" fill="currentColor"/>
+    <circle id="room28_player3" cx="3240" cy="1002" r="45" transform="rotate(-90 3240 1002)" fill="currentColor"/>
+    <circle id="room28_player4" cx="3150" cy="1062" r="45" transform="rotate(-90 3150 1062)" fill="currentColor"/>
+    <circle id="room28_player5" cx="3060" cy="1002" r="45" transform="rotate(-90 3060 1002)" fill="currentColor"/>
+    <circle id="room28_boss" cx="3150" cy="951" r="45" transform="rotate(-90 3150 951)" fill="currentColor"/>
     </g>
     <g id="room27">
-    <circle id="room27_player1" cx="2963" cy="1447" r="45" fill="#D9D9D9"/>
-    <circle id="room27_player2" cx="2963" cy="1623" r="45" fill="#D9D9D9"/>
-    <circle id="room27_player3" cx="3074" cy="1623" r="45" fill="#D9D9D9"/>
-    <circle id="room27_player4" cx="3014" cy="1535" r="45" fill="#D9D9D9"/>
-    <circle id="room27_player5" cx="3074" cy="1447" r="45" fill="#D9D9D9"/>
-    <circle id="room27_boss" cx="3125" cy="1535" r="45" fill="#D9D9D9"/>
+    <circle id="room27_player1" cx="2963" cy="1447" r="45" fill="currentColor"/>
+    <circle id="room27_player2" cx="2963" cy="1623" r="45" fill="currentColor"/>
+    <circle id="room27_player3" cx="3074" cy="1623" r="45" fill="currentColor"/>
+    <circle id="room27_player4" cx="3014" cy="1535" r="45" fill="currentColor"/>
+    <circle id="room27_player5" cx="3074" cy="1447" r="45" fill="currentColor"/>
+    <circle id="room27_boss" cx="3125" cy="1535" r="45" fill="currentColor"/>
     </g>
     <g id="room31">
-    <circle id="room31_player1" cx="3318" cy="1400" r="45" fill="#D9D9D9"/>
-    <circle id="room31_player2" cx="3322" cy="1580" r="45" fill="#D9D9D9"/>
-    <circle id="room31_player3" cx="3433" cy="1580" r="45" fill="#D9D9D9"/>
-    <circle id="room31_player4" cx="3356" cy="1490" r="45" fill="#D9D9D9"/>
-    <circle id="room31_player5" cx="3429" cy="1400" r="45" fill="#D9D9D9"/>
-    <circle id="room31_boss" cx="3467" cy="1490" r="45" fill="#D9D9D9"/>
+    <circle id="room31_player1" cx="3318" cy="1400" r="45" fill="currentColor"/>
+    <circle id="room31_player2" cx="3322" cy="1580" r="45" fill="currentColor"/>
+    <circle id="room31_player3" cx="3433" cy="1580" r="45" fill="currentColor"/>
+    <circle id="room31_player4" cx="3356" cy="1490" r="45" fill="currentColor"/>
+    <circle id="room31_player5" cx="3429" cy="1400" r="45" fill="currentColor"/>
+    <circle id="room31_boss" cx="3467" cy="1490" r="45" fill="currentColor"/>
     </g>
     <g id="room35">
-    <circle id="room35_player1" cx="3673" cy="1438" r="45" fill="#D9D9D9"/>
-    <circle id="room35_player2" cx="3673" cy="1543" r="45" fill="#D9D9D9"/>
-    <circle id="room35_player3" cx="3755" cy="1585" r="45" fill="#D9D9D9"/>
-    <circle id="room35_player4" cx="3840" cy="1543" r="45" fill="#D9D9D9"/>
-    <circle id="room35_player5" cx="3755" cy="1490" r="45" fill="#D9D9D9"/>
-    <circle id="room35_boss" cx="3840" cy="1438" r="45" fill="#D9D9D9"/>
+    <circle id="room35_player1" cx="3673" cy="1438" r="45" fill="currentColor"/>
+    <circle id="room35_player2" cx="3673" cy="1543" r="45" fill="currentColor"/>
+    <circle id="room35_player3" cx="3755" cy="1585" r="45" fill="currentColor"/>
+    <circle id="room35_player4" cx="3840" cy="1543" r="45" fill="currentColor"/>
+    <circle id="room35_player5" cx="3755" cy="1490" r="45" fill="currentColor"/>
+    <circle id="room35_boss" cx="3840" cy="1438" r="45" fill="currentColor"/>
     </g>
     <g id="room29">
-    <circle id="room29_player1" cx="2877" cy="691" r="45" transform="rotate(-90 2877 691)" fill="#D9D9D9"/>
-    <circle id="room29_player2" cx="3041" cy="691" r="45" transform="rotate(-90 3041 691)" fill="#D9D9D9"/>
-    <circle id="room29_player3" cx="3043" cy="584" r="45" transform="rotate(-90 3043 584)" fill="#D9D9D9"/>
-    <circle id="room29_player4" cx="2959" cy="644" r="45" transform="rotate(-90 2959 644)" fill="#D9D9D9"/>
-    <circle id="room29_player5" cx="2876" cy="584" r="45" transform="rotate(-90 2876 584)" fill="#D9D9D9"/>
-    <circle id="room29_boss" cx="2959" cy="545" r="45" transform="rotate(-90 2959 545)" fill="#D9D9D9"/>
+    <circle id="room29_player1" cx="2877" cy="691" r="45" transform="rotate(-90 2877 691)" fill="currentColor"/>
+    <circle id="room29_player2" cx="3041" cy="691" r="45" transform="rotate(-90 3041 691)" fill="currentColor"/>
+    <circle id="room29_player3" cx="3043" cy="584" r="45" transform="rotate(-90 3043 584)" fill="currentColor"/>
+    <circle id="room29_player4" cx="2959" cy="644" r="45" transform="rotate(-90 2959 644)" fill="currentColor"/>
+    <circle id="room29_player5" cx="2876" cy="584" r="45" transform="rotate(-90 2876 584)" fill="currentColor"/>
+    <circle id="room29_boss" cx="2959" cy="545" r="45" transform="rotate(-90 2959 545)" fill="currentColor"/>
     </g>
     <g id="room24">
-    <circle id="room24_player1" cx="2417" cy="665" r="45" transform="rotate(-90 2417 665)" fill="#D9D9D9"/>
-    <circle id="room24_player2" cx="2667" cy="665" r="45" transform="rotate(-90 2667 665)" fill="#D9D9D9"/>
-    <circle id="room24_player3" cx="2481" cy="585" r="45" transform="rotate(-90 2481 585)" fill="#D9D9D9"/>
-    <circle id="room24_player4" cx="2542" cy="665" r="45" transform="rotate(-90 2542 665)" fill="#D9D9D9"/>
-    <circle id="room24_player5" cx="2417" cy="495" r="45" transform="rotate(-90 2417 495)" fill="#D9D9D9"/>
-    <circle id="room24_boss" cx="2542" cy="495" r="45" transform="rotate(-90 2542 495)" fill="#D9D9D9"/>
+    <circle id="room24_player1" cx="2417" cy="665" r="45" transform="rotate(-90 2417 665)" fill="currentColor"/>
+    <circle id="room24_player2" cx="2667" cy="665" r="45" transform="rotate(-90 2667 665)" fill="currentColor"/>
+    <circle id="room24_player3" cx="2481" cy="585" r="45" transform="rotate(-90 2481 585)" fill="currentColor"/>
+    <circle id="room24_player4" cx="2542" cy="665" r="45" transform="rotate(-90 2542 665)" fill="currentColor"/>
+    <circle id="room24_player5" cx="2417" cy="495" r="45" transform="rotate(-90 2417 495)" fill="currentColor"/>
+    <circle id="room24_boss" cx="2542" cy="495" r="45" transform="rotate(-90 2542 495)" fill="currentColor"/>
     </g>
     <g id="room18">
-    <circle id="room18_player1" cx="1884" cy="1818" r="45" transform="rotate(-90 1884 1818)" fill="#D9D9D9"/>
-    <circle id="room18_player2" cx="2124" cy="1818" r="45" transform="rotate(-90 2124 1818)" fill="#D9D9D9"/>
-    <circle id="room18_player3" cx="2124" cy="1702" r="45" transform="rotate(-90 2124 1702)" fill="#D9D9D9"/>
-    <circle id="room18_player4" cx="2004" cy="1818" r="45" transform="rotate(-90 2004 1818)" fill="#D9D9D9"/>
-    <circle id="room18_player5" cx="1884" cy="1702" r="45" transform="rotate(-90 1884 1702)" fill="#D9D9D9"/>
-    <circle id="room18_boss" cx="2004" cy="1702" r="45" transform="rotate(-90 2004 1702)" fill="#D9D9D9"/>
+    <circle id="room18_player1" cx="1884" cy="1818" r="45" transform="rotate(-90 1884 1818)" fill="currentColor"/>
+    <circle id="room18_player2" cx="2124" cy="1818" r="45" transform="rotate(-90 2124 1818)" fill="currentColor"/>
+    <circle id="room18_player3" cx="2124" cy="1702" r="45" transform="rotate(-90 2124 1702)" fill="currentColor"/>
+    <circle id="room18_player4" cx="2004" cy="1818" r="45" transform="rotate(-90 2004 1818)" fill="currentColor"/>
+    <circle id="room18_player5" cx="1884" cy="1702" r="45" transform="rotate(-90 1884 1702)" fill="currentColor"/>
+    <circle id="room18_boss" cx="2004" cy="1702" r="45" transform="rotate(-90 2004 1702)" fill="currentColor"/>
     </g>
     <g id="room21">
-    <circle id="room21_player1" cx="2379" cy="2133" r="45" transform="rotate(-90 2379 2133)" fill="#D9D9D9"/>
-    <circle id="room21_player2" cx="2579" cy="2133" r="45" transform="rotate(-90 2579 2133)" fill="#D9D9D9"/>
-    <circle id="room21_player3" cx="2579" cy="2017" r="45" transform="rotate(-90 2579 2017)" fill="#D9D9D9"/>
-    <circle id="room21_player4" cx="2479" cy="2133" r="45" transform="rotate(-90 2479 2133)" fill="#D9D9D9"/>
-    <circle id="room21_player5" cx="2379" cy="2017" r="45" transform="rotate(-90 2379 2017)" fill="#D9D9D9"/>
-    <circle id="room21_boss" cx="2479" cy="2017" r="45" transform="rotate(-90 2479 2017)" fill="#D9D9D9"/>
+    <circle id="room21_player1" cx="2379" cy="2133" r="45" transform="rotate(-90 2379 2133)" fill="currentColor"/>
+    <circle id="room21_player2" cx="2579" cy="2133" r="45" transform="rotate(-90 2579 2133)" fill="currentColor"/>
+    <circle id="room21_player3" cx="2579" cy="2017" r="45" transform="rotate(-90 2579 2017)" fill="currentColor"/>
+    <circle id="room21_player4" cx="2479" cy="2133" r="45" transform="rotate(-90 2479 2133)" fill="currentColor"/>
+    <circle id="room21_player5" cx="2379" cy="2017" r="45" transform="rotate(-90 2379 2017)" fill="currentColor"/>
+    <circle id="room21_boss" cx="2479" cy="2017" r="45" transform="rotate(-90 2479 2017)" fill="currentColor"/>
     </g>
     <g id="room11">
-    <circle id="room11_player1" cx="1126" cy="1271" r="45" fill="#D9D9D9"/>
-    <circle id="room11_player2" cx="1126" cy="1483" r="45" fill="#D9D9D9"/>
-    <circle id="room11_player3" cx="1236" cy="1517" r="45" fill="#D9D9D9"/>
-    <circle id="room11_player4" cx="1126" cy="1377" r="45" fill="#D9D9D9"/>
-    <circle id="room11_player5" cx="1236" cy="1305" r="45" fill="#D9D9D9"/>
-    <circle id="room11_boss" cx="1236" cy="1411" r="45" fill="#D9D9D9"/>
+    <circle id="room11_player1" cx="1126" cy="1271" r="45" fill="currentColor"/>
+    <circle id="room11_player2" cx="1126" cy="1483" r="45" fill="currentColor"/>
+    <circle id="room11_player3" cx="1236" cy="1517" r="45" fill="currentColor"/>
+    <circle id="room11_player4" cx="1126" cy="1377" r="45" fill="currentColor"/>
+    <circle id="room11_player5" cx="1236" cy="1305" r="45" fill="currentColor"/>
+    <circle id="room11_boss" cx="1236" cy="1411" r="45" fill="currentColor"/>
     </g>
     <g id="room10">
-    <circle id="room10_player1" cx="1375" cy="1747" r="45" fill="#D9D9D9"/>
-    <circle id="room10_player2" cx="1335" cy="1940" r="45" fill="#D9D9D9"/>
-    <circle id="room10_player3" cx="1445" cy="1940" r="45" fill="#D9D9D9"/>
-    <circle id="room10_player4" cx="1328" cy="1841" r="45" fill="#D9D9D9"/>
-    <circle id="room10_player5" cx="1485" cy="1747" r="45" fill="#D9D9D9"/>
-    <circle id="room10_boss" cx="1438" cy="1841" r="45" fill="#D9D9D9"/>
+    <circle id="room10_player1" cx="1375" cy="1747" r="45" fill="currentColor"/>
+    <circle id="room10_player2" cx="1335" cy="1940" r="45" fill="currentColor"/>
+    <circle id="room10_player3" cx="1445" cy="1940" r="45" fill="currentColor"/>
+    <circle id="room10_player4" cx="1328" cy="1841" r="45" fill="currentColor"/>
+    <circle id="room10_player5" cx="1485" cy="1747" r="45" fill="currentColor"/>
+    <circle id="room10_boss" cx="1438" cy="1841" r="45" fill="currentColor"/>
     </g>
     <g id="room4">
-    <circle id="room4_player1" cx="340" cy="266" r="45" fill="#D9D9D9"/>
-    <circle id="room4_player2" cx="340" cy="478" r="45" fill="#D9D9D9"/>
-    <circle id="room4_player3" cx="471" cy="512" r="45" fill="#D9D9D9"/>
-    <circle id="room4_player4" cx="340" cy="372" r="45" fill="#D9D9D9"/>
-    <circle id="room4_player5" cx="471" cy="300" r="45" fill="#D9D9D9"/>
-    <circle id="room4_boss" cx="471" cy="406" r="45" fill="#D9D9D9"/>
+    <circle id="room4_player1" cx="340" cy="266" r="45" fill="currentColor"/>
+    <circle id="room4_player2" cx="340" cy="478" r="45" fill="currentColor"/>
+    <circle id="room4_player3" cx="471" cy="512" r="45" fill="currentColor"/>
+    <circle id="room4_player4" cx="340" cy="372" r="45" fill="currentColor"/>
+    <circle id="room4_player5" cx="471" cy="300" r="45" fill="currentColor"/>
+    <circle id="room4_boss" cx="471" cy="406" r="45" fill="currentColor"/>
     </g>
     <g id="room38">
-    <circle id="room38_player1" cx="3858" cy="380" r="45" transform="rotate(180 3858 380)" fill="#D9D9D9"/>
-    <circle id="room38_player2" cx="3858" cy="170" r="45" transform="rotate(180 3858 170)" fill="#D9D9D9"/>
-    <circle id="room38_player3" cx="3748" cy="136" r="45" transform="rotate(180 3748 136)" fill="#D9D9D9"/>
-    <circle id="room38_player4" cx="3858" cy="275" r="45" transform="rotate(180 3858 275)" fill="#D9D9D9"/>
-    <circle id="room38_player5" cx="3748" cy="346" r="45" transform="rotate(180 3748 346)" fill="#D9D9D9"/>
-    <circle id="room38_boss" cx="3748" cy="241" r="45" transform="rotate(180 3748 241)" fill="#D9D9D9"/>
+    <circle id="room38_player1" cx="3858" cy="380" r="45" transform="rotate(180 3858 380)" fill="currentColor"/>
+    <circle id="room38_player2" cx="3858" cy="170" r="45" transform="rotate(180 3858 170)" fill="currentColor"/>
+    <circle id="room38_player3" cx="3748" cy="136" r="45" transform="rotate(180 3748 136)" fill="currentColor"/>
+    <circle id="room38_player4" cx="3858" cy="275" r="45" transform="rotate(180 3858 275)" fill="currentColor"/>
+    <circle id="room38_player5" cx="3748" cy="346" r="45" transform="rotate(180 3748 346)" fill="currentColor"/>
+    <circle id="room38_boss" cx="3748" cy="241" r="45" transform="rotate(180 3748 241)" fill="currentColor"/>
     </g>
     <g id="Group 90">
     <circle id="Ellipse 48" cx="1067" cy="1862" r="23.5" fill="#8A0000" stroke="#A2A2A2" stroke-width="3"/>
@@ -378,8 +378,8 @@
     </g>
     <defs>
     <clipPath id="clip0_313_1301">
-    <rect width="4000" height="2250" fill="white"/>
+    <rect width="4000" height="2250" fill="currentColor"/>
     </clipPath>
     </defs>
-    </svg>
+</svg>
     

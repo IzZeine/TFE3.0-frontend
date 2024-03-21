@@ -94,6 +94,10 @@
         return compteur;
     }
 
+    let sleep = (sec) => {
+        return new Promise(resolve => setTimeout(resolve, sec*1000));
+    }
+
     let disabledArrowDirections = async()=>{
         roomsConnections = await getRoomsConnections()
         roomsConnections = Object.values(roomsConnections) // change Json to array
@@ -103,8 +107,14 @@
 
         for(let direction of diectionsKeys){
             let arrow = document.querySelector("#"+ direction)
+            arrow.setAttribute("disabled", true)
+        }
+
+        await sleep(1)
+        for(let direction of diectionsKeys){
+            if(directions[direction] == 'null') continue;
+            let arrow = document.querySelector("#"+ direction)
             if(directions[direction] != 'null') arrow.removeAttribute("disabled")
-            if(directions[direction] == 'null') arrow.setAttribute("disabled", true)
         }
     }
 
