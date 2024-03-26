@@ -1,109 +1,108 @@
 <script>
-    // @ts-nocheck
-    import { onMount } from "svelte";
-    import { io } from "socket.io-client";
-    import { getHeroes, getItems, getUser, clearStorage, getGame } from "$lib";
-    import GameRules from "$lib/composants/GameRules.svelte";
-    import ChooseHero from "$lib/composants/ChooseHero.svelte";
-    import Map from "$lib/composants/Map.svelte";
+	// @ts-nocheck
+	import { onMount } from 'svelte';
+	import { io } from 'socket.io-client';
+	import { getHeroes, getItems, getUser, clearStorage, getGame } from '$lib';
+	import GameRules from '$lib/composants/GameRules.svelte';
+	import ChooseHero from '$lib/composants/ChooseHero.svelte';
+	import Map from '$lib/composants/Map.svelte';
 
-    const socket = io("http://localhost:3000");
-    
-    let gameID = ""; // tout doit être relatif à la partie en cours
-    let sessionID = "";    
-    let user = "";
-    let game = "";
-    let hero = '';
-    let listOfItems = '';
-    let listOfHeroes = '';
-    // @TODO : il faut que tout s'actualise tout le temps
-    let wait = true;
-    
-    onMount(async() => {
-        sessionID = sessionStorage.getItem("sessionID");
-        if(!sessionID){
-            clearStorage()
-            window.location.href = "/"
-        }
+	const socket = io('http://localhost:3000');
 
-        gameID = sessionStorage.getItem("gameID")
-        if(!gameID){
-            window.location.href = "/game"
-        }
+	let gameID = ''; // tout doit être relatif à la partie en cours
+	let sessionID = '';
+	let user = '';
+	let game = '';
+	let hero = '';
+	let listOfItems = '';
+	let listOfHeroes = '';
+	// @TODO : il faut que tout s'actualise tout le temps
+	let wait = true;
 
-        console.log("session Id :",sessionID)
-        console.log('gameID', gameID)
+	onMount(async () => {
+		sessionID = sessionStorage.getItem('sessionID');
+		if (!sessionID) {
+			clearStorage();
+			window.location.href = '/';
+		}
 
-        socket.on('connect', async() => {
-            console.log('Connected to server');
-            if (gameID) {
-                // trouver l'utilisateur
-                user = await getUser(socket)
-                if(!user){
-                    clearStorage()
-                    window.location.href = "/"
-                }
-                socket.emit("joinGame", gameID)
-            }
-        });
+		gameID = sessionStorage.getItem('gameID');
+		if (!gameID) {
+			window.location.href = '/game';
+		}
 
-        // @TODO : deco intempestives...
-        socket.on("deco", () => {
-            alert("a lot of users")
-            clearStorage();
-            window.location.href = '/game';
-        })
+		console.log('session Id :', sessionID);
+		console.log('gameID', gameID);
 
-        if (screen.width > 500){
-            {window.location.href = "/boardGame"}
-        }
+		socket.on('connect', async () => {
+			console.log('Connected to server');
+			if (gameID) {
+				// trouver l'utilisateur
+				user = await getUser(socket);
+				if (!user) {
+					clearStorage();
+					window.location.href = '/';
+				}
+				socket.emit('joinGame', gameID);
+			}
+		});
 
-        //trouver la game
-        game = await getGame()
-        //importer les heros
-        listOfHeroes = await getHeroes()
-        //importer les items
-        listOfItems = await getItems()
+		// @TODO : deco intempestives...
+		socket.on('deco', () => {
+			alert('a lot of users');
+			clearStorage();
+			window.location.href = '/game';
+		});
 
-        socket.on("updateUsers", async (data)=>{
-           user = await getUser(socket)
-        })
+		if (screen.width > 500) {
+			{
+				window.location.href = '/boardGame';
+			}
+		}
 
-    });
+		//trouver la game
+		game = await getGame();
+		//importer les heros
+		listOfHeroes = await getHeroes();
+		//importer les items
+		listOfItems = await getItems();
 
-    socket.on("updateGame", (data)=>{
-        game = data
-    })
+		socket.on('updateUsers', async (data) => {
+			user = await getUser(socket);
+		});
+	});
 
-    socket.on ("wait", ()=>{
-        wait = true;
-    })
+	socket.on('updateGame', (data) => {
+		game = data;
+	});
 
-    function sentHeroToServer(event){
-        hero = event.detail.hero;
-        socket.emit("selectedHero", hero)
-    }
+	socket.on('wait', () => {
+		wait = true;
+	});
 
-    // mettre à jour le user quand le hero a été choisi et enregistré dans la db
-    socket.on("registeredHero", async()=>{
-        user = await getUser(socket);
-    })
+	function sentHeroToServer(event) {
+		hero = event.detail.hero;
+		socket.emit('selectedHero', hero);
+	}
 
+	// mettre à jour le user quand le hero a été choisi et enregistré dans la db
+	socket.on('registeredHero', async () => {
+		user = await getUser(socket);
+	});
 </script>
 
 {#if sessionID}
-    {#if user}
-        {user.username}
-        {#if game.statut == "waiting"}
-            <GameRules />
-        {/if}
-        {#if game.statut == "closed"}
-            <ChooseHero {user} on:ChooseHero={sentHeroToServer} />
-        {/if}
-        {#if game.statut == "started"}
-            <Map {user} />
-        {/if}
-    {/if}       
+	{#if user}
+		{user.username}
+		{#if game.statut == 'waiting'}
+			<GameRules />
+		{/if}
+		{#if game.statut == 'closed'}
+			<ChooseHero {user} on:ChooseHero={sentHeroToServer} />
+		{/if}
+		{#if game.statut == 'started'}
+			<Map {user} />
+		{/if}
+	{/if}
 {/if}
 <button on:click={clearStorage}>Clear</button>
-
