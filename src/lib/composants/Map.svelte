@@ -39,46 +39,46 @@
 		});
 
 		updateInventory(user);
-		disabledArrowDirections();
+		displayArrowsDirections();
 
 		socket.on('youAskedRooms', (rooms) => {
 			allRooms = rooms;
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
 			itemInRoom = JSON.parse(itemInRoom);
-			console.log(itemInRoom);
 		});
 
 		socket.on('movePlayer', async (userID) => {
-			disabledArrowDirections();
+			displayArrowsDirections();
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
 			itemInRoom = JSON.parse(itemInRoom); // convert string to json
-			console.log(itemInRoom);
 		});
 
 		socket.on('updateUser', (user) => {
 			updateInventory(user);
 		});
+
+		socket.on('battle', async (data) => {
+			if (user.room != data.room) return;
+			console.log(data);
+			console.log(user.room);
+		});
 	});
 
 	let updateInventory = (user) => {
 		let inventory = user.inventory;
-		console.log(inventory);
 		if (!inventory) return;
 		myInventory = [];
 		inventory = inventory.split('/');
-		console.log(JSON.parse(inventory[0]));
 		for (let item of inventory) {
 			item = JSON.parse(item);
 			myInventory.push(item);
 		}
-		console.log(myInventory);
 
 		countOfItems = compterObjetsIdentiques(myInventory);
 		countOfItems = Object.entries(countOfItems).map(([cle, valeur]) => ({ [cle]: valeur }));
-		console.log(countOfItems);
 	};
 
 	let compterObjetsIdentiques = (array) => {
@@ -87,7 +87,6 @@
 		array.forEach((item) => {
 			// Convertir l'objet en une chaîne JSON pour le représenter comme une clé
 			const cle = item.nameId;
-			console.log(cle);
 			// Incrémenter le compteur pour cette clé
 			compteur[cle] = (compteur[cle] || 0) + 1;
 		});
@@ -98,17 +97,25 @@
 		return new Promise((resolve) => setTimeout(resolve, sec * 1000));
 	};
 
-	let disabledArrowDirections = async () => {
+	let disabledArrows = () => {
+		let topArrow = document.querySelector('#top');
+		let leftArrow = document.querySelector('#left');
+		let rightArrow = document.querySelector('#right');
+		let botArrow = document.querySelector('#bot');
+		let arrows = [topArrow, leftArrow, rightArrow, botArrow];
+		for (let arrow of arrows) {
+			arrow.setAttribute('disabled', true);
+		}
+	};
+
+	let displayArrowsDirections = async () => {
 		roomsConnections = await getRoomsConnections();
 		roomsConnections = Object.values(roomsConnections); // change Json to array
 
 		directions = roomsConnections[user.room];
 		let diectionsKeys = Object.keys(directions);
 
-		for (let direction of diectionsKeys) {
-			let arrow = document.querySelector('#' + direction);
-			arrow.setAttribute('disabled', true);
-		}
+		disabledArrows();
 
 		await sleep(1);
 		for (let direction of diectionsKeys) {
@@ -120,25 +127,26 @@
 
 	let askToChangeRoom = () => {
 		let direction = event.target.id;
-		console.log(direction);
 		let targetRoom = directions[direction];
 		if (targetRoom == 'null') return;
 		socket.emit('askToChangeRoom', targetRoom);
+		dice1 = null;
+		dice2 = null;
 	};
 
-	let tryToGetItemInRoom = () => {
+	let tryToGetItemInRoom = async () => {
 		let condition = itemInRoom.condition;
 		let pointsDices = rollDice();
-		console.log(pointsDices);
 		if (pointsDices < condition) return;
-		console.log(myRoom);
+		disabledArrows();
+		await sleep(1);
+		displayArrowsDirections();
 		socket.emit('getItemInRoom', myRoom);
 	};
 
 	let rollDice = () => {
 		dice1 = Math.floor(Math.random() * 6) + 1;
 		dice2 = Math.floor(Math.random() * 6) + 1;
-		console.log(dice1, dice2);
 		return dice1 + dice2;
 	};
 
@@ -228,6 +236,13 @@
 	<button on:click={hideGames}>
 		<img style="width: 60px; height: auto;" src="/src/assets/img/inventory.PNG" alt="inventory" />
 	</button>
+	<div></div>
+	<img class="fluidimg userPawn_img" src="/src/assets/img/{user.heroImg}" alt="pawn icon" />
+	<p>{user.hero}</p>
+	<p>life : {user.life}</p>
+	<p>atk : {user.atk}</p>
+	<p>def : {user.def}</p>
+	<p>@TODO : add hability</p>
 	{#if countOfItems}
 		<ul class="inventory">
 			{#each countOfItems as item, index}

@@ -350,7 +350,7 @@ Boardgame - boardgame display
 	position: absolute;
 	display: inline-flex;
 	transition: 0.2s;
-	width: 2.25%;
+	width: 2.75%;
 	/* border: 1px solid red; */
 }
 
