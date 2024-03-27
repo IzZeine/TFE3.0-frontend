@@ -25,16 +25,19 @@
 		gameID = sessionStorage.getItem('gameID');
 
 		socket.on('connect', async () => {
-			console.log('Connected to server');
+			popUp("Connected to the server")
 			if (gameID) {
 				// trouver l'utilisateur
 				user = await getUser(socket);
+
 				if (!user) {
 					clearStorage();
 					window.location.href = '/';
 				}
 				socket.emit('joinGame', gameID);
 				socket.emit('getRooms', user.gameId);
+
+				
 			}
 		});
 
@@ -50,6 +53,7 @@
 
 		socket.on('movePlayer', async (userID) => {
 			displayArrowsDirections();
+			console.log("2")
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
@@ -61,11 +65,65 @@
 		});
 
 		socket.on('battle', async (data) => {
-			if (user.room != data.room) return;
-			console.log(data);
-			console.log(user.room);
+			let getItemBtn = document.querySelector(".getItemBtn")
+			getItemBtn.setAttribute("disabled", true)
+			user = await getUser(socket);
+			myRoom = allRooms[user.room];
+			itemInRoom = myRoom.item;
+			itemInRoom = JSON.parse(itemInRoom); // convert string to json
+			disabledArrows()
+			console.log("1")
+			if (user.room != data.room) {
+				popUp("Un combat est en cours")
+				return;
+			}
+			console.log(data)
+			popUp("Vous entrez dans un combat!")
+			let bossLife = data.boss.def
+			let heroesAtk = 0;
+			for(let hero of data.heroes){
+				heroesAtk += hero.atk
+			}
+			console.log(bossLife," / ",heroesAtk)
+			
+			await sleep(2)
+
+			let winner;
+
+			if(bossLife > heroesAtk) popUp("Le boss remporte! <br> -1 au hero le plus faible"), winner = data.boss;
+			if(bossLife == heroesAtk) popUp("Match nul.. <br> tout le monde à son spawn");
+			if(bossLife < heroesAtk) popUp("Les heroes remportent <br> fin de la partie!"), winner = "endGame";
+
+			console.log(winner)
+			if(user.id == data.boss.id) socket.emit("battleEnded", winner )
 		});
+
+		socket.on("returnAtSpawn", async()=>{
+			user = await getUser(socket);
+			displayArrowsDirections()
+			let getItemBtn = document.querySelector(".getItemBtn")
+
+			getItemBtn.removeAttribute("disabled")
+		})
 	});
+
+	let popUp = async (message) =>{
+		let popupDiv = document.body.appendChild(document.createElement("div"));
+		popupDiv.classList.add("popup")
+		let popupTxt = popupDiv.appendChild(document.createElement("p"));
+		popupTxt.classList.add("popup-message")
+
+		await sleep(0.1)
+
+		popupDiv.classList.add("is-active")
+		popupTxt.innerHTML = message
+
+		await sleep(3)
+		popupDiv.classList.remove("is-active")
+		await sleep(1)
+		popupTxt.innerHTML = ""
+		popupDiv.remove()
+	}
 
 	let updateInventory = (user) => {
 		let inventory = user.inventory;
@@ -109,6 +167,7 @@
 	};
 
 	let displayArrowsDirections = async () => {
+		if(user.life <= 0) return;
 		roomsConnections = await getRoomsConnections();
 		roomsConnections = Object.values(roomsConnections); // change Json to array
 
@@ -117,7 +176,7 @@
 
 		disabledArrows();
 
-		await sleep(1);
+		await sleep(0.1);
 		for (let direction of diectionsKeys) {
 			if (directions[direction] == 'null') continue;
 			let arrow = document.querySelector('#' + direction);
@@ -137,9 +196,14 @@
 	let tryToGetItemInRoom = async () => {
 		let condition = itemInRoom.condition;
 		let pointsDices = rollDice();
-		if (pointsDices < condition) return;
+		if (pointsDices < condition) {
+			popUp("raté..")
+			return;
+		} 
 		disabledArrows();
 		await sleep(1);
+		let message = "Vous avez gagné : \n" + "<img class='fluidimg'	src='/src/assets/img/" + itemInRoom.nameId + ".PNG'	alt={itemInRoom.nameId}/>" + itemInRoom.name;
+		popUp(message)
 		displayArrowsDirections();
 		socket.emit('getItemInRoom', myRoom);
 	};
@@ -155,7 +219,7 @@
 		display.classList.add('is-active');
 	};
 
-	let hideGames = () => {
+	let hideCardHero = () => {
 		const display = document.querySelector('.cardHero');
 		display.classList.remove('is-active');
 	};
@@ -174,6 +238,12 @@
 
 	// @TODO : si le boss est mort ou que l'ensemble de items restants ne suffisent pas pour battre le boss, le jeu se termine
 </script>
+
+<ul style="display: flex; gap:12px">
+	{#each {length : user.life} as item, index}
+		<li>X</li>
+	{/each}
+</ul>
 
 <p>{user.hero}</p>
 <div class="container mapUserContainer">
@@ -219,7 +289,7 @@
 						<span>{dice1 + dice2}</span>
 					</p>
 				{/if}
-				<button on:click={tryToGetItemInRoom}>Attraper</button>
+				<button class="getItemBtn" on:click={tryToGetItemInRoom}>Attraper</button>
 			{:else}
 				<p>no item here</p>
 			{/if}
@@ -233,7 +303,7 @@
 	<button class="showCardHero"> habilité </button>
 </div>
 <div class="cardHero">
-	<button on:click={hideGames}>
+	<button on:click={hideCardHero}>
 		<img style="width: 60px; height: auto;" src="/src/assets/img/inventory.PNG" alt="inventory" />
 	</button>
 	<div></div>
