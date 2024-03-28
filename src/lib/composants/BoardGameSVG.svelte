@@ -1911,9 +1911,33 @@
 			/>
 			<path id="Vector 15" d="M1054 1862H1080.5" stroke="#A2A2A2" stroke-width="5" />
 		</g>
-		<g id="Group 92">
+		<g id="Group 96">
 			<circle
 				id="Ellipse 48_2"
+				cx="430"
+				cy="1862"
+				r="23.5"
+				fill="#8A0000"
+				stroke="#A2A2A2"
+				stroke-width="3"
+			/>
+			<path id="Vector 15_2" d="M417 1862H443.5" stroke="#A2A2A2" stroke-width="5" />
+		</g>
+		<g id="Group 97">
+			<circle
+				id="Ellipse 48_3"
+				cx="678"
+				cy="2013"
+				r="23.5"
+				fill="#8A0000"
+				stroke="#A2A2A2"
+				stroke-width="3"
+			/>
+			<path id="Vector 15_3" d="M665 2013H691.5" stroke="#A2A2A2" stroke-width="5" />
+		</g>
+		<g id="Group 92">
+			<circle
+				id="Ellipse 48_4"
 				cx="1975"
 				cy="1622"
 				r="23.5"
@@ -1921,11 +1945,11 @@
 				stroke="#A2A2A2"
 				stroke-width="3"
 			/>
-			<path id="Vector 15_2" d="M1962 1622H1988.5" stroke="#A2A2A2" stroke-width="5" />
+			<path id="Vector 15_4" d="M1962 1622H1988.5" stroke="#A2A2A2" stroke-width="5" />
 		</g>
 		<g id="Group 93">
 			<circle
-				id="Ellipse 48_3"
+				id="Ellipse 48_5"
 				cx="1810"
 				cy="335"
 				r="23.5"
@@ -1933,11 +1957,11 @@
 				stroke="#A2A2A2"
 				stroke-width="3"
 			/>
-			<path id="Vector 15_3" d="M1797 335H1823.5" stroke="#A2A2A2" stroke-width="5" />
+			<path id="Vector 15_5" d="M1797 335H1823.5" stroke="#A2A2A2" stroke-width="5" />
 		</g>
 		<g id="Group 94">
 			<circle
-				id="Ellipse 48_4"
+				id="Ellipse 48_6"
 				cx="2599"
 				cy="509"
 				r="23.5"
@@ -1945,11 +1969,11 @@
 				stroke="#A2A2A2"
 				stroke-width="3"
 			/>
-			<path id="Vector 15_4" d="M2586 509H2612.5" stroke="#A2A2A2" stroke-width="5" />
+			<path id="Vector 15_6" d="M2586 509H2612.5" stroke="#A2A2A2" stroke-width="5" />
 		</g>
 		<g id="Group 95">
 			<circle
-				id="Ellipse 48_5"
+				id="Ellipse 48_7"
 				cx="2934"
 				cy="408"
 				r="23.5"
@@ -1957,11 +1981,11 @@
 				stroke="#A2A2A2"
 				stroke-width="3"
 			/>
-			<path id="Vector 15_5" d="M2921 408H2947.5" stroke="#A2A2A2" stroke-width="5" />
+			<path id="Vector 15_7" d="M2921 408H2947.5" stroke="#A2A2A2" stroke-width="5" />
 		</g>
 		<g id="Group 91">
 			<circle
-				id="Ellipse 48_6"
+				id="Ellipse 48_8"
 				cx="1092"
 				cy="2103"
 				r="23.5"
@@ -1969,12 +1993,12 @@
 				stroke="#A2A2A2"
 				stroke-width="3"
 			/>
-			<path id="Vector 15_6" d="M1079 2103H1105.5" stroke="#A2A2A2" stroke-width="5" />
+			<path id="Vector 15_8" d="M1079 2103H1105.5" stroke="#A2A2A2" stroke-width="5" />
 		</g>
 	</g>
 	<defs>
 		<clipPath id="clip0_313_1301">
-			<rect width="4000" height="2250" fill="currentColor" />
+			<rect width="4000" height="2250" fill="white" />
 		</clipPath>
 	</defs>
 </svg>

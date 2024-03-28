@@ -41,6 +41,10 @@
 			}
 		});
 
+		socket.on('endGame', (data) => {
+			console.log(data);
+		});
+
 		listOfHeroes = await getHeroes();
 	});
 
@@ -71,6 +75,9 @@
 	{#if activeUsers.length > 0}
 		<BoardGame {activeUsers} />
 	{/if}
+{:else if game.statut == 'ended'}
+	<!-- @TODO : winner page -->
+	<p>the winner is :</p>
 {:else}
 	<div class="container">
 		<h1 class="h1">{game.name}</h1>

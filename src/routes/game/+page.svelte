@@ -90,7 +90,6 @@
 		>
 	</div>
 
-	<!-- @TODO : laisser ça ici ou le mettre sur /game/join ? -->
 	<div class="activeGames">
 		<div class="content">
 			<div class="btns">

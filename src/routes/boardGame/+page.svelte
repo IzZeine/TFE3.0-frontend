@@ -36,6 +36,10 @@
 	}
 
 	let createGame = async () => {
+		if (screen.width < 500) {
+			window.location.href = '/';
+			return;
+		}
 		const response = await fetch('http://localhost:3000/creategame', {
 			method: 'POST',
 			headers: {
@@ -91,5 +95,4 @@
 </div>
 <!-- @TODO : faire l'icon du boss (1 à 3) -->
 
-<!-- @TODO : quand le joueur change de salle, le faire suivre le path de couloir et l'amener à la bonne salle -->
 <!-- @TODO++ : ajouter des animations quelconques : lancement de combat, récupération d'un item, utilisation de sort -->

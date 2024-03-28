@@ -25,7 +25,7 @@
 		gameID = sessionStorage.getItem('gameID');
 
 		socket.on('connect', async () => {
-			popUp("Connected to the server")
+			popUp('Connected to the server');
 			if (gameID) {
 				// trouver l'utilisateur
 				user = await getUser(socket);
@@ -36,8 +36,6 @@
 				}
 				socket.emit('joinGame', gameID);
 				socket.emit('getRooms', user.gameId);
-
-				
 			}
 		});
 
@@ -53,7 +51,6 @@
 
 		socket.on('movePlayer', async (userID) => {
 			displayArrowsDirections();
-			console.log("2")
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
@@ -65,65 +62,69 @@
 		});
 
 		socket.on('battle', async (data) => {
-			let getItemBtn = document.querySelector(".getItemBtn")
-			getItemBtn.setAttribute("disabled", true)
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
-			itemInRoom = myRoom.item;
-			itemInRoom = JSON.parse(itemInRoom); // convert string to json
-			disabledArrows()
-			console.log("1")
+
+			if (user.team == 'hero' && myRoom.item != 'null' && myRoom.item != null) {
+				let getItemBtn = document.querySelector('.getItemBtn');
+				getItemBtn.setAttribute('disabled', true);
+			}
+
+			disabledArrows();
+
 			if (user.room != data.room) {
-				popUp("Un combat est en cours")
+				popUp('Un combat est en cours');
 				return;
 			}
-			console.log(data)
-			popUp("Vous entrez dans un combat!")
-			let bossLife = data.boss.def
+
+			popUp('Vous entrez dans un combat!');
+			let bossLife = data.boss.def;
 			let heroesAtk = 0;
-			for(let hero of data.heroes){
-				heroesAtk += hero.atk
+			for (let hero of data.heroes) {
+				heroesAtk += hero.atk;
 			}
-			console.log(bossLife," / ",heroesAtk)
-			
-			await sleep(2)
+
+			await sleep(2);
 
 			let winner;
 
-			if(bossLife > heroesAtk) popUp("Le boss remporte! <br> -1 au hero le plus faible"), winner = data.boss;
-			if(bossLife == heroesAtk) popUp("Match nul.. <br> tout le monde à son spawn");
-			if(bossLife < heroesAtk) popUp("Les heroes remportent <br> fin de la partie!"), winner = "endGame";
-
-			console.log(winner)
-			if(user.id == data.boss.id) socket.emit("battleEnded", winner )
+			if (bossLife > heroesAtk)
+				popUp('Le boss remporte! <br> -1 au hero le plus faible'), (winner = data.boss);
+			if (bossLife == heroesAtk)
+				popUp('Match nul.. <br> tout le monde à son spawn'), (winner = data.boss.room);
+			if (bossLife < heroesAtk)
+				popUp('Les heroes remportent <br> fin de la partie!'), (winner = 'endGame');
+			if (user.id == data.boss.id) socket.emit('battleEnded', winner);
 		});
 
-		socket.on("returnAtSpawn", async()=>{
+		socket.on('returnAtSpawn', async () => {
 			user = await getUser(socket);
-			displayArrowsDirections()
-			let getItemBtn = document.querySelector(".getItemBtn")
+			displayArrowsDirections();
 
-			getItemBtn.removeAttribute("disabled")
-		})
+			if (user.team == 'hero' && myRoom.item != 'null' && myRoom.item != null) {
+				let getItemBtn = document.querySelector('.getItemBtn');
+				getItemBtn.removeAttribute('disabled');
+			}
+		});
 	});
 
-	let popUp = async (message) =>{
-		let popupDiv = document.body.appendChild(document.createElement("div"));
-		popupDiv.classList.add("popup")
-		let popupTxt = popupDiv.appendChild(document.createElement("p"));
-		popupTxt.classList.add("popup-message")
+	let popUp = async (message) => {
+		let popupDiv = document.body.appendChild(document.createElement('div'));
+		popupDiv.classList.add('popup');
+		let popupTxt = popupDiv.appendChild(document.createElement('p'));
+		popupTxt.classList.add('popup-message');
 
-		await sleep(0.1)
+		await sleep(0.1);
 
-		popupDiv.classList.add("is-active")
-		popupTxt.innerHTML = message
+		popupDiv.classList.add('is-active');
+		popupTxt.innerHTML = message;
 
-		await sleep(3)
-		popupDiv.classList.remove("is-active")
-		await sleep(1)
-		popupTxt.innerHTML = ""
-		popupDiv.remove()
-	}
+		await sleep(3);
+		popupDiv.classList.remove('is-active');
+		await sleep(1);
+		popupTxt.innerHTML = '';
+		popupDiv.remove();
+	};
 
 	let updateInventory = (user) => {
 		let inventory = user.inventory;
@@ -167,7 +168,7 @@
 	};
 
 	let displayArrowsDirections = async () => {
-		if(user.life <= 0) return;
+		if (user.life <= 0) return;
 		roomsConnections = await getRoomsConnections();
 		roomsConnections = Object.values(roomsConnections); // change Json to array
 
@@ -188,6 +189,13 @@
 		let direction = event.target.id;
 		let targetRoom = directions[direction];
 		if (targetRoom == 'null') return;
+		if (targetRoom == 19) {
+			let hasKey = myInventory.some((item) => item.nameId === 'key');
+			if (!hasKey) {
+				popUp("You don't have the key");
+				return;
+			}
+		}
 		socket.emit('askToChangeRoom', targetRoom);
 		dice1 = null;
 		dice2 = null;
@@ -197,13 +205,18 @@
 		let condition = itemInRoom.condition;
 		let pointsDices = rollDice();
 		if (pointsDices < condition) {
-			popUp("raté..")
+			popUp('raté..');
 			return;
-		} 
+		}
 		disabledArrows();
 		await sleep(1);
-		let message = "Vous avez gagné : \n" + "<img class='fluidimg'	src='/src/assets/img/" + itemInRoom.nameId + ".PNG'	alt={itemInRoom.nameId}/>" + itemInRoom.name;
-		popUp(message)
+		let message =
+			'Vous avez gagné : \n' +
+			"<img class='fluidimg itemInPopUp' src='/src/assets/img/" +
+			itemInRoom.nameId +
+			".PNG'	alt={itemInRoom.nameId}/>" +
+			itemInRoom.name;
+		popUp(message);
 		displayArrowsDirections();
 		socket.emit('getItemInRoom', myRoom);
 	};
@@ -224,26 +237,18 @@
 		display.classList.remove('is-active');
 	};
 
-	// @TODO : quand le combat se lance :
-	// @TODO : prendre la vie du boss et le total des atk des users
-	// @TODO : si life > atk
-	// @TODO : boss gagne, le user le plus faible perd une vie
-	// @TODO : si le user n'a plus de vie : mort : spectateur (tous ces items partent avec lui)
-	// @TODO : si life = atk
-	// @TODO : tout le monde repart
-	// @TODO : else
-	// @TODO : le boss perd de la vie
-	// @TODO : si le boss n'a plus de vie : mort : fin de game
-	// @TODO : après chaque combat, tous le monde retourne à son spawn
-
 	// @TODO : si le boss est mort ou que l'ensemble de items restants ne suffisent pas pour battre le boss, le jeu se termine
 </script>
 
-<ul style="display: flex; gap:12px">
-	{#each {length : user.life} as item, index}
-		<li>X</li>
-	{/each}
-</ul>
+{#if user.life > 0}
+	<ul style="display: flex; gap:12px">
+		{#each { length: user.life } as item, index}
+			<li>X</li>
+		{/each}
+	</ul>
+{:else}
+	<p>you are dead..</p>
+{/if}
 
 <p>{user.hero}</p>
 <div class="container mapUserContainer">
@@ -272,7 +277,7 @@
 			<img class="directionArrow_img" src="/src/assets/img/left.svg" alt="top" />
 		</button>
 	</div>
-	{#if myRoom}
+	{#if myRoom && user.team == 'hero'}
 		<div class="itemInRoom">
 			{#if itemInRoom}
 				<img
@@ -330,8 +335,3 @@
 </div>
 
 <!-- @TODO : implémenter les abilities -->
-
-<!-- @TODO : quand le boss arrive dans la même salle : -->
-<!-- @TODO : un combat se lance (composant) -->
-
-<!-- @TODO : si le joueur n'a plus de vie alors il meurt et devient spectateur -->

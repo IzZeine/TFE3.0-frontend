@@ -16,7 +16,6 @@
 	let hero = '';
 	let listOfItems = '';
 	let listOfHeroes = '';
-	// @TODO : il faut que tout s'actualise tout le temps
 	let wait = true;
 
 	onMount(async () => {

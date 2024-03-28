@@ -431,7 +431,7 @@ userMap
 PopUp
 --------------------------------------------------------------------------*/
 
-.popup{
+.popup {
 	z-index: 99;
 	position: absolute;
 	display: table;
