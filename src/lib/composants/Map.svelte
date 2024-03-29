@@ -202,14 +202,21 @@
 	};
 
 	let tryToGetItemInRoom = async () => {
+		let getItemBtn = document.querySelector('.getItemBtn');
 		let condition = itemInRoom.condition;
 		let pointsDices = rollDice();
 		if (pointsDices < condition) {
 			popUp('raté..');
+			getItemBtn.setAttribute('disabled', true);
+			await sleep(1);
+			getItemBtn.removeAttribute('disabled');
 			return;
 		}
 		disabledArrows();
+		getItemBtn.setAttribute('disabled', true);
 		await sleep(1);
+		getItemBtn.removeAttribute('disabled');
+
 		let message =
 			'Vous avez gagné : \n' +
 			"<img class='fluidimg itemInPopUp' src='/assets/img/" +
@@ -285,10 +292,10 @@
 				<p>{itemInRoom.rarity}</p>
 				<p>{itemInRoom.condition}</p>
 				{#if dice1 && dice2}
-					<p>
-						<span>{dice1}</span> ; <span>{dice2}</span> <span> => </span>
-						<span>{dice1 + dice2}</span>
-					</p>
+					<div class="dices">
+						<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
+						<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
+					</div>
 				{/if}
 				<button class="getItemBtn" on:click={tryToGetItemInRoom}>Attraper</button>
 			{:else}

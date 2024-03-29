@@ -418,3 +418,14 @@ userMap
 	display: flex;
 	justify-content: center;
 }
+
+.dices {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+}
+
+.dice {
+	max-width: 30px;
+}
