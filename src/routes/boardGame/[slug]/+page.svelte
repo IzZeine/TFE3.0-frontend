@@ -90,11 +90,7 @@
 						<p class="cardUser_hero">{user.team}</p>
 						<p class="cardUser_life">{user.life}</p>
 						{#if user.hero}
-							<img
-								class="fluidimg userPawn_img"
-								src="/src/assets/img/{user.heroImg}"
-								alt="pawn icon"
-							/>
+							<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 							<p class="cardUser_hero">{user.hero}</p>
 							<p class="cardUser_atk">{user.atk}</p>
 						{:else}

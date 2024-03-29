@@ -64,7 +64,7 @@
 </script>
 
 <div class="container">
-	<img src="./src/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
+	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
 	<form on:submit|preventDefault={onFormSubmit} class="form">
 		<div>
 			<label for="username" class="labelForm">Enter your username:</label>

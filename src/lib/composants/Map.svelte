@@ -212,7 +212,7 @@
 		await sleep(1);
 		let message =
 			'Vous avez gagné : \n' +
-			"<img class='fluidimg itemInPopUp' src='/src/assets/img/" +
+			"<img class='fluidimg itemInPopUp' src='/assets/img/" +
 			itemInRoom.nameId +
 			".PNG'	alt={itemInRoom.nameId}/>" +
 			itemInRoom.name;
@@ -255,7 +255,7 @@
 	<h1 class="h1">Your room : {user.room}</h1>
 	<div class="directionsArrows">
 		<button class="directionArrow directionArrow_top" id="top" disabled on:click={askToChangeRoom}>
-			<img class="directionArrow_img" src="/src/assets/img/top.svg" alt="top" />
+			<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
 		</button>
 		<button
 			class="directionArrow directionArrow_right"
@@ -263,10 +263,10 @@
 			disabled
 			on:click={askToChangeRoom}
 		>
-			<img class="directionArrow_img" src="/src/assets/img/right.svg" alt="top" />
+			<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
 		</button>
 		<button class="directionArrow directionArrow_bot" id="bot" disabled on:click={askToChangeRoom}>
-			<img class="directionArrow_img" src="/src/assets/img/bot.svg" alt="top" />
+			<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
 		</button>
 		<button
 			class="directionArrow directionArrow_left"
@@ -274,17 +274,13 @@
 			disabled
 			on:click={askToChangeRoom}
 		>
-			<img class="directionArrow_img" src="/src/assets/img/left.svg" alt="top" />
+			<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
 		</button>
 	</div>
 	{#if myRoom && user.team == 'hero'}
 		<div class="itemInRoom">
 			{#if itemInRoom}
-				<img
-					class="fluidimg"
-					src="/src/assets/img/{itemInRoom.nameId}.PNG"
-					alt={itemInRoom.nameId}
-				/>
+				<img class="fluidimg" src="/assets/img/{itemInRoom.nameId}.PNG" alt={itemInRoom.nameId} />
 				<p>{itemInRoom.name}</p>
 				<p>{itemInRoom.rarity}</p>
 				<p>{itemInRoom.condition}</p>
@@ -303,16 +299,16 @@
 </div>
 <div class="sideBarUser">
 	<button class="showCardHero" on:click={displayCardHero}>
-		<img style="width: 60px; height: auto;" src="/src/assets/img/inventory.PNG" alt="inventory" />
+		<img style="width: 60px; height: auto;" src="/assets/img/inventory.png" alt="inventory" />
 	</button>
 	<button class="showCardHero"> habilité </button>
 </div>
 <div class="cardHero">
 	<button on:click={hideCardHero}>
-		<img style="width: 60px; height: auto;" src="/src/assets/img/inventory.PNG" alt="inventory" />
+		<img style="width: 60px; height: auto;" src="/assets/img/inventory.png" alt="inventory" />
 	</button>
 	<div></div>
-	<img class="fluidimg userPawn_img" src="/src/assets/img/{user.heroImg}" alt="pawn icon" />
+	<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 	<p>{user.hero}</p>
 	<p>life : {user.life}</p>
 	<p>atk : {user.atk}</p>
@@ -324,7 +320,7 @@
 				<li class="inventory_item">
 					<img
 						style="width: 30px; height : auto;"
-						src="/src/assets/img/{Object.keys(countOfItems[index])[0]}.PNG"
+						src="/assets/img/{Object.keys(countOfItems[index])[0]}.PNG"
 						alt={Object.keys(countOfItems[index])[0]}
 					/>
 					<p><span> x {countOfItems[index][Object.keys(countOfItems[index])[0]]}</span></p>

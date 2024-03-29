@@ -66,7 +66,7 @@
 			{#if user.team == 'hero'}
 				{#each heroes as hero}
 					<div class="heroItem">
-						<img class="fluidimg heroImg" src="/src/assets/img/{hero.img}" alt={hero.name} />
+						<img class="fluidimg heroImg" src="/assets/img/{hero.img}" alt={hero.name} />
 					</div>
 				{/each}
 			{/if}
@@ -74,7 +74,7 @@
 			{#if user.team == 'boss'}
 				{#each boss as oneBoss}
 					<div class="heroItem">
-						<img class="fluidimg heroImg" src="/src/assets/img/{oneBoss.img}" alt={oneBoss.name} />
+						<img class="fluidimg heroImg" src="/assets/img/{oneBoss.img}" alt={oneBoss.name} />
 					</div>
 				{/each}
 			{/if}
@@ -82,7 +82,7 @@
 			<div class="arrowNavigate" slot="prev">
 				<button on:click={handlePrevClick}
 					><img
-						src="/src/assets/img/arrow.svg"
+						src="/assets/img/arrow.svg"
 						alt="prev"
 						class="fluidimg arrowNavigate-item prev"
 					/></button
@@ -91,7 +91,7 @@
 			<div class="arrowNavigate" slot="next">
 				<button on:click={handleNextClick}
 					><img
-						src="/src/assets/img/arrow.svg"
+						src="/assets/img/arrow.svg"
 						alt="prev"
 						class="fluidimg arrowNavigate-item next"
 						style="transform: scale(-1);"

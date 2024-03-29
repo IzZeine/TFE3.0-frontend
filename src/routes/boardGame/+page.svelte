@@ -67,7 +67,7 @@
 
 <div class="createGame">
 	<div class="content">
-		<img src="./src/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
+		<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
 		<form on:submit|preventDefault={createGame} class="gameNameForm">
 			<div class="gameNameForm_content">
 				<label for="gameName" class="gameNameLabel">Enter your game's name:</label>

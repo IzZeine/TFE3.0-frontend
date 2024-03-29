@@ -60,11 +60,11 @@
 	<ul class="usersPawnList">
 		{#each activeUsers as user}
 			<li class="userPawn" id={user.player}>
-				<img class="fluidimg userPawn_img" src="/src/assets/img/{user.heroImg}" alt="pawn icon" />
+				<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 			</li>
 		{/each}
 	</ul>
-	<img class="fluidimg boardGameImg" src="/src/assets/img/boardgame.png" alt="boardgame" />
+	<img class="fluidimg boardGameImg" src="/assets/img/boardgame.png" alt="boardgame" />
 	<BoardGameSVG />
 </div>
 

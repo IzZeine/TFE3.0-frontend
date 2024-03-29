@@ -73,7 +73,7 @@
 </script>
 
 <div class="container">
-	<img src="./src/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
+	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
 	<p>
 		Welcome
 		{#if user}
@@ -94,10 +94,10 @@
 		<div class="content">
 			<div class="btns">
 				<button class="btn-menuGames return" on:click={hideGames}
-					><img src="./src/assets/img/return.svg" alt="return" /></button
+					><img src="/assets/img/return.svg" alt="return" /></button
 				>
 				<button class="btn-menuGames refresh" on:click={askActiveGames}
-					><img src="./src/assets/img/refresh.svg" alt="refresh" /></button
+					><img src="/assets/img/refresh.svg" alt="refresh" /></button
 				>
 			</div>
 			<ul>
