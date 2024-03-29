@@ -342,7 +342,7 @@ Boardgame - boardgame display
 	position: absolute;
 	display: inline-flex;
 	transition: 0.2s;
-	width: 2.75%;
+	width: 3%;
 	/* border: 1px solid red; */
 }
 
@@ -392,6 +392,8 @@ userMap
 
 .sideBarUser {
 	position: absolute;
+	width: 100%;
+	justify-content: center;
 	display: flex;
 	gap: 60px;
 	bottom: 0;
@@ -412,6 +414,58 @@ userMap
 	top: 0;
 	height: 100%;
 	width: 100%;
+}
+
+.cardHero_stats {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	align-items: center;
+}
+
+.cardHero_hero {
+	font-family: 'Deutsch', serif;
+	letter-spacing: 0.2rem;
+	font-weight: 400;
+	color: var(--primary);
+	font-size: 36px;
+}
+
+.cardHero_stats-life {
+	margin: 0 auto 0 0;
+	display: flex;
+	gap: 12px;
+}
+.cardHero_stats-life > li > img {
+	max-width: 30px;
+}
+
+.cardHero_stats-atk-def {
+	display: flex;
+	gap: 30px;
+	align-items: center;
+}
+
+.cardHero_stats-atk-def > div {
+	display: flex;
+	gap: 12px;
+}
+
+.cardHero_stats-atk-def > div > img {
+	max-height: 30px;
+	width: auto;
+}
+
+.showCardHero {
+	background-color: unset;
+}
+
+.hideCardHero {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+
+	background-color: unset;
 }
 
 .inventory {

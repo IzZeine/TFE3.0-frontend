@@ -308,19 +308,34 @@
 	<button class="showCardHero" on:click={displayCardHero}>
 		<img style="width: 60px; height: auto;" src="/assets/img/inventory.png" alt="inventory" />
 	</button>
-	<button class="showCardHero"> habilité </button>
+	<!-- <button> habilité </button> -->
 </div>
 <div class="cardHero">
-	<button on:click={hideCardHero}>
+	<button class="hideCardHero" on:click={hideCardHero}>
 		<img style="width: 60px; height: auto;" src="/assets/img/inventory.png" alt="inventory" />
 	</button>
-	<div></div>
-	<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
-	<p>{user.hero}</p>
-	<p>life : {user.life}</p>
-	<p>atk : {user.atk}</p>
-	<p>def : {user.def}</p>
-	<p>@TODO : add hability</p>
+	<div class="cardHero_stats">
+		<ul class="cardHero_stats-life">
+			{#each { length: user.life } as item, index}
+				<li>
+					<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
+				</li>
+			{/each}
+		</ul>
+		<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
+		<p class="cardHero_hero">{user.hero}</p>
+		<p>@TODO : add hability</p>
+		<div class="cardHero_stats-atk-def">
+			<div class="cardHero_stats-atk-def_atk">
+				<img class="fluidimg cardHero_stats-atk-def_atk-img" src="/assets/img/atk.png" alt="atk" />
+				<p>atk : {user.atk}</p>
+			</div>
+			<div class="cardHero_stats-atk-def_def">
+				<img class="fluidimg cardHero_stats-atk-def_def-img" src="/assets/img/life.png" alt="def" />
+				<p>def : {user.def}</p>
+			</div>
+		</div>
+	</div>
 	{#if countOfItems}
 		<ul class="inventory">
 			{#each countOfItems as item, index}
