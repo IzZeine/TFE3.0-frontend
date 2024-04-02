@@ -1,0 +1,19 @@
+/*--------------------------------------------------------------------------
+Reset HTML
+--------------------------------------------------------------------------*/
+*,
+*:after,
+*:before {
+	list-style: none;
+	outline: unset;
+	border: none;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+a:focus,
+a:active,
+a:visited {
+	color: var(--txtPrimary);
+	text-decoration: none;
+}
