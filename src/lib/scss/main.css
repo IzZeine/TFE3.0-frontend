@@ -1,0 +1,454 @@
+/*--------------------------------------------------------------------------
+VARIABLES
+--------------------------------------------------------------------------*/
+:root {
+	--primary: #fc750c;
+	--BG: rgb(53, 46, 45);
+	--BGTranspary: rgba(0, 0, 0, 0.3);
+	--txtPrimary: #fdeabf;
+	--txtGrey: #8a817f;
+	--black: #000;
+}
+
+/*--------------------------------------------------------------------------
+FONTS
+--------------------------------------------------------------------------*/
+
+@font-face {
+	font-family: 'Deutsch';
+	src:
+		url('/assets/fonts/Deutsch.woff') format('woff'),
+		url('/assets/fonts/Deutsch.woff2') format('woff2');
+}
+
+/*--------------------------------------------------------------------------
+Reset HTML
+--------------------------------------------------------------------------*/
+*,
+*:after,
+*:before {
+	list-style: none;
+	outline: unset;
+	border: none;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+a:focus,
+a:active,
+a:visited {
+	color: var(--txtPrimary);
+	text-decoration: none;
+}
+
+/*--------------------------------------------------------------------------
+BODY
+--------------------------------------------------------------------------*/
+body {
+	background-color: var(--BG);
+	color: var(--txtPrimary);
+	font-family: 'Source Sans 3', sans-serif;
+	font-weight: 200;
+	overflow-y: hidden;
+	height: 100vh;
+	width: 100vw;
+}
+
+.container {
+	padding: 60px;
+}
+
+/*--------------------------------------------------------------------------
+TITLES
+--------------------------------------------------------------------------*/
+.h1 {
+	font-family: 'Deutsch', serif;
+	letter-spacing: 0.2rem;
+	font-weight: 400;
+	color: var(--primary);
+	font-size: 30px;
+}
+
+.h2 {
+	font-family: 'Source Serif 4', serif;
+	font-weight: 600;
+	font-size: 24px;
+}
+
+/*--------------------------------------------------------------------------
+FLUIDIMG
+--------------------------------------------------------------------------*/
+.fluidimg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/*--------------------------------------------------------------------------
+BTN PRIMARY
+--------------------------------------------------------------------------*/
+.btnPrimary {
+	padding: 12px 24px;
+	border-bottom: solid 1px var(--txtPrimary);
+	background-color: var(--BGTranspary);
+	color: var(--txtPrimary);
+	box-shadow: 3px 3px 6px var(--black);
+	font-family: 'Source Serif 4', serif;
+	font-weight: 600;
+	font-size: 18px;
+	transition: 0.1s;
+	/* position: absolute; */
+	/* bottom: 60px; */
+	margin-top: 18px;
+}
+
+.btnPrimary:disabled {
+	color: gray;
+	border-color: grey;
+}
+
+.btnPrimary:active {
+	box-shadow: none;
+	transform: translate(3px, 3px);
+}
+
+.btnPrimary:disabled:active {
+	box-shadow: 3px 3px 6px var(--black);
+	transform: none;
+}
+
+/*--------------------------------------------------------------------------
+MainPage
+--------------------------------------------------------------------------*/
+.logoImg {
+	max-width: 210px;
+	display: block;
+	margin: 0 auto;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.labelForm {
+	text-align: center;
+	display: block;
+	width: 100%;
+}
+
+.inputForm {
+	margin-top: 6px;
+	width: 100%;
+	height: 24px;
+	color: var(--txtPrimary);
+	background-color: var(--BGTranspary);
+	box-shadow: 1px 1px 6px var(--black);
+	text-align: center;
+	font-family: 'Deutsch', serif;
+	letter-spacing: 0.2rem;
+}
+
+.inputForm::placeholder {
+	/* padding-left: 12px; */
+	text-align: center;
+}
+
+.btnForm {
+	margin-top: 24px;
+}
+
+.btnsGames {
+	display: flex;
+	flex-direction: column;
+}
+
+.activeGames {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: red;
+	transition: 0.2s;
+	transform: translate(100%, 0);
+	background-color: var(--BG);
+}
+
+.activeGames.is-active {
+	transform: translate(0, 0);
+}
+
+.activeGames > .content > .btns {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 30px;
+}
+
+.btn-menuGames {
+	background: unset;
+	transition: 0.2s;
+}
+
+.btn-menuGames.return:active {
+	transform: translate(-3px, 0);
+}
+.btn-menuGames.refresh:active {
+	transform: rotate(360deg);
+}
+
+.btn-joinGames {
+	background: unset;
+	background-color: var(--BGTranspary);
+	padding: 6px 12px;
+	margin-top: 12px;
+	border-bottom: solid 1px var(--txtPrimary);
+	color: var(--txtPrimary);
+	box-shadow: 3px 3px 6px var(--black);
+	width: 100%;
+}
+
+.btn-joinGames:active {
+	box-shadow: none;
+	transform: translate(3px, 3px);
+}
+
+.activeGames > .content,
+.createGame > .content {
+	padding: 60px;
+}
+
+.btn-joinGames_statut {
+	margin-top: 6px;
+}
+
+.gameNameForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.gameNameForm_content {
+	text-align: center;
+}
+
+.errorCreateGame {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+	color: var(--txtGrey);
+}
+
+/*--------------------------------------------------------------------------
+HowToPlay
+--------------------------------------------------------------------------*/
+
+.howToPlay {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 60px;
+}
+
+.howToPlay-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.btnRules {
+	position: fixed;
+	bottom: 60px;
+}
+
+.btnRules > button {
+	position: relative;
+	bottom: 0;
+}
+
+.rulesList {
+	margin-top: 60px;
+	height: 270px;
+	overflow-y: scroll;
+}
+
+.rulesItem {
+	position: relative;
+}
+
+.rulesItem:before {
+	content: '';
+	background: url('../../assets/img/listArrow.svg');
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	padding-left: 9px;
+	margin-right: 6px;
+	margin-top: 6px;
+}
+
+/*--------------------------------------------------------------------------
+ChooseHero
+--------------------------------------------------------------------------*/
+
+.chooseHero {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 60px;
+}
+
+.heroImg {
+	width: 360px;
+}
+.arrowNavigate {
+	display: flex;
+}
+
+.arrowNavigate > button {
+	background-color: unset;
+}
+.arrowNavigate-item {
+	width: 24px;
+}
+.abilityTitle {
+	font-family: 'Source Serif 4', serif;
+	font-weight: 400;
+	margin-top: 24px;
+}
+.heroDescription {
+	text-align: center;
+	margin-top: 12px;
+}
+
+/*--------------------------------------------------------------------------
+Boardgame - Waiting users
+--------------------------------------------------------------------------*/
+
+.cardUserList {
+	display: flex;
+	gap: 30px;
+}
+
+/*--------------------------------------------------------------------------
+Boardgame - boardgame display
+--------------------------------------------------------------------------*/
+
+.boardGame {
+	position: relative;
+}
+
+.boardGameImg {
+	position: absolute;
+	z-index: -1;
+}
+
+.userPawn {
+	position: absolute;
+	display: inline-flex;
+	transition: 0.2s;
+	width: 2.75%;
+	/* border: 1px solid red; */
+}
+
+/*--------------------------------------------------------------------------
+userMap
+--------------------------------------------------------------------------*/
+
+.mapUserContainer {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.directionsArrows {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+}
+
+.directionArrow_img {
+	pointer-events: none;
+}
+
+.directionArrow_top {
+	grid-area: 1/2/1/3;
+}
+
+.directionArrow_bot {
+	grid-area: 3/2/3/3;
+}
+
+.directionArrow_left {
+	grid-area: 2/1/2/1;
+}
+
+.directionArrow_right {
+	grid-area: 2/3/2/3;
+}
+
+.directionArrow {
+	background-color: unset;
+}
+
+.directionArrow:disabled {
+	opacity: 20%;
+}
+
+.sideBarUser {
+	position: absolute;
+	display: flex;
+	gap: 60px;
+	bottom: 0;
+}
+
+.cardHero {
+	background-color: #3d3d3d;
+	position: absolute;
+	top: 100%;
+	height: 100%;
+	width: 100%;
+	transition: 0.2s;
+}
+
+.cardHero.is-active {
+	background-color: #3d3d3d;
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.inventory {
+	display: flex;
+	justify-content: center;
+}
+
+/*--------------------------------------------------------------------------
+PopUp
+--------------------------------------------------------------------------*/
+
+.popup {
+	z-index: 99;
+	position: absolute;
+	display: table;
+	text-align: center;
+	max-width: calc(100vw - 120px);
+	top: -30%;
+	left: 50%;
+	transform: translate(-50%, 0);
+	background-color: #505050;
+	padding: 12px 30px;
+	border-radius: 5px;
+	opacity: 0;
+	transition: 0.5s;
+}
+
+.popup.is-active {
+	top: 12px;
+	opacity: 100;
+}

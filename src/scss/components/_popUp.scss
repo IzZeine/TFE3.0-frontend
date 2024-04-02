@@ -1,0 +1,24 @@
+/*--------------------------------------------------------------------------
+PopUp
+--------------------------------------------------------------------------*/
+
+.popup {
+	z-index: 99;
+	position: absolute;
+	display: table;
+	text-align: center;
+	max-width: calc(100vw - 120px);
+	top: -30%;
+	left: 50%;
+	transform: translate(-50%, 0);
+	background-color: #505050;
+	padding: 12px 30px;
+	border-radius: 5px;
+	opacity: 0;
+	transition: 0.5s;
+}
+
+.popup.is-active {
+	top: 12px;
+	opacity: 100;
+}

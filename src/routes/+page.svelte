@@ -1,67 +1,87 @@
-<!-- Page de connection -->
 <script>
-// @ts-nocheck
+	// @ts-nocheck
 
-	import { onMount } from "svelte";
-    import { io } from "socket.io-client";
-    import { getUser } from "$lib";
-    import { clearStorage } from "$lib";
+	import { onMount } from 'svelte';
+	import { io } from 'socket.io-client';
+	import { getUser } from '$lib';
 
-    const socket = io("http://localhost:3000");
-    
-    let sessionID = "";    
-    let username = "";
-    let userID = "";
-    let user = "";
-    
-    onMount(async() => {
-        sessionID = sessionStorage.getItem("sessionID");
-        socket.on("connect", () => {
-            console.log("Connected to server")
-        });
-        // Écouter l'événement de réponse du serveur après la création d'utilisateur
-        socket.on("userCreated", (data) => {
-            userID = data.userID;
-            console.log("User created with ID:", userID);
-            sessionStorage.setItem("sessionID", userID);
-        });
-        
-        user = await getUser()
+	const socket = io('http://localhost:3000');
 
-    });
+	let sessionID = '';
+	let gameID = '';
+	let username = '';
+	let user = '';
+	let OnlineUsers = 0;
 
-    const onFormSubmit = async () => {
-        try {
-            console.log("Welcome " + username);
-            // Envoyer le nom d'utilisateur au serveur pour créer l'utilisateur
-            socket.emit("createUser", { username });
-        } catch (error) {
-            console.error("Error creating user:", error);
-            // Gérer les erreurs ici
-        }
-        //reload la page quand le form à été envoyé pour avoir le btn "jouer"
-        location.reload(true);
-    };
+	onMount(async () => {
+		sessionID = sessionStorage.getItem('sessionID');
+		if (sessionID) {
+			window.location.href = '/game';
+		}
+		gameID = sessionStorage.getItem('gameID');
+		if (gameID) {
+			window.location.href = '/game/' + gameID;
+		}
+		socket.on('connect', async () => {
+			console.log('Connected to server');
+		});
+
+		// Écouter l'événement de réponse du serveur après la création d'utilisateur
+		socket.on('userCreated', (id) => {
+			console.log(id);
+			sessionStorage.setItem('sessionID', id);
+			window.location.reload();
+		});
+
+		socket.on('updateUsersCount', (count) => {
+			OnlineUsers = count;
+		});
+
+		if (screen.width > 500) {
+			window.location.href = '/boardGame';
+		}
+
+		user = await getUser(socket);
+		if (user) {
+			window.location.href = '/game';
+		}
+	});
+
+	const onFormSubmit = async () => {
+		try {
+			// Envoyer le nom d'utilisateur au serveur pour créer l'utilisateur
+			socket.emit('createUser', username);
+		} catch (error) {
+			console.error('Error creating user:', error);
+		}
+		//reload la page quand le form à été envoyé pour avoir le btn "jouer"
+	};
+
+	// disabled btn if the input is empty
+	function isDirty(username) {
+		return username == '';
+	}
 </script>
 
-<!-- html ici -->
-
-{#if sessionID}
-    {#if user}
-        <h2>Welcome {user.username}</h2>
-        <button><a href="/game">jouer</a></button>
-        <button on:click={clearStorage}>RESET</button>
-        {:else}
-            <p>User not found</p>
-        <button on:click={clearStorage}>RESET</button>
-    {/if}
-    {:else}
-        <form class="form-example" on:submit|preventDefault={onFormSubmit}>
-            <div class="form-example">
-                <label for="username">Enter your username:</label>
-                <input type="text" name="username" id="username" required bind:value={username}/>
-            </div>
-            <button>submit</button>
-        </form>
-{/if}
-        
+<div class="container">
+	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
+	<form on:submit|preventDefault={onFormSubmit} class="form">
+		<div>
+			<label for="username" class="labelForm">Enter your username:</label>
+			<input
+				type="text"
+				name="username"
+				id="username"
+				class="inputForm"
+				placeholder="ex : IzZeine"
+				maxlength="12"
+				autocomplete="off"
+				data-lpignore="true"
+				data-form-type="other"
+				required
+				bind:value={username}
+			/>
+		</div>
+		<button class="btnPrimary btnForm" disabled={isDirty(username)}>Jouer</button>
+	</form>
+</div>
