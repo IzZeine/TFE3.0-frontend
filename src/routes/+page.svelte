@@ -5,7 +5,7 @@
 	import { io } from 'socket.io-client';
 	import { getUser } from '$lib';
 
-	const socket = io('https://momorpg-server.netlify.app');
+	const socket = io('http://localhost:3000');
 
 	let sessionID = '';
 	let gameID = '';

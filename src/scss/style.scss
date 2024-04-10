@@ -221,8 +221,16 @@ Boardgame - Waiting users
 --------------------------------------------------------------------------*/
 
 .cardUserList {
-	display: flex;
+	margin-top: 30px;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
 	gap: 30px;
+}
+
+.cardUser-Empty,
+.cardUser {
+	border: solid 3px var(--BGTranspary);
+	padding: 6px;
 }
 
 /*--------------------------------------------------------------------------
@@ -251,9 +259,12 @@ userMap
 --------------------------------------------------------------------------*/
 
 .mapUserContainer {
+	padding: 60px 60px 120px;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
+	justify-content: space-between;
 }
 
 .directionsArrows {

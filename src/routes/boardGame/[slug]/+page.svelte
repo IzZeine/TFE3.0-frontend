@@ -5,11 +5,13 @@
 	import { onMount } from 'svelte';
 	import { io } from 'socket.io-client';
 	import BoardGame from '$lib/composants/BoardGame.svelte';
+
 	const socket = io('http://localhost:3000');
 
 	let game = '';
 	let activeUsers = [];
 	let listOfHeroes;
+	let numberOfColGrid;
 
 	onMount(async () => {
 		game = await getGame();
@@ -38,6 +40,11 @@
 			if (activeUsers.length >= 2 && activeUsers.every(conditionHero) && game.statut == 'closed') {
 				let btnPlay = document.querySelector('.js-btn-play');
 				btnPlay.removeAttribute('disabled');
+			}
+
+			numberOfColGrid = 6;
+			if (game.statut == 'closed') {
+				numberOfColGrid = activeUsers.length;
 			}
 		});
 
@@ -81,9 +88,15 @@
 {:else}
 	<div class="container">
 		<h1 class="h1">{game.name}</h1>
-		<ul class="cardUserList">
-			<!-- @TODO : mettre de base 6 emplacements vide à remplir dès que qql rejoint la game -->
-			{#each activeUsers as user}
+		<ul class="cardUserList" style="grid-template-columns: repeat({numberOfColGrid}, 1fr);">
+			{#if activeUsers.length < 1}
+				{#each { length: 6 } as _, index}
+					<li class="cardUser-Empty"></li>
+				{/each}
+			{/if}
+			{#each activeUsers as user, index}
+				{@const numberOfLi = 6 - activeUsers.length}
+				{@const isLast = index === activeUsers.length - 1}
 				<li class="cardUser">
 					<p class="cardUser_name">{user.username}</p>
 					{#if game.statut == 'closed'}
@@ -99,6 +112,13 @@
 						{/if}
 					{/if}
 				</li>
+				{#if game.statut == 'waiting'}
+					{#if isLast}
+						{#each { length: numberOfLi } as _, index}
+							<li class="cardUser-Empty"></li>
+						{/each}
+					{/if}
+				{/if}
 			{/each}
 		</ul>
 
@@ -112,3 +132,6 @@
 {/if}
 
 <button on:click={clearStorage}>Clear</button>
+
+<style>
+</style>

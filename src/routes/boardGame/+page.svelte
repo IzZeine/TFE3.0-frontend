@@ -2,10 +2,10 @@
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import { io } from 'socket.io-client';
+
 	const socket = io('http://localhost:3000');
 
 	let gameID;
-	// @TODO : quand il y a au moins 2 user autoriser le bouton play
 	let OnlineUsers = 0;
 	let errorMessage = '';
 	let gameName = '';

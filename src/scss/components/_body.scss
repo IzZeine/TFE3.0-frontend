@@ -11,6 +11,12 @@ body {
 	width: 100vw;
 }
 
+.maxContent {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
 .container {
 	padding: 60px;
 }

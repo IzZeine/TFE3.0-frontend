@@ -92,7 +92,6 @@
 
 {#if sessionID}
 	{#if user}
-		{user.username}
 		{#if game.statut == 'waiting'}
 			<GameRules />
 		{/if}

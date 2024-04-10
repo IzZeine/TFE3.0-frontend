@@ -18,7 +18,10 @@
 	let myInventory = [];
 	let countOfItems;
 	let itemInRoom;
-	let dice1, dice2;
+	let dice1 = 1,
+		dice2 = 1;
+
+	console.log(dice1, dice2);
 
 	onMount(async () => {
 		sessionID = sessionStorage.getItem('sessionID');
@@ -219,10 +222,12 @@
 
 		let message =
 			'Vous avez gagné : \n' +
+			"<div class='itemInPopUpDiv'>" +
 			"<img class='fluidimg itemInPopUp' src='/assets/img/" +
 			itemInRoom.nameId +
 			".PNG'	alt={itemInRoom.nameId}/>" +
-			itemInRoom.name;
+			itemInRoom.name +
+			'</div>';
 		popUp(message);
 		displayArrowsDirections();
 		socket.emit('getItemInRoom', myRoom);
@@ -247,62 +252,67 @@
 	// @TODO : si le boss est mort ou que l'ensemble de items restants ne suffisent pas pour battre le boss, le jeu se termine
 </script>
 
-{#if user.life > 0}
-	<ul style="display: flex; gap:12px">
-		{#each { length: user.life } as item, index}
-			<li>X</li>
-		{/each}
-	</ul>
-{:else}
+{#if user.life == 0}
 	<p>you are dead..</p>
 {/if}
 
-<p>{user.hero}</p>
-<div class="container mapUserContainer">
-	<h1 class="h1">Your room : {user.room}</h1>
-	<div class="directionsArrows">
-		<button class="directionArrow directionArrow_top" id="top" disabled on:click={askToChangeRoom}>
-			<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
-		</button>
-		<button
-			class="directionArrow directionArrow_right"
-			id="right"
-			disabled
-			on:click={askToChangeRoom}
-		>
-			<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
-		</button>
-		<button class="directionArrow directionArrow_bot" id="bot" disabled on:click={askToChangeRoom}>
-			<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
-		</button>
-		<button
-			class="directionArrow directionArrow_left"
-			id="left"
-			disabled
-			on:click={askToChangeRoom}
-		>
-			<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
-		</button>
-	</div>
-	{#if myRoom && user.team == 'hero'}
-		<div class="itemInRoom">
-			{#if itemInRoom}
-				<img class="fluidimg" src="/assets/img/{itemInRoom.nameId}.PNG" alt={itemInRoom.nameId} />
-				<p>{itemInRoom.name}</p>
-				<p>{itemInRoom.rarity}</p>
-				<p>{itemInRoom.condition}</p>
-				{#if dice1 && dice2}
-					<div class="dices">
-						<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
-						<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
-					</div>
+<div class="maxContent">
+	<div class="mapUserContainer">
+		<h1 class="h1">Salle {user.room}</h1>
+
+		{#if myRoom && user.team == 'hero'}
+			<div class="itemInRoom">
+				{#if itemInRoom}
+					<img class="fluidimg" src="/assets/img/{itemInRoom.nameId}.PNG" alt={itemInRoom.nameId} />
+					<p>{itemInRoom.name} / {itemInRoom.rarity} / {itemInRoom.condition}</p>
+					{#if dice1 && dice2}
+						<div class="dices">
+							<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
+							<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
+							<p>{dice1 + dice2}</p>
+						</div>
+					{/if}
+					<button class="getItemBtn btnPrimary" on:click={tryToGetItemInRoom}>Attraper</button>
+				{:else}
+					<p>no item here</p>
 				{/if}
-				<button class="getItemBtn" on:click={tryToGetItemInRoom}>Attraper</button>
-			{:else}
-				<p>no item here</p>
-			{/if}
+			</div>
+		{/if}
+		<div class="directionsArrows">
+			<button
+				class="directionArrow directionArrow_top"
+				id="top"
+				disabled
+				on:click={askToChangeRoom}
+			>
+				<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
+			</button>
+			<button
+				class="directionArrow directionArrow_right"
+				id="right"
+				disabled
+				on:click={askToChangeRoom}
+			>
+				<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
+			</button>
+			<button
+				class="directionArrow directionArrow_bot"
+				id="bot"
+				disabled
+				on:click={askToChangeRoom}
+			>
+				<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
+			</button>
+			<button
+				class="directionArrow directionArrow_left"
+				id="left"
+				disabled
+				on:click={askToChangeRoom}
+			>
+				<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
+			</button>
 		</div>
-	{/if}
+	</div>
 </div>
 <div class="sideBarUser">
 	<button class="showCardHero" on:click={displayCardHero}>

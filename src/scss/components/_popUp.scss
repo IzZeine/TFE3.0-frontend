@@ -22,3 +22,13 @@ PopUp
 	top: 12px;
 	opacity: 100;
 }
+
+.itemInPopUpDiv {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+
+.itemInPopUp {
+	width: 36px;
+}
