@@ -63,7 +63,7 @@
 	};
 </script>
 
-<!-- @TODO : add QR Code -->
+<img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
 
 <div class="createGame">
 	<div class="content">

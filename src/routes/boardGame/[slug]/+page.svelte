@@ -76,7 +76,7 @@
 	};
 </script>
 
-<!-- @TODO : add QR Code -->
+<img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
 
 {#if game.statut == 'started'}
 	{#if activeUsers.length > 0}

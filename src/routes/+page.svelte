@@ -12,7 +12,6 @@
 	let gameID = '';
 	let username = '';
 	let user = '';
-	let OnlineUsers = 0;
 
 	const onFormSubmit = async () => {
 		try {
@@ -47,35 +46,26 @@
 
 	onMount(async () => {
 		onResize();
+
 		sessionID = sessionStorage.getItem('sessionID');
 		if (sessionID) {
-			window.location.href = '/game';
+			goto('/game');
 		}
+
 		gameID = sessionStorage.getItem('gameID');
 		if (gameID) {
-			window.location.href = '/game/' + gameID;
+			goto(`/game/${gameID}`);
 		}
+
 		socket.on('connect', async () => {
 			console.log('Connected to server');
-		});
-		// Écouter l'événement de réponse du serveur après la création d'utilisateur
-		/*
-		socket.on('userCreated', (id) => {
-			console.log(id);
-
-			//window.location.reload();
-		});
-		 */
-
-		socket.on('updateUsersCount', (count) => {
-			OnlineUsers = count;
 		});
 
 		user = await getUser(socket);
 		if (user) {
-			//window.location.href = '/game';
 			goto('/game');
 		}
+
 		return () => {
 			socket.offAny();
 		};
