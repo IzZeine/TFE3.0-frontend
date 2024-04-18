@@ -2,11 +2,12 @@
 	// @ts-nocheck
 
 	import { onMount } from 'svelte';
-	import { io } from 'socket.io-client';
 	import { getUser } from '$lib';
 	import { clearStorage } from '$lib';
 
-	const socket = io('http://localhost:3000');
+	//const socket = io(process.env.VITE_BACKEND_URL);
+
+	export let data;
 
 	let sessionID = '';
 	let user = '';
@@ -25,17 +26,17 @@
 		if (gameID) {
 			window.location.href = '/game/' + gameID;
 		}
-		socket.on('connect', async () => {
+		data.socket.on('connect', async () => {
 			console.log('Connected to server');
 		});
 
 		// Écouter l'événement de réponse du serveur après la création d'utilisateur
-		socket.on('userCreated', (id) => {
+		data.socket.on('userCreated', (id) => {
 			console.log(id);
 			sessionStorage.setItem('sessionID', id);
 		});
 
-		socket.on('updateUsersCount', (count) => {
+		data.socket.on('updateUsersCount', (count) => {
 			OnlineUsers = count;
 		});
 
