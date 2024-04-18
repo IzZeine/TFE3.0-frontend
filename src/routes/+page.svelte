@@ -39,7 +39,6 @@
 	const onResize = () => {
 		console.log('onResize', innerWidth);
 		if (innerWidth > 500) {
-			//window.location.href = '/boardGame';
 			throw goto('/boardGame');
 		}
 	};
