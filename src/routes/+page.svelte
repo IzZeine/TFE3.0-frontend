@@ -6,8 +6,6 @@
 	import { goto } from '$app/navigation';
 
 	export let data;
-
-	//const socket = io(import.meta.env.VITE_BACKEND_URL);
 	const socket = data.socket;
 
 	let sessionID = '';
@@ -23,8 +21,8 @@
 				console.log('created user', userId);
 				sessionStorage.setItem('sessionID', userId);
 				user = await getUser(socket);
-				if (user){
-					goto("/game")
+				if (user) {
+					goto('/game');
 				}
 			});
 		} catch (error) {
@@ -84,11 +82,7 @@
 	});
 </script>
 
-
-<svelte:window
-	on:resize={onResize}
-	bind:innerWidth
-/>
+<svelte:window on:resize={onResize} bind:innerWidth />
 
 <div class="container">
 	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />

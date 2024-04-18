@@ -5,10 +5,7 @@
 	import { getUser } from '$lib';
 	import { clearStorage } from '$lib';
 
-	//const socket = io(process.env.VITE_BACKEND_URL);
-
 	export let data;
-
 	const socket = data.socket;
 
 	let sessionID = '';
@@ -89,19 +86,19 @@
 				askActiveGames();
 				displayGames(evt);
 			}}
-			class="btnPrimary">Rejoindre
-		</button
-		>
+			class="btnPrimary"
+			>Rejoindre
+		</button>
 	</div>
 
 	<div class="activeGames">
 		<div class="content">
 			<div class="btns">
 				<button class="btn-menuGames return" on:click={hideGames}
-				><img src="/assets/img/return.svg" alt="return" /></button
+					><img src="/assets/img/return.svg" alt="return" /></button
 				>
 				<button class="btn-menuGames refresh" on:click={askActiveGames}
-				><img src="/assets/img/refresh.svg" alt="refresh" /></button
+					><img src="/assets/img/refresh.svg" alt="refresh" /></button
 				>
 			</div>
 			<ul>

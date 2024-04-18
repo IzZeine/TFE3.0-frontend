@@ -1,13 +1,13 @@
 <script>
 	// @ts-nocheck
 	import { onMount } from 'svelte';
-	import { io } from 'socket.io-client';
 	import { getHeroes, getItems, getUser, clearStorage, getGame } from '$lib';
 	import GameRules from '$lib/composants/GameRules.svelte';
 	import ChooseHero from '$lib/composants/ChooseHero.svelte';
 	import Map from '$lib/composants/Map.svelte';
 
-	const socket = io('http://localhost:3000');
+	export let data;
+	const socket = data.socket;
 
 	let gameID = ''; // tout doit être relatif à la partie en cours
 	let sessionID = '';

@@ -3,10 +3,10 @@
 
 	import { clearStorage, getGame, getHeroes } from '$lib';
 	import { onMount } from 'svelte';
-	import { io } from 'socket.io-client';
 	import BoardGame from '$lib/composants/BoardGame.svelte';
 
-	const socket = io('http://localhost:3000');
+	export let data;
+	const socket = data.socket;
 
 	let game = '';
 	let activeUsers = [];
@@ -132,6 +132,3 @@
 {/if}
 
 <button on:click={clearStorage}>Clear</button>
-
-<style>
-</style>
