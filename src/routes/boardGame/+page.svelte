@@ -37,9 +37,9 @@
 	}
 
 	let url = getMyUrlForDev()
-	console.log(`${getMyUrlForDev()}/creategame`)
+	console.log(`${url}/creategame`)
 	let createGame = async () => {
-		const response = await fetch(`${getMyUrlForDev()}/creategame`, {
+		const response = await fetch(`${url}/creategame`, {
 		// const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {
