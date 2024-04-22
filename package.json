@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"start": "node build/index.js",
+		"start": "node -r dotenv/config build/index.js",
 		"dev": "vite dev",
 		"host": "vite --host",
 		"build": "vite build",
@@ -33,6 +33,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.0.1",
+		"dotenv": "^16.4.5",
 		"socket.io-client": "^4.7.4"
 	}
 }

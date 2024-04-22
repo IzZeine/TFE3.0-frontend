@@ -37,7 +37,6 @@
 
 	console.log(`${import.meta.env.VITE_BACKEND_URL}/creategame`)
 	let createGame = async () => {
-
 		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {
