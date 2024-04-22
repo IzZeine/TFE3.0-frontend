@@ -3,6 +3,7 @@
 
 	import { onMount } from 'svelte';
 	import { getUser } from '$lib';
+	import { goto } from '$app/navigation';
 	import { clearStorage } from '$lib';
 
 	export let data;
@@ -15,6 +16,7 @@
 	let activeGames = [];
 
 	onMount(async () => {
+		onResize();
 		sessionID = sessionStorage.getItem('sessionID');
 		console.log(sessionID);
 		if (!sessionID) {
@@ -70,7 +72,17 @@
 		const display = document.querySelector('.activeGames');
 		display.classList.remove('is-active');
 	};
+
+	let innerWidth;
+	const onResize = () => {
+		console.log('onResize', innerWidth);
+		if (innerWidth > 500) {
+			throw goto('/boardGame');
+		}
+	};
 </script>
+
+<svelte:window on:resize={onResize} bind:innerWidth />
 
 <div class="container">
 	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />

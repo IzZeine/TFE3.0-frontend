@@ -1,5 +1,6 @@
 <script>
 	// @ts-nocheck
+	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	export let data;
@@ -11,6 +12,8 @@
 	let gameName = '';
 
 	onMount(async () => {
+		onResize();
+
 		gameID = sessionStorage.getItem('gameID');
 
 		if (gameID) {
@@ -36,10 +39,7 @@
 	}
 
 	let createGame = async () => {
-		if (screen.width < 500) {
-			window.location.href = '/';
-			return;
-		}
+
 		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {
@@ -61,7 +61,17 @@
 			errorMessage = 'Ce nom existe dejà !';
 		}
 	};
+
+	let innerWidth;
+	const onResize = () => {
+		console.log('onResize', innerWidth);
+		if (innerWidth < 500) {
+			throw goto('/');
+		}
+	};
 </script>
+
+<svelte:window on:resize={onResize} bind:innerWidth />
 
 <img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
 

@@ -4,6 +4,7 @@
 	import { getHeroes, getItems, getUser, clearStorage, getGame } from '$lib';
 	import GameRules from '$lib/composants/GameRules.svelte';
 	import ChooseHero from '$lib/composants/ChooseHero.svelte';
+	import { goto } from '$app/navigation';
 	import Map from '$lib/composants/Map.svelte';
 
 	export let data;
@@ -19,6 +20,7 @@
 	let wait = true;
 
 	onMount(async () => {
+		onResize()
 		sessionID = sessionStorage.getItem('sessionID');
 		if (!sessionID) {
 			clearStorage();
@@ -88,7 +90,18 @@
 	socket.on('registeredHero', async () => {
 		user = await getUser(socket);
 	});
+
+	let innerWidth;
+	const onResize = () => {
+		console.log('onResize', innerWidth);
+		if (innerWidth > 500) {
+			throw goto('/boardGame');
+		}
+	};
 </script>
+
+<svelte:window on:resize={onResize} bind:innerWidth />
+
 
 {#if sessionID}
 	{#if user}

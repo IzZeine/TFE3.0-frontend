@@ -2,6 +2,7 @@
 	// @ts-nocheck
 
 	import { clearStorage, getGame, getHeroes } from '$lib';
+	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import BoardGame from '$lib/composants/BoardGame.svelte';
 
@@ -14,15 +15,13 @@
 	let numberOfColGrid;
 
 	onMount(async () => {
+		onResize();
+
 		game = await getGame();
 
 		if (!game) {
 			clearStorage();
 			window.location.href = '/boardGame';
-		}
-
-		if (screen.width < 500) {
-			window.location.href = '/';
 		}
 
 		socket.emit('isActiveUsers', game.gameId);
@@ -74,7 +73,17 @@
 		console.log('start');
 		window.location.reload();
 	};
+
+	let innerWidth;
+	const onResize = () => {
+		console.log('onResize', innerWidth);
+		if (innerWidth < 500) {
+			throw goto('/');
+		}
+	};
 </script>
+
+<svelte:window on:resize={onResize} bind:innerWidth />
 
 <img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
 
