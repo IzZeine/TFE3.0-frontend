@@ -36,9 +36,10 @@
 		return username == '';
 	}
 
+	let url = getMyUrlForDev()
 	console.log(`${getMyUrlForDev()}/creategame`)
 	let createGame = async () => {
-		const response = await fetch(`${getMyUrlForDev}/creategame`, {
+		const response = await fetch(`${getMyUrlForDev()}/creategame`, {
 		// const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {
