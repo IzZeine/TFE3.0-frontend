@@ -21,7 +21,7 @@
 				sessionStorage.setItem('sessionID', userId);
 				user = await getUser(socket);
 				if (user) {
-					goto('/game');
+					throw goto('/game');
 				}
 			});
 		} catch (error) {
@@ -48,12 +48,12 @@
 
 		sessionID = sessionStorage.getItem('sessionID');
 		if (sessionID) {
-			goto('/game');
+			throw goto('/game');
 		}
 
 		gameID = sessionStorage.getItem('gameID');
 		if (gameID) {
-			goto(`/game/${gameID}`);
+			throw goto(`/game/${gameID}`);
 		}
 
 		socket.on('connect', async () => {
@@ -62,12 +62,12 @@
 
 		user = await getUser(socket);
 		if (user) {
-			goto('/game');
+			throw goto('/game');
 		}
 
-		return () => {
-			socket.offAny();
-		};
+		// return () => {
+		// 	socket.offAny();
+		// };
 	});
 </script>
 

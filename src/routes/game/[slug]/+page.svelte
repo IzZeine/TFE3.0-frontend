@@ -24,12 +24,12 @@
 		sessionID = sessionStorage.getItem('sessionID');
 		if (!sessionID) {
 			clearStorage();
-			window.location.href = '/';
+			throw goto('/')
 		}
 
 		gameID = sessionStorage.getItem('gameID');
 		if (!gameID) {
-			window.location.href = '/game';
+			throw goto('/game')
 		}
 
 		console.log('session Id :', sessionID);
@@ -42,7 +42,7 @@
 				user = await getUser(socket);
 				if (!user) {
 					clearStorage();
-					window.location.href = '/';
+					throw goto('/')
 				}
 				socket.emit('joinGame', gameID);
 			}
@@ -52,14 +52,8 @@
 		socket.on('deco', () => {
 			alert('a lot of users');
 			clearStorage();
-			window.location.href = '/game';
+			throw goto('/game')
 		});
-
-		if (screen.width > 500) {
-			{
-				window.location.href = '/boardGame';
-			}
-		}
 
 		//trouver la game
 		game = await getGame();

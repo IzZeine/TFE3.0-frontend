@@ -17,7 +17,7 @@
 		gameID = sessionStorage.getItem('gameID');
 
 		if (gameID) {
-			window.location.href = '/boardGame/' + gameID;
+			throw goto(`/boardGame/${gameID}`)
 		}
 
 		socket.on('connect', async () => {
@@ -28,10 +28,6 @@
 		socket.on('updateUsersCount', (count) => {
 			OnlineUsers = count;
 		});
-
-		if (screen.width < 500) {
-			window.location.href = '/';
-		}
 	});
 
 	// disabled btn if the input is empty
@@ -57,7 +53,7 @@
 			console.log(gameJson);
 			gameID = gameJson.gameId;
 			sessionStorage.setItem('gameID', gameID);
-			window.location.href = '/boardGame/' + gameID;
+			throw goto(`/boardGame/${gameID}`)
 		} else {
 			console.error('Failed to create game');
 			errorMessage = 'Ce nom existe dejà !';

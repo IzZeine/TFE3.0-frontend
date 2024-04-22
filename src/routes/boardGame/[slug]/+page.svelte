@@ -21,7 +21,7 @@
 
 		if (!game) {
 			clearStorage();
-			window.location.href = '/boardGame';
+			throw goto('/boardGame')
 		}
 
 		socket.emit('isActiveUsers', game.gameId);
@@ -71,7 +71,7 @@
 	let startGame = () => {
 		socket.emit('startGame', game.gameId);
 		console.log('start');
-		window.location.reload();
+		throw goto(`/boardGame/${game.gameId}`)
 	};
 
 	let innerWidth;

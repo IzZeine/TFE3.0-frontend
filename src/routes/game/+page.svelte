@@ -17,38 +17,37 @@
 
 	onMount(async () => {
 		onResize();
+
 		sessionID = sessionStorage.getItem('sessionID');
 		console.log(sessionID);
 		if (!sessionID) {
 			clearStorage();
-			window.location.href = '/';
+			throw goto('/')
 		}
+
 		gameID = sessionStorage.getItem('gameID');
 		if (gameID) {
-			window.location.href = '/game/' + gameID;
+			throw goto(`/game/${gameID}`)
 		}
-		data.socket.on('connect', async () => {
+
+		socket.on('connect', async () => {
 			console.log('Connected to server');
 		});
 
 		// Écouter l'événement de réponse du serveur après la création d'utilisateur
-		data.socket.on('userCreated', (id) => {
+		socket.on('userCreated', (id) => {
 			console.log(id);
 			sessionStorage.setItem('sessionID', id);
 		});
 
-		data.socket.on('updateUsersCount', (count) => {
+		socket.on('updateUsersCount', (count) => {
 			OnlineUsers = count;
 		});
-
-		if (screen.width > 500) {
-			window.location.href = '/boardGame';
-		}
 
 		user = await getUser(socket);
 		if (!user) {
 			clearStorage();
-			window.location.href = '/';
+			throw goto('/')
 		}
 	});
 
@@ -75,7 +74,8 @@
 
 	let innerWidth;
 	const onResize = () => {
-		if (innerWidth > 500) {
+		if (screen.width > 500) {
+			console.log("enter")
 			throw goto('/boardGame');
 		}
 	};
