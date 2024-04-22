@@ -37,7 +37,8 @@
 
 	console.log(`${import.meta.env.VITE_BACKEND_URL}/creategame`)
 	let createGame = async () => {
-		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
+		const response = await fetch(`https://tfe30-backend.up.railway.app/creategame`, {
+		// const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
