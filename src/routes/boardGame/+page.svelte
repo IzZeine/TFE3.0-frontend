@@ -2,9 +2,10 @@
 	// @ts-nocheck
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { io } from 'socket.io-client';
 
-	export let data;
-	const socket = data.socket;
+	// export let data;
+	const socket = io('https://tfe30-backend.up.railway.app');
 
 	let gameID;
 	let OnlineUsers = 0;
