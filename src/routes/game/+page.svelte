@@ -2,7 +2,7 @@
 	// @ts-nocheck
 
 	import { onMount } from 'svelte';
-	import { getUser } from '$lib';
+	import { getMyUrlForDev, getUser } from '$lib';
 	import { goto } from '$app/navigation';
 	import { clearStorage } from '$lib';
 
@@ -14,6 +14,7 @@
 	let gameID = '';
 	let OnlineUsers = 0;
 	let activeGames = [];
+	let url = getMyUrlForDev()
 
 	onMount(async () => {
 		onResize();
@@ -57,7 +58,7 @@
 	};
 
 	let askActiveGames = async () => {
-		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/activegames`);
+		const response = await fetch(`${url}/activegames`);
 		const activeGamesJson = await response.json();
 		activeGames = [...activeGamesJson];
 	};

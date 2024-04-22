@@ -11,6 +11,7 @@
 	let OnlineUsers = 0;
 	let errorMessage = '';
 	let gameName = '';
+	let url = getMyUrlForDev()
 
 	onMount(async () => {
 		onResize();
@@ -36,7 +37,6 @@
 		return username == '';
 	}
 
-	let url = getMyUrlForDev()
 	console.log(`${url}/creategame`)
 	let createGame = async () => {
 		const response = await fetch(`${url}/creategame`, {

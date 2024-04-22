@@ -1,7 +1,9 @@
 // @ts-nocheck
+import { goto } from '$app/navigation';
+
 let clearStorage = () => {
 	sessionStorage.clear();
-	location.reload(true);
+	throw goto('/');
 };
 
 export { clearStorage };

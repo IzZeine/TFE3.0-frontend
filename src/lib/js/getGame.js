@@ -1,10 +1,13 @@
 // @ts-nocheck
 
+import { getMyUrlForDev } from './getMyUrlForDev';
+
 async function getGame() {
 	let gameID = sessionStorage.getItem('gameID');
 	let game = '';
+	let url = getMyUrlForDev();
 	try {
-		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/games`);
+		const response = await fetch(`${url}/games`);
 		const gamesJson = await response.json();
 		game = gamesJson.find((game) => game.gameId === gameID);
 		return game;

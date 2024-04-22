@@ -1,8 +1,11 @@
 // @ts-nocheck
 
+import { getMyUrlForDev } from './getMyUrlForDev';
+
 async function getItems() {
+	let url = getMyUrlForDev();
 	try {
-		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/items`);
+		const response = await fetch(`${url}/items`);
 		const itemsJson = await response.json();
 		return itemsJson;
 	} catch (error) {

@@ -1,8 +1,11 @@
 // @ts-nocheck
 
+import { getMyUrlForDev } from './getMyUrlForDev';
+
 async function getRoomsConnections() {
+	let url = getMyUrlForDev();
 	try {
-		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/roomsConnections`);
+		const response = await fetch(`${url}/roomsConnections`);
 		const roomsConnectionsJson = await response.json();
 		return roomsConnectionsJson;
 	} catch (error) {

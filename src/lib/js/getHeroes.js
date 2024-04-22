@@ -1,8 +1,11 @@
 // @ts-nocheck
 
+import { getMyUrlForDev } from './getMyUrlForDev';
+
 async function getHeroes() {
+	let url = getMyUrlForDev();
 	try {
-		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/heroes`);
+		const response = await fetch(`${url}/heroes`);
 		const heroesJson = await response.json();
 		return heroesJson;
 	} catch (error) {
