@@ -1,11 +1,11 @@
 <script>
 	// @ts-nocheck
 	import { goto } from '$app/navigation';
+	import { getMyUrlForDev } from '$lib';
 	import { onMount } from 'svelte';
-	import { io } from 'socket.io-client';
 
-	// export let data;
-	const socket = io('https://tfe30-backend.up.railway.app');
+	export let data;
+	const socket = data.socket
 
 	let gameID;
 	let OnlineUsers = 0;
@@ -36,9 +36,9 @@
 		return username == '';
 	}
 
-	console.log(`${import.meta.env.VITE_BACKEND_URL}/creategame`)
+	console.log(`${getMyUrlForDev()}/creategame`)
 	let createGame = async () => {
-		const response = await fetch(`https://tfe30-backend.up.railway.app/creategame`, {
+		const response = await fetch(`${getMyUrlForDev}/creategame`, {
 		// const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {

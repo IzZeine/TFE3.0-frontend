@@ -20,3 +20,6 @@ export { getGame };
 
 import { getRoomsConnections } from './js/getRoomsConnections';
 export { getRoomsConnections };
+
+import { getMyUrlForDev } from './js/getMyUrlForDev';
+export { getMyUrlForDev };
