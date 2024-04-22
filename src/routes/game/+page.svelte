@@ -75,7 +75,6 @@
 
 	let innerWidth;
 	const onResize = () => {
-		console.log('onResize', innerWidth);
 		if (innerWidth > 500) {
 			throw goto('/boardGame');
 		}

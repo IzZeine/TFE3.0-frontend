@@ -22,6 +22,7 @@
 
 		socket.on('connect', async () => {
 			console.log('Connected to server');
+			console.log(socket)
 		});
 
 		socket.on('updateUsersCount', (count) => {
@@ -40,6 +41,7 @@
 
 	let createGame = async () => {
 
+		console.log(`${import.meta.env.VITE_BACKEND_URL}/creategame`)
 		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {
@@ -64,7 +66,6 @@
 
 	let innerWidth;
 	const onResize = () => {
-		console.log('onResize', innerWidth);
 		if (innerWidth < 500) {
 			throw goto('/');
 		}
