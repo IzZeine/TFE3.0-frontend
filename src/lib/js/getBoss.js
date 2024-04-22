@@ -2,7 +2,7 @@
 
 async function getBoss() {
 	try {
-		const response = await fetch('http://localhost:3000/boss');
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/boss`);
 		const bossJson = await response.json();
 		return bossJson;
 	} catch (error) {

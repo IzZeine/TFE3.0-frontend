@@ -4,7 +4,7 @@ async function getGame() {
 	let gameID = sessionStorage.getItem('gameID');
 	let game = '';
 	try {
-		const response = await fetch('http://localhost:3000/games');
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/games`);
 		const gamesJson = await response.json();
 		game = gamesJson.find((game) => game.gameId === gameID);
 		return game;

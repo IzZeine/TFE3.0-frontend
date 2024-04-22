@@ -2,7 +2,7 @@
 
 async function getHeroes() {
 	try {
-		const response = await fetch('http://localhost:3000/heroes');
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/heroes`);
 		const heroesJson = await response.json();
 		return heroesJson;
 	} catch (error) {

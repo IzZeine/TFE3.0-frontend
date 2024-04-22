@@ -56,7 +56,7 @@
 	};
 
 	let askActiveGames = async () => {
-		const response = await fetch('http://localhost:3000/activegames');
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/activegames`);
 		const activeGamesJson = await response.json();
 		activeGames = [...activeGamesJson];
 	};

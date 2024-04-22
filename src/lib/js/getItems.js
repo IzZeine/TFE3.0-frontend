@@ -2,7 +2,7 @@
 
 async function getItems() {
 	try {
-		const response = await fetch('http://localhost:3000/items');
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/items`);
 		const itemsJson = await response.json();
 		return itemsJson;
 	} catch (error) {

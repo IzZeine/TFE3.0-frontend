@@ -2,7 +2,7 @@
 
 async function getRoomsConnections() {
 	try {
-		const response = await fetch('http://localhost:3000/roomsConnections');
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/roomsConnections`);
 		const roomsConnectionsJson = await response.json();
 		return roomsConnectionsJson;
 	} catch (error) {

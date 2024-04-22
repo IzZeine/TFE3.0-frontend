@@ -40,7 +40,7 @@
 			window.location.href = '/';
 			return;
 		}
-		const response = await fetch('http://localhost:3000/creategame', {
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
