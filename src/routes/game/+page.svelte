@@ -14,7 +14,7 @@
 	let gameID = '';
 	let OnlineUsers = 0;
 	let activeGames = [];
-	let url = getMyUrlForDev()
+	let url = getMyUrlForDev();
 
 	onMount(async () => {
 		onResize();
@@ -23,12 +23,12 @@
 		console.log(sessionID);
 		if (!sessionID) {
 			clearStorage();
-			throw goto('/')
+			goto('/');
 		}
 
 		gameID = sessionStorage.getItem('gameID');
 		if (gameID) {
-			throw goto(`/game/${gameID}`)
+			goto(`/game/${gameID}`);
 		}
 
 		socket.on('connect', async () => {
@@ -37,7 +37,6 @@
 
 		// Écouter l'événement de réponse du serveur après la création d'utilisateur
 		socket.on('userCreated', (id) => {
-			console.log(id);
 			sessionStorage.setItem('sessionID', id);
 		});
 
@@ -48,7 +47,7 @@
 		user = await getUser(socket);
 		if (!user) {
 			clearStorage();
-			throw goto('/')
+			goto('/');
 		}
 	});
 
@@ -76,8 +75,7 @@
 	let innerWidth;
 	const onResize = () => {
 		if (screen.width > 500) {
-			console.log("enter")
-			throw goto('/boardGame');
+			goto('/boardGame');
 		}
 	};
 </script>

@@ -21,7 +21,7 @@
 
 		if (!game) {
 			clearStorage();
-			throw goto('/boardGame')
+			goto('/boardGame');
 		}
 
 		socket.emit('isActiveUsers', game.gameId);
@@ -60,24 +60,21 @@
 
 	let closeGame = () => {
 		socket.emit('closeGame', game.gameId);
-		console.log('close');
 	};
 
 	let openGame = () => {
 		socket.emit('openGame', game.gameId);
-		console.log('open');
 	};
 
 	let startGame = () => {
 		socket.emit('startGame', game.gameId);
-		console.log('start');
-		throw goto(`/boardGame/${game.gameId}`)
+		goto(`/boardGame/${game.gameId}`);
 	};
 
 	let innerWidth;
 	const onResize = () => {
 		if (innerWidth < 500) {
-			throw goto('/');
+			goto('/');
 		}
 	};
 </script>

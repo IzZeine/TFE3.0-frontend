@@ -5,13 +5,13 @@
 	import { onMount } from 'svelte';
 
 	export let data;
-	const socket = data.socket
+	const socket = data.socket;
 
 	let gameID;
 	let OnlineUsers = 0;
 	let errorMessage = '';
 	let gameName = '';
-	let url = getMyUrlForDev()
+	let url = getMyUrlForDev();
 
 	onMount(async () => {
 		onResize();
@@ -19,12 +19,11 @@
 		gameID = sessionStorage.getItem('gameID');
 
 		if (gameID) {
-			throw goto(`/boardGame/${gameID}`)
+			goto(`/boardGame/${gameID}`);
 		}
 
 		socket.on('connect', async () => {
 			console.log('Connected to server');
-			console.log(socket)
 		});
 
 		socket.on('updateUsersCount', (count) => {
@@ -37,10 +36,9 @@
 		return username == '';
 	}
 
-	console.log(`${url}/creategame`)
 	let createGame = async () => {
 		const response = await fetch(`${url}/creategame`, {
-		// const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
+			// const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/creategame`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -52,10 +50,9 @@
 			// Gérer la réponse si nécessaire
 			console.log('Game created successfully');
 			const gameJson = await response.json();
-			console.log(gameJson);
 			gameID = gameJson.gameId;
 			sessionStorage.setItem('gameID', gameID);
-			throw goto(`/boardGame/${gameID}`)
+			goto(`/boardGame/${gameID}`);
 		} else {
 			console.error('Failed to create game');
 			errorMessage = 'Ce nom existe dejà !';
@@ -65,7 +62,7 @@
 	let innerWidth;
 	const onResize = () => {
 		if (innerWidth < 500) {
-			throw goto('/');
+			goto('/');
 		}
 	};
 </script>

@@ -21,7 +21,7 @@
 				sessionStorage.setItem('sessionID', userId);
 				user = await getUser(socket);
 				if (user) {
-					throw goto('/game');
+					goto('/game');
 				}
 			});
 		} catch (error) {
@@ -37,9 +37,8 @@
 
 	let innerWidth;
 	const onResize = () => {
-		console.log('onResize', innerWidth);
 		if (innerWidth > 500) {
-			throw goto('/boardGame');
+			goto('/boardGame');
 		}
 	};
 
@@ -48,12 +47,12 @@
 
 		sessionID = sessionStorage.getItem('sessionID');
 		if (sessionID) {
-			throw goto('/game');
+			goto('/game');
 		}
 
 		gameID = sessionStorage.getItem('gameID');
 		if (gameID) {
-			throw goto(`/game/${gameID}`);
+			goto(`/game/${gameID}`);
 		}
 
 		socket.on('connect', async () => {
@@ -62,7 +61,7 @@
 
 		user = await getUser(socket);
 		if (user) {
-			throw goto('/game');
+			goto('/game');
 		}
 
 		// return () => {

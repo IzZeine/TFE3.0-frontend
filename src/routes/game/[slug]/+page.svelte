@@ -20,16 +20,16 @@
 	let wait = true;
 
 	onMount(async () => {
-		onResize()
+		onResize();
 		sessionID = sessionStorage.getItem('sessionID');
 		if (!sessionID) {
 			clearStorage();
-			throw goto('/')
+			goto('/');
 		}
 
 		gameID = sessionStorage.getItem('gameID');
 		if (!gameID) {
-			throw goto('/game')
+			goto('/game');
 		}
 
 		console.log('session Id :', sessionID);
@@ -42,7 +42,7 @@
 				user = await getUser(socket);
 				if (!user) {
 					clearStorage();
-					throw goto('/')
+					goto('/');
 				}
 				socket.emit('joinGame', gameID);
 			}
@@ -52,7 +52,7 @@
 		socket.on('deco', () => {
 			alert('a lot of users');
 			clearStorage();
-			throw goto('/game')
+			goto('/game');
 		});
 
 		//trouver la game
@@ -88,13 +88,12 @@
 	let innerWidth;
 	const onResize = () => {
 		if (innerWidth > 500) {
-			throw goto('/boardGame');
+			goto('/boardGame');
 		}
 	};
 </script>
 
 <svelte:window on:resize={onResize} bind:innerWidth />
-
 
 {#if sessionID}
 	{#if user}
