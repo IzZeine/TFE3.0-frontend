@@ -12,6 +12,7 @@
 	let errorMessage = '';
 	let gameName = '';
 	let url = getMyUrlForDev();
+	let activegames = [];
 
 	onMount(async () => {
 		onResize();
@@ -59,6 +60,16 @@
 		}
 	};
 
+	let askActiveGames = async () => {
+		console.log('enter');
+		const response = await fetch(`${url}/activegames`);
+		console.log(response);
+		const activeGamesJson = await response.json();
+		console.log(activeGamesJson);
+		activegames = [...activeGamesJson];
+		console.log(activegames);
+	};
+
 	let innerWidth;
 	const onResize = () => {
 		if (innerWidth < 500) {
@@ -97,8 +108,14 @@
 			</div>
 			<button class="btnPrimary btnForm" disabled={isDirty(gameName)}>Jouer</button>
 		</form>
+		<button class="btnPrimary btnGamesOnline" on:click={askActiveGames}>Rejoindre</button>
 	</div>
 </div>
-<!-- @TODO : faire l'icon du boss (1 à 3) -->
+
+<ul>
+	{#each activegames as game}
+		<li>{game.name}</li>
+	{/each}
+</ul>
 
 <!-- @TODO++ : ajouter des animations quelconques : lancement de combat, récupération d'un item, utilisation de sort -->
