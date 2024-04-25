@@ -81,8 +81,6 @@
 
 <svelte:window on:resize={onResize} bind:innerWidth />
 
-<img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
-
 {#if game.statut == 'started'}
 	{#if activeUsers.length > 0}
 		<BoardGame {activeUsers} />
@@ -91,6 +89,8 @@
 	<!-- @TODO : winner page -->
 	<p>the winner is :</p>
 {:else}
+	<img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
+
 	<div class="container">
 		<h1 class="h1">{game.name}</h1>
 		<ul class="cardUserList" style="grid-template-columns: repeat({numberOfColGrid}, 1fr);">

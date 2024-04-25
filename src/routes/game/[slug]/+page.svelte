@@ -48,6 +48,10 @@
 			}
 		});
 
+		socket.on('Hi', () => {
+			console.log('hi');
+		});
+
 		// @TODO : deco intempestives...
 		socket.on('deco', () => {
 			alert('a lot of users');

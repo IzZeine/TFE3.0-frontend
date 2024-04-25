@@ -31,7 +31,6 @@
 		dispatch('ChooseHero', {
 			hero: selectedHero
 		});
-		console.log(selectedHero);
 	}
 
 	let carousel; // for calling methods of the carousel instance

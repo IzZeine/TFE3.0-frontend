@@ -19,7 +19,6 @@
 	let positionOfPlayers = () => {
 		for (let player of activeUsers) {
 			let target = 'room' + player.room + '_' + player.player;
-			console.log(target);
 
 			let myPlayerDiv = document.querySelector('#' + player.player);
 			let targetDiv = document.querySelector('#' + target);

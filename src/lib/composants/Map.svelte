@@ -21,8 +21,6 @@
 	let dice1 = 1,
 		dice2 = 1;
 
-	console.log(dice1, dice2);
-
 	onMount(async () => {
 		sessionID = sessionStorage.getItem('sessionID');
 		gameID = sessionStorage.getItem('gameID');

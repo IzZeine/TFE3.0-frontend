@@ -61,13 +61,17 @@
 	};
 
 	let askActiveGames = async () => {
-		console.log('enter');
 		const response = await fetch(`${url}/activegames`);
 		console.log(response);
 		const activeGamesJson = await response.json();
 		console.log(activeGamesJson);
 		activegames = [...activeGamesJson];
 		console.log(activegames);
+	};
+
+	let joinGame = (gameId) => {
+		console.log(gameId);
+		sessionStorage.setItem('gameID', gameId);
 	};
 
 	let innerWidth;
@@ -114,7 +118,13 @@
 
 <ul>
 	{#each activegames as game}
-		<li>{game.name}</li>
+		<li>
+			<a href="/boardGame/{game.gameId}">
+				<button on:click={() => joinGame(game.gameId)}>
+					{game.name}
+				</button>
+			</a>
+		</li>
 	{/each}
 </ul>
 
