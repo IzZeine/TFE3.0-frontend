@@ -58,6 +58,7 @@ MainPage
 }
 
 .activeGames {
+	opacity: 0;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -70,6 +71,7 @@ MainPage
 }
 
 .activeGames.is-active {
+	opacity: 100;
 	transform: translate(0, 0);
 }
 
