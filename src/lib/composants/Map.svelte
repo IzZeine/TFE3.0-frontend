@@ -198,8 +198,8 @@
 			}
 		}
 		socket.emit('askToChangeRoom', targetRoom);
-		dice1 = null;
-		dice2 = null;
+		dice1 = 1;
+		dice2 = 1;
 	};
 
 	let tryToGetItemInRoom = async () => {
@@ -256,108 +256,153 @@
 
 <div class="maxContent">
 	<div class="mapUserContainer">
-		<h1 class="h1">Salle {user.room}</h1>
-
 		{#if myRoom && user.team == 'hero'}
+			<div class="headerMap">
+				<div class="dices">
+					<div class="dices">
+						<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
+						<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
+						<p>{dice1 + dice2}</p>
+					</div>
+				</div>
+				<div class="lifes">
+					<ul class="cardHero_stats-life">
+						{#each { length: user.life } as item, index}
+							{@const isFirst = index === 0}
+							{@const numberOfLife = user.life}
+							{#if isFirst}
+								{#each { length: 3 - numberOfLife } as item, index}
+									<li>
+										<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
+									</li>
+								{/each}
+							{/if}
+							<li>
+								<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
+							</li>
+						{/each}
+						<!-- @TODO : no life -->
+					</ul>
+				</div>
+			</div>
 			<div class="itemInRoom">
 				{#if itemInRoom}
-					<img class="fluidimg" src="/assets/img/{itemInRoom.nameId}.PNG" alt={itemInRoom.nameId} />
-					<p>{itemInRoom.name} / {itemInRoom.rarity} / {itemInRoom.condition}</p>
-					{#if dice1 && dice2}
-						<div class="dices">
-							<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
-							<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
-							<p>{dice1 + dice2}</p>
-						</div>
-					{/if}
-					<button class="getItemBtn btnPrimary" on:click={tryToGetItemInRoom}>Attraper</button>
+					<img
+						class="fluidimg itemInRoom"
+						src="/assets/img/{itemInRoom.nameId}.PNG"
+						alt={itemInRoom.nameId}
+					/>
+					<div class="itemInRoom_stats">
+						<p>&gt; {itemInRoom.condition}</p>
+						<p>
+							{itemInRoom.bonus} <span style="text-transform: uppercase;">{itemInRoom.type}</span>
+						</p>
+					</div>
 				{:else}
-					<p>no item here</p>
+					<p>Il n'y a pas d'item dans cette salle.</p>
+					<p>Continuez votre chemin!</p>
 				{/if}
 			</div>
 		{/if}
-		<div class="directionsArrows">
-			<button
-				class="directionArrow directionArrow_top"
-				id="top"
-				disabled
-				on:click={askToChangeRoom}
-			>
-				<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
-			</button>
-			<button
-				class="directionArrow directionArrow_right"
-				id="right"
-				disabled
-				on:click={askToChangeRoom}
-			>
-				<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
-			</button>
-			<button
-				class="directionArrow directionArrow_bot"
-				id="bot"
-				disabled
-				on:click={askToChangeRoom}
-			>
-				<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
-			</button>
-			<button
-				class="directionArrow directionArrow_left"
-				id="left"
-				disabled
-				on:click={askToChangeRoom}
-			>
-				<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
-			</button>
+		<div class="sideBarUser">
+			<div class="directionsArrows">
+				<h1 class="h1 directionSalle">{user.room}</h1>
+				<button
+					class="directionArrow directionArrow_top"
+					id="top"
+					disabled
+					on:click={askToChangeRoom}
+				>
+					<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
+				</button>
+				<button
+					class="directionArrow directionArrow_right"
+					id="right"
+					disabled
+					on:click={askToChangeRoom}
+				>
+					<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
+				</button>
+				<button
+					class="directionArrow directionArrow_bot"
+					id="bot"
+					disabled
+					on:click={askToChangeRoom}
+				>
+					<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
+				</button>
+				<button
+					class="directionArrow directionArrow_left"
+					id="left"
+					disabled
+					on:click={askToChangeRoom}
+				>
+					<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
+				</button>
+			</div>
+			<div class="actionButtons">
+				{#if myRoom && user.team == 'hero'}
+					<button class="btnPrimary"> habilité </button>
+					<button class="getItemBtn btnPrimary" on:click={tryToGetItemInRoom}
+						><img src="/assets/img/diceRoll.png" alt="diceRoll" /></button
+					>
+				{/if}
+			</div>
+			<img class="swipe" src="/assets/img/swipe.svg" alt="swipe" />
 		</div>
 	</div>
 </div>
-<div class="sideBarUser">
-	<button class="showCardHero" on:click={displayCardHero}>
-		<img style="width: 60px; height: auto;" src="/assets/img/inventory.png" alt="inventory" />
-	</button>
-	<!-- <button> habilité </button> -->
-</div>
 <div class="cardHero">
-	<button class="hideCardHero" on:click={hideCardHero}>
-		<img style="width: 60px; height: auto;" src="/assets/img/inventory.png" alt="inventory" />
-	</button>
+	<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 	<div class="cardHero_stats">
-		<ul class="cardHero_stats-life">
-			{#each { length: user.life } as item, index}
-				<li>
-					<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
-				</li>
-			{/each}
-		</ul>
-		<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 		<p class="cardHero_hero">{user.hero}</p>
-		<p>@TODO : add hability</p>
 		<div class="cardHero_stats-atk-def">
 			<div class="cardHero_stats-atk-def_atk">
 				<img class="fluidimg cardHero_stats-atk-def_atk-img" src="/assets/img/atk.png" alt="atk" />
-				<p>atk : {user.atk}</p>
+				<p>{user.atk} ATK</p>
 			</div>
 			<div class="cardHero_stats-atk-def_def">
 				<img class="fluidimg cardHero_stats-atk-def_def-img" src="/assets/img/life.png" alt="def" />
-				<p>def : {user.def}</p>
+				<p>{user.def} DEF</p>
 			</div>
 		</div>
+		{#if countOfItems}
+			<ul class="inventory">
+				{#each countOfItems as item, index}
+					<li class="inventory_item">
+						<img
+							class="fluidimg"
+							src="/assets/img/{Object.keys(countOfItems[index])[0]}.PNG"
+							alt={Object.keys(countOfItems[index])[0]}
+						/>
+						<p class="numOfItem">
+							<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
+						</p>
+					</li>
+				{/each}
+			</ul>
+		{/if}
 	</div>
-	{#if countOfItems}
-		<ul class="inventory">
-			{#each countOfItems as item, index}
-				<li class="inventory_item">
-					<img
-						style="width: 30px; height : auto;"
-						src="/assets/img/{Object.keys(countOfItems[index])[0]}.PNG"
-						alt={Object.keys(countOfItems[index])[0]}
-					/>
-					<p><span> x {countOfItems[index][Object.keys(countOfItems[index])[0]]}</span></p>
-				</li>
-			{/each}
-		</ul>
-	{/if}
 </div>
 
-<!-- @TODO : implémenter les abilities -->
+<style>
+	.cardHero_hero::after,
+	.cardHero_hero::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		flex-direction: row;
+		background-color: var(--txtPrimary);
+		/* @TODO : change color */
+		height: 2px;
+		width: 30px;
+	}
+	.cardHero_hero::before {
+		transform: translate(-100%, 0);
+		left: -12px;
+	}
+	.cardHero_hero::after {
+		transform: translate(100%, 0);
+		right: -12px;
+	}
+</style>

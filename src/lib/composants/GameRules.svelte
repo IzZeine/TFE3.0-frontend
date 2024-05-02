@@ -36,41 +36,27 @@
 			{/if}
 			{#if rulesPage == 2}
 				<li class="rulesItem">
-					Tous les héros ainsi que le boss peuvent se déplacer case par case (case voisine) dans le
-					donjon.
+					Tous les héros ainsi que le boss peuvent se déplacer case par case dans le donjon.
 				</li>
 				<li class="rulesItem">Chaque salle possède un item.</li>
 				<li class="rulesItem">
-					Pour pouvoir accéder aux salles les joueurs devront combattre des monstres.
+					Pour récupérer les items les héros devront lancer des dés en remplissant certaines
+					conditions.
 				</li>
 				<li class="rulesItem">
-					Si un joueur est déjà en combat dans la salle, personne ne peut rejoindre ni lancer un
-					nouveau combat dans la même salle. Il ne feront alors que traverser la salle sans pouvoir
-					y récupérer un item.
-				</li>
-				<li class="rulesItem">
-					Le boss se déplace également dans le donjon. Il bats également des monstres et récolte
-					également des items. Il essaye de rejoindre les joueurs afin de les tuer.
-				</li>
-				<li class="rulesItem">Si un héro meurt, il perd une vie (il en a trois).</li>
-				<li class="rulesItem">
-					Quand le boss tue quelqu'un, une zone rouge apparait sur un diamètre de 4 salles dans une
-					desquelles il se trouve.
-				</li>
-				<li class="rulesItem">
-					Si un héros trouve la clef du donjon, il pourra se rendre dans la salle des coffres ou il
-					pourra récolter des objets plus puissants.
+					Si le boss arrive dans la même salle qu'un ou plusieurs héros, un combat se lance. A la
+					fin de celui-ci, tout le monde retourne à son spawn.
 				</li>
 			{/if}
 			{#if rulesPage == 3}
-				<li class="rulesItem">Le boss gagne s'il a réussi à tuer tous les héro 3 fois.</li>
-				<li class="rulesItem">Les héros gagnent s'ils arrivent à se coordonner afin de le tuer.</li>
+				<li class="rulesItem">Le boss gagne s'il arrive à tuer 3 fois chaque joueur.</li>
+				<li class="rulesItem">Les héros gagnent s'il parviennent à tuer une fois le boss</li>
 			{/if}
 		</ul>
 	</div>
-	<p class="pageRules">{rulesPage}/3</p>
 	<div class="btnRules">
-		<button on:click={deincrement} disabled={rulesPage === 1} class="btnPrimary">Précédent</button>
-		<button on:click={increment} disabled={rulesPage === 3} class="btnPrimary">Suivant</button>
+		<img src="/assets/img/gamerules{rulesPage}.png" class="dotsRules" alt="dots" />
+		<button on:click={deincrement} disabled={rulesPage === 1} class="btnPrimary">prev</button>
+		<button on:click={increment} disabled={rulesPage === 3} class="btnPrimary">next</button>
 	</div>
 </div>

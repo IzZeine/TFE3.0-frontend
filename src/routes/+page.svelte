@@ -76,7 +76,7 @@
 	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
 	<form on:submit|preventDefault={onFormSubmit} class="form">
 		<div>
-			<label for="username" class="labelForm">Enter your username:</label>
+			<label for="username" class="labelForm">Entrez votre pseudo :</label>
 			<input
 				type="text"
 				name="username"

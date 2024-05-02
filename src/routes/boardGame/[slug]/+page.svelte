@@ -41,10 +41,10 @@
 				btnPlay.removeAttribute('disabled');
 			}
 
-			numberOfColGrid = 6;
-			if (game.statut == 'closed') {
-				numberOfColGrid = activeUsers.length;
-			}
+			// numberOfColGrid = 6;
+			// if (game.statut == 'closed') {
+			// 	numberOfColGrid = activeUsers.length;
+			// }
 		});
 
 		socket.on('endGame', (data) => {
@@ -103,26 +103,41 @@
 				{@const numberOfLi = 6 - activeUsers.length}
 				{@const isLast = index === activeUsers.length - 1}
 				<li class="cardUser">
-					<p class="cardUser_name">{user.username}</p>
 					{#if game.statut == 'closed'}
-						<p class="cardUser_hero">{user.team}</p>
-						<p class="cardUser_life">{user.life}</p>
 						{#if user.hero}
 							<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
-							<p class="cardUser_hero">{user.hero}</p>
-							<p class="cardUser_atk">{user.atk}</p>
+							<p class="cardUser_name">{user.hero}</p>
+							<p class="cardUser_ability">vblabla</p>
+							<div class="stats">
+								<p class="cardUser_atk">{user.atk} ATK</p>
+								<p class="cardUser_atk">{user.def} DEF</p>
+							</div>
 						{:else}
-							<p class="cardUser_hero">...</p>
-							<p class="cardUser_atk">...</p>
+							<img class="fluidimg userPawn_img" src="/assets/img/wizard.png" alt="pawn icon" />
+							<p class="cardUser_ability">
+								Vous n'êtes encore personne dans ce monde, un moins que rien!
+							</p>
+							<div class="stats">
+								<p class="cardUser_atk">0 ATK</p>
+								<p class="cardUser_atk">0 DEF</p>
+							</div>
 						{/if}
+					{:else}
+						<img class="fluidimg userPawn_img" src="/assets/img/wizard.png" alt="pawn icon" />
+						<p class="cardUser_name">{user.username}</p>
+						<p class="cardUser_ability">
+							Vous n'êtes encore personne dans ce monde, un moins que rien!
+						</p>
+						<div class="stats">
+							<p class="cardUser_atk">0 ATK</p>
+							<p class="cardUser_atk">0 VIE</p>
+						</div>
 					{/if}
 				</li>
-				{#if game.statut == 'waiting'}
-					{#if isLast}
-						{#each { length: numberOfLi } as _, index}
-							<li class="cardUser-Empty"></li>
-						{/each}
-					{/if}
+				{#if isLast}
+					{#each { length: numberOfLi } as _, index}
+						<li class="cardUser-Empty"></li>
+					{/each}
 				{/if}
 			{/each}
 		</ul>

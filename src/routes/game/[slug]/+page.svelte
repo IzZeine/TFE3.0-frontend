@@ -69,6 +69,8 @@
 		socket.on('updateUsers', async (data) => {
 			user = await getUser(socket);
 		});
+
+		console.log(user);
 	});
 
 	socket.on('updateGame', (data) => {

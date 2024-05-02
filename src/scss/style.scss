@@ -57,47 +57,25 @@ MainPage
 	flex-direction: column;
 }
 
-.activeGames {
-	opacity: 0;
+.activeGames > .refresh {
 	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background-color: red;
-	transition: 0.2s;
-	transform: translate(100%, 0);
-	background-color: var(--BG);
-}
-
-.activeGames.is-active {
-	opacity: 100;
-	transform: translate(0, 0);
-}
-
-.activeGames > .content > .btns {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 30px;
-}
-
-.btn-menuGames {
-	background: unset;
+	bottom: 30px;
+	right: 30px;
+	background-color: unset;
 	transition: 0.2s;
 }
 
-.btn-menuGames.return:active {
-	transform: translate(-3px, 0);
-}
 .btn-menuGames.refresh:active {
 	transform: rotate(360deg);
 }
 
 .btn-joinGames {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	background: unset;
 	background-color: var(--BGTranspary);
-	padding: 6px 12px;
+	padding: 12px 24px;
 	margin-top: 12px;
 	border-bottom: solid 1px var(--txtPrimary);
 	color: var(--txtPrimary);
@@ -105,18 +83,9 @@ MainPage
 	width: 100%;
 }
 
-.btn-joinGames:active {
-	box-shadow: none;
-	transform: translate(3px, 3px);
-}
-
 .activeGames > .content,
 .createGame > .content {
 	padding: 60px;
-}
-
-.btn-joinGames_statut {
-	margin-top: 6px;
 }
 
 .gameNameForm {
@@ -155,13 +124,10 @@ HowToPlay
 }
 
 .btnRules {
-	position: fixed;
+	position: absolute;
+	display: flex;
+	gap: 12px;
 	bottom: 60px;
-}
-
-.btnRules > button {
-	position: relative;
-	bottom: 0;
 }
 
 .rulesList {
@@ -183,6 +149,13 @@ HowToPlay
 	padding-left: 9px;
 	margin-right: 6px;
 	margin-top: 6px;
+}
+
+.dotsRules {
+	position: absolute;
+	top: -6px;
+	left: 50%;
+	transform: translate(-50%, 0);
 }
 
 /*--------------------------------------------------------------------------
@@ -232,8 +205,51 @@ Boardgame - Waiting users
 
 .cardUser-Empty,
 .cardUser {
-	border: solid 3px var(--BGTranspary);
-	padding: 6px;
+	border-bottom: solid 3px var(--txtPrimary);
+	background-color: var(--BGTranspary);
+	padding: 18px;
+	display: flex;
+	gap: 18px;
+	flex-direction: column;
+	align-items: center;
+	.stats {
+		display: flex;
+		gap: 30px;
+	}
+}
+
+.cardUser-Empty {
+	border-bottom: solid 3px var(--txtPrimary);
+	opacity: 20%;
+}
+
+.cardUser_name {
+	font-family: 'Deutsch', serif;
+	font-size: 30px;
+	position: relative;
+}
+
+.cardUser_name::after,
+.cardUser_name::before {
+	content: '';
+	// display: inline-block;
+	position: absolute;
+	top: 50%;
+	flex-direction: row;
+	background-color: var(--txtPrimary);
+	height: 2px;
+	width: 24px;
+}
+.cardUser_name::before {
+	transform: translate(-100%, 0);
+	left: -12px;
+}
+.cardUser_name::after {
+	transform: translate(100%, 0);
+	right: -12px;
+}
+.cardUser_ability {
+	text-align: center;
 }
 
 /*--------------------------------------------------------------------------
@@ -262,7 +278,7 @@ userMap
 --------------------------------------------------------------------------*/
 
 .mapUserContainer {
-	padding: 60px 60px 120px;
+	padding: 60px;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -270,14 +286,42 @@ userMap
 	justify-content: space-between;
 }
 
+.headerMap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+
+.itemInRoom {
+	background-image: url('/assets/img/radialItem.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	position: relative;
+}
+
+.itemInRoom_stats {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	text-align: right;
+}
+
 .directionsArrows {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(2, 1fr);
+	justify-content: center;
+	align-items: center;
 }
 
 .directionArrow_img {
 	pointer-events: none;
+}
+
+.directionSalle {
+	grid-area: 2/2/3/3;
 }
 
 .directionArrow_top {
@@ -305,33 +349,52 @@ userMap
 }
 
 .sideBarUser {
-	position: absolute;
-	width: 100%;
-	justify-content: center;
 	display: flex;
-	gap: 60px;
-	bottom: 0;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.actionButtons {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 12px;
+	button {
+		margin: 0;
+		padding: 12px 24px;
+	}
+	.getItemBtn {
+		padding: 0 12px;
+	}
+	.getItemBtn:disabled {
+		opacity: 20%;
+	}
+}
+
+.swipe {
+	position: absolute;
+	width: 30px;
+	bottom: 18px;
+	transform: translate(-50%, 0);
+	left: 50%;
 }
 
 .cardHero {
-	background-color: #3d3d3d;
-	position: absolute;
-	top: 100%;
+	background-color: var(--BG);
+	// position: absolute;
+	// top: 100%;
 	height: 100%;
-	width: 100%;
-	transition: 0.2s;
+	// width: 100%;
+	margin-bottom: 60px;
 }
 
-.cardHero.is-active {
-	background-color: #3d3d3d;
-	position: absolute;
-	top: 0;
-	height: 100%;
-	width: 100%;
+.cardHero_hero {
+	position: relative;
 }
 
 .cardHero_stats {
 	display: flex;
+	gap: 24px;
 	width: 100%;
 	flex-direction: column;
 	align-items: center;
@@ -348,8 +411,9 @@ userMap
 .cardHero_stats-life {
 	margin: 0 auto 0 0;
 	display: flex;
-	gap: 12px;
+	gap: 6px;
 }
+
 .cardHero_stats-life > li > img {
 	max-width: 30px;
 }
@@ -358,11 +422,14 @@ userMap
 	display: flex;
 	gap: 30px;
 	align-items: center;
+	font-style: italic;
+	font-weight: 400;
 }
 
 .cardHero_stats-atk-def > div {
 	display: flex;
 	gap: 12px;
+	align-items: center;
 }
 
 .cardHero_stats-atk-def > div > img {
@@ -370,28 +437,35 @@ userMap
 	width: auto;
 }
 
-.showCardHero {
-	background-color: unset;
-}
-
-.hideCardHero {
-	position: absolute;
-	width: 100%;
-	bottom: 0;
-
-	background-color: unset;
-}
-
 .inventory {
-	display: flex;
-	justify-content: center;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 12px;
+}
+
+.inventory_item {
+	position: relative;
+	background-color: var(--BGTranspary);
+	padding: 6px;
+	width: 48px;
+	height: 48px;
+
+	box-shadow:
+		inset 0px 1px 0px 0px #ff9c5156,
+		0px 1px 0px 0px #713405;
+}
+
+.numOfItem {
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
 
 .dices {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 12px;
+	gap: 6px;
 }
 
 .dice {

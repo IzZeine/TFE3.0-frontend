@@ -45,10 +45,13 @@
 		});
 
 		user = await getUser(socket);
+
 		if (!user) {
 			clearStorage();
 			goto('/');
 		}
+
+		askActiveGames();
 	});
 
 	let joinGame = (id) => {
@@ -62,16 +65,6 @@
 		activeGames = [...activeGamesJson];
 	};
 
-	let displayGames = () => {
-		const display = document.querySelector('.activeGames');
-		display.classList.add('is-active');
-	};
-
-	let hideGames = () => {
-		const display = document.querySelector('.activeGames');
-		display.classList.remove('is-active');
-	};
-
 	let innerWidth;
 	const onResize = () => {
 		if (screen.width > 500) {
@@ -83,47 +76,26 @@
 <svelte:window on:resize={onResize} bind:innerWidth />
 
 <div class="container">
-	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
-	<p>
-		Welcome
-		{#if user}
-			{user.username}
-		{/if}
+	<p class="h1" style="display: flex; text-align:center; margin-bottom:24px">
+		Rejoindre une partie:
 	</p>
-	<div class="btnsGames">
-		<button
-			on:click={(evt) => {
-				askActiveGames();
-				displayGames(evt);
-			}}
-			class="btnPrimary"
-			>Rejoindre
-		</button>
-	</div>
 
 	<div class="activeGames">
-		<div class="content">
-			<div class="btns">
-				<button class="btn-menuGames return" on:click={hideGames}
-					><img src="/assets/img/return.svg" alt="return" /></button
-				>
-				<button class="btn-menuGames refresh" on:click={askActiveGames}
-					><img src="/assets/img/refresh.svg" alt="refresh" /></button
-				>
-			</div>
-			<ul>
-				{#each activeGames as game}
-					<li>
-						<a href="/game/{game.gameId}">
-							<button on:click={joinGame(game.gameId)} class="btn-joinGames">
-								<p>{game.name}</p>
-								<p class="btn-joinGames_statut">{game.statut} <span>{game.users}/6</span></p>
-							</button>
-						</a>
-					</li>
-				{/each}
-			</ul>
-		</div>
+		<ul>
+			{#each activeGames as game}
+				<li>
+					<a href="/game/{game.gameId}">
+						<button on:click={joinGame(game.gameId)} class="btn-joinGames">
+							<p>{game.name}</p>
+							<p class="btn-joinGames_statut">{game.users}/6</p>
+						</button>
+					</a>
+				</li>
+			{/each}
+		</ul>
+		<button class="btn-menuGames refresh" on:click={askActiveGames}>
+			<img src="/assets/img/refresh.svg" alt="refresh" />
+		</button>
 	</div>
 </div>
 
