@@ -40,10 +40,7 @@
 			console.log('Connected to server');
 			if (gameID) {
 				// trouver l'utilisateur
-				console.log('1')
-				console.log(socket)
 				user = await getUser(socket);
-				console.log('2')
 				if (!user) {
 					clearStorage();
 					goto('/');
@@ -67,9 +64,7 @@
 		listOfItems = await getItems();
 
 		socket.on('updateUsers', async (data) => {
-			console.log('3')
 			user = await getUser(socket);
-			console.log('4')
 		});
 
 	});

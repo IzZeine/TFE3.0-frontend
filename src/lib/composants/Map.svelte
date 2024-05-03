@@ -9,6 +9,7 @@
 	// console.log(socket)
 
 	export let user = user;
+	let color = user.color
 	let gameID = '';
 	let sessionID = '';
 
@@ -36,7 +37,7 @@
 					window.location.href = '/';
 				}
 				socket.emit('joinGame', gameID);
-				socket.emit('getRooms', user.gameId);
+				socket.emit('getRooms', gameID);
 			}
 		});
 
@@ -44,7 +45,6 @@
 		displayArrowsDirections();
 
 		socket.on('youAskedRooms', (rooms) => {
-			console.log('isUser?',user)
 			if(!user) return;
 			allRooms = rooms;
 			myRoom = allRooms[user.room];
@@ -55,6 +55,7 @@
 		socket.on('movePlayer', async (userID) => {
 			displayArrowsDirections();
 			user = await getUser(socket);
+			console.log(allRooms)
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
 			itemInRoom = JSON.parse(itemInRoom); // convert string to json
@@ -283,7 +284,6 @@
 								<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
 							</li>
 						{/each}
-						<!-- @TODO : no life -->
 					</ul>
 				</div>
 			</div>
@@ -305,6 +305,9 @@
 					<p>Continuez votre chemin!</p>
 				{/if}
 			</div>
+			{:else}
+			<!-- @TODO : check -->
+			<p>pass your way</p> 
 		{/if}
 		<div class="sideBarUser">
 			<div class="directionsArrows">
@@ -357,7 +360,7 @@
 <div class="cardHero">
 	<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 	<div class="cardHero_stats">
-		<p class="cardHero_hero">{user.hero}</p>
+		<p class="cardHero_hero" style='--color:{color};'>{user.hero}</p>
 		<div class="cardHero_stats-atk-def">
 			<div class="cardHero_stats-atk-def_atk">
 				<img class="fluidimg cardHero_stats-atk-def_atk-img" src="/assets/img/atk.png" alt="atk" />
@@ -388,13 +391,16 @@
 </div>
 
 <style>
+	.cardHero_hero{
+		color: var(--color);
+	}
 	.cardHero_hero::after,
 	.cardHero_hero::before {
 		content: '';
 		position: absolute;
 		top: 50%;
 		flex-direction: row;
-		background-color: var(--txtPrimary);
+		background-color: var(--color);
 		/* @TODO : change color */
 		height: 2px;
 		width: 30px;

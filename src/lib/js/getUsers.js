@@ -5,7 +5,6 @@ async function getUser(socket) {
 	try {
 		let userDataPromise = new Promise((resolve, reject) => {
 			socket.on('ThisIsYourUser', (data) => {
-				console.log('dataUser:', data);
 				resolve(data); // Résoudre la promesse avec les données utilisateur
 			});
 		});
