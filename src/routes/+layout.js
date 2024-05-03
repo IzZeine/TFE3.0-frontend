@@ -1,13 +1,10 @@
-import { dev } from '$app/environment';
+// @ts-nocheck
 import { io } from 'socket.io-client';
 
-// /** @type {import('./$types').LayoutServerLoad} */
+/** @type {import('./$types').LayoutServerLoad} */
 export async function load() {
-	let socket = io('https://tfe30-backend.up.railway.app');
-
-	if (dev) {
-		socket = io(import.meta.env.VITE_BACKEND_URL);
-	}
+	// let socket = io('https://tfe30-backend.up.railway.app');
+	let socket = io('http://localhost:3000');
 
 	return {
 		socket
