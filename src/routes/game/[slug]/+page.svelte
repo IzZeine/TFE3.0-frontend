@@ -6,9 +6,10 @@
 	import ChooseHero from '$lib/composants/ChooseHero.svelte';
 	import { goto } from '$app/navigation';
 	import Map from '$lib/composants/Map.svelte';
+	import { socket } from '$lib/js/socketConnection.js';
 
-	export let data;
-	const socket = data.socket;
+	// export let data;
+	// const socket = data.socket;
 
 	let gameID = ''; // tout doit être relatif à la partie en cours
 	let sessionID = '';
@@ -39,8 +40,10 @@
 			console.log('Connected to server');
 			if (gameID) {
 				// trouver l'utilisateur
+				console.log('1')
+				console.log(socket)
 				user = await getUser(socket);
-				console.log(user)
+				console.log('2')
 				if (!user) {
 					clearStorage();
 					goto('/');
@@ -64,13 +67,16 @@
 		listOfItems = await getItems();
 
 		socket.on('updateUsers', async (data) => {
+			console.log('3')
 			user = await getUser(socket);
+			console.log('4')
 		});
 
 	});
 
 	socket.on('updateGame', (data) => {
 		game = data;
+		console.log(game)
 	});
 
 	function sentHeroToServer(event) {

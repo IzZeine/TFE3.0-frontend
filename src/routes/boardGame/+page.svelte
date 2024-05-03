@@ -3,9 +3,10 @@
 	import { goto } from '$app/navigation';
 	import { getMyUrlForDev } from '$lib';
 	import { onMount } from 'svelte';
+	import { socket } from '$lib/js/socketConnection.js';
 
-	export let data;
-	const socket = data.socket;
+	// export let data;
+	// const socket = data.socket;
 
 	let gameID;
 	let OnlineUsers = 0;
@@ -16,6 +17,7 @@
 
 	onMount(async () => {
 		onResize();
+		console.log("pouetpouet")
 
 		gameID = sessionStorage.getItem('gameID');
 

@@ -5,9 +5,10 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import BoardGame from '$lib/composants/BoardGame.svelte';
+	import { socket } from '$lib/js/socketConnection.js';
 
-	export let data;
-	const socket = data.socket;
+	// export let data;
+	// const socket = data.socket;
 
 	let game = '';
 	let activeUsers = [];

@@ -2,10 +2,11 @@
 	// @ts-nocheck
 	import { clearStorage, getItems, getRoomsConnections, getUser } from '$lib';
 	import { onMount } from 'svelte';
+	import { socket } from '$lib/js/socketConnection.js';
 
-	export let data;
-	const socket = data.socket;
-	console.log(socket)
+	// export let data;
+	// const socket = data.socket;
+	// console.log(socket)
 
 	export let user = user;
 	let gameID = '';
@@ -43,6 +44,7 @@
 		displayArrowsDirections();
 
 		socket.on('youAskedRooms', (rooms) => {
+			console.log('isUser?',user)
 			if(!user) return;
 			allRooms = rooms;
 			myRoom = allRooms[user.room];

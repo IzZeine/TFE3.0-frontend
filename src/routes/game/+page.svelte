@@ -5,9 +5,10 @@
 	import { getMyUrlForDev, getUser } from '$lib';
 	import { goto } from '$app/navigation';
 	import { clearStorage } from '$lib';
+	import { socket } from '$lib/js/socketConnection.js';
 
-	export let data;
-	const socket = data.socket;
+	// export let data;
+	// const socket = data.socket;
 
 	let sessionID = '';
 	let user = '';

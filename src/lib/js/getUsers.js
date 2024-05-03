@@ -2,11 +2,10 @@
 
 async function getUser(socket) {
 	let sessionID = sessionStorage.getItem('sessionID');
-	console.log('askSocket');
 	try {
 		let userDataPromise = new Promise((resolve, reject) => {
 			socket.on('ThisIsYourUser', (data) => {
-				console.log('user: ', data);
+				console.log('dataUser:', data);
 				resolve(data); // Résoudre la promesse avec les données utilisateur
 			});
 		});

@@ -2,9 +2,10 @@
 	// @ts-nocheck
 	import BoardGameSVG from '$lib/composants/BoardGameSVG.svelte';
 	import { onMount } from 'svelte';
+	import { socket } from '$lib/js/socketConnection.js';
 
-	export let data;
-	const socket = data.socket;
+	// export let data;
+	// const socket = data.socket;
 
 	export let activeUsers = activeUsers;
 
