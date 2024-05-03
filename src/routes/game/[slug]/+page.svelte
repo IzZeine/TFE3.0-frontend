@@ -40,16 +40,13 @@
 			if (gameID) {
 				// trouver l'utilisateur
 				user = await getUser(socket);
+				console.log(user)
 				if (!user) {
 					clearStorage();
 					goto('/');
 				}
 				socket.emit('joinGame', gameID);
 			}
-		});
-
-		socket.on('Hi', () => {
-			console.log('hi');
 		});
 
 		// @TODO : deco intempestives...
@@ -70,15 +67,10 @@
 			user = await getUser(socket);
 		});
 
-		console.log(user);
 	});
 
 	socket.on('updateGame', (data) => {
 		game = data;
-	});
-
-	socket.on('wait', () => {
-		wait = true;
 	});
 
 	function sentHeroToServer(event) {

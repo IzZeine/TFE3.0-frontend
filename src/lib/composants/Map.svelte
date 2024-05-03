@@ -2,15 +2,14 @@
 	// @ts-nocheck
 	import { clearStorage, getItems, getRoomsConnections, getUser } from '$lib';
 	import { onMount } from 'svelte';
-	import { io } from 'socket.io-client';
 
-	const socket = io('http://localhost:3000');
+	export let data;
+	const socket = data.socket;
+	console.log(socket)
 
 	export let user = user;
 	let gameID = '';
 	let sessionID = '';
-
-	//@TODO : quand il veut changer de room il fait un request au serveur et le serveur envoie les infos au gameboard
 
 	let roomsConnections, directions;
 	let allRooms;
@@ -44,6 +43,7 @@
 		displayArrowsDirections();
 
 		socket.on('youAskedRooms', (rooms) => {
+			if(!user) return;
 			allRooms = rooms;
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;

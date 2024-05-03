@@ -44,6 +44,8 @@
 	onMount(async () => {
 		onResize();
 
+		console.log('onMount')
+
 		sessionID = sessionStorage.getItem('sessionID');
 		if (sessionID) {
 			goto('/game');
@@ -54,7 +56,7 @@
 			goto(`/game/${gameID}`);
 		}
 
-		socket.on('connect', async () => {
+		socket.on('connect', () => {
 			console.log('Connected to server');
 		});
 
@@ -62,10 +64,6 @@
 		if (user) {
 			goto('/game');
 		}
-
-		// return () => {
-		// 	socket.offAny();
-		// };
 	});
 </script>
 
