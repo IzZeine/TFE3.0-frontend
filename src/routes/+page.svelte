@@ -27,7 +27,6 @@
 		} catch (error) {
 			console.error('Error creating user:', error);
 		}
-		//reload la page quand le form à été envoyé pour avoir le btn "jouer"
 	};
 
 	// disabled btn if the input is empty

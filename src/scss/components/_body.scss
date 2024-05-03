@@ -9,6 +9,9 @@ body {
 	// overflow-y: hidden;
 	height: 100svh;
 	width: 100vw;
+	//fix ios zoom
+	touch-action: pan-y;
+	transform: scale(1);
 }
 
 .maxContent {
