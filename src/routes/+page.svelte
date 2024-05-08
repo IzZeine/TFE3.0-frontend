@@ -70,7 +70,8 @@
 
 <svelte:window on:resize={onResize} bind:innerWidth />
 
-<div class="container">
+<div class="homepage_container" style="margin: auto 0;">
+	<div class="homepage_content">
 	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
 	<form on:submit|preventDefault={onFormSubmit} class="form">
 		<div>
@@ -91,4 +92,5 @@
 		</div>
 		<button class="btnPrimary btnForm" disabled={isDirty(username)}>Jouer</button>
 	</form>
+</div>
 </div>

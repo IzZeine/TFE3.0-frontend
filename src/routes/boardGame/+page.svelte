@@ -88,12 +88,13 @@
 
 <img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
 
-<div class="createGame">
-	<div class="content">
-		<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
+<div class="boardgame--home">
+
+<div class="boardgame--home_content">
+		<img src="/assets/img/logo.png" class="fluidimg boardgame--home_logoImg" alt="Logo" />
 		<form on:submit|preventDefault={createGame} class="gameNameForm">
 			<div class="gameNameForm_content">
-				<label for="gameName" class="gameNameLabel">Enter your game's name:</label>
+				<label for="gameName" class="gameNameLabel">Entrez le nom de votre partie :</label>
 				<input
 					type="text"
 					name="gameName"
@@ -115,7 +116,6 @@
 			<button class="btnPrimary btnForm" disabled={isDirty(gameName)}>Jouer</button>
 		</form>
 		<button class="btnPrimary btnGamesOnline" on:click={askActiveGames}>Rejoindre</button>
-	</div>
 </div>
 
 <ul>
@@ -129,5 +129,8 @@
 		</li>
 	{/each}
 </ul>
+
+</div>
+
 
 <!-- @TODO++ : ajouter des animations quelconques : lancement de combat, récupération d'un item, utilisation de sort -->
