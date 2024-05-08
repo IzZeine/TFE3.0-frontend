@@ -343,7 +343,7 @@
 						</button>
 					{/if}
 						<button class="actionButton" on:click={() => openDialog("dialog_power")}>
-							<img class="fluidimg" src="/assets/img/ax.PNG" alt="Ax" />
+							<img class="fluidimg" src="/assets/img/power.png" alt="Ax" />
 						</button>
 					{#if myRoom && user.team == 'hero'}
 						<button class="getItemBtn actionButton" on:click={() => openDialog("dialog_item")}>
@@ -421,6 +421,21 @@
 					<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 				</button>
 			</div>
+		</div>
+	</dialog>
+
+	<dialog class="dialog dialog_power">
+		<div class="headerDialog">
+		</div>
+		<div class="contentDialog">
+			<p>{user.ability}</p>
+			<button class="btnPrimary">Utiliser</button>
+		</div>
+		<div class="footerDialog">
+			<div class="actionButtons">
+				<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+					<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+				</button>
 		</div>
 	</dialog>
 

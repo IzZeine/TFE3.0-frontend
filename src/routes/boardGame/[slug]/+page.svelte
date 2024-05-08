@@ -114,7 +114,7 @@
 								<p class="cardUser_atk">{user.def} DEF</p>
 							</div>
 						{:else}
-							<img class="fluidimg userPawn_img" src="/assets/img/wizard.png" alt="pawn icon" />
+							<img class="fluidimg userPawn_img" src="/assets/img/nobody.png" alt="pawn icon" />
 							<p class="cardUser_ability">
 								Vous n'êtes encore personne dans ce monde, un moins que rien!
 							</p>
@@ -124,7 +124,7 @@
 							</div>
 						{/if}
 					{:else}
-						<img class="fluidimg userPawn_img" src="/assets/img/wizard.png" alt="pawn icon" />
+						<img class="fluidimg userPawn_img" src="/assets/img/nobody.png" alt="pawn icon" />
 						<p class="cardUser_name">{user.username}</p>
 						<p class="cardUser_ability">
 							Vous n'êtes encore personne dans ce monde, un moins que rien!
