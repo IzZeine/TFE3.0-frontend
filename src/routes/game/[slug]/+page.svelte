@@ -11,14 +11,13 @@
 	// export let data;
 	// const socket = data.socket;
 
-	let gameID = ''; // tout doit être relatif à la partie en cours
+	let gameID = '';
 	let sessionID = '';
 	let user = '';
 	let game = '';
 	let hero = '';
 	let listOfItems = '';
 	let listOfHeroes = '';
-	let wait = true;
 
 	onMount(async () => {
 		onResize();

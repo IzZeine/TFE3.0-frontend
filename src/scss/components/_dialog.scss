@@ -1,0 +1,125 @@
+.dialog {
+	box-sizing: border-box;
+	padding: 30px;
+	width: 100%;
+	height: 100%;
+
+	flex-direction: column;
+	justify-content: space-between;
+
+	background-color: var(--BGDialog);
+	color: var(--txtPrimary);
+
+	animation: fadeout 0.2s ease-in forwards;
+}
+
+dialog[open] {
+	display: flex;
+	animation: fadein 0.2s ease-in forwards;
+}
+
+@keyframes fadein {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeout {
+	0% {
+		opacity: 1;
+		display: flex;
+	}
+	99% {
+		opacity: 0;
+	}
+	100% {
+		display: none;
+	}
+}
+
+/*--------------------------------------------------------------------------
+ITEM
+--------------------------------------------------------------------------*/
+
+.itemInRoom {
+	background-image: url('/assets/img/radialItem.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	position: relative;
+	text-align: center;
+}
+
+.dices {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 6px;
+}
+
+.dice {
+	max-width: 30px;
+}
+
+/*--------------------------------------------------------------------------
+Iventory
+--------------------------------------------------------------------------*/
+
+.inventory {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 12px;
+}
+
+.inventory_item {
+	position: relative;
+	background-color: var(--BGTranspary);
+	padding: 6px;
+	width: 48px;
+	height: 48px;
+
+	box-shadow:
+		inset 0px 1px 0px 0px #ff9c5156,
+		0px 1px 0px 0px #713405;
+}
+
+.numOfItem {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+/*--------------------------------------------------------------------------
+Battle
+--------------------------------------------------------------------------*/
+
+.dialog_battle {
+	.heroes {
+		display: flex;
+		justify-content: center;
+		.hero {
+			max-width: calc((100vw) / 5);
+		}
+	}
+	.contentDialog {
+		display: flex;
+		justify-content: center;
+		gap: 24px;
+		.left {
+			text-align: start;
+		}
+		.right {
+			text-align: end;
+		}
+	}
+	.footerDialog {
+		text-align: center;
+	}
+}
+
+.dialog_battle-boss {
+	text-align: center;
+}

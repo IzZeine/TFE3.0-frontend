@@ -116,5 +116,5 @@
 		<p class="heroDescription">{selectedHero.ability}</p>
 	{/if}
 
-	<button on:click={chooseHero} class="btnPrimary">Choose</button>
+	<button on:click={chooseHero} class="btnPrimary">Choisir</button>
 </div>
