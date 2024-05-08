@@ -246,6 +246,11 @@
 		return dice1 + dice2;
 	};
 
+	let useAbility = () => {
+		console.log(user.hero)
+		socket.on('useAbility', user.hero)
+	}
+
 	let openDialog = (target) => {
 		let dialogTarget = document.querySelector('.'+target)
 		dialogTarget.show()
@@ -429,7 +434,7 @@
 		</div>
 		<div class="contentDialog">
 			<p>{user.ability}</p>
-			<button class="btnPrimary">Utiliser</button>
+			<button class="btnPrimary" on:click={useAbility}>Utiliser</button>
 		</div>
 		<div class="footerDialog">
 			<div class="actionButtons">
