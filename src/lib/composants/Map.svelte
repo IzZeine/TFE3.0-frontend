@@ -3,7 +3,7 @@
 	import { clearStorage, getItems, getRoomsConnections, getUser } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
-	import { fade, fly, blur } from 'svelte/transition';
+	import { fade, fly, blur, slide } from 'svelte/transition';
 
 	// export let data;
 	// const socket = data.socket;
@@ -44,14 +44,17 @@
 			}
 
 		updateInventory(user);
-		displayArrowsDirections();
-
+		
 		socket.on('youAskedRooms', (rooms) => {
 			if(!user) return;
+			displayArrowsDirections();
 			allRooms = rooms;
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
+			console.log(itemInRoom)
+			if(!itemInRoom || itemInRoom == 'null') return;
 			itemInRoom = JSON.parse(itemInRoom);
+			if(itemInRoom.rarity == 'légendaire') console.log('yes')
 		});
 
 		socket.on('movePlayer', async (userID) => {
@@ -60,6 +63,8 @@
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
 			itemInRoom = JSON.parse(itemInRoom); // convert string to json
+			if(!itemInRoom || itemInRoom == 'null') return;
+			if(itemInRoom.rarity == 'légendaire') console.log('yes')
 		});
 
 		socket.on('updateUser', (user) => {
@@ -223,7 +228,7 @@
 	let tryToGetItemInRoom = async () => {
 		let getItemBtn = document.querySelector('.getItemBtn');
 		let condition = itemInRoom.condition;
-		let pointsDices = rollDice();
+		let pointsDices = await rollDice();
 		if (pointsDices < condition) {
 			getItemBtn.setAttribute('disabled', true);
 			await sleep(1);
@@ -240,7 +245,7 @@
 			"<div class='itemInPopUpDiv'>" +
 			"<img class='fluidimg itemInPopUp' src='/assets/img/" +
 			itemInRoom.nameId +
-			".PNG'	alt={itemInRoom.nameId}/>" +
+			".png'	alt={itemInRoom.nameId}/>" +
 			itemInRoom.name +
 			'</div>';
 		popUp(message);
@@ -249,9 +254,12 @@
 		closeDialog('dialog_item')
 	};
 
-	let rollDice = () => {
-		dice1 = Math.floor(Math.random() * 6) + 1;
-		dice2 = Math.floor(Math.random() * 6) + 1;
+	let rollDice = async() => {
+		for(let i=0;i<5;i++){
+			dice1 = Math.floor(Math.random() * 6) + 1;
+			dice2 = Math.floor(Math.random() * 6) + 1;
+			await sleep(0.07)
+		}
 		return dice1 + dice2;
 	};
 
@@ -287,7 +295,8 @@
 		let dialogTarget = document.querySelector('.'+target)
 		if(target == 'dialog_power') randomRoomTP = getnumber()
 		dialogTarget.show()
-		if(target == 'dialog_item' && itemInRoom.rarity == 'légendaire') console.log('anim')
+		let getItemBtn = document.querySelector('.getItemBtn');
+		if(!itemInRoom) getItemBtn.setAttribute('disabled', true);
 	}
 
 	let closeDialog = (target) => {
@@ -414,22 +423,22 @@
 			<div class="headerDialog">
 				<div class="dices">
 					<div class="dices">
-						<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
-						<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
+						{#if dice1 && dice2}
+							<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" transition:blur={{ delay:300, duration:0.5}} />
+							<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" transition:blur={{ delay:300, duration:0.5}} />
+						{/if}
 					</div>
 				</div>
 			</div>
 			<div class="contentDialog">
 				<div class="itemInRoom">
-					{#if itemInRoom}
+					{#if itemInRoom && itemInRoom != 'null'}
 						{#if itemInRoom.rarity == 'légendaire'}
-							<caption width="100%" controls autoplay>
-								<source src="/assets/img/animLegendary.MOV" type="video/mp4">
-							</caption>
+							<div class="animationLegendary"></div>
 						{/if}
 						<img
 							class="fluidimg itemInRoom"
-							src="/assets/img/{itemInRoom.nameId}.PNG"
+							src="/assets/img/{itemInRoom.nameId}.png"
 							alt={itemInRoom.nameId}
 						/>
 						<div class="itemInRoom_stats">
@@ -465,7 +474,7 @@
 							<li class="inventory_item">
 								<img
 									class="fluidimg"
-									src="/assets/img/{Object.keys(countOfItems[index])[0]}.PNG"
+									src="/assets/img/{Object.keys(countOfItems[index])[0]}.png"
 									alt={Object.keys(countOfItems[index])[0]}
 								/>
 								<p class="numOfItem">
