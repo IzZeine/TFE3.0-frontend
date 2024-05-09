@@ -77,7 +77,9 @@
 
 	let innerWidth;
 	const onResize = () => {
+		console.log(innerWidth)
 		if (innerWidth < 500) {
+			console.log('enter?')
 			goto('/');
 		}
 	};
@@ -114,7 +116,7 @@
 			</div>
 			<button class="btnPrimary btnForm" disabled={isDirty(gameName)}>Jouer</button>
 		</form>
-		<button class="btnPrimary btnGamesOnline" on:click={askActiveGames}>Rejoindre</button>
+		<!-- <button class="btnPrimary btnGamesOnline" on:click={askActiveGames}>Rejoindre</button> -->
 </div>
 
 <ul>

@@ -287,6 +287,7 @@
 		let dialogTarget = document.querySelector('.'+target)
 		if(target == 'dialog_power') randomRoomTP = getnumber()
 		dialogTarget.show()
+		if(target == 'dialog_item' && itemInRoom.rarity == 'légendaire') console.log('anim')
 	}
 
 	let closeDialog = (target) => {
@@ -408,6 +409,7 @@
 				</div>
 			{/if}
 		</div>
+
 		<dialog class="dialog dialog_item">
 			<div class="headerDialog">
 				<div class="dices">
@@ -420,6 +422,11 @@
 			<div class="contentDialog">
 				<div class="itemInRoom">
 					{#if itemInRoom}
+						{#if itemInRoom.rarity == 'légendaire'}
+							<caption width="100%" controls autoplay>
+								<source src="/assets/img/animLegendary.MOV" type="video/mp4">
+							</caption>
+						{/if}
 						<img
 							class="fluidimg itemInRoom"
 							src="/assets/img/{itemInRoom.nameId}.PNG"
