@@ -257,6 +257,7 @@ Boardgame - Waiting users
 	.stats {
 		display: flex;
 		gap: 30px;
+		margin-top: auto;
 	}
 }
 
@@ -389,11 +390,27 @@ userMap
 	justify-content: center;
 	gap: 12px;
 	.actionButton {
+		color: var(--txtPrimary);
 		height: 48px;
 		width: 48px;
 		padding: 6px;
 		background-color: var(--BGTranspary);
+		position: relative;
+		transition: 0.2s;
 	}
+	.actionButton:disabled {
+		img {
+			opacity: 0.2;
+		}
+	}
+}
+
+#cooldown {
+	position: absolute;
+	transform: translate(-50%, 0);
+	color: var(--black);
+	font-weight: 800;
+	font-size: 24px;
 }
 
 .swipe {

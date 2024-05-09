@@ -108,7 +108,7 @@
 						{#if user.hero}
 							<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 							<p class="cardUser_name">{user.hero}</p>
-							<p class="cardUser_ability">vblabla</p>
+							<p class="cardUser_ability">{user.ability}</p>
 							<div class="stats">
 								<p class="cardUser_atk">{user.atk} ATK</p>
 								<p class="cardUser_atk">{user.def} DEF</p>

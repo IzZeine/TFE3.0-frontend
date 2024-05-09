@@ -17,7 +17,6 @@
 
 	onMount(async () => {
 		onResize();
-		console.log("pouetpouet")
 
 		gameID = sessionStorage.getItem('gameID');
 

@@ -3,6 +3,7 @@
 	import { clearStorage, getItems, getRoomsConnections, getUser } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
+	import { fade, fly, blur } from 'svelte/transition';
 
 	// export let data;
 	// const socket = data.socket;
@@ -22,6 +23,8 @@
 	let dice1 = 1,
 		dice2 = 1;
 	let battle;
+	let mooveSpeed = 1
+	let isFixed = true
 
 	onMount(async () => {
 		sessionID = sessionStorage.getItem('sessionID');
@@ -188,7 +191,8 @@
 
 		disabledArrows();
 
-		await sleep(0.1);
+		await sleep(mooveSpeed);
+
 		for (let direction of diectionsKeys) {
 			if (directions[direction] == 'null') continue;
 			let arrow = document.querySelector('#' + direction);
@@ -196,7 +200,8 @@
 		}
 	};
 
-	let askToChangeRoom = () => {
+	let askToChangeRoom = async() => {
+		isFixed = false
 		let direction = event.target.id;
 		let targetRoom = directions[direction];
 		if (targetRoom == 'null') return;
@@ -204,12 +209,15 @@
 			let hasKey = myInventory.some((item) => item.nameId === 'key');
 			if (!hasKey) {
 				popUp("You don't have the key");
+				isFixed = true
 				return;
 			}
 		}
 		socket.emit('askToChangeRoom', targetRoom);
 		dice1 = 1;
 		dice2 = 1;
+		await sleep(mooveSpeed)
+		isFixed = true
 	};
 
 	let tryToGetItemInRoom = async () => {
@@ -238,6 +246,7 @@
 		popUp(message);
 		displayArrowsDirections();
 		socket.emit('getItemInRoom', myRoom);
+		closeDialog('dialog_item')
 	};
 
 	let rollDice = () => {
@@ -246,13 +255,37 @@
 		return dice1 + dice2;
 	};
 
-	let useAbility = () => {
-		console.log(user.hero)
+	let useAbility = async(data) => {
+		let cdElement = document.querySelector('#cooldown');
+		let powerElement = document.querySelector('.--power');
+
+		switch (user.hero){
+			case 'Rodeur':
+				socket.emit('askToChangeRoom', data);
+				closeDialog('dialog_power')
+				break;
+			case 'Chevalier' :
+				cdElement.textContent = "10"
+				cdElement.style.color = 'green'
+				powerElement.setAttribute('disabled', true);
+				mooveSpeed = data;
+				await sleep(10)
+				mooveSpeed = 1;
+				await sleep(60)
+				cdElement.textContent = "60"
+				cdElement.style.color = 'red'
+				powerElement.removeAttribute('disabled');
+				
+				break;
+			default :
+				console.log('personne');
+		}
 		socket.on('useAbility', user.hero)
 	}
 
 	let openDialog = (target) => {
 		let dialogTarget = document.querySelector('.'+target)
+		if(target == 'dialog_power') randomRoomTP = getnumber()
 		dialogTarget.show()
 	}
 
@@ -260,6 +293,20 @@
 		let dialogTarget = document.querySelector('.'+target)
 		dialogTarget.close()
 	}
+ 
+	let getnumber = () =>{
+		let numbers = [];
+		while(numbers.length < 5){
+				var r = Math.floor(Math.random() * 38) + 1;
+				while (r==19){
+					 r = Math.floor(Math.random() * 38) + 1;
+					}
+				if(numbers.indexOf(r) === -1) numbers.push(r);
+		}
+		return numbers
+	}
+
+	let randomRoomTP = getnumber()
 
 	// @TODO : si le boss est mort ou que l'ensemble de items restants ne suffisent pas pour battre le boss, le jeu se termine
 </script>
@@ -268,209 +315,242 @@
 	<p>you are dead..</p>
 {/if}
 
-<div class="maxContent">
-	<div class="mapUserContainer">
-		{#if myRoom}
-			<div class="headerMap">
-				<div class="cardHero">
-					<div class="lifes">
-						<ul class="cardHero_stats-life">
-							{#each { length: user.life } as item, index}
-								{@const numberOfLife = user.life}
-								{@const isLast = index === user.life - 1}
-								<li>
-									<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
-								</li>
-								{#if isLast}
-									{#each { length: 3 - numberOfLife } as item, index}
-										<li>
-											<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
-										</li>
-									{/each}
-								{/if}
-							{/each}
-						</ul>
-					</div>
-					<img class="fluidimg cardHero_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
-					<div class="cardHero_stats">						
-						<div class="cardHero_stats-atk-def">
-							<div class="cardHero_stats-atk-def_atk">
-								<p>ATK: <span>{user.atk}</span></p>
-							</div>
-							<div class="cardHero_stats-atk-def_def">
-								<p>DEF: <span>{user.def}</span></p>
+{#if isFixed}
+	<div class="maxContent" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*500}}>
+		<div class="mapUserContainer">
+			{#if myRoom}
+				<div class="headerMap">
+					<div class="cardHero">
+						<div class="lifes">
+							<ul class="cardHero_stats-life">
+								{#each { length: user.life } as item, index}
+									{@const numberOfLife = user.life}
+									{@const isLast = index === user.life - 1}
+									<li>
+										<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
+									</li>
+									{#if isLast}
+										{#each { length: 3 - numberOfLife } as item, index}
+											<li>
+												<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
+											</li>
+										{/each}
+									{/if}
+								{/each}
+							</ul>
+						</div>
+						<img class="fluidimg cardHero_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
+						<div class="cardHero_stats">						
+							<div class="cardHero_stats-atk-def">
+								<div class="cardHero_stats-atk-def_atk">
+									<p>ATK: <span>{user.atk}</span></p>
+								</div>
+								<div class="cardHero_stats-atk-def_def">
+									<p>DEF: <span>{user.def}</span></p>
+								</div>
 							</div>
 						</div>
 					</div>
+					<p class="cardHero_hero" style='--color:{color};'>{user.hero}</p>
 				</div>
-				<p class="cardHero_hero" style='--color:{color};'>{user.hero}</p>
-			</div>
-			<div class="sideBarUser">
-				<div class="directionsArrows">
-					<button
-						class="directionArrow directionArrow_top"
-						id="top"
-						disabled
-						on:click={askToChangeRoom}
-					>
-						<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
-					</button>
-					<button
-						class="directionArrow directionArrow_right"
-						id="right"
-						disabled
-						on:click={askToChangeRoom}
-					>
-						<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
-					</button>
-					<button
-						class="directionArrow directionArrow_bot"
-						id="bot"
-						disabled
-						on:click={askToChangeRoom}
-					>
-						<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
-					</button>
-					<button
-						class="directionArrow directionArrow_left"
-						id="left"
-						disabled
-						on:click={askToChangeRoom}
-					>
-						<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
-					</button>
-				</div>
-				<h1 class="h2 directionSalle">Salle {user.room}</h1>
-				<div class="actionButtons">
-					{#if myRoom && user.team == 'hero'}
-						<button class="actionButton" on:click={() => openDialog("dialog_inventory")}>
-							<img class="fluidimg" src="/assets/img/inventory.png" alt="inventory">
+				<div class="sideBarUser">
+					<div class="directionsArrows">
+						<button
+							class="directionArrow directionArrow_top"
+							id="top"
+							disabled
+							on:click={askToChangeRoom}
+						>
+							<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
 						</button>
-					{/if}
-						<button class="actionButton" on:click={() => openDialog("dialog_power")}>
-							<img class="fluidimg" src="/assets/img/power.png" alt="Ax" />
+						<button
+							class="directionArrow directionArrow_right"
+							id="right"
+							disabled
+							on:click={askToChangeRoom}
+						>
+							<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
 						</button>
-					{#if myRoom && user.team == 'hero'}
-						<button class="getItemBtn actionButton" on:click={() => openDialog("dialog_item")}>
-							<img class="fluidimg" src="/assets/img/ax.PNG" alt="Ax" />
+						<button
+							class="directionArrow directionArrow_bot"
+							id="bot"
+							disabled
+							on:click={askToChangeRoom}
+						>
+							<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
 						</button>
-					{/if}
-				</div>
-			</div>
-		{/if}
-	</div>
-	<dialog class="dialog dialog_item">
-		<div class="headerDialog">
-			<div class="dices">
-				<div class="dices">
-					<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
-					<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
-				</div>
-			</div>
-		</div>
-		<div class="contentDialog">
-			<div class="itemInRoom">
-				{#if itemInRoom}
-					<img
-						class="fluidimg itemInRoom"
-						src="/assets/img/{itemInRoom.nameId}.PNG"
-						alt={itemInRoom.nameId}
-					/>
-					<div class="itemInRoom_stats">
-						<p class="h1">{itemInRoom.name}</p>
-						<p>
-							Bonus : <span style="text-transform: uppercase;">{itemInRoom.type}</span> +{itemInRoom.bonus} 
-						</p>
-						<p>Condition : faire un {itemInRoom.condition}+</p>
+						<button
+							class="directionArrow directionArrow_left"
+							id="left"
+							disabled
+							on:click={askToChangeRoom}
+						>
+							<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
+						</button>
 					</div>
-				{:else}
-					<p>Il n'y a pas d'item dans cette salle.</p>
-					<p>Continuez votre chemin!</p>
-				{/if}
-			</div>
+					<h1 class="h2 directionSalle">Salle {user.room}</h1>
+					<div class="actionButtons">
+						{#if myRoom && user.team == 'hero'}
+							<button class="actionButton --inventory" on:click={() => openDialog("dialog_inventory")}>
+								<img class="fluidimg" src="/assets/img/inventory.png" alt="inventory">
+							</button>
+						{/if}
+							<button class="actionButton --power" on:click={() => openDialog("dialog_power")}>
+								<p class="h2" id="counter"><span id='cooldown'></span></p>
+								<img class="fluidimg" src="/assets/img/power.png" alt="Ax" />
+							</button>
+						{#if myRoom && user.team == 'hero'}
+							<button class="actionButton --find" on:click={() => openDialog("dialog_item")}>
+								<img class="fluidimg" src="/assets/img/find.png" alt="find" />
+							</button>
+						{/if}
+					</div>
+				</div>
+			{/if}
 		</div>
-		<div class="footerDialog">
-			<div class="actionButtons">
-				<button class="actionButton" on:click={() => closeDialog("dialog_item")}>
-					<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
-				</button>
-				<button class="getItemBtn actionButton" on:click={tryToGetItemInRoom}>
-					<img class="fluidimg" src="/assets/img/diceRoll.png" alt="Ax" />
-				</button>
-			</div>
-		</div>
-	</dialog>
-
-	<dialog class="dialog dialog_inventory">
-		<div class="contentDialog">
-			{#if countOfItems}
-				<ul class="inventory">
-					{#each countOfItems as item, index}
-						<li class="inventory_item">
-							<img
-								class="fluidimg"
-								src="/assets/img/{Object.keys(countOfItems[index])[0]}.PNG"
-								alt={Object.keys(countOfItems[index])[0]}
-							/>
-							<p class="numOfItem">
-								<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
-							</p>
-						</li>
-					{/each}
-				</ul>
-			{/if}	
-		</div>
-		<div class="footerDialog">
-			<div class="actionButtons">
-				<button class="actionButton" on:click={() => closeDialog("dialog_inventory")}>
-					<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
-				</button>
-			</div>
-		</div>
-	</dialog>
-
-	<dialog class="dialog dialog_power">
-		<div class="headerDialog">
-		</div>
-		<div class="contentDialog">
-			<p>{user.ability}</p>
-			<button class="btnPrimary" on:click={useAbility}>Utiliser</button>
-		</div>
-		<div class="footerDialog">
-			<div class="actionButtons">
-				<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
-					<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
-				</button>
-		</div>
-	</dialog>
-
-	<dialog class="dialog dialog_battle">
-		{#if battle}
+		<dialog class="dialog dialog_item">
 			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/{battle.boss.heroImg}" alt="boss">
-				<p class="h1 dialog_battle-boss" style='--color:{color};'>{battle.boss.hero}</p>
-				<div class="heroes">
-					{#each battle.heroes as hero}
-						<img class="fluidimg hero" src="/assets/img/{hero.heroImg}" alt="hero">
-					{/each}
+				<div class="dices">
+					<div class="dices">
+						<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
+						<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
+					</div>
 				</div>
 			</div>
 			<div class="contentDialog">
-				<div class="right">
-					<p class="h2">Le méchant</p>
-					<p>DEF: {battle.boss.def}</p>
-				</div>
-				<div class="left">
-					<p class="h2">Les gentils</p>
-					<p>ATK: {battle.boss.def}</p>
+				<div class="itemInRoom">
+					{#if itemInRoom}
+						<img
+							class="fluidimg itemInRoom"
+							src="/assets/img/{itemInRoom.nameId}.PNG"
+							alt={itemInRoom.nameId}
+						/>
+						<div class="itemInRoom_stats">
+							<p class="h1">{itemInRoom.name}</p>
+							<p>
+								Bonus : <span style="text-transform: uppercase;">{itemInRoom.type}</span> +{itemInRoom.bonus} 
+							</p>
+							<p>Condition : faire un {itemInRoom.condition}+</p>
+						</div>
+					{:else}
+						<p>Il n'y a pas d'item dans cette salle.</p>
+						<p>Continuez votre chemin!</p>
+					{/if}
 				</div>
 			</div>
 			<div class="footerDialog">
-				<p>Vous combattez !</p>
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_item")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+					<button class="getItemBtn actionButton" on:click={tryToGetItemInRoom}>
+						<img class="fluidimg" src="/assets/img/diceRoll.png" alt="Ax" />
+					</button>
+				</div>
 			</div>
+		</dialog>
+
+		<dialog class="dialog dialog_inventory">
+			<div class="contentDialog">
+				{#if countOfItems}
+					<ul class="inventory">
+						{#each countOfItems as item, index}
+							<li class="inventory_item">
+								<img
+									class="fluidimg"
+									src="/assets/img/{Object.keys(countOfItems[index])[0]}.PNG"
+									alt={Object.keys(countOfItems[index])[0]}
+								/>
+								<p class="numOfItem">
+									<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
+								</p>
+							</li>
+						{/each}
+					</ul>
+				{/if}	
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_inventory")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+				</div>
+			</div>
+		</dialog>
+
+		{#if user.hero == 'Rodeur'}
+		<dialog class="dialog dialog_power --rodeur">
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<ul class="roomChoice">
+					{#each randomRoomTP as room}
+							<li class="roomChoice_item"><button class="roomChoice_item-btn" on:click={() => useAbility(room)}>{room}</button></li>
+					{/each}
+				</ul>
+			</div>
+			<div class="contentDialog">
+				<p class="h2">{user.abilityName}</p>
+				<p>{user.ability}</p>
+				<!-- <button class="btnPrimary" on:click={useAbility}>Utiliser</button> -->
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+			</div>
+		</dialog>
 		{/if}
-	</dialog>
-</div>
+
+		{#if user.hero == 'Chevalier'}
+		<dialog class="dialog dialog_power --knight">
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+			</div>
+			<div class="contentDialog">
+				<p class="h2">{user.abilityName}</p>
+				<p>{user.ability}</p>
+				<button class="btnPrimary" on:click={() => {useAbility(0.3); closeDialog("dialog_power")}}>Utiliser</button>
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+			</div>
+		</dialog>
+		{/if}
+
+		<dialog class="dialog dialog_battle">
+			{#if battle}
+				<div class="headerDialog">
+					<img class="fluidimg" src="/assets/img/{battle.boss.heroImg}" alt="boss">
+					<p class="h1 dialog_battle-boss" style='--color:{color};'>{battle.boss.hero}</p>
+					<div class="heroes">
+						{#each battle.heroes as hero}
+							<img class="fluidimg hero" src="/assets/img/{hero.heroImg}" alt="hero">
+						{/each}
+					</div>
+				</div>
+				<div class="contentDialog">
+					<div class="right">
+						<p class="h2">Le méchant</p>
+						<p>DEF: {battle.boss.def}</p>
+					</div>
+					<div class="left">
+						<p class="h2">Les gentils</p>
+						<p>ATK: {battle.boss.def}</p>
+					</div>
+				</div>
+				<div class="footerDialog">
+					<p>Vous combattez !</p>
+				</div>
+			{/if}
+		</dialog>
+	</div>
+	{:else}
+		<!-- <img class="fluidimg" src="/assets/img/moove.png" alt="ismooving"> -->
+{/if}
 
 
 <style>
