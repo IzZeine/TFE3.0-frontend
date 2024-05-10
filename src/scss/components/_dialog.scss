@@ -59,10 +59,26 @@ ITEM
 	justify-content: center;
 	align-items: center;
 	gap: 6px;
+	position: relative;
 }
 
 .dice {
 	max-width: 30px;
+}
+
+.luckOfDices {
+	position: absolute;
+	bottom: -50%;
+	color: green;
+	opacity: 0;
+	transition: 0.2s;
+}
+
+.luckOfDices.isActive {
+	position: absolute;
+	bottom: -70%;
+	opacity: 1;
+	color: green;
 }
 
 .animationLegendary {
@@ -205,6 +221,25 @@ Power --rodeur
 	color: var(--txtPrimary);
 	height: 48px;
 	width: 48px;
+	padding: 6px;
+	background-color: var(--BGTranspary);
+}
+
+/*--------------------------------------------------------------------------
+Power --death
+--------------------------------------------------------------------------*/
+
+.userChoice {
+	margin-top: 12px;
+	display: flex;
+	justify-content: center;
+	.hero {
+		max-width: calc((100vw) / 4);
+	}
+}
+
+.userChoice_item-btn {
+	color: var(--txtPrimary);
 	padding: 6px;
 	background-color: var(--BGTranspary);
 }

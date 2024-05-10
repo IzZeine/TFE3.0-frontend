@@ -7,7 +7,6 @@
 
 	// export let data;
 	// const socket = data.socket;
-	// console.log(socket)
 
 	export let user = user;
 	let color = user.color
@@ -25,6 +24,9 @@
 	let battle;
 	let mooveSpeed = 1
 	let isFixed = true
+	let usersInGame = ''
+	let luckOfDices = 2
+	let luckRatio = 0
 
 	onMount(async () => {
 		sessionID = sessionStorage.getItem('sessionID');
@@ -44,6 +46,10 @@
 			}
 
 		updateInventory(user);
+
+		socket.on('updateUsers',(data)=>{
+			usersInGame = data;
+		})
 		
 		socket.on('youAskedRooms', (rooms) => {
 			if(!user) return;
@@ -51,10 +57,8 @@
 			allRooms = rooms;
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
-			console.log(itemInRoom)
 			if(!itemInRoom || itemInRoom == 'null') return;
 			itemInRoom = JSON.parse(itemInRoom);
-			if(itemInRoom.rarity == 'légendaire') console.log('yes')
 		});
 
 		socket.on('movePlayer', async (userID) => {
@@ -62,9 +66,8 @@
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
-			itemInRoom = JSON.parse(itemInRoom); // convert string to json
 			if(!itemInRoom || itemInRoom == 'null') return;
-			if(itemInRoom.rarity == 'légendaire') console.log('yes')
+			itemInRoom = JSON.parse(itemInRoom); // convert string to json
 		});
 
 		socket.on('updateUser', (user) => {
@@ -72,9 +75,9 @@
 		});
 
 		socket.on('battle', async (data) => {
-			console.log(data)
 			battle = data
 			console.log(battle)
+
 			openDialog('dialog_battle')
 
 			user = await getUser(socket);
@@ -109,9 +112,8 @@
 				popUp('Match nul.. <br> tout le monde à son spawn'), (winner = data.boss.room);
 			if (bossLife < heroesAtk)
 				popUp('Les heroes remportent <br> fin de la partie!'), (winner = 'endGame');
-			if (user.id == data.boss.id) socket.emit('battleEnded', winner);
 
-			closeDialog('dialog_battle')
+			if (user.id == data.boss.id) socket.emit('battleEnded', winner);
 
 		});
 
@@ -119,10 +121,20 @@
 				user = await getUser(socket);
 				displayArrowsDirections();
 
+				if(user.life <= 0){
+					let actionButtonsElement = document.querySelectorAll('.actionButton')
+					actionButtonsElement.forEach((btn)=>{
+						btn.setAttribute('disabled', true);
+					})
+				}
+
 				if (user.team == 'hero' && myRoom.item != 'null' && myRoom.item != null) {
 					let getItemBtn = document.querySelector('.getItemBtn');
 					getItemBtn.removeAttribute('disabled');
 				}
+
+			closeDialog('dialog_battle')
+
 			});
 	});
 
@@ -227,18 +239,30 @@
 
 	let tryToGetItemInRoom = async () => {
 		let getItemBtn = document.querySelector('.getItemBtn');
+		let luckOfDicesElement = document.querySelector('.luckOfDices')
+		luckOfDicesElement.classList.add('isActive')
+		console.log(luckOfDicesElement)
 		let condition = itemInRoom.condition;
 		let pointsDices = await rollDice();
+		pointsDices += luckOfDices
+		console.log(pointsDices)
 		if (pointsDices < condition) {
 			getItemBtn.setAttribute('disabled', true);
 			await sleep(1);
 			getItemBtn.removeAttribute('disabled');
+
+			luckOfDicesElement.classList.remove('isActive')
+			luckOfDices = 0
+
 			return;
 		}
 		disabledArrows();
 		getItemBtn.setAttribute('disabled', true);
 		await sleep(1);
 		getItemBtn.removeAttribute('disabled');
+
+		luckOfDicesElement.classList.remove('.isActive')
+		luckOfDices = 0
 
 		let message =
 			'Vous avez gagné : \n' +
@@ -256,8 +280,8 @@
 
 	let rollDice = async() => {
 		for(let i=0;i<5;i++){
-			dice1 = Math.floor(Math.random() * 6) + 1;
-			dice2 = Math.floor(Math.random() * 6) + 1;
+			dice1 = Math.floor(Math.random() * 2) + 1;
+			// dice2 = Math.floor(Math.random() * 6) + 1;
 			await sleep(0.07)
 		}
 		return dice1 + dice2;
@@ -282,8 +306,16 @@
 				await sleep(60)
 				cdElement.textContent = "60"
 				cdElement.style.color = 'red'
-				powerElement.removeAttribute('disabled');
-				
+				powerElement.removeAttribute('disabled');				
+				break;
+			case 'Faucheuse' :
+				socket.emit('saveUser',(data))
+				break;
+			case 'Druide' :
+				socket.emit('healUser',(data))
+				break;
+			case 'Magicien' :
+				upLuckToDice()
 				break;
 			default :
 				console.log('personne');
@@ -316,6 +348,12 @@
 		return numbers
 	}
 
+	let upLuckToDice = () => {
+		luckOfDices =  Math.floor(Math.random() * 3 + luckRatio);
+		if(luckOfDices == 0) luckRatio += 0.25
+		if(luckOfDices > 0) luckRatio = 0
+	}
+
 	let randomRoomTP = getnumber()
 
 	// @TODO : si le boss est mort ou que l'ensemble de items restants ne suffisent pas pour battre le boss, le jeu se termine
@@ -325,9 +363,9 @@
 	<p>you are dead..</p>
 {/if}
 
-{#if isFixed}
-	<div class="maxContent" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*500}}>
-		<div class="mapUserContainer">
+<div class="maxContent">
+		{#if isFixed}
+		<div class="mapUserContainer" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*500}}>
 			{#if myRoom}
 				<div class="headerMap">
 					<div class="cardHero">
@@ -418,14 +456,18 @@
 				</div>
 			{/if}
 		</div>
+		{/if}
 
-		<dialog class="dialog dialog_item">
+		<dialog class="dialog dialog_item" open>
 			<div class="headerDialog">
 				<div class="dices">
 					<div class="dices">
 						{#if dice1 && dice2}
-							<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" transition:blur={{ delay:300, duration:0.5}} />
-							<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" transition:blur={{ delay:300, duration:0.5}} />
+							{#if luckOfDices != 0}
+								<p class="h1 luckOfDices">+{luckOfDices}</p>
+							{/if}
+							<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1"/>
+							<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2"/>
 						{/if}
 					</div>
 				</div>
@@ -537,6 +579,143 @@
 		</dialog>
 		{/if}
 
+		{#if user.hero == 'Druide'}
+		<dialog class="dialog dialog_power --druide">
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<ul class="userChoice">
+					{#each usersInGame as user}
+						{#if user.life < 3 && user.life > 0}
+							<li class="userChoice_item">
+								<button class="userChoice_item-btn" on:click={() => useAbility(user)}>
+									<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead">
+									<p>{user.username}</p>
+								</button>
+							</li>
+						{/if}
+					{/each}
+				</ul>
+			</div>
+			<div class="contentDialog">
+				<p class="h2">{user.abilityName}</p>
+				<p>{user.ability}</p>
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+			</div>
+		</dialog>
+		{/if}
+
+		{#if user.hero == 'Faucheuse'}
+		<dialog class="dialog dialog_power --death">
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<ul class="userChoice">
+					{#each usersInGame as user}
+						{#if user.life == 0}
+							<li class="userChoice_item">
+								<button class="userChoice_item-btn" on:click={() => useAbility(user)}>
+									<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead">
+									<p>{user.username}</p>
+								</button>
+							</li>
+						{/if}
+					{/each}
+				</ul>
+			</div>
+			<div class="contentDialog">
+				<p class="h2">{user.abilityName}</p>
+				<p>{user.ability}</p>
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+			</div>
+		</dialog>
+		{/if}
+
+		{#if user.hero == 'Magicien'}
+		<dialog class="dialog dialog_power --knight">
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<p>Vous avez +{luckOfDices} points au prochain lancé de dés!</p>
+			</div>
+			<div class="contentDialog">
+				<p class="h2">{user.abilityName}</p>
+				<p>{user.ability}</p>
+				<button class="btnPrimary" on:click={() => {useAbility(0)}}>Utiliser</button>
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+			</div>
+		</dialog>
+		{/if}
+
+		{#if user.hero == 'Serpent'}
+		<dialog class="dialog dialog_power --knight">
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+			</div>
+			<div class="contentDialog">
+				<p class="h2">{user.abilityName}</p>
+				<p>{user.ability}</p>
+				<button class="btnPrimary" on:click={() => {useAbility(0.3); closeDialog("dialog_power")}}>Utiliser</button>
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+			</div>
+		</dialog>
+		{/if}
+
+		{#if user.hero == 'Dragon'}
+		<dialog class="dialog dialog_power --knight">
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+			</div>
+			<div class="contentDialog">
+				<p class="h2">{user.abilityName}</p>
+				<p>{user.ability}</p>
+				<button class="btnPrimary" on:click={() => {useAbility(0.3); closeDialog("dialog_power")}}>Utiliser</button>
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+			</div>
+		</dialog>
+		{/if}
+
+		{#if user.hero == 'Golem'}
+		<dialog class="dialog dialog_power --knight">
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+			</div>
+			<div class="contentDialog">
+				<p class="h2">{user.abilityName}</p>
+				<p>{user.ability}</p>
+				<button class="btnPrimary" on:click={() => {useAbility(0.3); closeDialog("dialog_power")}}>Utiliser</button>
+			</div>
+			<div class="footerDialog">
+				<div class="actionButtons">
+					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					</button>
+			</div>
+		</dialog>
+		{/if}
+
 		<dialog class="dialog dialog_battle">
 			{#if battle}
 				<div class="headerDialog">
@@ -564,9 +743,6 @@
 			{/if}
 		</dialog>
 	</div>
-	{:else}
-		<!-- <img class="fluidimg" src="/assets/img/moove.png" alt="ismooving"> -->
-{/if}
 
 
 <style>

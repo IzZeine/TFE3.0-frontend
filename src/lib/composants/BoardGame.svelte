@@ -10,7 +10,7 @@
 	export let activeUsers = activeUsers;
 
 	onMount(async () => {
-		positionOfPlayers();
+		// positionOfPlayers();
 		socket.on('updateUsers', (data) => {
 			activeUsers = data;
 			positionOfPlayers();

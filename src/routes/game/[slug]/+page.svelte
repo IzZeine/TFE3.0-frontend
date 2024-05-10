@@ -7,6 +7,7 @@
 	import { goto } from '$app/navigation';
 	import Map from '$lib/composants/Map.svelte';
 	import { socket } from '$lib/js/socketConnection.js';
+	import EndGame from '$lib/composants/EndGame.svelte';
 
 	// export let data;
 	// const socket = data.socket;
@@ -103,6 +104,9 @@
 		{/if}
 		{#if game.statut == 'started'}
 			<Map {user} />
+		{/if}
+		{#if game.statut == 'ended'}
+			<EndGame />
 		{/if}
 	{/if}
 {/if}
