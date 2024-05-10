@@ -643,7 +643,11 @@
 		<dialog class="dialog dialog_power --knight">
 			<div class="headerDialog">
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
-				<p>Vous avez +{luckOfDices} points au prochain lancé de dés!</p>
+				<div class="luckText">
+					<p>Vous avez</p>
+					<p>+{luckOfDices} points</p>
+					<p>au prochain lancé de dés!</p>
+				</div>
 			</div>
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
