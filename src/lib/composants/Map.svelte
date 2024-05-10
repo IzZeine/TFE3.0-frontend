@@ -240,8 +240,7 @@
 	let tryToGetItemInRoom = async () => {
 		let getItemBtn = document.querySelector('.getItemBtn');
 		let luckOfDicesElement = document.querySelector('.luckOfDices')
-		luckOfDicesElement.classList.add('isActive')
-		console.log(luckOfDicesElement)
+		if (luckOfDicesElement) luckOfDicesElement.classList.add('isActive')
 		let condition = itemInRoom.condition;
 		let pointsDices = await rollDice();
 		pointsDices += luckOfDices
@@ -251,7 +250,7 @@
 			await sleep(1);
 			getItemBtn.removeAttribute('disabled');
 
-			luckOfDicesElement.classList.remove('isActive')
+			if (luckOfDicesElement) luckOfDicesElement.classList.remove('isActive')
 			luckOfDices = 0
 
 			return;
@@ -261,7 +260,7 @@
 		await sleep(1);
 		getItemBtn.removeAttribute('disabled');
 
-		luckOfDicesElement.classList.remove('.isActive')
+		if (luckOfDicesElement) luckOfDicesElement.classList.remove('.isActive')
 		luckOfDices = 0
 
 		let message =
@@ -289,6 +288,7 @@
 
 	let useAbility = async(data) => {
 		let cdElement = document.querySelector('#cooldown');
+		cdElement.textContent = '00'
 		let powerElement = document.querySelector('.--power');
 
 		switch (user.hero){
@@ -438,7 +438,7 @@
 					</div>
 					<h1 class="h2 directionSalle">Salle {user.room}</h1>
 					<div class="actionButtons">
-						{#if myRoom && user.team == 'hero'}
+						{#if myRoom && (user.team == 'hero' || user.hero == 'Dragon')}
 							<button class="actionButton --inventory" on:click={() => openDialog("dialog_inventory")}>
 								<img class="fluidimg" src="/assets/img/inventory.png" alt="inventory">
 							</button>
@@ -447,7 +447,7 @@
 								<p class="h2" id="counter"><span id='cooldown'></span></p>
 								<img class="fluidimg" src="/assets/img/power.png" alt="Ax" />
 							</button>
-						{#if myRoom && user.team == 'hero'}
+						{#if myRoom && (user.team == 'hero' || user.hero == 'Dragon')}
 							<button class="actionButton --find" on:click={() => openDialog("dialog_item")}>
 								<img class="fluidimg" src="/assets/img/find.png" alt="find" />
 							</button>
@@ -640,7 +640,7 @@
 		{/if}
 
 		{#if user.hero == 'Magicien'}
-		<dialog class="dialog dialog_power --knight">
+		<dialog class="dialog dialog_power --wizard">
 			<div class="headerDialog">
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
 				<div class="luckText">
@@ -671,7 +671,7 @@
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
 				<p>{user.ability}</p>
-				<button class="btnPrimary" on:click={() => {useAbility(0.3); closeDialog("dialog_power")}}>Utiliser</button>
+				<button class="btnPrimary" on:click={() => {useAbility(0); closeDialog("dialog_power")}}>Utiliser</button>
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
@@ -690,7 +690,6 @@
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
 				<p>{user.ability}</p>
-				<button class="btnPrimary" on:click={() => {useAbility(0.3); closeDialog("dialog_power")}}>Utiliser</button>
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
