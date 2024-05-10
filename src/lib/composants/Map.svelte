@@ -25,7 +25,7 @@
 	let mooveSpeed = 1
 	let isFixed = true
 	let usersInGame = ''
-	let luckOfDices = 2
+	let luckOfDices = 0
 	let luckRatio = 0
 
 	onMount(async () => {
