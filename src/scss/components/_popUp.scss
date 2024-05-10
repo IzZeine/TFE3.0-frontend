@@ -6,8 +6,9 @@ PopUp
 	z-index: 99;
 	position: absolute;
 	display: table;
+	width: 80%;
+	box-sizing: border-box;
 	text-align: center;
-	max-width: calc(100vw - 120px);
 	top: -30%;
 	left: 50%;
 	transform: translate(-50%, 0);
@@ -27,6 +28,7 @@ PopUp
 	display: flex;
 	gap: 12px;
 	align-items: center;
+	justify-content: center;
 }
 
 .itemInPopUp {
