@@ -25,6 +25,7 @@
 	let mooveSpeed = 1
 	let isFixed = true
 	let usersInGame = ''
+	let nerfDices = 3
 	let luckOfDices = 0
 	let luckRatio = 0
 
@@ -41,14 +42,35 @@
 					clearStorage();
 					window.location.href = '/';
 				}
+
 				socket.emit('joinGame', gameID);
 				socket.emit('getRooms', gameID);
 			}
 
 		updateInventory(user);
 
-		socket.on('updateUsers',(data)=>{
+		socket.on('updateUsers',async (data)=>{
+			updateInventory(user);
+			user = await getUser(socket);
 			usersInGame = data;
+			if(user.life <= 0){
+				let actionButtonsElement = document.querySelectorAll('.actionButton')
+				actionButtonsElement.forEach((btn)=>{
+					btn.setAttribute('disabled', true);
+				})
+			}
+		})
+
+		socket.on('saveYou', async(id)=>{
+			if(user.id != id)	{
+				console.log('notYou')
+				return;
+			}
+			console.log('you are saved')
+			let actionButtonsElement = document.querySelectorAll('.actionButton')
+				actionButtonsElement.forEach((btn)=>{
+					btn.removeAttribute('disabled');
+			})
 		})
 		
 		socket.on('youAskedRooms', (rooms) => {
@@ -70,10 +92,6 @@
 			itemInRoom = JSON.parse(itemInRoom); // convert string to json
 		});
 
-		socket.on('updateUser', (user) => {
-			updateInventory(user);
-		});
-
 		socket.on('battle', async (data) => {
 			battle = data
 			console.log(battle)
@@ -90,12 +108,8 @@
 
 			disabledArrows();
 
-			if (user.room != data.room) {
-				popUp('Un combat est en cours');
-				return;
-			}
-
-			popUp('Vous entrez dans un combat!');
+			if (user.room != data.room) return;
+			
 			let bossLife = data.boss.def;
 			let heroesAtk = 0;
 			for (let hero of data.heroes) {
@@ -113,29 +127,37 @@
 			if (bossLife < heroesAtk)
 				popUp('Les heroes remportent <br> fin de la partie!'), (winner = 'endGame');
 
-			if (user.id == data.boss.id) socket.emit('battleEnded', winner);
+			if (user.team = 'boss') socket.emit('battleEnded', winner);
 
 		});
 
-			socket.on('returnAtSpawn', async () => {
-				user = await getUser(socket);
-				displayArrowsDirections();
+		socket.on('returnAtSpawn', async () => {
+			user = await getUser(socket);
+			displayArrowsDirections();
 
-				if(user.life <= 0){
-					let actionButtonsElement = document.querySelectorAll('.actionButton')
-					actionButtonsElement.forEach((btn)=>{
-						btn.setAttribute('disabled', true);
-					})
-				}
+			if(user.life <= 0){
+				let actionButtonsElement = document.querySelectorAll('.actionButton')
+				actionButtonsElement.forEach((btn)=>{
+					btn.setAttribute('disabled', true);
+				})
+			}
 
-				if (user.team == 'hero' && myRoom.item != 'null' && myRoom.item != null) {
-					let getItemBtn = document.querySelector('.getItemBtn');
-					getItemBtn.removeAttribute('disabled');
-				}
+			if (user.team == 'hero' && myRoom.item != 'null' && myRoom.item != null) {
+				let getItemBtn = document.querySelector('.getItemBtn');
+				getItemBtn.removeAttribute('disabled');
+			}
 
 			closeDialog('dialog_battle')
+		});
 
-			});
+		socket.on('isNerfingDices', () =>{
+			console.log("dices is nerf")
+			nerfDices = 3
+		})
+		socket.on('undoNerfingDices', () =>{
+			console.log("dices is normal")
+			nerfDices = 0
+		})
 	});
 
 	let popUp = async (message) => {
@@ -239,18 +261,19 @@
 
 	let tryToGetItemInRoom = async () => {
 		let getItemBtn = document.querySelector('.getItemBtn');
-		let luckOfDicesElement = document.querySelector('.luckOfDices')
-		if (luckOfDicesElement) luckOfDicesElement.classList.add('isActive')
+		let bonusDicesElement = document.querySelector('.bonusDices')
+		if (bonusDicesElement) bonusDicesElement.classList.add('isActive')
 		let condition = itemInRoom.condition;
 		let pointsDices = await rollDice();
-		pointsDices += luckOfDices
-		console.log(pointsDices)
+		pointsDices += luckOfDices - nerfDices
 		if (pointsDices < condition) {
 			getItemBtn.setAttribute('disabled', true);
 			await sleep(1);
 			getItemBtn.removeAttribute('disabled');
 
-			if (luckOfDicesElement) luckOfDicesElement.classList.remove('isActive')
+			if (bonusDicesElement) bonusDicesElement.classList.remove('isActive')
+
+			await sleep(0.2)
 			luckOfDices = 0
 
 			return;
@@ -260,7 +283,7 @@
 		await sleep(1);
 		getItemBtn.removeAttribute('disabled');
 
-		if (luckOfDicesElement) luckOfDicesElement.classList.remove('.isActive')
+		if (bonusDicesElement) bonusDicesElement.classList.remove('.isActive')
 		luckOfDices = 0
 
 		let message =
@@ -286,35 +309,66 @@
 		return dice1 + dice2;
 	};
 
-	let useAbility = async(data) => {
+	let cooldownTimer = async (duration, color) => {
 		let cdElement = document.querySelector('#cooldown');
+		cdElement.textContent = duration
+		cdElement.style.color = color
+		let count = 0
+		let intervalId = setInterval ( () => { 
+			count++; 
+			cdElement.textContent = duration - count
+			if (count >= duration ) { 
+				count = 0
+				clearInterval (intervalId);
+			} 
+		}, 1000 ) ;
+		await sleep(duration)
+		cdElement.textContent = ''
+	}
+
+	let useAbility = async(data) => {
 		let powerElement = document.querySelector('.--power');
+		powerElement.setAttribute('disabled', true);
+		let colorActive = 'green'
+		let colorInactive = 'red'
 
 		switch (user.hero){
 			case 'Rodeur':
 				socket.emit('askToChangeRoom', data);
 				closeDialog('dialog_power')
+				await cooldownTimer(5, colorInactive)
+				powerElement.removeAttribute('disabled');			
 				break;
 			case 'Chevalier' :
-				cdElement.textContent = "10"
-				cdElement.style.color = 'green'
-				powerElement.setAttribute('disabled', true);
 				mooveSpeed = data;
-				await sleep(10)
+				await cooldownTimer(10, colorActive)
 				mooveSpeed = 1;
-				await sleep(60)
-				cdElement.textContent = "60"
-				cdElement.style.color = 'red'
-				powerElement.removeAttribute('disabled');				
+				await cooldownTimer(60, colorInactive)
+				powerElement.removeAttribute('disabled');			
 				break;
 			case 'Faucheuse' :
 				socket.emit('saveUser',(data))
+				closeDialog('dialog_power')
+				powerElement.removeAttribute('disabled');			
 				break;
 			case 'Druide' :
 				socket.emit('healUser',(data))
+				await cooldownTimer(5, colorInactive)
+				powerElement.removeAttribute('disabled');
 				break;
 			case 'Magicien' :
 				upLuckToDice()
+				closeDialog('dialog_power')
+				let message = 'vous gagnez +' + luckOfDices + ' points pour le prochain lancé de dés'
+				popUp(message)
+				await cooldownTimer(5, colorInactive)
+				powerElement.removeAttribute('disabled');	
+				break;
+			case 'Serpent' :
+				socket.emit('nerfDices')
+				await cooldownTimer(10, colorActive)
+				socket.emit('undoNerfDices')
+				await cooldownTimer(120, colorInactive)
 				break;
 			default :
 				console.log('personne');
@@ -325,9 +379,12 @@
 	let openDialog = (target) => {
 		let dialogTarget = document.querySelector('.'+target)
 		if(target == 'dialog_power') randomRoomTP = getnumber()
-		dialogTarget.show()
 		let getItemBtn = document.querySelector('.getItemBtn');
-		if(!itemInRoom) getItemBtn.setAttribute('disabled', true);
+		getItemBtn.removeAttribute('disabled');
+		if(!itemInRoom) {
+			getItemBtn.setAttribute('disabled', true);
+		}
+		dialogTarget.show()
 	}
 
 	let closeDialog = (target) => {
@@ -358,84 +415,101 @@
 	// @TODO : si le boss est mort ou que l'ensemble de items restants ne suffisent pas pour battre le boss, le jeu se termine
 </script>
 
-{#if user.life == 0}
-	<p>you are dead..</p>
-{/if}
-
 <div class="maxContent">
-		{#if isFixed}
+		<!-- {#if isFixed} -->
 		<div class="mapUserContainer" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*500}}>
 			{#if myRoom}
-				<div class="headerMap">
-					<div class="cardHero">
-						<div class="lifes">
-							<ul class="cardHero_stats-life">
-								{#each { length: user.life } as item, index}
-									{@const numberOfLife = user.life}
-									{@const isLast = index === user.life - 1}
-									<li>
-										<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
-									</li>
-									{#if isLast}
-										{#each { length: 3 - numberOfLife } as item, index}
-											<li>
-												<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
-											</li>
-										{/each}
-									{/if}
-								{/each}
-							</ul>
-						</div>
-						<img class="fluidimg cardHero_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
-						<div class="cardHero_stats">						
-							<div class="cardHero_stats-atk-def">
-								<div class="cardHero_stats-atk-def_atk">
-									<p>ATK: <span>{user.atk}</span></p>
-								</div>
-								<div class="cardHero_stats-atk-def_def">
-									<p>DEF: <span>{user.def}</span></p>
+				{#if isFixed}
+					<div class="headerMap" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*500}}>
+						<div class="cardHero">
+							<div class="lifes">
+										<ul class="cardHero_stats-life">
+											{#each { length: user.life } as _, index}
+												{@const numberOfLife = user.life}
+												{@const isLast = index === user.life - 1}
+												<li>
+													<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
+												</li>
+												{#if isLast}
+													{#each { length: 3 - numberOfLife } as _, index}
+														<li>
+															<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
+														</li>
+													{/each}
+												{/if}
+											{/each}
+											{#if user.life <= 0}
+											{#each { length: 3 } as _}
+												<li>
+													<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
+												</li>
+											{/each}
+											{/if}
+										</ul>
+							</div>
+							<img class="fluidimg cardHero_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
+							<div class="cardHero_stats">						
+								<div class="cardHero_stats-atk-def">
+									<div class="cardHero_stats-atk-def_atk">
+										<p>ATK: <span>{user.atk}</span></p>
+									</div>
+									<div class="cardHero_stats-atk-def_def">
+										<p>DEF: <span>{user.def}</span></p>
+									</div>
 								</div>
 							</div>
 						</div>
+							<p class="cardHero_hero" style='--color:{color};'>{user.hero}</p>
 					</div>
-					<p class="cardHero_hero" style='--color:{color};'>{user.hero}</p>
+					{:else}
+					<div></div>
+				{/if}
+				{#if user.life <= 0 } <p>Vous êtes mort..</p> {/if}
+				<div class="directionsArrows">
+					<button
+						class="directionArrow directionArrow_top"
+						id="top"
+						disabled
+						on:click={askToChangeRoom}
+					>
+						<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
+					</button>
+					<button
+						class="directionArrow directionArrow_right"
+						id="right"
+						disabled
+						on:click={askToChangeRoom}
+					>
+						<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
+					</button>
+					<button
+						class="directionArrow directionArrow_bot"
+						id="bot"
+						disabled
+						on:click={askToChangeRoom}
+					>
+						<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
+					</button>
+					<button
+						class="directionArrow directionArrow_left"
+						id="left"
+						disabled
+						on:click={askToChangeRoom}
+					>
+						<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
+					</button>
 				</div>
+
 				<div class="sideBarUser">
-					<div class="directionsArrows">
-						<button
-							class="directionArrow directionArrow_top"
-							id="top"
-							disabled
-							on:click={askToChangeRoom}
-						>
-							<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
-						</button>
-						<button
-							class="directionArrow directionArrow_right"
-							id="right"
-							disabled
-							on:click={askToChangeRoom}
-						>
-							<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
-						</button>
-						<button
-							class="directionArrow directionArrow_bot"
-							id="bot"
-							disabled
-							on:click={askToChangeRoom}
-						>
-							<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
-						</button>
-						<button
-							class="directionArrow directionArrow_left"
-							id="left"
-							disabled
-							on:click={askToChangeRoom}
-						>
-							<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
-						</button>
-					</div>
-					<h1 class="h2 directionSalle">Salle {user.room}</h1>
+					{#if isFixed}
+						<h1 class="h2 directionSalle" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*0}}>
+							Salle {user.room}
+						</h1>
+						{:else}
+							<h1 class="h2 directionSalle"  in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: 0}}>
+								Mooving..
+							</h1>
+					{/if}
 					<div class="actionButtons">
 						{#if myRoom && (user.team == 'hero' || user.hero == 'Dragon')}
 							<button class="actionButton --inventory" on:click={() => openDialog("dialog_inventory")}>
@@ -455,15 +529,18 @@
 				</div>
 			{/if}
 		</div>
-		{/if}
+		<!-- {/if} -->
 
 		<dialog class="dialog dialog_item">
 			<div class="headerDialog">
 				<div class="dices">
 					<div class="dices">
 						{#if dice1 && dice2}
+							{#if nerfDices != 0}
+								<p class="h1 bonusDices nerfOfDices">{luckOfDices - nerfDices}</p>
+							{/if}
 							{#if luckOfDices != 0}
-								<p class="h1 luckOfDices">+{luckOfDices}</p>
+								<p class="h1 bonusDices luckOfDices">+{luckOfDices}</p>
 							{/if}
 							<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1"/>
 							<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2"/>
@@ -588,8 +665,8 @@
 							<li class="userChoice_item">
 								<button class="userChoice_item-btn" on:click={() => useAbility(user)}>
 									<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead">
-									<p>{user.username}</p>
 								</button>
+								<p class="userChoice_item-username">{user.username}</p>
 							</li>
 						{/if}
 					{/each}
@@ -614,12 +691,12 @@
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
 				<ul class="userChoice">
 					{#each usersInGame as user}
-						{#if user.life == 0}
+						{#if user.life <= 0}
 							<li class="userChoice_item">
 								<button class="userChoice_item-btn" on:click={() => useAbility(user)}>
 									<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead">
-									<p>{user.username}</p>
 								</button>
+								<p class="userChoice_item-username">{user.username}</p>
 							</li>
 						{/if}
 					{/each}
@@ -651,6 +728,7 @@
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
 				<p>{user.ability}</p>
+				<p>Si vous relancez votre sort, vous perdrez votre bonus actuel</p>
 				<button class="btnPrimary" on:click={() => {useAbility(0)}}>Utiliser</button>
 			</div>
 			<div class="footerDialog">
@@ -707,7 +785,6 @@
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
 				<p>{user.ability}</p>
-				<button class="btnPrimary" on:click={() => {useAbility(0.3); closeDialog("dialog_power")}}>Utiliser</button>
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">

@@ -280,7 +280,6 @@ Boardgame - Waiting users
 .cardUser_name::after,
 .cardUser_name::before {
 	content: '';
-	// display: inline-block;
 	position: absolute;
 	top: 50%;
 	flex-direction: row;
@@ -334,6 +333,7 @@ userMap
 	padding: 30px;
 	height: 100%;
 	display: flex;
+	gap: 12px;
 	flex-direction: column;
 	text-align: center;
 	justify-content: space-between;
@@ -345,6 +345,7 @@ userMap
 }
 
 .directionsArrows {
+	margin-top: auto;
 	display: grid;
 	grid-template-columns: repeat(3, 42px);
 	grid-template-rows: repeat(3, 42px);

@@ -82,7 +82,7 @@
 				id="username"
 				class="inputForm"
 				placeholder="ex : IzZeine"
-				maxlength="12"
+				maxlength="9"
 				autocomplete="off"
 				data-lpignore="true"
 				data-form-type="other"

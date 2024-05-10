@@ -66,18 +66,24 @@ ITEM
 	max-width: 30px;
 }
 
-.luckOfDices {
+.bonusDices {
 	position: absolute;
 	bottom: -50%;
-	color: green;
 	opacity: 0;
 	transition: 0.2s;
 }
 
-.luckOfDices.isActive {
+.bonusDices.isActive {
 	position: absolute;
 	bottom: -70%;
 	opacity: 1;
+}
+
+.nerfOfDices {
+	color: red;
+}
+
+.luckOfDices {
 	color: green;
 }
 
@@ -226,22 +232,30 @@ Power --rodeur
 }
 
 /*--------------------------------------------------------------------------
-Power --death
+Power --death --druide
 --------------------------------------------------------------------------*/
 
 .userChoice {
 	margin-top: 12px;
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(0, 0.33fr));
+	grid-template-rows: repeat(2, 1fr);
+	gap: 12px;
 	justify-content: center;
-	.hero {
-		max-width: calc((100vw) / 4);
-	}
+	// .hero {
+	// 	max-width: calc((100vw) / 4);
+	// }
 }
 
 .userChoice_item-btn {
 	color: var(--txtPrimary);
 	padding: 6px;
 	background-color: var(--BGTranspary);
+}
+
+.userChoice_item-username {
+	padding-top: 6px;
+	text-align: center;
 }
 
 /*--------------------------------------------------------------------------
