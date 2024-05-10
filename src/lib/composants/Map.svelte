@@ -280,8 +280,8 @@
 
 	let rollDice = async() => {
 		for(let i=0;i<5;i++){
-			dice1 = Math.floor(Math.random() * 2) + 1;
-			// dice2 = Math.floor(Math.random() * 6) + 1;
+			dice1 = Math.floor(Math.random() * 6) + 1;
+			dice2 = Math.floor(Math.random() * 6) + 1;
 			await sleep(0.07)
 		}
 		return dice1 + dice2;
