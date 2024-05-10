@@ -288,7 +288,6 @@
 
 	let useAbility = async(data) => {
 		let cdElement = document.querySelector('#cooldown');
-		cdElement.textContent = '00'
 		let powerElement = document.querySelector('.--power');
 
 		switch (user.hero){
