@@ -105,14 +105,13 @@
 
 	{#if user.team == 'hero'}
 		<p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
-		<p class="abilityTitle">Habilité :</p>
+		<p class="abilityTitle">{selectedHero.abilityName}</p>
 		<p class="heroDescription">{selectedHero.ability}</p>
 	{/if}
 
 	{#if user.team == 'boss'}
-		<!-- content here -->
 		<p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
-		<p class="abilityTitle">Habilité :</p>
+		<p class="abilityTitle">{selectedHero.abilityName}</p>
 		<p class="heroDescription">{selectedHero.ability}</p>
 	{/if}
 
