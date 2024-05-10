@@ -458,7 +458,7 @@
 		</div>
 		{/if}
 
-		<dialog class="dialog dialog_item" open>
+		<dialog class="dialog dialog_item">
 			<div class="headerDialog">
 				<div class="dices">
 					<div class="dices">
