@@ -25,7 +25,7 @@
 	let mooveSpeed = 1
 	let isFixed = true
 	let usersInGame = ''
-	let nerfDices = 3
+	let nerfDices = 0
 	let luckOfDices = 0
 	let luckRatio = 0
 
@@ -341,18 +341,20 @@
 				break;
 			case 'Chevalier' :
 				mooveSpeed = data;
+				closeDialog('dialog_power')
 				await cooldownTimer(10, colorActive)
 				mooveSpeed = 1;
 				await cooldownTimer(60, colorInactive)
 				powerElement.removeAttribute('disabled');			
 				break;
-			case 'Faucheuse' :
+			case 'Necromancien' :
 				socket.emit('saveUser',(data))
 				closeDialog('dialog_power')
 				powerElement.removeAttribute('disabled');			
 				break;
 			case 'Druide' :
 				socket.emit('healUser',(data))
+				closeDialog('dialog_power')
 				await cooldownTimer(5, colorInactive)
 				powerElement.removeAttribute('disabled');
 				break;
@@ -366,6 +368,7 @@
 				break;
 			case 'Serpent' :
 				socket.emit('nerfDices')
+				closeDialog('dialog_power')
 				await cooldownTimer(10, colorActive)
 				socket.emit('undoNerfDices')
 				await cooldownTimer(120, colorInactive)
@@ -377,6 +380,7 @@
 	}
 
 	let openDialog = (target) => {
+		console.log(target)
 		let dialogTarget = document.querySelector('.'+target)
 		if(target == 'dialog_power') randomRoomTP = getnumber()
 		let getItemBtn = document.querySelector('.getItemBtn');
@@ -384,6 +388,7 @@
 		if(!itemInRoom) {
 			getItemBtn.setAttribute('disabled', true);
 		}
+		console.log(dialogTarget)
 		dialogTarget.show()
 	}
 
@@ -685,7 +690,7 @@
 		</dialog>
 		{/if}
 
-		{#if user.hero == 'Faucheuse'}
+		{#if user.hero == 'Necromancien'}
 		<dialog class="dialog dialog_power --death">
 			<div class="headerDialog">
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
