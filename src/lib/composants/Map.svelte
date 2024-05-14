@@ -93,6 +93,12 @@
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
+			if(user.hero == 'Golem') {
+				let rockDef = Math.floor(Math.random() * 4) * 5;
+				let rock = {def: rockDef}
+				console.log(rockDef)
+				socket.emit ('dropARock', rock )
+			}
 			if(!itemInRoom || itemInRoom == 'null') return;
 			itemInRoom = JSON.parse(itemInRoom); // convert string to json
 		});
@@ -791,6 +797,22 @@
 		<dialog class="dialog dialog_power --knight">
 			<div class="headerDialog">
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				{#if countOfItems}
+				<ul class="inventory">
+					{#each countOfItems as item, index}
+						<li class="inventory_item">
+							<img
+								class="fluidimg"
+								src="/assets/img/{Object.keys(countOfItems[index])[0]}.png"
+								alt={Object.keys(countOfItems[index])[0]}
+							/>
+							<p class="numOfItem">
+								<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
+							</p>
+						</li>
+					{/each}
+				</ul>
+			{/if}	
 			</div>
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
