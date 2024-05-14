@@ -32,7 +32,7 @@
 
 	// disabled btn if the input is empty
 	function isDirty(username) {
-		return username == '';
+		return username === '';
 	}
 
 	let innerWidth;
