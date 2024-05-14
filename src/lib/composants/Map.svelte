@@ -52,6 +52,7 @@
 		socket.on('updateUsers',async (data)=>{
 			updateInventory(user);
 			user = await getUser(socket);
+			displayArrowsDirections()
 			usersInGame = data;
 			if(user.life <= 0){
 				let actionButtonsElement = document.querySelectorAll('.actionButton')
@@ -79,7 +80,11 @@
 			allRooms = rooms;
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
-			if(!itemInRoom || itemInRoom == 'null') return;
+			if(!itemInRoom || itemInRoom == 'null') {
+				let getItemBtn = document.querySelector('.getItemBtn');
+				getItemBtn.setAttribute('disabled', true);
+				return;
+			}
 			itemInRoom = JSON.parse(itemInRoom);
 		});
 
