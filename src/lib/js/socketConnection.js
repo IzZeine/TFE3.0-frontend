@@ -4,8 +4,7 @@ import { getMyUrlForDev } from '$lib';
 // const ENDPOINT = 'http://192.168.0.43:3000';
 // const ENDPOINT = 'https://tfe30-backend.up.railway.app';
 
-const ENDPOINT = getMyUrlForDev();
-
-const io = ioClient(ENDPOINT);
+const io = ioClient(getMyUrlForDev());
+console.log('init socket io', io);
 
 export const socket = io;

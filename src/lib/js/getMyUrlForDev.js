@@ -6,7 +6,7 @@ let getMyUrlForDev = () => {
 
 	//return 'http://localhost:3000';
 	console.log('PUBLIC_BACKEND_URL', PUBLIC_BASE_URL);
-	return import.meta.env.PUBLIC_BASE_URL;
+	return PUBLIC_BASE_URL;
 };
 
 export { getMyUrlForDev };
