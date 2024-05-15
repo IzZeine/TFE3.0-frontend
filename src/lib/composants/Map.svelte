@@ -50,8 +50,8 @@
 		updateInventory(user);
 
 		socket.on('updateUsers',async (data)=>{
-			updateInventory(user);
 			user = await getUser(socket);
+			updateInventory(user);
 			displayArrowsDirections()
 			usersInGame = data;
 			if(user.life <= 0){
@@ -304,6 +304,7 @@
 			'</div>';
 		popUp(message);
 		displayArrowsDirections();
+		console.log(user)
 		socket.emit('getItemInRoom', myRoom);
 		closeDialog('dialog_item')
 	};
