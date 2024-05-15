@@ -18,7 +18,6 @@
 		try {
 			// Envoyer le nom d'utilisateur au serveur pour créer l'utilisateur
 			socket.emit('createUser', username, async (userId) => {
-				console.log('created user', userId);
 				sessionStorage.setItem('sessionID', userId);
 				user = await getUser(socket);
 				if (user) {
@@ -44,8 +43,6 @@
 
 	onMount(async () => {
 		onResize();
-
-		console.log('onMount')
 
 		sessionID = sessionStorage.getItem('sessionID');
 		if (sessionID) {

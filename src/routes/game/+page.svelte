@@ -21,7 +21,6 @@
 		onResize();
 
 		sessionID = sessionStorage.getItem('sessionID');
-		console.log(sessionID);
 		if (!sessionID) {
 			clearStorage();
 			goto('/');
@@ -31,10 +30,6 @@
 		if (gameID) {
 			goto(`/game/${gameID}`);
 		}
-
-		socket.on('connect', async () => {
-			console.log('Connected to server');
-		});
 
 		// Écouter l'événement de réponse du serveur après la création d'utilisateur
 		socket.on('userCreated', (id) => {

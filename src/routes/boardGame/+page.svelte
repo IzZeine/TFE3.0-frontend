@@ -63,15 +63,11 @@
 
 	let askActiveGames = async () => {
 		const response = await fetch(`${url}/activegames`);
-		console.log(response);
 		const activeGamesJson = await response.json();
-		console.log(activeGamesJson);
 		activegames = [...activeGamesJson];
-		console.log(activegames);
 	};
 
 	let joinGame = (gameId) => {
-		console.log(gameId);
 		sessionStorage.setItem('gameID', gameId);
 	};
 

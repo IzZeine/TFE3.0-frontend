@@ -31,23 +31,18 @@
 		gameID = sessionStorage.getItem('gameID');
 		if (!gameID) {
 			goto('/game');
-		}
-
-		console.log('session Id :', sessionID);
-		console.log('gameID', gameID);
-
-		socket.on('connect', async () => {
-			console.log('Connected to server');
-			if (gameID) {
-				// trouver l'utilisateur
-				user = await getUser(socket);
+		}else{
+			// trouver l'utilisateur
+			user = await getUser(socket);
 				if (!user) {
 					clearStorage();
 					goto('/');
 				}
 				socket.emit('joinGame', gameID);
-			}
-		});
+		}
+
+		console.log('session Id :', sessionID);
+		console.log('gameID', gameID);
 
 		// @TODO : deco intempestives...
 		socket.on('deco', () => {
@@ -71,7 +66,6 @@
 
 	socket.on('updateGame', (data) => {
 		game = data;
-		console.log(game)
 	});
 
 	function sentHeroToServer(event) {

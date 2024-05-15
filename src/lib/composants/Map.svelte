@@ -96,7 +96,6 @@
 			if(user.hero == 'Golem') {
 				let rockDef = Math.floor(Math.random() * 4) * 5;
 				let rock = {def: rockDef}
-				console.log(rockDef)
 				socket.emit ('dropARock', rock )
 			}
 			if(!itemInRoom || itemInRoom == 'null') return;
@@ -391,7 +390,6 @@
 	}
 
 	let openDialog = (target) => {
-		console.log(target)
 		let dialogTarget = document.querySelector('.'+target)
 		if(target == 'dialog_power') randomRoomTP = getnumber()
 		let getItemBtn = document.querySelector('.getItemBtn');
@@ -399,7 +397,6 @@
 		if(!itemInRoom) {
 			getItemBtn.setAttribute('disabled', true);
 		}
-		console.log(dialogTarget)
 		dialogTarget.show()
 	}
 
@@ -794,11 +791,11 @@
 		{/if}
 
 		{#if user.hero == 'Golem'}
-		<dialog class="dialog dialog_power --knight">
+		<dialog class="dialog dialog_power --golem">
 			<div class="headerDialog">
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
 				{#if countOfItems}
-				<ul class="inventory">
+				<ul class="inventory -rock">
 					{#each countOfItems as item, index}
 						<li class="inventory_item">
 							<img

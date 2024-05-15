@@ -5,6 +5,5 @@ import { getMyUrlForDev } from '$lib';
 // const ENDPOINT = 'https://tfe30-backend.up.railway.app';
 
 const io = ioClient(getMyUrlForDev());
-console.log('init socket io', io);
 
 export const socket = io;
