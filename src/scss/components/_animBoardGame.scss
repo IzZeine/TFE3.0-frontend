@@ -56,7 +56,7 @@
 	width: 20%;
 	img {
 		filter: drop-shadow(0 0 5px rgb(126, 0, 0));
-		opacity: 1;
+		opacity: 0;
 		transition: 0.2s;
 		transform-origin: center;
 	}
@@ -108,5 +108,64 @@
 	}
 	100% {
 		opacity: 0;
+	}
+}
+
+.animBattleEnded {
+	width: 20%;
+	img {
+		filter: drop-shadow(0 0 5px rgb(126, 0, 0));
+		opacity: 0;
+		transition: 0.2s;
+		transform-origin: center;
+	}
+	.--1 {
+		transform: translate(0, -50%) rotate(20deg);
+	}
+	.--2 {
+		transform: translate(0, -50%) rotate(-20deg) scaleX(-1);
+	}
+}
+
+.animBattleEnded.isActive {
+	.--winner {
+		animation: animWinner 3s;
+	}
+	.--crown {
+		animation: animCrown 3s;
+	}
+}
+
+@keyframes animWinner {
+	0% {
+		opacity: 0;
+	}
+	25% {
+		opacity: 1;
+	}
+	75% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes animCrown {
+	0% {
+		opacity: 0;
+		transform: translate(0, -50%);
+	}
+	25% {
+		opacity: 1;
+		transform: translate(0, -250%);
+	}
+	75% {
+		opacity: 1;
+		transform: translate(0, -250%);
+	}
+	100% {
+		opacity: 0;
+		transform: translate(0, -250%);
 	}
 }

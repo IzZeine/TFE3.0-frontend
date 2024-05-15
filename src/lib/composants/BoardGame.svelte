@@ -48,6 +48,11 @@
 			if(hero == 'Necromancien') img = 'save'
 			animOnPlayer(id, img)
 		})
+
+		socket.on('returnAtSpawn', (winner) => {
+			console.log(winner)
+			animBattleEnded(winner)
+		})
 	});
 
 	let positionOfPlayers = () => {
@@ -126,6 +131,7 @@
 	}
 
 	let animBattle = async (item) => {
+		console.log('animBattle')
 		let itemImg = "/assets/img/battle.png"
 		let target = document.querySelector(".boardGame")
 		target.style.position = 'relative'
@@ -140,6 +146,33 @@
 		let itemDivImg2 = itemDiv.appendChild(document.createElement('img'))
 		itemDivImg2.classList.add("fluidimg", "sword", '--2')
 		itemDivImg2.setAttribute("src", itemImg)
+
+		let targetBoundingClientRect = target.getBoundingClientRect();
+		let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width/2;
+		let TargetY = targetBoundingClientRect.y + targetBoundingClientRect.height/2;
+
+		itemDiv.style.top = TargetY + 'px';
+		itemDiv.style.left = TargetX + 'px';
+
+		await sleep(5)
+		itemDiv.remove()
+	}
+
+	let animBattleEnded = async (winner) => {
+		let itemImg = "/assets/img/"+ winner.heroImg
+		let crownImg = "/assets/img/crown.png"
+		let target = document.querySelector(".boardGame")
+		target.style.position = 'relative'
+		console.log(target)
+
+		let itemDiv = document.body.appendChild(document.createElement('div'))
+		itemDiv.classList.add("anim","animBattleEnded", 'isActive')
+		let itemDivImg = itemDiv.appendChild(document.createElement('img'))
+		itemDivImg.classList.add("fluidimg", "--winner")
+		itemDivImg.setAttribute("src", itemImg)
+		let itemDivCrownImg = itemDiv.appendChild(document.createElement('img'))
+		itemDivCrownImg.classList.add("fluidimg", "--crown")
+		itemDivCrownImg.setAttribute("src", crownImg)
 
 		let targetBoundingClientRect = target.getBoundingClientRect();
 		let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width/2;
