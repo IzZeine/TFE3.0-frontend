@@ -23,3 +23,6 @@ export { getRoomsConnections };
 
 import { getMyUrlForDev } from './js/getMyUrlForDev';
 export { getMyUrlForDev };
+
+import { sleep } from './js/sleep';
+export { sleep };

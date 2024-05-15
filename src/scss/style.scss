@@ -9,6 +9,7 @@
 @use 'components/_popUp.scss';
 @use 'components/_QRCode.scss';
 @use 'components/_dialog.scss';
+@use 'components/_animBoardGame.scss';
 
 /*--------------------------------------------------------------------------
 Homepage - Mobile
@@ -318,7 +319,9 @@ Boardgame - boardgame display
 	display: inline-flex;
 	transition: 0.2s;
 	width: 3%;
-	/* border: 1px solid red; */
+	img {
+		filter: drop-shadow(0 0 5px var(--primary));
+	}
 }
 
 /*--------------------------------------------------------------------------

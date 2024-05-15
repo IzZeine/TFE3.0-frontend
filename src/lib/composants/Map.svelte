@@ -1,6 +1,6 @@
 <script>
 	// @ts-nocheck
-	import { clearStorage, getItems, getRoomsConnections, getUser } from '$lib';
+	import { clearStorage, getItems, getRoomsConnections, getUser, sleep } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
 	import { fade, fly, blur, slide } from 'svelte/transition';
@@ -96,6 +96,7 @@
 			if(user.hero == 'Golem') {
 				let rockDef = Math.floor(Math.random() * 4) * 5;
 				let rock = {def: rockDef}
+				console.log(rock)
 				socket.emit ('dropARock', rock )
 			}
 			if(!itemInRoom || itemInRoom == 'null') return;
@@ -106,8 +107,9 @@
 			battle = data
 			console.log(battle)
 
+			
 			openDialog('dialog_battle')
-
+			
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 
@@ -212,10 +214,6 @@
 			compteur[cle] = (compteur[cle] || 0) + 1;
 		});
 		return compteur;
-	};
-
-	let sleep = (sec) => {
-		return new Promise((resolve) => setTimeout(resolve, sec * 1000));
 	};
 
 	let disabledArrows = () => {
@@ -342,10 +340,14 @@
 		let colorActive = 'green'
 		let colorInactive = 'red'
 
+		socket.emit('useAbility', data)
+
 		switch (user.hero){
 			case 'Rodeur':
-				socket.emit('askToChangeRoom', data);
 				closeDialog('dialog_power')
+				disabledArrows()
+				await sleep(1)
+				socket.emit('askToChangeRoom', data);
 				await cooldownTimer(5, colorInactive)
 				powerElement.removeAttribute('disabled');			
 				break;
@@ -386,7 +388,6 @@
 			default :
 				console.log('personne');
 		}
-		socket.on('useAbility', user.hero)
 	}
 
 	let openDialog = (target) => {
