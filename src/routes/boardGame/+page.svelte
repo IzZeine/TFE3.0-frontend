@@ -129,7 +129,4 @@
 
 </div>
 
-<button on:click={()=> clearDataBase(socket)}>Reset dataBase</button>
-
-
-<!-- @TODO++ : ajouter des animations quelconques : lancement de combat, récupération d'un item, utilisation de sort -->
+<!-- <button on:click={()=> clearDataBase(socket)}>Reset dataBase</button> -->

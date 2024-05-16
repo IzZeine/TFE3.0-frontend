@@ -111,4 +111,5 @@
 		{/if}
 	{/if}
 {/if}
-<button on:click={clearStorage}>Clear</button>
+
+<!-- <button on:click={clearStorage}>Clear</button> -->

@@ -100,4 +100,4 @@
 	</div>
 </div>
 
-<button on:click={clearStorage}>reset</button>
+<!-- <button on:click={clearStorage}>reset</button> -->
