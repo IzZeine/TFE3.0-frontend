@@ -12,9 +12,11 @@ PopUp
 	top: -30%;
 	left: 50%;
 	transform: translate(-50%, 0);
-	background-color: #505050;
+	background-color: var(--BGDialog);
+	color: var(--txtPrimary);
 	padding: 12px 30px;
-	border-radius: 5px;
+	border: solid 1px var(--txtPrimary);
+	border-radius: 3px;
 	opacity: 0;
 	transition: 0.5s;
 }

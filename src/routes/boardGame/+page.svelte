@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 	import { goto } from '$app/navigation';
-	import { getMyUrlForDev } from '$lib';
+	import { getMyUrlForDev,clearDataBase } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
 
@@ -128,6 +128,8 @@
 </ul>
 
 </div>
+
+<button on:click={()=> clearDataBase(socket)}>Reset dataBase</button>
 
 
 <!-- @TODO++ : ajouter des animations quelconques : lancement de combat, récupération d'un item, utilisation de sort -->

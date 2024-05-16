@@ -95,6 +95,9 @@
 			itemInRoom = myRoom.item;
 			if(user.hero == 'Golem') {
 				let rockDef = Math.floor(Math.random() * 4) * 5;
+				let message =
+					"<div class='itemInPopUpDiv'> <p>+1</p> <img class='fluidimg itemInPopUp' src='/assets/img/rock.png'	alt='rock'/> </div>";
+				if(rockDef>0) popUp(message)
 				let rock = {def: rockDef}
 				console.log(rock)
 				socket.emit ('dropARock', rock )

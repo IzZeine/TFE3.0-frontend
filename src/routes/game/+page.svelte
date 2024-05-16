@@ -31,6 +31,11 @@
 			goto(`/game/${gameID}`);
 		}
 
+		socket.on('updateUsers', async (data) => {
+			user = await getUser(socket);
+			if(!user) throw goto('/')
+		});
+
 		// Écouter l'événement de réponse du serveur après la création d'utilisateur
 		socket.on('userCreated', (id) => {
 			sessionStorage.setItem('sessionID', id);

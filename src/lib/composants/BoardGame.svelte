@@ -45,7 +45,7 @@
 			if(hero == 'Magicien') img = 'diceRoll'
 			if(hero == 'Serpent') img = 'diceRoll'
 			if(hero == 'Rodeur') img = 'power'
-			if(hero == 'Necromancien') img = 'save'
+			if(hero == 'Necromancien') img = 'angel'
 			animOnPlayer(id, img)
 		})
 
@@ -167,12 +167,12 @@
 
 		let itemDiv = document.body.appendChild(document.createElement('div'))
 		itemDiv.classList.add("anim","animBattleEnded", 'isActive')
-		let itemDivImg = itemDiv.appendChild(document.createElement('img'))
-		itemDivImg.classList.add("fluidimg", "--winner")
-		itemDivImg.setAttribute("src", itemImg)
 		let itemDivCrownImg = itemDiv.appendChild(document.createElement('img'))
 		itemDivCrownImg.classList.add("fluidimg", "--crown")
 		itemDivCrownImg.setAttribute("src", crownImg)
+		let itemDivImg = itemDiv.appendChild(document.createElement('img'))
+		itemDivImg.classList.add("fluidimg", "--winner")
+		itemDivImg.setAttribute("src", itemImg)
 
 		let targetBoundingClientRect = target.getBoundingClientRect();
 		let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width/2;

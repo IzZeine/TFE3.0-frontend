@@ -60,6 +60,7 @@
 
 		socket.on('updateUsers', async (data) => {
 			user = await getUser(socket);
+			if(!user) throw goto('/')
 		});
 
 	});

@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 
-	import { clearStorage, getGame, getHeroes } from '$lib';
+	import { clearStorage, getGame, getHeroes, clearDataBase } from '$lib';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import BoardGame from '$lib/composants/BoardGame.svelte';
@@ -153,3 +153,4 @@
 {/if}
 
 <button on:click={clearStorage}>Clear</button>
+<button on:click={()=> clearDataBase(socket)}>Reset dataBase</button>

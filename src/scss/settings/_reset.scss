@@ -17,3 +17,11 @@ a:visited {
 	color: var(--txtPrimary);
 	text-decoration: none;
 }
+
+html {
+	cursor: url('/assets/img/cursor.svg'), auto;
+}
+
+button:hover {
+	cursor: url('/assets/img/pointer.svg'), auto;
+}

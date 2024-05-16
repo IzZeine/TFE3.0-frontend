@@ -6,6 +6,9 @@ export { getUser };
 import { clearStorage } from './js/clearStorage';
 export { clearStorage };
 
+import { clearDataBase } from './js/clearDataBase';
+export { clearDataBase };
+
 import { getHeroes } from './js/getHeroes';
 export { getHeroes };
 
