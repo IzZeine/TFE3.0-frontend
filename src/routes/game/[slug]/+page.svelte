@@ -4,13 +4,10 @@
 	import { getHeroes, getItems, getUser, clearStorage, getGame } from '$lib';
 	import GameRules from '$lib/composants/GameRules.svelte';
 	import ChooseHero from '$lib/composants/ChooseHero.svelte';
-	import { goto } from '$app/navigation';
-	import Map from '$lib/composants/Map.svelte';
-	import { socket } from '$lib/js/socketConnection.js';
 	import EndGame from '$lib/composants/EndGame.svelte';
-
-	// export let data;
-	// const socket = data.socket;
+	import Map from '$lib/composants/Map.svelte';
+	import { goto } from '$app/navigation';
+	import { socket } from '$lib/js/socketConnection.js';
 
 	let gameID = '';
 	let sessionID = '';
@@ -19,6 +16,7 @@
 	let hero = '';
 	let listOfItems = '';
 	let listOfHeroes = '';
+	let winner = null;
 
 	onMount(async () => {
 		onResize();
@@ -63,21 +61,29 @@
 			if(!user) throw goto('/')
 		});
 
+		socket.on('endGame', (data) => {
+			winner = data
+			console.log(data);
+		});
+		
+		socket.on('updateGame', (data) => {
+			game = data;
+		});
+
+		// mettre à jour le user quand le hero a été choisi et enregistré dans la db
+		socket.on('registeredHero', async () => {
+			user = await getUser(socket);
+		});
+
 	});
 
-	socket.on('updateGame', (data) => {
-		game = data;
-	});
 
 	function sentHeroToServer(event) {
 		hero = event.detail.hero;
 		socket.emit('selectedHero', hero);
 	}
 
-	// mettre à jour le user quand le hero a été choisi et enregistré dans la db
-	socket.on('registeredHero', async () => {
-		user = await getUser(socket);
-	});
+
 
 	let innerWidth;
 	const onResize = () => {
@@ -101,7 +107,7 @@
 			<Map {user} />
 		{/if}
 		{#if game.statut == 'ended'}
-			<EndGame />
+			<EndGame {winner} />
 		{/if}
 	{/if}
 {/if}

@@ -10,7 +10,6 @@ $viewport-width: 100% * -13;
 	background-size: cover;
 	background-position: 0 0;
 	opacity: 0;
-	content: inspect($viewport-width);
 }
 
 @keyframes animLegendary {

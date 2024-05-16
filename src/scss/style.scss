@@ -11,6 +11,7 @@
 @use 'components/_dialog.scss';
 @use 'components/_animBoardGame.scss';
 @use 'components/_animLegendary.scss';
+@use 'components/_endGame.scss';
 
 /*--------------------------------------------------------------------------
 Homepage - Mobile
@@ -455,6 +456,14 @@ userMap
 	margin: 0 auto;
 	max-width: 222px;
 	grid-area: 1/1/1/-1;
+	&.--hero {
+		filter: grayscale(0.8);
+	}
+	&.--death {
+		z-index: 1;
+		width: 50%;
+		margin: auto;
+	}
 }
 
 .lifes {

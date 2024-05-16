@@ -5,9 +5,6 @@
 	import { socket } from '$lib/js/socketConnection.js';
 	import { sleep } from '$lib/js/sleep';
 
-	// export let data;
-	// const socket = data.socket;
-
 	export let activeUsers = activeUsers;
 
 	onMount(async () => {

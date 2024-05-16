@@ -1,0 +1,28 @@
+.endgame {
+	// text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.winner-team {
+		span {
+			position: relative;
+		}
+		span::before {
+			content: '';
+			background-image: url('/assets/img/crown.png');
+			background-size: contain;
+			position: absolute;
+			left: 50%;
+			width: 30px;
+			height: 30px;
+			transform: translate(-50%, -75%);
+			@media (min-width: 750px) {
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+	.winners {
+		display: flex;
+		gap: 12px;
+	}
+}
