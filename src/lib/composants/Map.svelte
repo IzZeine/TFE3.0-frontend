@@ -105,12 +105,13 @@
 			}
 			if(!itemInRoom || itemInRoom == 'null') return;
 			itemInRoom = JSON.parse(itemInRoom); // convert string to json
+			// socket.emit('playSound', 'power') // @TODO : sound move
 		});
 
 		socket.on('battle', async (data) => {
 			battle = data
-			console.log(battle)
-
+			
+			socket.emit('playSound', 'sword')
 			
 			openDialog('dialog_battle')
 			
@@ -314,7 +315,7 @@
 			'</div>';
 		popUp(message);
 		displayArrowsDirections();
-		console.log(user)
+		socket.emit('playSound', 'woosh')
 		socket.emit('getItemInRoom', myRoom);
 		closeDialog('dialog_item')
 	};
@@ -352,6 +353,9 @@
 		let colorInactive = 'red'
 
 		socket.emit('useAbility', data)
+		let sound = 'power'
+		if (user.hero == 'Necromancien') sound = 'revive'
+		socket.emit('playSound', sound)
 
 		switch (user.hero){
 			case 'Rodeur':
@@ -360,7 +364,7 @@
 				await sleep(1)
 				socket.emit('askToChangeRoom', data);
 				await cooldownTimer(5, colorInactive)
-				powerElement.removeAttribute('disabled');			
+				powerElement.removeAttribute('disabled');
 				break;
 			case 'Chevalier' :
 				mooveSpeed = data;

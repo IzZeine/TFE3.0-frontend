@@ -51,6 +51,7 @@
 
 		//trouver la game
 		game = await getGame();
+		console.log(game)
 		//importer les heros
 		listOfHeroes = await getHeroes();
 		//importer les items
@@ -77,13 +78,11 @@
 
 	});
 
-
 	function sentHeroToServer(event) {
 		hero = event.detail.hero;
 		socket.emit('selectedHero', hero);
+		socket.emit('playSound', 'power') // @TODO : sound select
 	}
-
-
 
 	let innerWidth;
 	const onResize = () => {

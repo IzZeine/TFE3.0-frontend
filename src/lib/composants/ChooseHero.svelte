@@ -2,7 +2,8 @@
 	// @ts-nocheck
 	import { createEventDispatcher, onMount } from 'svelte';
 	import Carousel from 'svelte-carousel';
-	import { getHeroes, getBoss } from '$lib';
+	import { getHeroes, getBoss, createAudio } from '$lib';
+	import { socket } from '$lib/js/socketConnection';
 
 	export let user = user;
 	let heroes = '';

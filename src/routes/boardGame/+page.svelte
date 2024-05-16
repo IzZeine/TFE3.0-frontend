@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 	import { goto } from '$app/navigation';
-	import { getMyUrlForDev,clearDataBase } from '$lib';
+	import { getMyUrlForDev,clearDataBase, sleep, createAudio } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
 
@@ -27,6 +27,8 @@
 		socket.on('connect', async () => {
 			console.log('Connected to server');
 		});
+
+		createAudio('/assets/sounds/dungeon.mp3', true, 'dungeon', 0.5)
 
 		socket.on('updateUsersCount', (count) => {
 			OnlineUsers = count;
@@ -82,6 +84,11 @@
 </script>
 
 <svelte:window on:resize={onResize} bind:innerWidth />
+
+<!-- <audio id="audio" autoplay preload loop>
+  <source src="/assets/sounds/dungeon.mp3" type="audio/mpeg">
+  Votre navigateur ne prend pas en charge l'élément audio.
+</audio> -->
 
 <img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
 

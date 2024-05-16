@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 
-	import { clearStorage, getGame, getHeroes, clearDataBase } from '$lib';
+	import { clearStorage, getGame, getHeroes, clearDataBase, createAudio, createSound } from '$lib';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import BoardGame from '$lib/composants/BoardGame.svelte';
@@ -14,6 +14,13 @@
 	let numberOfColGrid;
 	let winner = null
 
+	const audioFiles = [
+		'/assets/sounds/dungeon.mp3',
+		'/assets/sounds/power.mp3',
+		'/assets/sounds/sword.mp3',
+		'/assets/sounds/woosh.mp3'
+	];
+
 	onMount(async () => {
 		onResize();
 
@@ -24,7 +31,23 @@
 			goto('/boardGame');
 		}
 
+		audioFiles.forEach((path)=>{
+			let audio = new Audio()
+			audio.src = path
+			console.log('audio chargé: ', path)
+		})
+
+		createAudio('/assets/sounds/dungeon.mp3', true, 'dungeon', 0.5)
+
 		socket.emit('isActiveUsers', game.gameId);
+
+		socket.on('playThisSound', async (data)=>{
+			console.log(data)
+			let path = '/assets/sounds/'+ data + '.mp3'
+			let volume = 1
+			if(data == 'sword') volume = 0.7
+			await createSound(path, false, data, volume)
+		})
 
 		socket.on('updateUsers', (data) => {
 			activeUsers = data;
@@ -146,5 +169,5 @@
 	</div>
 {/if}
 
-<!-- <button on:click={clearStorage}>Clear</button> -->
-<!-- <button on:click={()=> clearDataBase(socket)}>Reset dataBase</button> -->
+<button on:click={clearStorage}>Clear</button>
+<button on:click={()=> clearDataBase(socket)}>Reset dataBase</button>

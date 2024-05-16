@@ -29,3 +29,9 @@ export { getMyUrlForDev };
 
 import { sleep } from './js/sleep';
 export { sleep };
+
+import { createAudio } from './js/createAudio';
+export { createAudio };
+
+import { createSound } from './js/createSound';
+export { createSound };
