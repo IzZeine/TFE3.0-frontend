@@ -701,7 +701,7 @@
 		{/if}
 
 		{#if user.hero == 'Necromancien'}
-		<dialog class="dialog dialog_power --death">
+		<dialog class="dialog dialog_power --necromancer">
 			<div class="headerDialog">
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
 				<ul class="userChoice">
