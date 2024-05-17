@@ -169,5 +169,5 @@
 	</div>
 {/if}
 
-<button on:click={clearStorage}>Clear</button>
-<button on:click={()=> clearDataBase(socket)}>Reset dataBase</button>
+<!-- <button on:click={clearStorage}>Clear</button>
+<button on:click={()=> clearDataBase(socket)}>Reset dataBase</button> -->
