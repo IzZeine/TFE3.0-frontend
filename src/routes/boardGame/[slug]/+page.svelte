@@ -5,7 +5,7 @@
 	import EndGame from '$lib/board/EndGame.svelte';
 	import { socket } from '$lib/api/socketConnection.js';
 	import Audio from '$lib/audio/AudioPlayer.svelte';
-	import LobbyGame from '$lib/board/LobbyGame.svelte';
+	import LobbyGame from '$lib/board/lobby/LobbyGame.svelte';
 
 	let activeUsers = [];
 	let winner = null;
@@ -54,7 +54,7 @@
 {:else if game.statut === 'ended'}
 	<EndGame {winner} />
 {:else}
-	<LobbyGame {game} />
+	<LobbyGame {game} {gameId} />
 {/if}
 
 <!-- <button on:click={clearStorage}>Clear</button>

@@ -18,8 +18,6 @@
 	let url = getMyUrlForDev();
 
 	onMount(async () => {
-		onResize();
-
 		sessionID = sessionStorage.getItem('sessionID');
 		if (!sessionID) {
 			clearStorage();
@@ -33,7 +31,7 @@
 
 		socket.on('updateUsers', async (data) => {
 			user = await getUser(socket);
-			if(!user) throw goto('/')
+			if (!user) throw goto('/');
 		});
 
 		// Écouter l'événement de réponse du serveur après la création d'utilisateur
@@ -67,14 +65,7 @@
 	};
 
 	let innerWidth;
-	const onResize = () => {
-		if (screen.width > 500) {
-			goto('/boardGame');
-		}
-	};
 </script>
-
-<svelte:window on:resize={onResize} bind:innerWidth />
 
 <div class="container">
 	<p class="h1" style="display: flex; text-align:center; margin-bottom:24px">

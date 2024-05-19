@@ -34,15 +34,7 @@
 		return username === '';
 	}
 
-	let innerWidth;
-	const onResize = () => {
-		if (innerWidth > 500) {
-			goto('/boardGame');
-		}
-	};
-
 	onMount(async () => {
-		onResize();
 
 		sessionID = sessionStorage.getItem('sessionID');
 		if (sessionID) {
@@ -64,8 +56,6 @@
 		}
 	});
 </script>
-
-<svelte:window on:resize={onResize} bind:innerWidth />
 
 <div class="homepage_container" style="margin: auto 0;">
 	<div class="homepage_content">
