@@ -1,16 +1,16 @@
 <script>
 	// @ts-nocheck
 
-	import { clearStorage, getGame, getHeroes, clearDataBase, createAudio, createSound } from '$lib';
+	import { clearStorage, getGame, getHeroes, createAudio, createSound } from '$lib';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import BoardGame from '$lib/composants/BoardGame.svelte';
-	import EndGame from '$lib/composants/EndGame.svelte';
+	import EndGame from '$lib/components/EndGame.svelte';
 	import { socket } from '$lib/js/socketConnection.js';
 
 	let game = '';
 	let activeUsers = [];
-	let listOfHeroes;
+	let listOfHeroes = [];
 	let numberOfColGrid;
 	let winner = null
 

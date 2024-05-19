@@ -4,6 +4,7 @@
 	import { getMyUrlForDev,clearDataBase, sleep, createAudio } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
+	import QRCode from '$lib/board/QRCode.svelte';
 
 	// export let data;
 	// const socket = data.socket;
@@ -90,7 +91,7 @@
   Votre navigateur ne prend pas en charge l'élément audio.
 </audio> -->
 
-<img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
+<QRCode />
 
 <div class="boardgame--home">
 

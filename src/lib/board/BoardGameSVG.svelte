@@ -1,3 +1,49 @@
+<script>
+	import { socket } from '$lib/js/socketConnection.js';
+	import { onMount } from 'svelte';
+
+	export let rooms;
+
+	let animInRoom = async (room, item) => {
+		/*
+	let itemImg = '/assets/img/' + item + '.png';
+	let target = document.getElementById(room);
+	target.style.position = 'relative';
+
+	let itemDiv = document.body.appendChild(document.createElement('div'));
+	itemDiv.classList.add('anim', 'animInRoom', 'isActive');
+	let itemDivImg = itemDiv.appendChild(document.createElement('img'));
+	itemDivImg.classList.add('fluidimg');
+	itemDivImg.setAttribute('src', itemImg);
+
+	let targetBoundingClientRect = target.getBoundingClientRect();
+	let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width / 2;
+	let TargetY = targetBoundingClientRect.y + targetBoundingClientRect.height / 2;
+
+	itemDiv.style.top = TargetY + 'px';
+	itemDiv.style.left = TargetX + 'px';
+
+	await sleep(5);
+	itemDiv.remove();
+	*/
+	};
+
+	const onTakeItemInRoom = (room, boss) => {
+		if (boss) {
+			animInRoom(room, 'rock');
+			return;
+		}
+		animInRoom(room, 'inventory');
+	};
+
+	onMount(() => {
+		socket.on('takeItemInRoom', onTakeItemInRoom);
+		return () => {
+			socket.off('takeItemInRoom', onTakeItemInRoom);
+		};
+	});
+</script>
+
 <svg
 	width="4000"
 	height="2250"

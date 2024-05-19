@@ -4,7 +4,7 @@
 	import { getHeroes, getItems, getUser, clearStorage, getGame } from '$lib';
 	import GameRules from '$lib/composants/GameRules.svelte';
 	import ChooseHero from '$lib/composants/ChooseHero.svelte';
-	import EndGame from '$lib/composants/EndGame.svelte';
+	import EndGame from '$lib/components/EndGame.svelte';
 	import Map from '$lib/composants/Map.svelte';
 	import { goto } from '$app/navigation';
 	import { socket } from '$lib/js/socketConnection.js';
