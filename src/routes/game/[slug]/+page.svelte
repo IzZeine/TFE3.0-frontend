@@ -2,15 +2,12 @@
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import { getHeroes, getItems, getUser, clearStorage, getGame } from '$lib';
-	import GameRules from '$lib/components/GameRules.svelte';
-	import ChooseHero from '$lib/components/ChooseHero.svelte';
+	import GameRules from '$lib/composants/GameRules.svelte';
+	import ChooseHero from '$lib/composants/ChooseHero.svelte';
+	import EndGame from '$lib/composants/EndGame.svelte';
+	import Map from '$lib/composants/Map.svelte';
 	import { goto } from '$app/navigation';
-	import Map from '$lib/components/Map.svelte';
 	import { socket } from '$lib/js/socketConnection.js';
-	import EndGame from '$lib/components/EndGame.svelte';
-
-	// export let data;
-	// const socket = data.socket;
 
 	let gameID = '';
 	let sessionID = '';
@@ -19,6 +16,7 @@
 	let hero = '';
 	let listOfItems = '';
 	let listOfHeroes = '';
+	let winner = null;
 
 	onMount(async () => {
 		onResize();
@@ -31,23 +29,18 @@
 		gameID = sessionStorage.getItem('gameID');
 		if (!gameID) {
 			goto('/game');
-		}
-
-		console.log('session Id :', sessionID);
-		console.log('gameID', gameID);
-
-		socket.on('connect', async () => {
-			console.log('Connected to server');
-			if (gameID) {
-				// trouver l'utilisateur
-				user = await getUser(socket);
+		}else{
+			// trouver l'utilisateur
+			user = await getUser(socket);
 				if (!user) {
 					clearStorage();
 					goto('/');
 				}
 				socket.emit('joinGame', gameID);
-			}
-		});
+		}
+
+		console.log('session Id :', sessionID);
+		console.log('gameID', gameID);
 
 		// @TODO : deco intempestives...
 		socket.on('deco', () => {
@@ -58,6 +51,7 @@
 
 		//trouver la game
 		game = await getGame();
+		console.log(game)
 		//importer les heros
 		listOfHeroes = await getHeroes();
 		//importer les items
@@ -65,24 +59,30 @@
 
 		socket.on('updateUsers', async (data) => {
 			user = await getUser(socket);
+			if(!user) throw goto('/')
 		});
 
-	});
+		socket.on('endGame', (data) => {
+			winner = data
+			console.log(data);
+		});
+		
+		socket.on('updateGame', (data) => {
+			game = data;
+		});
 
-	socket.on('updateGame', (data) => {
-		game = data;
-		console.log(game)
+		// mettre à jour le user quand le hero a été choisi et enregistré dans la db
+		socket.on('registeredHero', async () => {
+			user = await getUser(socket);
+		});
+
 	});
 
 	function sentHeroToServer(event) {
 		hero = event.detail.hero;
 		socket.emit('selectedHero', hero);
+		socket.emit('playSound', 'power') // @TODO : sound select
 	}
-
-	// mettre à jour le user quand le hero a été choisi et enregistré dans la db
-	socket.on('registeredHero', async () => {
-		user = await getUser(socket);
-	});
 
 	let innerWidth;
 	const onResize = () => {
@@ -106,8 +106,9 @@
 			<Map {user} />
 		{/if}
 		{#if game.statut == 'ended'}
-			<EndGame />
+			<EndGame {winner} />
 		{/if}
 	{/if}
 {/if}
-<button on:click={clearStorage}>Clear</button>
+
+<!-- <button on:click={clearStorage}>Clear</button> -->

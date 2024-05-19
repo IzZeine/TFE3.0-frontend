@@ -87,60 +87,6 @@ ITEM
 	color: green;
 }
 
-.animationLegendary {
-	z-index: 9;
-	position: absolute;
-	width: 100%;
-	padding-top: 100%; /* La hauteur est égale à 100% de la largeur */
-	animation: animLegendary 1s 0.2s steps(13);
-	background-size: contain;
-}
-
-@keyframes animLegendary {
-	0% {
-		background-image: url('/assets/img/animLegendary/frame_1.png');
-	}
-	8% {
-		background-image: url('/assets/img/animLegendary/frame_2.png');
-	}
-	15% {
-		background-image: url('/assets/img/animLegendary/frame_3.png');
-	}
-	23% {
-		background-image: url('/assets/img/animLegendary/frame_4.png');
-	}
-	31% {
-		background-image: url('/assets/img/animLegendary/frame_5.png');
-	}
-	38% {
-		background-image: url('/assets/img/animLegendary/frame_6.png');
-	}
-	46% {
-		background-image: url('/assets/img/animLegendary/frame_7.png');
-	}
-	54% {
-		background-image: url('/assets/img/animLegendary/frame_8.png');
-	}
-	62% {
-		background-image: url('/assets/img/animLegendary/frame_9.png');
-	}
-	69% {
-		background-image: url('/assets/img/animLegendary/frame_10.png');
-	}
-	77% {
-		background-image: url('/assets/img/animLegendary/frame_11.png');
-	}
-	85% {
-		background-image: url('/assets/img/animLegendary/frame_12.png');
-	}
-	92% {
-		background-image: url('/assets/img/animLegendary/frame_13.png');
-	}
-	100% {
-		background-image: url('/assets/img/animLegendary/frame_13.png');
-	}
-}
-
 /*--------------------------------------------------------------------------
 Inventory
 --------------------------------------------------------------------------*/
@@ -232,7 +178,7 @@ Power --rodeur
 }
 
 /*--------------------------------------------------------------------------
-Power --death --druide
+Power --necromancer --druide
 --------------------------------------------------------------------------*/
 
 .userChoice {
@@ -265,4 +211,15 @@ Power --wizard
 .luckText {
 	margin-top: 12px;
 	text-align: center;
+}
+
+/*--------------------------------------------------------------------------
+Power --gelom
+--------------------------------------------------------------------------*/
+
+.inventory.-rock {
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+	margin-top: 24px;
 }

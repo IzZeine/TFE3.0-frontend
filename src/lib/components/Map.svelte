@@ -1,6 +1,6 @@
 <script>
 	// @ts-nocheck
-	import { clearStorage, getItems, getRoomsConnections, getUser } from '$lib';
+	import { clearStorage, getItems, getRoomsConnections, getUser, sleep } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
 	import { fade, fly, blur, slide } from 'svelte/transition';
@@ -50,11 +50,12 @@
 		updateInventory(user);
 
 		socket.on('updateUsers',async (data)=>{
-			updateInventory(user);
 			user = await getUser(socket);
+			updateInventory(user);
 			displayArrowsDirections()
 			usersInGame = data;
 			if(user.life <= 0){
+				disabledArrows()
 				let actionButtonsElement = document.querySelectorAll('.actionButton')
 				actionButtonsElement.forEach((btn)=>{
 					btn.setAttribute('disabled', true);
@@ -95,20 +96,25 @@
 			itemInRoom = myRoom.item;
 			if(user.hero == 'Golem') {
 				let rockDef = Math.floor(Math.random() * 4) * 5;
+				let message =
+					"<div class='itemInPopUpDiv'> <p>+1</p> <img class='fluidimg itemInPopUp' src='/assets/img/rock.png'	alt='rock'/> </div>";
+				if(rockDef>0) popUp(message)
 				let rock = {def: rockDef}
-				console.log(rockDef)
+				console.log(rock)
 				socket.emit ('dropARock', rock )
 			}
 			if(!itemInRoom || itemInRoom == 'null') return;
 			itemInRoom = JSON.parse(itemInRoom); // convert string to json
+			// socket.emit('playSound', 'power') // @TODO : sound move
 		});
 
 		socket.on('battle', async (data) => {
 			battle = data
-			console.log(battle)
-
+			
+			socket.emit('playSound', 'sword')
+			
 			openDialog('dialog_battle')
-
+			
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 
@@ -136,7 +142,7 @@
 			if (bossLife == heroesAtk)
 				popUp('Match nul.. <br> tout le monde à son spawn'), (winner = data.boss.room);
 			if (bossLife < heroesAtk)
-				popUp('Les heroes remportent <br> fin de la partie!'), (winner = 'endGame');
+				popUp('Les heroes remportent <br> fin de la partie!'), (winner = data.heroes);
 
 			if (user.team = 'boss') socket.emit('battleEnded', winner);
 
@@ -182,6 +188,12 @@
 		popupDiv.classList.add('is-active');
 		popupTxt.innerHTML = message;
 
+		popupDiv.addEventListener('click', async ()=>{
+			popupDiv.classList.remove('is-active');			await sleep(0.5);
+			popupTxt.innerHTML = '';
+			popupDiv.remove();
+		})
+
 		await sleep(2);
 		popupDiv.classList.remove('is-active');
 		await sleep(1);
@@ -213,10 +225,6 @@
 			compteur[cle] = (compteur[cle] || 0) + 1;
 		});
 		return compteur;
-	};
-
-	let sleep = (sec) => {
-		return new Promise((resolve) => setTimeout(resolve, sec * 1000));
 	};
 
 	let disabledArrows = () => {
@@ -307,6 +315,7 @@
 			'</div>';
 		popUp(message);
 		displayArrowsDirections();
+		socket.emit('playSound', 'woosh')
 		socket.emit('getItemInRoom', myRoom);
 		closeDialog('dialog_item')
 	};
@@ -343,12 +352,19 @@
 		let colorActive = 'green'
 		let colorInactive = 'red'
 
+		socket.emit('useAbility', data)
+		let sound = 'power'
+		if (user.hero == 'Necromancien') sound = 'revive'
+		socket.emit('playSound', sound)
+
 		switch (user.hero){
 			case 'Rodeur':
-				socket.emit('askToChangeRoom', data);
 				closeDialog('dialog_power')
+				disabledArrows()
+				await sleep(1)
+				socket.emit('askToChangeRoom', data);
 				await cooldownTimer(5, colorInactive)
-				powerElement.removeAttribute('disabled');			
+				powerElement.removeAttribute('disabled');
 				break;
 			case 'Chevalier' :
 				mooveSpeed = data;
@@ -387,11 +403,9 @@
 			default :
 				console.log('personne');
 		}
-		socket.on('useAbility', user.hero)
 	}
 
 	let openDialog = (target) => {
-		console.log(target)
 		let dialogTarget = document.querySelector('.'+target)
 		if(target == 'dialog_power') randomRoomTP = getnumber()
 		let getItemBtn = document.querySelector('.getItemBtn');
@@ -399,7 +413,6 @@
 		if(!itemInRoom) {
 			getItemBtn.setAttribute('disabled', true);
 		}
-		console.log(dialogTarget)
 		dialogTarget.show()
 	}
 
@@ -463,7 +476,12 @@
 											{/if}
 										</ul>
 							</div>
-							<img class="fluidimg cardHero_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
+							{#if user.life <= 0 }
+								<img class="fluidimg cardHero_img --hero" src="/assets/img/{user.heroImg}" alt="pawn icon" />
+								<img class="fluidimg cardHero_img --death" src="/assets/img/death.png" alt="death" />
+								{:else}
+									<img class="fluidimg cardHero_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
+							{/if}
 							<div class="cardHero_stats">						
 								<div class="cardHero_stats-atk-def">
 									<div class="cardHero_stats-atk-def_atk">
@@ -477,8 +495,6 @@
 						</div>
 							<p class="cardHero_hero" style='--color:{color};'>{user.hero}</p>
 					</div>
-					{:else}
-					<div></div>
 				{/if}
 				{#if user.life <= 0 } <p>Vous êtes mort..</p> {/if}
 				<div class="directionsArrows">
@@ -545,7 +561,6 @@
 				</div>
 			{/if}
 		</div>
-		<!-- {/if} -->
 
 		<dialog class="dialog dialog_item">
 			<div class="headerDialog">
@@ -702,7 +717,7 @@
 		{/if}
 
 		{#if user.hero == 'Necromancien'}
-		<dialog class="dialog dialog_power --death">
+		<dialog class="dialog dialog_power --necromancer">
 			<div class="headerDialog">
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
 				<ul class="userChoice">
@@ -794,11 +809,11 @@
 		{/if}
 
 		{#if user.hero == 'Golem'}
-		<dialog class="dialog dialog_power --knight">
+		<dialog class="dialog dialog_power --golem">
 			<div class="headerDialog">
 				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
 				{#if countOfItems}
-				<ul class="inventory">
+				<ul class="inventory -rock">
 					{#each countOfItems as item, index}
 						<li class="inventory_item">
 							<img

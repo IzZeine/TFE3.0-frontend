@@ -6,6 +6,9 @@ export { getUser };
 import { clearStorage } from './js/clearStorage';
 export { clearStorage };
 
+import { clearDataBase } from './js/clearDataBase';
+export { clearDataBase };
+
 import { getHeroes } from './js/getHeroes';
 export { getHeroes };
 
@@ -23,3 +26,12 @@ export { getRoomsConnections };
 
 import { getMyUrlForDev } from './js/getMyUrlForDev';
 export { getMyUrlForDev };
+
+import { sleep } from './js/sleep';
+export { sleep };
+
+import { createAudio } from './js/createAudio';
+export { createAudio };
+
+import { createSound } from './js/createSound';
+export { createSound };

@@ -9,6 +9,9 @@
 @use 'components/_popUp.scss';
 @use 'components/_QRCode.scss';
 @use 'components/_dialog.scss';
+@use 'components/_animBoardGame.scss';
+@use 'components/_animLegendary.scss';
+@use 'components/_endGame.scss';
 
 /*--------------------------------------------------------------------------
 Homepage - Mobile
@@ -194,7 +197,7 @@ Boardgame -Homepage
 .boardgame--home {
 	height: 100vh;
 	width: 100vw;
-	background-image: url('assets/img/cover.png');
+	background-image: url('/assets/img/cover.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 }
@@ -229,6 +232,7 @@ Boardgame -Homepage
 }
 
 .gameNameForm_content {
+	position: relative;
 	text-align: center;
 }
 
@@ -317,7 +321,9 @@ Boardgame - boardgame display
 	display: inline-flex;
 	transition: 0.2s;
 	width: 3%;
-	/* border: 1px solid red; */
+	img {
+		filter: drop-shadow(0 0 5px var(--primary));
+	}
 }
 
 /*--------------------------------------------------------------------------
@@ -450,6 +456,14 @@ userMap
 	margin: 0 auto;
 	max-width: 222px;
 	grid-area: 1/1/1/-1;
+	&.--hero {
+		filter: grayscale(0.8);
+	}
+	&.--death {
+		z-index: 1;
+		width: 50%;
+		margin: auto;
+	}
 }
 
 .lifes {

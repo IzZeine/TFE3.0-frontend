@@ -21,7 +21,6 @@
 		onResize();
 
 		sessionID = sessionStorage.getItem('sessionID');
-		console.log(sessionID);
 		if (!sessionID) {
 			clearStorage();
 			goto('/');
@@ -32,8 +31,9 @@
 			goto(`/game/${gameID}`);
 		}
 
-		socket.on('connect', async () => {
-			console.log('Connected to server');
+		socket.on('updateUsers', async (data) => {
+			user = await getUser(socket);
+			if(!user) throw goto('/')
 		});
 
 		// Écouter l'événement de réponse du serveur après la création d'utilisateur
@@ -100,4 +100,4 @@
 	</div>
 </div>
 
-<button on:click={clearStorage}>reset</button>
+<!-- <button on:click={clearStorage}>reset</button> -->
