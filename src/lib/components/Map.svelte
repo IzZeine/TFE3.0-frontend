@@ -2,7 +2,7 @@
 	// @ts-nocheck
 	import { clearStorage, getItems, getRoomsConnections, getUser, sleep } from '$lib';
 	import { onMount } from 'svelte';
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
 	import { fade, fly, blur, slide } from 'svelte/transition';
 
 	// export let data;

@@ -1,110 +1,60 @@
 <script>
 	// @ts-nocheck
-
-	import { clearStorage, getGame, getHeroes } from '$lib';
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import BoardGame from '$lib/board/BoardGame.svelte';
 	import EndGame from '$lib/board/EndGame.svelte';
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
 	import Audio from '$lib/audio/AudioPlayer.svelte';
 	import LobbyGame from '$lib/board/LobbyGame.svelte';
 
-	let game = '';
 	let activeUsers = [];
-	let listOfHeroes = [];
-	let numberOfColGrid;
 	let winner = null;
 
+	// eslint-disable-next-line no-undef
+	export let data;
+
+	const { initialGameData, gameId } = data;
+
+	let game = initialGameData;
+
+	/*
 	const audioFiles = [
 		'/assets/sounds/dungeon.mp3',
 		'/assets/sounds/power.mp3',
 		'/assets/sounds/sword.mp3',
 		'/assets/sounds/woosh.mp3'
 	];
+	*/
+
+	const onUpdateGame =  (data) => {
+		game = data;
+	}
+	const onEndGame =(data) => {
+		winner = data;
+		console.log('onEndGame', data);
+	};
 
 	onMount(async () => {
-		onResize();
-
-		game = await getGame();
-
-		if (!game) {
-			clearStorage();
-			goto('/boardGame');
+		socket.emit('isActiveUsers', gameId);
+		socket.on('updateGame',onUpdateGame);
+		socket.on('endGame',onEndGame);
+		return ()=>{
+			socket.off('updateGame', onUpdateGame)
+			socket.off('endGame', onEndGame)
 		}
-
-		audioFiles.forEach((path) => {
-			let audio = new Audio();
-			audio.src = path;
-			console.log('audio chargé: ', path);
-		});
-
-		//createAudio('/assets/sounds/dungeon.mp3', true, 'dungeon', 0.5);
-
-		socket.emit('isActiveUsers', game.gameId);
-
-
-
-		socket.on('updateUsers', (data) => {
-			activeUsers = data;
-			let conditionHero = (currentValue) => currentValue.hero;
-			if (activeUsers.length >= 2 && game.statut == 'waiting') {
-				let btnClose = document.querySelector('.js-btn-close');
-				btnClose.removeAttribute('disabled');
-			}
-			if (activeUsers.length == 6 && game.statut == 'waiting') {
-				closeGame();
-			}
-			if (activeUsers.length >= 2 && activeUsers.every(conditionHero) && game.statut == 'closed') {
-				let btnPlay = document.querySelector('.js-btn-play');
-				btnPlay.removeAttribute('disabled');
-			}
-		});
-
-		socket.on('endGame', (data) => {
-			winner = data;
-			console.log(data);
-		});
-
-		listOfHeroes = await getHeroes();
 	});
 
-	socket.on('updateGame', (data) => {
-		game = data;
-	});
 
-	let closeGame = () => {
-		socket.emit('closeGame', game.gameId);
-	};
-
-	let openGame = () => {
-		socket.emit('openGame', game.gameId);
-	};
-
-	let startGame = () => {
-		socket.emit('startGame', game.gameId);
-		goto(`/boardGame/${game.gameId}`);
-	};
-
-	let innerWidth;
-	const onResize = () => {
-		if (innerWidth < 500) {
-			goto('/');
-		}
-	};
 </script>
 
 <Audio src="/assets/sounds/dungeon.mp3" loop={true} id="dungeon" volume={0.5} />
-<svelte:window on:resize={onResize} bind:innerWidth />
 
-{#if game.statut == 'started'}
-	{#if activeUsers.length > 0}
-		<BoardGame {activeUsers} />
-	{/if}
-{:else if game.statut == 'ended'}
+{#if game.statut === 'started'}
+	<BoardGame {activeUsers} />
+{:else if game.statut === 'ended'}
 	<EndGame {winner} />
 {:else}
-	<LobbyGame />
+	<LobbyGame {game} />
 {/if}
 
 <!-- <button on:click={clearStorage}>Clear</button>

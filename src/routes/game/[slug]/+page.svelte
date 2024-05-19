@@ -1,54 +1,46 @@
 <script>
 	import { onMount } from 'svelte';
-	import { getHeroes, getItems, getUser, clearStorage, getGame } from '$lib';
+	import { getHeroes, getItems, getUser, clearStorage } from '$lib';
 	import GameRules from '$lib/components/GameRules.svelte';
 	import ChooseHero from '$lib/components/ChooseHero.svelte';
 	import EndGame from '$lib/board/EndGame.svelte';
 	import Map from '$lib/components/Map.svelte';
 	import { goto } from '$app/navigation';
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
 
-	let gameID = '';
+	export let data;
+	const { initialGameData, gameId } = data;
+
+	let game = initialGameData;
+
 	let sessionID = '';
 	let user = '';
-	let game;
 	let hero = '';
 	let winner = null;
 
 	onMount(async () => {
-		onResize();
 		sessionID = sessionStorage.getItem('sessionID') || '';
 		if (!sessionID) {
 			clearStorage();
 			goto('/');
 		}
 
-		gameID = sessionStorage.getItem('gameID') || '';
-		if (!gameID) {
-			goto('/game');
-		} else {
-			// trouver l'utilisateur
-			user = await getUser(socket);
-			if (!user) {
-				clearStorage();
-				goto('/');
-			}
-			socket.emit('joinGame', gameID);
+		// trouver l'utilisateur
+		user = await getUser(socket);
+		if (!user) {
+			clearStorage();
+			goto('/');
 		}
+		socket.emit('joinGame', gameId);
 
 		console.log('session Id :', sessionID);
-		console.log('gameID', gameID);
 
 		// @TODO : deco intempestives...
 		socket.on('deco', () => {
 			alert('a lot of users');
 			clearStorage();
-			goto('/game');
 		});
 
-		//trouver la game
-		game = await getGame();
-		console.log(game);
 		//importer les heros
 		let listOfHeroes = await getHeroes();
 		//importer les items
@@ -79,16 +71,7 @@
 		socket.emit('selectedHero', hero);
 		socket.emit('playSound', 'power'); // @TODO : sound select
 	}
-
-	let innerWidth;
-	const onResize = () => {
-		if (innerWidth > 500) {
-			goto('/boardGame');
-		}
-	};
 </script>
-
-<svelte:window on:resize={onResize} bind:innerWidth />
 
 {#if sessionID}
 	{#if user}

@@ -1,5 +1,5 @@
 <script>
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
 	import { sleep } from '$lib';
 	import { onMount } from 'svelte';
 	import AudioPlayer from '$lib/audio/AudioPlayer.svelte';

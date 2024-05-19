@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import { getUser } from '$lib';
 	import { goto } from '$app/navigation';
-	import { socket } from '$lib/js/socketConnection';
+	import { socket } from '$lib/api/socketConnection.js';
 
 	// export let data;
 	// const socket = data.socket;

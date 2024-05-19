@@ -5,7 +5,7 @@
 	import { getMyUrlForDev, getUser } from '$lib';
 	import { goto } from '$app/navigation';
 	import { clearStorage } from '$lib';
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
 
 	// export let data;
 	// const socket = data.socket;

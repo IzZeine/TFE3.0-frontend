@@ -1,5 +1,5 @@
 <script>
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
 
 	export let rooms;

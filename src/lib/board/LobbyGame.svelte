@@ -1,49 +1,21 @@
 <script>
-	// @ts-nocheck
-
-	import { clearStorage, getGame, getHeroes } from '$lib';
+	import { clearStorage, getHeroes } from '$lib';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import BoardGame from '$lib/board/BoardGame.svelte';
-	import EndGame from '$lib/board/EndGame.svelte';
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
 	import Audio from '$lib/audio/AudioPlayer.svelte';
-	import LobbyGame from '$lib/board/LobbyGame.svelte';
 
-	let game = '';
 	let activeUsers = [];
 	let listOfHeroes = [];
 	let numberOfColGrid;
 	let winner = null;
 
-	const audioFiles = [
-		'/assets/sounds/dungeon.mp3',
-		'/assets/sounds/power.mp3',
-		'/assets/sounds/sword.mp3',
-		'/assets/sounds/woosh.mp3'
-	];
+	export let game;
 
 	onMount(async () => {
-		onResize();
 
-		game = await getGame();
-
-		if (!game) {
-			clearStorage();
-			goto('/boardGame');
-		}
-
-		audioFiles.forEach((path) => {
-			let audio = new Audio();
-			audio.src = path;
-			console.log('audio chargé: ', path);
-		});
-
-		//createAudio('/assets/sounds/dungeon.mp3', true, 'dungeon', 0.5);
 
 		socket.emit('isActiveUsers', game.gameId);
-
-
 
 		socket.on('updateUsers', (data) => {
 			activeUsers = data;
@@ -75,6 +47,7 @@
 
 	let closeGame = () => {
 		socket.emit('closeGame', game.gameId);
+		goto("/boardGame");
 	};
 
 	let openGame = () => {
@@ -84,13 +57,6 @@
 	let startGame = () => {
 		socket.emit('startGame', game.gameId);
 		goto(`/boardGame/${game.gameId}`);
-	};
-
-	let innerWidth;
-	const onResize = () => {
-		if (innerWidth < 500) {
-			goto('/');
-		}
 	};
 </script>
 

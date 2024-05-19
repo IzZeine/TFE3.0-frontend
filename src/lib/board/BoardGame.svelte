@@ -2,7 +2,26 @@
 	import Player from '$lib/board/Player.svelte';
 	import BoardGameSVG from '$lib/board/BoardGameSVG.svelte';
 	import Battles from '$lib/board/Battles.svelte';
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
+
+
+/*
+	socket.on('updateUsers', (data) => {
+		activeUsers = data;
+		let conditionHero = (currentValue) => currentValue.hero;
+		if (activeUsers.length >= 2 && game.statut == 'waiting') {
+			let btnClose = document.querySelector('.js-btn-close');
+			btnClose.removeAttribute('disabled');
+		}
+		if (activeUsers.length == 6 && game.statut == 'waiting') {
+			closeGame();
+		}
+		if (activeUsers.length >= 2 && activeUsers.every(conditionHero) && game.statut == 'closed') {
+			let btnPlay = document.querySelector('.js-btn-play');
+			btnPlay.removeAttribute('disabled');
+		}
+	});
+*/
 
 	//Game status
 	let activeUsers = [];
