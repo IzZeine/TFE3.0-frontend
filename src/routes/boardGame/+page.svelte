@@ -1,20 +1,23 @@
 <script>
 	// @ts-nocheck
 	import { goto } from '$app/navigation';
-	import { getMyUrlForDev,clearDataBase, sleep, createAudio } from '$lib';
+	import { getMyUrlForDev } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
 	import QRCode from '$lib/board/QRCode.svelte';
 
-	// export let data;
-	// const socket = data.socket;
-
 	let gameID;
-	let OnlineUsers = 0;
 	let errorMessage = '';
 	let gameName = '';
 	let url = getMyUrlForDev();
 	let activegames = [];
+
+	const onConnect = () => {
+		console.log('connected');
+	};
+	const updateUserCount = (count) => {
+		console.log('onlineUsers', count);
+	};
 
 	onMount(async () => {
 		onResize();
@@ -22,23 +25,21 @@
 		gameID = sessionStorage.getItem('gameID');
 
 		if (gameID) {
-			goto(`/boardGame/${gameID}`);
+			return goto(`/boardGame/${gameID}`);
 		}
 
-		socket.on('connect', async () => {
-			console.log('Connected to server');
-		});
+		socket.on('connect', onConnect);
+		socket.on('updateUsersCount', updateUserCount);
 
-		createAudio('/assets/sounds/dungeon.mp3', true, 'dungeon', 0.5)
-
-		socket.on('updateUsersCount', (count) => {
-			OnlineUsers = count;
-		});
+		return () => {
+			socket.off('connect', onConnect);
+			socket.off('updateUsersCount', updateUserCount);
+		};
 	});
 
 	// disabled btn if the input is empty
 	function isDirty(username) {
-		return username == '';
+		return username === '';
 	}
 
 	let createGame = async () => {
@@ -64,21 +65,15 @@
 		}
 	};
 
-	let askActiveGames = async () => {
-		const response = await fetch(`${url}/activegames`);
-		const activeGamesJson = await response.json();
-		activegames = [...activeGamesJson];
-	};
-
 	let joinGame = (gameId) => {
 		sessionStorage.setItem('gameID', gameId);
 	};
 
 	let innerWidth;
 	const onResize = () => {
-		console.log(innerWidth)
+		console.log(innerWidth);
 		if (innerWidth < 500) {
-			console.log('enter?')
+			console.log('enter?');
 			goto('/');
 		}
 	};
@@ -94,8 +89,7 @@
 <QRCode />
 
 <div class="boardgame--home">
-
-<div class="boardgame--home_content">
+	<div class="boardgame--home_content">
 		<img src="/assets/img/logo.png" class="fluidimg boardgame--home_logoImg" alt="Logo" />
 		<form on:submit|preventDefault={createGame} class="gameNameForm">
 			<div class="gameNameForm_content">
@@ -121,20 +115,19 @@
 			<button class="btnPrimary btnForm" disabled={isDirty(gameName)}>Jouer</button>
 		</form>
 		<!-- <button class="btnPrimary btnGamesOnline" on:click={askActiveGames}>Rejoindre</button> -->
-</div>
+	</div>
 
-<ul>
-	{#each activegames as game}
-		<li>
-			<a href="/boardGame/{game.gameId}">
-				<button on:click={() => joinGame(game.gameId)}>
-					{game.name}
-				</button>
-			</a>
-		</li>
-	{/each}
-</ul>
-
+	<ul>
+		{#each activegames as game}
+			<li>
+				<a href="/boardGame/{game.gameId}">
+					<button on:click={() => joinGame(game.gameId)}>
+						{game.name}
+					</button>
+				</a>
+			</li>
+		{/each}
+	</ul>
 </div>
 
 <!-- <button on:click={()=> clearDataBase(socket)}>Reset dataBase</button> -->

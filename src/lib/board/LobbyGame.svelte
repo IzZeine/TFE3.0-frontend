@@ -94,18 +94,61 @@
 	};
 </script>
 
-<Audio src="/assets/sounds/dungeon.mp3" loop={true} id="dungeon" volume={0.5} />
-<svelte:window on:resize={onResize} bind:innerWidth />
+<div class="container">
+	<h1 class="h1">{game.name}</h1>
+	<ul class="cardUserList" style="grid-template-columns: repeat({numberOfColGrid}, 1fr);">
+		{#if activeUsers.length < 1}
+			{#each { length: 6 } as _, index}
+				<li class="cardUser-Empty"></li>
+			{/each}
+		{/if}
+		{#each activeUsers as user, index}
+			{@const numberOfLi = 6 - activeUsers.length}
+			{@const isLast = index === activeUsers.length - 1}
+			<li class="cardUser">
+				{#if game.statut == 'closed'}
+					{#if user.hero}
+						<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
+						<p class="cardUser_name">{user.hero}</p>
+						<p class="cardUser_ability">{user.ability}</p>
+						<div class="stats">
+							<p class="cardUser_atk">{user.atk} ATK</p>
+							<p class="cardUser_atk">{user.def} DEF</p>
+						</div>
+					{:else}
+						<img class="fluidimg userPawn_img" src="/assets/img/nobody.png" alt="pawn icon" />
+						<p class="cardUser_ability">
+							Vous n'êtes encore personne dans ce monde, un moins que rien!
+						</p>
+						<div class="stats">
+							<p class="cardUser_atk">0 ATK</p>
+							<p class="cardUser_atk">0 DEF</p>
+						</div>
+					{/if}
+				{:else}
+					<img class="fluidimg userPawn_img" src="/assets/img/nobody.png" alt="pawn icon" />
+					<p class="cardUser_name">{user.username}</p>
+					<p class="cardUser_ability">
+						Vous n'êtes encore personne dans ce monde, un moins que rien!
+					</p>
+					<div class="stats">
+						<p class="cardUser_atk">0 ATK</p>
+						<p class="cardUser_atk">0 VIE</p>
+					</div>
+				{/if}
+			</li>
+			{#if isLast}
+				{#each { length: numberOfLi } as _, index}
+					<li class="cardUser-Empty"></li>
+				{/each}
+			{/if}
+		{/each}
+	</ul>
 
-{#if game.statut == 'started'}
-	{#if activeUsers.length > 0}
-		<BoardGame {activeUsers} />
+	{#if game.statut == 'closed'}
+		<button class="btnPrimary js-btn-play" disabled on:click={startGame}>Jouer</button>
+		<button class="btnPrimary js-btn-play" on:click={openGame}>ouvrir</button>
+	{:else}
+		<button class="btnPrimary js-btn-close" disabled on:click={closeGame}>Fermer</button>
 	{/if}
-{:else if game.statut == 'ended'}
-	<EndGame {winner} />
-{:else}
-	<LobbyGame />
-{/if}
-
-<!-- <button on:click={clearStorage}>Clear</button>
-<button on:click={()=> clearDataBase(socket)}>Reset dataBase</button> -->
+</div>

@@ -25,7 +25,7 @@
 		if (hero === 'Serpent') img = 'diceRoll';
 		if (hero === 'Rodeur') img = 'power';
 		if (hero === 'Necromancien') img = 'angel';
-		animOnPlayer(id, img);
+		//animOnPlayer(id, img);
 	});
 </script>
 

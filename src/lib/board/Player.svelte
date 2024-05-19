@@ -1,5 +1,4 @@
 <script>
-	import { activeUsers } from '$lib/board/boardStatus.js';
 	import { sleep } from '$lib';
 
 	export let user;
