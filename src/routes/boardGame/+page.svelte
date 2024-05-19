@@ -4,6 +4,7 @@
 	import { getMyUrlForDev } from '$lib';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
+	import QRCode from '$lib/board/QRCode.svelte';
 
 	// export let data;
 	// const socket = data.socket;
@@ -77,9 +78,9 @@
 
 	let innerWidth;
 	const onResize = () => {
-		console.log(innerWidth)
+		console.log(innerWidth);
 		if (innerWidth < 500) {
-			console.log('enter?')
+			console.log('enter?');
 			goto('/');
 		}
 	};
@@ -87,11 +88,10 @@
 
 <svelte:window on:resize={onResize} bind:innerWidth />
 
-<img class="fluidimg QRCode" src="/assets/img/QR.svg" alt="QRCode" />
+<QRCode />
 
 <div class="boardgame--home">
-
-<div class="boardgame--home_content">
+	<div class="boardgame--home_content">
 		<img src="/assets/img/logo.png" class="fluidimg boardgame--home_logoImg" alt="Logo" />
 		<form on:submit|preventDefault={createGame} class="gameNameForm">
 			<div class="gameNameForm_content">
@@ -116,22 +116,19 @@
 			</div>
 			<button class="btnPrimary btnForm" disabled={isDirty(gameName)}>Jouer</button>
 		</form>
-		<!-- <button class="btnPrimary btnGamesOnline" on:click={askActiveGames}>Rejoindre</button> -->
+	</div>
+
+	<ul>
+		{#each activegames as game}
+			<li>
+				<a href="/boardGame/{game.gameId}">
+					<button on:click={() => joinGame(game.gameId)}>
+						{game.name}
+					</button>
+				</a>
+			</li>
+		{/each}
+	</ul>
 </div>
-
-<ul>
-	{#each activegames as game}
-		<li>
-			<a href="/boardGame/{game.gameId}">
-				<button on:click={() => joinGame(game.gameId)}>
-					{game.name}
-				</button>
-			</a>
-		</li>
-	{/each}
-</ul>
-
-</div>
-
 
 <!-- @TODO++ : ajouter des animations quelconques : lancement de combat, récupération d'un item, utilisation de sort -->

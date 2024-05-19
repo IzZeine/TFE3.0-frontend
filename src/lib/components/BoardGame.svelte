@@ -1,6 +1,6 @@
 <script>
 	// @ts-nocheck
-	import BoardGameSVG from '$lib/composants/BoardGameSVG.svelte';
+	import BoardGameSVG from '$lib/components/BoardGameSVG.svelte';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/js/socketConnection.js';
 

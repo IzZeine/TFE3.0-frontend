@@ -4,7 +4,7 @@
 	import { clearStorage, getGame, getHeroes } from '$lib';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import BoardGame from '$lib/composants/BoardGame.svelte';
+	import BoardGame from '$lib/components/BoardGame.svelte';
 	import { socket } from '$lib/js/socketConnection.js';
 
 	// export let data;

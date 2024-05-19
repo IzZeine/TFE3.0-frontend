@@ -2,12 +2,12 @@
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import { getHeroes, getItems, getUser, clearStorage, getGame } from '$lib';
-	import GameRules from '$lib/composants/GameRules.svelte';
-	import ChooseHero from '$lib/composants/ChooseHero.svelte';
+	import GameRules from '$lib/components/GameRules.svelte';
+	import ChooseHero from '$lib/components/ChooseHero.svelte';
 	import { goto } from '$app/navigation';
-	import Map from '$lib/composants/Map.svelte';
+	import Map from '$lib/components/Map.svelte';
 	import { socket } from '$lib/js/socketConnection.js';
-	import EndGame from '$lib/composants/EndGame.svelte';
+	import EndGame from '$lib/components/EndGame.svelte';
 
 	// export let data;
 	// const socket = data.socket;
