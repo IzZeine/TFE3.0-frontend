@@ -3,9 +3,9 @@
 	import BoardGameSVG from '$lib/board/game/BoardGameSVG.svelte';
 	import Battles from '$lib/board/game/Battles.svelte';
 	import { socket } from '$lib/api/socketConnection.js';
+	import { onMount } from 'svelte';
 
-
-/*
+	/*
 	socket.on('updateUsers', (data) => {
 		activeUsers = data;
 		let conditionHero = (currentValue) => currentValue.hero;
@@ -26,7 +26,7 @@
 	//Game status
 	let activeUsers = [];
 
-	socket.on('updateUsers', (players) => {
+	const onUpdateUsers = (players) => {
 		activeUsers = players.map((player) => {
 			console.log(player);
 			return {
@@ -34,6 +34,12 @@
 				//Faire ici des calculs eventuels
 			};
 		});
+	};
+	onMount(() => {
+		socket.on('updateUsers', onUpdateUsers);
+		return () => {
+			socket.off('updateUsers', onUpdateUsers);
+		};
 	});
 </script>
 
