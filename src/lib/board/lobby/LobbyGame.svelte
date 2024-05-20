@@ -71,8 +71,8 @@
 		<button class="btnPrimary" disabled={btnPlayDisabled} on:click={startGame}>Jouer</button>
 		<button class="btnPrimary" disabled={btnPlayDisabled} on:click={openGame}>ouvrir</button>
 	{:else}
-		<button class="btnPrimary js-btn-close" disabled={btnCloseDisabled} on:click={closeGame}
-			>Fermer</button
-		>
+		<button class="btnPrimary js-btn-close" disabled={btnCloseDisabled} on:click={closeGame}>
+			Fermer
+		</button>
 	{/if}
 </div>
