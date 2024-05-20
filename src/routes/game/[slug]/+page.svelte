@@ -1,10 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
 	import { getHeroes, getItems, getUser, clearStorage } from '$lib';
-	import GameRules from '$lib/components/GameRules.svelte';
-	import ChooseHero from '$lib/components/ChooseHero.svelte';
+	import GameRules from '$lib/game/GameRules.svelte';
+	import ChooseHero from '$lib/game/ChooseHero.svelte';
 	import EndGame from '$lib/board/EndGame.svelte';
-	import Map from '$lib/components/Map.svelte';
+	import Map from '$lib/game/Map.svelte';
 	import { goto } from '$app/navigation';
 	import { socket } from '$lib/api/socketConnection.js';
 

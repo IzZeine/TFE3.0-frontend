@@ -1,5 +1,4 @@
 <script>
-	import { getHeroes } from '$lib';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
@@ -36,7 +35,6 @@
 
 	const closeGame = () => {
 		socket.emit('closeGame', gameId);
-		goto('/boardGame');
 	};
 
 	const openGame = () => {
