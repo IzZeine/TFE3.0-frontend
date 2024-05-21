@@ -5,6 +5,8 @@
 
 	export let user;
 
+	let element;
+
 	const animOnPlayer = async (id, item) => {
 		/*
 		let itemImg = '/assets/img/' + item + '.png';
@@ -96,6 +98,7 @@
 </script>
 
 <li
+	bind:this={element}
 	class="userPawn {user.player}"
 	id={user.id}
 	style:left={`${user.roomInformations.x}px`}

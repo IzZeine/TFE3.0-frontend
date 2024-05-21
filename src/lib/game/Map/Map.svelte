@@ -5,12 +5,13 @@
 	import { socket } from '$lib/api/socketConnection.js';
 	import { fade, fly, blur, slide } from 'svelte/transition';
 	import Inventory from '$lib/game/Map/Inventory.svelte';
+	import Dialog from './Dialog.svelte';
 
 	// export let data;
 	// const socket = data.socket;
 
 	export let user = user;
-	let color = user.color
+	let color = user.color;
 	let gameID = '';
 	let sessionID = '';
 
@@ -23,12 +24,14 @@
 	let dice1 = 1,
 		dice2 = 1;
 	let battle;
-	let mooveSpeed = 1
-	let isFixed = true
-	let usersInGame = ''
-	let nerfDices = 0
-	let luckOfDices = 0
-	let luckRatio = 0
+	let mooveSpeed = 1;
+	let isFixed = true;
+	let usersInGame = '';
+	let nerfDices = 0;
+	let luckOfDices = 0;
+	let luckRatio = 0;
+
+	let dialogActive = '';
 
 	onMount(async () => {
 		sessionID = sessionStorage.getItem('sessionID');
@@ -36,51 +39,51 @@
 
 		popUp('Vous êtes connecté');
 		if (gameID) {
-				// trouver l'utilisateur
-				user = await getUser(socket);
+			// trouver l'utilisateur
+			user = await getUser(socket);
 
-				if (!user) {
-					clearStorage();
-					window.location.href = '/';
-				}
-
-				socket.emit('joinGame', gameID);
-				socket.emit('getRooms', gameID);
+			if (!user) {
+				clearStorage();
+				window.location.href = '/';
 			}
 
-		socket.on('updateUsers',async (data)=>{
+			socket.emit('joinGame', gameID);
+			socket.emit('getRooms', gameID);
+		}
+
+		socket.on('updateUsers', async (data) => {
 			user = await getUser(socket);
 			updateInventory(user);
-			displayArrowsDirections()
+			displayArrowsDirections();
 			usersInGame = data;
-			if(user.life <= 0){
-				disabledArrows()
-				let actionButtonsElement = document.querySelectorAll('.actionButton')
-				actionButtonsElement.forEach((btn)=>{
+			if (user.life <= 0) {
+				disabledArrows();
+				let actionButtonsElement = document.querySelectorAll('.actionButton');
+				actionButtonsElement.forEach((btn) => {
 					btn.setAttribute('disabled', true);
-				})
+				});
 			}
-		})
+		});
 
-		socket.on('saveYou', async(id)=>{
-			if(user.id != id)	{
-				console.log('notYou')
+		socket.on('saveYou', async (id) => {
+			if (user.id != id) {
+				console.log('notYou');
 				return;
 			}
-			console.log('you are saved')
-			let actionButtonsElement = document.querySelectorAll('.actionButton')
-				actionButtonsElement.forEach((btn)=>{
-					btn.removeAttribute('disabled');
-			})
-		})
-		
+			console.log('you are saved');
+			let actionButtonsElement = document.querySelectorAll('.actionButton');
+			actionButtonsElement.forEach((btn) => {
+				btn.removeAttribute('disabled');
+			});
+		});
+
 		socket.on('youAskedRooms', (rooms) => {
-			if(!user) return;
+			if (!user) return;
 			displayArrowsDirections();
 			allRooms = rooms;
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
-			if(!itemInRoom || itemInRoom == 'null') {
+			if (!itemInRoom || itemInRoom == 'null') {
 				let getItemBtn = document.querySelector('.getItemBtn');
 				getItemBtn.setAttribute('disabled', true);
 				return;
@@ -93,27 +96,27 @@
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 			itemInRoom = myRoom.item;
-			if(user.hero == 'Golem') {
+			if (user.hero == 'Golem') {
 				let rockDef = Math.floor(Math.random() * 4) * 5;
 				let message =
 					"<div class='itemInPopUpDiv'> <p>+1</p> <img class='fluidimg itemInPopUp' src='/assets/img/rock.png'	alt='rock'/> </div>";
-				if(rockDef>0) popUp(message)
-				let rock = {def: rockDef}
-				console.log(rock)
-				socket.emit ('dropARock', rock )
+				if (rockDef > 0) popUp(message);
+				let rock = { def: rockDef };
+				console.log(rock);
+				socket.emit('dropARock', rock);
 			}
-			if(!itemInRoom || itemInRoom == 'null') return;
+			if (!itemInRoom || itemInRoom == 'null') return;
 			itemInRoom = JSON.parse(itemInRoom); // convert string to json
 			// socket.emit('playSound', 'power') // @TODO : sound move
 		});
 
 		socket.on('battle', async (data) => {
-			battle = data
-			
-			socket.emit('playSound', 'sword')
-			
-			openDialog('dialog_battle')
-			
+			battle = data;
+
+			socket.emit('playSound', 'sword');
+
+			openDialog('dialog_battle');
+
 			user = await getUser(socket);
 			myRoom = allRooms[user.room];
 
@@ -125,7 +128,7 @@
 			disabledArrows();
 
 			if (user.room != data.room) return;
-			
+
 			let bossLife = data.boss.def;
 			let heroesAtk = 0;
 			for (let hero of data.heroes) {
@@ -143,19 +146,18 @@
 			if (bossLife < heroesAtk)
 				popUp('Les heroes remportent <br> fin de la partie!'), (winner = data.heroes);
 
-			if (user.team = 'boss') socket.emit('battleEnded', winner);
-
+			if ((user.team = 'boss')) socket.emit('battleEnded', winner);
 		});
 
 		socket.on('returnAtSpawn', async () => {
 			user = await getUser(socket);
 			displayArrowsDirections();
 
-			if(user.life <= 0){
-				let actionButtonsElement = document.querySelectorAll('.actionButton')
-				actionButtonsElement.forEach((btn)=>{
+			if (user.life <= 0) {
+				let actionButtonsElement = document.querySelectorAll('.actionButton');
+				actionButtonsElement.forEach((btn) => {
 					btn.setAttribute('disabled', true);
-				})
+				});
 			}
 
 			if (user.team == 'hero' && myRoom.item != 'null' && myRoom.item != null) {
@@ -163,17 +165,17 @@
 				getItemBtn.removeAttribute('disabled');
 			}
 
-			closeDialog('dialog_battle')
+			closeDialog('dialog_battle');
 		});
 
-		socket.on('isNerfingDices', () =>{
-			console.log("dices is nerf")
-			nerfDices = 3
-		})
-		socket.on('undoNerfingDices', () =>{
-			console.log("dices is normal")
-			nerfDices = 0
-		})
+		socket.on('isNerfingDices', () => {
+			console.log('dices is nerf');
+			nerfDices = 3;
+		});
+		socket.on('undoNerfingDices', () => {
+			console.log('dices is normal');
+			nerfDices = 0;
+		});
 	});
 
 	let popUp = async (message) => {
@@ -187,11 +189,12 @@
 		popupDiv.classList.add('is-active');
 		popupTxt.innerHTML = message;
 
-		popupDiv.addEventListener('click', async ()=>{
-			popupDiv.classList.remove('is-active');			await sleep(0.5);
+		popupDiv.addEventListener('click', async () => {
+			popupDiv.classList.remove('is-active');
+			await sleep(0.5);
 			popupTxt.innerHTML = '';
 			popupDiv.remove();
-		})
+		});
 
 		await sleep(2);
 		popupDiv.classList.remove('is-active');
@@ -199,10 +202,6 @@
 		popupTxt.innerHTML = '';
 		popupDiv.remove();
 	};
-
-
-
-
 
 	let disabledArrows = () => {
 		let topArrow = document.querySelector('#top');
@@ -217,7 +216,7 @@
 
 	let displayArrowsDirections = async () => {
 		if (user.life <= 0) return;
-		if(!myRoom) myRoom = user.room
+		if (!myRoom) myRoom = user.room;
 		roomsConnections = await getRoomsConnections();
 		roomsConnections = Object.values(roomsConnections); // change Json to array
 
@@ -235,8 +234,8 @@
 		}
 	};
 
-	let askToChangeRoom = async() => {
-		isFixed = false
+	let askToChangeRoom = async () => {
+		isFixed = false;
 		let direction = event.target.id;
 		let targetRoom = directions[direction];
 		if (targetRoom == 'null') return;
@@ -244,33 +243,33 @@
 			let hasKey = myInventory.some((item) => item.nameId === 'key');
 			if (!hasKey) {
 				popUp("You don't have the key");
-				isFixed = true
+				isFixed = true;
 				return;
 			}
 		}
 		socket.emit('askToChangeRoom', targetRoom);
 		dice1 = 1;
 		dice2 = 1;
-		await sleep(mooveSpeed)
-		isFixed = true
+		await sleep(mooveSpeed);
+		isFixed = true;
 	};
 
 	let tryToGetItemInRoom = async () => {
 		let getItemBtn = document.querySelector('.getItemBtn');
-		let bonusDicesElement = document.querySelector('.bonusDices')
-		if (bonusDicesElement) bonusDicesElement.classList.add('isActive')
+		let bonusDicesElement = document.querySelector('.bonusDices');
+		if (bonusDicesElement) bonusDicesElement.classList.add('isActive');
 		let condition = itemInRoom.condition;
 		let pointsDices = await rollDice();
-		pointsDices += luckOfDices - nerfDices
+		pointsDices += luckOfDices - nerfDices;
 		if (pointsDices < condition) {
 			getItemBtn.setAttribute('disabled', true);
 			await sleep(1);
 			getItemBtn.removeAttribute('disabled');
 
-			if (bonusDicesElement) bonusDicesElement.classList.remove('isActive')
+			if (bonusDicesElement) bonusDicesElement.classList.remove('isActive');
 
-			await sleep(0.2)
-			luckOfDices = 0
+			await sleep(0.2);
+			luckOfDices = 0;
 
 			return;
 		}
@@ -279,8 +278,8 @@
 		await sleep(1);
 		getItemBtn.removeAttribute('disabled');
 
-		if (bonusDicesElement) bonusDicesElement.classList.remove('.isActive')
-		luckOfDices = 0
+		if (bonusDicesElement) bonusDicesElement.classList.remove('.isActive');
+		luckOfDices = 0;
 
 		let message =
 			'Vous avez gagné : \n' +
@@ -292,311 +291,310 @@
 			'</div>';
 		popUp(message);
 		displayArrowsDirections();
-		socket.emit('playSound', 'woosh')
+		socket.emit('playSound', 'woosh');
 		socket.emit('getItemInRoom', myRoom);
-		closeDialog('dialog_item')
+		closeDialog('dialog_item');
 	};
 
-	let rollDice = async() => {
-		for(let i=0;i<5;i++){
+	let rollDice = async () => {
+		for (let i = 0; i < 5; i++) {
 			dice1 = Math.floor(Math.random() * 6) + 1;
 			dice2 = Math.floor(Math.random() * 6) + 1;
-			await sleep(0.07)
+			await sleep(0.07);
 		}
 		return dice1 + dice2;
 	};
 
 	let cooldownTimer = async (duration, color) => {
 		let cdElement = document.querySelector('#cooldown');
-		cdElement.textContent = duration
-		cdElement.style.color = color
-		let count = 0
-		let intervalId = setInterval ( () => { 
-			count++; 
-			cdElement.textContent = duration - count
-			if (count >= duration ) { 
-				count = 0
-				clearInterval (intervalId);
-			} 
-		}, 1000 ) ;
-		await sleep(duration)
-		cdElement.textContent = ''
-	}
+		cdElement.textContent = duration;
+		cdElement.style.color = color;
+		let count = 0;
+		let intervalId = setInterval(() => {
+			count++;
+			cdElement.textContent = duration - count;
+			if (count >= duration) {
+				count = 0;
+				clearInterval(intervalId);
+			}
+		}, 1000);
+		await sleep(duration);
+		cdElement.textContent = '';
+	};
 
-	function closeDialog(dialogId) {
-		
-	}
+	function closeDialog(dialogId) {}
 
-	let useAbility = async(data) => {
+	let useAbility = async (data) => {
 		let powerElement = document.querySelector('.--power');
 		powerElement.setAttribute('disabled', true);
-		let colorActive = 'green'
-		let colorInactive = 'red'
+		let colorActive = 'green';
+		let colorInactive = 'red';
 
-		socket.emit('useAbility', data)
-		let sound = 'power'
-		if (user.hero == 'Necromancien') sound = 'revive'
-		socket.emit('playSound', sound)
+		socket.emit('useAbility', data);
+		let sound = 'power';
+		if (user.hero == 'Necromancien') sound = 'revive';
+		socket.emit('playSound', sound);
 
-		switch (user.hero){
+		switch (user.hero) {
 			case 'Rodeur':
-				closeDialog('dialog_power')
-				disabledArrows()
-				await sleep(1)
+				closeDialog('dialog_power');
+				disabledArrows();
+				await sleep(1);
 				socket.emit('askToChangeRoom', data);
-				await cooldownTimer(5, colorInactive)
+				await cooldownTimer(5, colorInactive);
 				powerElement.removeAttribute('disabled');
 				break;
-			case 'Chevalier' :
+			case 'Chevalier':
 				mooveSpeed = data;
-				closeDialog('dialog_power')
-				await cooldownTimer(10, colorActive)
+				closeDialog('dialog_power');
+				await cooldownTimer(10, colorActive);
 				mooveSpeed = 1;
-				await cooldownTimer(60, colorInactive)
-				powerElement.removeAttribute('disabled');			
-				break;
-			case 'Necromancien' :
-				socket.emit('saveUser',(data))
-				closeDialog('dialog_power')
-				powerElement.removeAttribute('disabled');			
-				break;
-			case 'Druide' :
-				socket.emit('healUser',(data))
-				closeDialog('dialog_power')
-				await cooldownTimer(5, colorInactive)
+				await cooldownTimer(60, colorInactive);
 				powerElement.removeAttribute('disabled');
 				break;
-			case 'Magicien' :
-				upLuckToDice()
-				closeDialog('dialog_power')
-				let message = 'vous gagnez +' + luckOfDices + ' points pour le prochain lancé de dés'
-				popUp(message)
-				await cooldownTimer(5, colorInactive)
-				powerElement.removeAttribute('disabled');	
+			case 'Necromancien':
+				socket.emit('saveUser', data);
+				closeDialog('dialog_power');
+				powerElement.removeAttribute('disabled');
 				break;
-			case 'Serpent' :
-				socket.emit('nerfDices')
-				closeDialog('dialog_power')
-				await cooldownTimer(10, colorActive)
-				socket.emit('undoNerfDices')
-				await cooldownTimer(120, colorInactive)
+			case 'Druide':
+				socket.emit('healUser', data);
+				closeDialog('dialog_power');
+				await cooldownTimer(5, colorInactive);
+				powerElement.removeAttribute('disabled');
 				break;
-			default :
+			case 'Magicien':
+				upLuckToDice();
+				closeDialog('dialog_power');
+				let message = 'vous gagnez +' + luckOfDices + ' points pour le prochain lancé de dés';
+				popUp(message);
+				await cooldownTimer(5, colorInactive);
+				powerElement.removeAttribute('disabled');
+				break;
+			case 'Serpent':
+				socket.emit('nerfDices');
+				closeDialog('dialog_power');
+				await cooldownTimer(10, colorActive);
+				socket.emit('undoNerfDices');
+				await cooldownTimer(120, colorInactive);
+				break;
+			default:
 				console.log('personne');
 		}
-	}
+	};
 
 	let openDialog = (target) => {
-		/*
-		let dialogTarget = document.querySelector('.'+target)
-		if(target == 'dialog_power') randomRoomTP = getnumber()
-		let getItemBtn = document.querySelector('.getItemBtn');
-		getItemBtn.removeAttribute('disabled');
-		if(!itemInRoom) {
-			getItemBtn.setAttribute('disabled', true);
-		}
-		dialogTarget.show()
-		*/
-	}
- 
-	let getnumber = () =>{
+		dialogActive = target;
+	};
+
+	let getnumber = () => {
 		let numbers = [];
-		while(numbers.length < 5){
-				var r = Math.floor(Math.random() * 38) + 1;
-				while (r==19){
-					 r = Math.floor(Math.random() * 38) + 1;
-					}
-				if(numbers.indexOf(r) === -1) numbers.push(r);
+		while (numbers.length < 5) {
+			var r = Math.floor(Math.random() * 38) + 1;
+			while (r == 19) {
+				r = Math.floor(Math.random() * 38) + 1;
+			}
+			if (numbers.indexOf(r) === -1) numbers.push(r);
 		}
-		return numbers
-	}
+		return numbers;
+	};
 
 	let upLuckToDice = () => {
-		luckOfDices =  Math.floor(Math.random() * 3 + luckRatio);
-		if(luckOfDices == 0) luckRatio += 0.25
-		if(luckOfDices > 0) luckRatio = 0
-	}
+		luckOfDices = Math.floor(Math.random() * 3 + luckRatio);
+		if (luckOfDices == 0) luckRatio += 0.25;
+		if (luckOfDices > 0) luckRatio = 0;
+	};
 
-	let randomRoomTP = getnumber()
+	let randomRoomTP = getnumber();
 
 	// @TODO : si le boss est mort ou que l'ensemble de items restants ne suffisent pas pour battre le boss, le jeu se termine
 </script>
 
 <div class="maxContent">
-		<!-- {#if isFixed} -->
-		<div class="mapUserContainer" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*500}}>
-			{#if myRoom}
-				{#if isFixed}
-					<div class="headerMap" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*500}}>
-						<div class="cardHero">
-							<div class="lifes">
-										<ul class="cardHero_stats-life">
-											{#each { length: user.life } as _, index}
-												{@const numberOfLife = user.life}
-												{@const isLast = index === user.life - 1}
-												<li>
-													<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
-												</li>
-												{#if isLast}
-													{#each { length: 3 - numberOfLife } as _, index}
-														<li>
-															<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
-														</li>
-													{/each}
-												{/if}
-											{/each}
-											{#if user.life <= 0}
-											{#each { length: 3 } as _}
-												<li>
-													<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
-												</li>
-											{/each}
-											{/if}
-										</ul>
-							</div>
-							{#if user.life <= 0 }
-								<img class="fluidimg cardHero_img --hero" src="/assets/img/{user.heroImg}" alt="pawn icon" />
-								<img class="fluidimg cardHero_img --death" src="/assets/img/death.png" alt="death" />
-								{:else}
-									<img class="fluidimg cardHero_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
-							{/if}
-							<div class="cardHero_stats">						
-								<div class="cardHero_stats-atk-def">
-									<div class="cardHero_stats-atk-def_atk">
-										<p>ATK: <span>{user.atk}</span></p>
-									</div>
-									<div class="cardHero_stats-atk-def_def">
-										<p>DEF: <span>{user.def}</span></p>
-									</div>
+	<!-- {#if isFixed} -->
+	<div
+		class="mapUserContainer"
+		in:blur={{ y: 50, duration: mooveSpeed * 500 }}
+		out:blur={{ duration: mooveSpeed * 500 }}
+	>
+		{#if myRoom}
+			{#if isFixed}
+				<div
+					class="headerMap"
+					in:blur={{ y: 50, duration: mooveSpeed * 500 }}
+					out:blur={{ duration: mooveSpeed * 500 }}
+				>
+					<div class="cardHero">
+						<div class="lifes">
+							<ul class="cardHero_stats-life">
+								{#each { length: user.life } as _, index}
+									{@const numberOfLife = user.life}
+									{@const isLast = index === user.life - 1}
+									<li>
+										<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
+									</li>
+									{#if isLast}
+										{#each { length: 3 - numberOfLife } as _, index}
+											<li>
+												<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
+											</li>
+										{/each}
+									{/if}
+								{/each}
+								{#if user.life <= 0}
+									{#each { length: 3 } as _}
+										<li>
+											<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
+										</li>
+									{/each}
+								{/if}
+							</ul>
+						</div>
+						{#if user.life <= 0}
+							<img
+								class="fluidimg cardHero_img --hero"
+								src="/assets/img/{user.heroImg}"
+								alt="pawn icon"
+							/>
+							<img class="fluidimg cardHero_img --death" src="/assets/img/death.png" alt="death" />
+						{:else}
+							<img class="fluidimg cardHero_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
+						{/if}
+						<div class="cardHero_stats">
+							<div class="cardHero_stats-atk-def">
+								<div class="cardHero_stats-atk-def_atk">
+									<p>ATK: <span>{user.atk}</span></p>
+								</div>
+								<div class="cardHero_stats-atk-def_def">
+									<p>DEF: <span>{user.def}</span></p>
 								</div>
 							</div>
 						</div>
-							<p class="cardHero_hero" style='--color:{color};'>{user.hero}</p>
 					</div>
-				{/if}
-				{#if user.life <= 0 } <p>Vous êtes mort..</p> {/if}
-				<div class="directionsArrows">
-					<button
-						class="directionArrow directionArrow_top"
-						id="top"
-						disabled
-						on:click={askToChangeRoom}
-					>
-						<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
-					</button>
-					<button
-						class="directionArrow directionArrow_right"
-						id="right"
-						disabled
-						on:click={askToChangeRoom}
-					>
-						<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
-					</button>
-					<button
-						class="directionArrow directionArrow_bot"
-						id="bot"
-						disabled
-						on:click={askToChangeRoom}
-					>
-						<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
-					</button>
-					<button
-						class="directionArrow directionArrow_left"
-						id="left"
-						disabled
-						on:click={askToChangeRoom}
-					>
-						<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
-					</button>
-				</div>
-
-				<div class="sideBarUser">
-					{#if isFixed}
-						<h1 class="h2 directionSalle" in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: mooveSpeed*0}}>
-							Salle {user.room}
-						</h1>
-						{:else}
-							<h1 class="h2 directionSalle"  in:blur={{ y: 50, duration: mooveSpeed*500 }} out:blur={{duration: 0}}>
-								Mooving..
-							</h1>
-					{/if}
-					<div class="actionButtons">
-						{#if myRoom && (user.team == 'hero' || user.hero == 'Dragon')}
-							<button class="actionButton --inventory" on:click={() => openDialog("dialog_inventory")}>
-								<img class="fluidimg" src="/assets/img/inventory.png" alt="inventory">
-							</button>
-						{/if}
-							<button class="actionButton --power" on:click={() => openDialog("dialog_power")}>
-								<p class="h2" id="counter"><span id='cooldown'></span></p>
-								<img class="fluidimg" src="/assets/img/power.png" alt="Ax" />
-							</button>
-						{#if myRoom && (user.team == 'hero' || user.hero == 'Dragon')}
-							<button class="actionButton --find" on:click={() => openDialog("dialog_item")}>
-								<img class="fluidimg" src="/assets/img/find.png" alt="find" />
-							</button>
-						{/if}
-					</div>
+					<p class="cardHero_hero" style="--color:{color};">{user.hero}</p>
 				</div>
 			{/if}
-		</div>
-
-		<Item />
-
-		<Inventory />
-
-		{#if user.hero == 'Rodeur'}
-		<dialog class="dialog dialog_power --rodeur">
-			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
-				<ul class="roomChoice">
-					{#each randomRoomTP as room}
-							<li class="roomChoice_item"><button class="roomChoice_item-btn" on:click={() => useAbility(room)}>{room}</button></li>
-					{/each}
-				</ul>
+			{#if user.life <= 0}
+				<p>Vous êtes mort..</p>
+			{/if}
+			<div class="directionsArrows">
+				<button
+					class="directionArrow directionArrow_top"
+					id="top"
+					disabled
+					on:click={askToChangeRoom}
+				>
+					<img class="directionArrow_img" src="/assets/img/top.svg" alt="top" />
+				</button>
+				<button
+					class="directionArrow directionArrow_right"
+					id="right"
+					disabled
+					on:click={askToChangeRoom}
+				>
+					<img class="directionArrow_img" src="/assets/img/right.svg" alt="top" />
+				</button>
+				<button
+					class="directionArrow directionArrow_bot"
+					id="bot"
+					disabled
+					on:click={askToChangeRoom}
+				>
+					<img class="directionArrow_img" src="/assets/img/bot.svg" alt="top" />
+				</button>
+				<button
+					class="directionArrow directionArrow_left"
+					id="left"
+					disabled
+					on:click={askToChangeRoom}
+				>
+					<img class="directionArrow_img" src="/assets/img/left.svg" alt="top" />
+				</button>
 			</div>
-			<div class="contentDialog">
-				<p class="h2">{user.abilityName}</p>
-				<p>{user.ability}</p>
-				<!-- <button class="btnPrimary" on:click={useAbility}>Utiliser</button> -->
-			</div>
-			<div class="footerDialog">
+
+			<div class="sideBarUser">
+				{#if isFixed}
+					<h1
+						class="h2 directionSalle"
+						in:blur={{ y: 50, duration: mooveSpeed * 500 }}
+						out:blur={{ duration: mooveSpeed * 0 }}
+					>
+						Salle {user.room}
+					</h1>
+				{:else}
+					<h1
+						class="h2 directionSalle"
+						in:blur={{ y: 50, duration: mooveSpeed * 500 }}
+						out:blur={{ duration: 0 }}
+					>
+						Mooving..
+					</h1>
+				{/if}
 				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
-						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
+					{#if myRoom && (user.team == 'hero' || user.hero == 'Dragon')}
+						<button
+							class="actionButton --inventory"
+							on:click={() => openDialog('dialog_inventory')}
+						>
+							<img class="fluidimg" src="/assets/img/inventory.png" alt="inventory" />
+						</button>
+					{/if}
+					<button class="actionButton --power" on:click={() => openDialog('dialog_power')}>
+						<p class="h2" id="counter"><span id="cooldown"></span></p>
+						<img class="fluidimg" src="/assets/img/power.png" alt="Ax" />
 					</button>
+					{#if myRoom && (user.team == 'hero' || user.hero == 'Dragon')}
+						<button class="actionButton --find" on:click={() => openDialog('dialog_item')}>
+							<img class="fluidimg" src="/assets/img/find.png" alt="find" />
+						</button>
+					{/if}
+				</div>
 			</div>
-		</dialog>
 		{/if}
+	</div>
+	<!-- 
+	<Item />
 
-		{#if user.hero == 'Chevalier'}
+	<Inventory /> -->
+
+	{#if user.hero == 'Rodeur'}{/if}
+
+	{#if user.hero == 'Chevalier'}
 		<dialog class="dialog dialog_power --knight">
 			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 			</div>
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
 				<p>{user.ability}</p>
-				<button class="btnPrimary" on:click={() => {useAbility(0.3); closeDialog("dialog_power")}}>Utiliser</button>
+				<button
+					class="btnPrimary"
+					on:click={() => {
+						useAbility(0.3);
+						closeDialog('dialog_power');
+					}}>Utiliser</button
+				>
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+					<button class="actionButton" on:click={() => closeDialog('dialog_power')}>
 						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 					</button>
+				</div>
 			</div>
 		</dialog>
-		{/if}
+	{/if}
 
-		{#if user.hero == 'Druide'}
+	{#if user.hero == 'Druide'}
 		<dialog class="dialog dialog_power --druide">
 			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 				<ul class="userChoice">
 					{#each usersInGame as user}
 						{#if user.life < 3 && user.life > 0}
 							<li class="userChoice_item">
 								<button class="userChoice_item-btn" on:click={() => useAbility(user)}>
-									<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead">
+									<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead" />
 								</button>
 								<p class="userChoice_item-username">{user.username}</p>
 							</li>
@@ -610,23 +608,24 @@
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+					<button class="actionButton" on:click={() => closeDialog('dialog_power')}>
 						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 					</button>
+				</div>
 			</div>
 		</dialog>
-		{/if}
+	{/if}
 
-		{#if user.hero == 'Necromancien'}
+	{#if user.hero == 'Necromancien'}
 		<dialog class="dialog dialog_power --necromancer">
 			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 				<ul class="userChoice">
 					{#each usersInGame as user}
 						{#if user.life <= 0}
 							<li class="userChoice_item">
 								<button class="userChoice_item-btn" on:click={() => useAbility(user)}>
-									<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead">
+									<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead" />
 								</button>
 								<p class="userChoice_item-username">{user.username}</p>
 							</li>
@@ -640,17 +639,18 @@
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+					<button class="actionButton" on:click={() => closeDialog('dialog_power')}>
 						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 					</button>
+				</div>
 			</div>
 		</dialog>
-		{/if}
+	{/if}
 
-		{#if user.hero == 'Magicien'}
+	{#if user.hero == 'Magicien'}
 		<dialog class="dialog dialog_power --wizard">
 			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 				<div class="luckText">
 					<p>Vous avez</p>
 					<p>+{luckOfDices} points</p>
@@ -661,40 +661,53 @@
 				<p class="h2">{user.abilityName}</p>
 				<p>{user.ability}</p>
 				<p>Si vous relancez votre sort, vous perdrez votre bonus actuel</p>
-				<button class="btnPrimary" on:click={() => {useAbility(0)}}>Utiliser</button>
+				<button
+					class="btnPrimary"
+					on:click={() => {
+						useAbility(0);
+					}}>Utiliser</button
+				>
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+					<button class="actionButton" on:click={() => closeDialog('dialog_power')}>
 						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 					</button>
+				</div>
 			</div>
 		</dialog>
-		{/if}
+	{/if}
 
-		{#if user.hero == 'Serpent'}
+	{#if user.hero == 'Serpent'}
 		<dialog class="dialog dialog_power --knight">
 			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 			</div>
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
 				<p>{user.ability}</p>
-				<button class="btnPrimary" on:click={() => {useAbility(0); closeDialog("dialog_power")}}>Utiliser</button>
+				<button
+					class="btnPrimary"
+					on:click={() => {
+						useAbility(0);
+						closeDialog('dialog_power');
+					}}>Utiliser</button
+				>
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+					<button class="actionButton" on:click={() => closeDialog('dialog_power')}>
 						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 					</button>
+				</div>
 			</div>
 		</dialog>
-		{/if}
+	{/if}
 
-		{#if user.hero == 'Dragon'}
+	{#if user.hero == 'Dragon'}
 		<dialog class="dialog dialog_power --knight">
 			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 			</div>
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
@@ -702,33 +715,34 @@
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+					<button class="actionButton" on:click={() => closeDialog('dialog_power')}>
 						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 					</button>
+				</div>
 			</div>
 		</dialog>
-		{/if}
+	{/if}
 
-		{#if user.hero == 'Golem'}
+	{#if user.hero == 'Golem'}
 		<dialog class="dialog dialog_power --golem">
 			<div class="headerDialog">
-				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau">
+				<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 				{#if countOfItems}
-				<ul class="inventory -rock">
-					{#each countOfItems as item, index}
-						<li class="inventory_item">
-							<img
-								class="fluidimg"
-								src="/assets/img/{Object.keys(countOfItems[index])[0]}.png"
-								alt={Object.keys(countOfItems[index])[0]}
-							/>
-							<p class="numOfItem">
-								<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
-							</p>
-						</li>
-					{/each}
-				</ul>
-			{/if}	
+					<ul class="inventory -rock">
+						{#each countOfItems as item, index}
+							<li class="inventory_item">
+								<img
+									class="fluidimg"
+									src="/assets/img/{Object.keys(countOfItems[index])[0]}.png"
+									alt={Object.keys(countOfItems[index])[0]}
+								/>
+								<p class="numOfItem">
+									<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
+								</p>
+							</li>
+						{/each}
+					</ul>
+				{/if}
 			</div>
 			<div class="contentDialog">
 				<p class="h2">{user.abilityName}</p>
@@ -736,44 +750,44 @@
 			</div>
 			<div class="footerDialog">
 				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_power")}>
+					<button class="actionButton" on:click={() => closeDialog('dialog_power')}>
 						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 					</button>
+				</div>
 			</div>
 		</dialog>
+	{/if}
+
+	<dialog class="dialog dialog_battle">
+		{#if battle}
+			<div class="headerDialog">
+				<img class="fluidimg" src="/assets/img/{battle.boss.heroImg}" alt="boss" />
+				<p class="h1 dialog_battle-boss" style="--color:{color};">{battle.boss.hero}</p>
+				<div class="heroes">
+					{#each battle.heroes as hero}
+						<img class="fluidimg hero" src="/assets/img/{hero.heroImg}" alt="hero" />
+					{/each}
+				</div>
+			</div>
+			<div class="contentDialog">
+				<div class="right">
+					<p class="h2">Le méchant</p>
+					<p>DEF: {battle.boss.def}</p>
+				</div>
+				<div class="left">
+					<p class="h2">Les gentils</p>
+					<p>ATK: {battle.boss.def}</p>
+				</div>
+			</div>
+			<div class="footerDialog">
+				<p>Vous combattez !</p>
+			</div>
 		{/if}
-
-		<dialog class="dialog dialog_battle">
-			{#if battle}
-				<div class="headerDialog">
-					<img class="fluidimg" src="/assets/img/{battle.boss.heroImg}" alt="boss">
-					<p class="h1 dialog_battle-boss" style='--color:{color};'>{battle.boss.hero}</p>
-					<div class="heroes">
-						{#each battle.heroes as hero}
-							<img class="fluidimg hero" src="/assets/img/{hero.heroImg}" alt="hero">
-						{/each}
-					</div>
-				</div>
-				<div class="contentDialog">
-					<div class="right">
-						<p class="h2">Le méchant</p>
-						<p>DEF: {battle.boss.def}</p>
-					</div>
-					<div class="left">
-						<p class="h2">Les gentils</p>
-						<p>ATK: {battle.boss.def}</p>
-					</div>
-				</div>
-				<div class="footerDialog">
-					<p>Vous combattez !</p>
-				</div>
-			{/if}
-		</dialog>
-	</div>
-
+	</dialog>
+</div>
 
 <style>
-	.cardHero_hero{
+	.cardHero_hero {
 		color: var(--color);
 		position: relative;
 		width: fit-content;
@@ -797,7 +811,7 @@
 		transform: translate(100%, 0);
 		right: -12px;
 	}
-	.dialog_battle-boss{
+	.dialog_battle-boss {
 		color: var(--color);
 	}
 </style>

@@ -40,7 +40,7 @@
 	onMount(() => {
 		socket.on('takeItemInRoom', onTakeItemInRoom);
 
-		console.log(roomPositions);
+		positions = roomPositions();
 		return () => {
 			socket.off('takeItemInRoom', onTakeItemInRoom);
 		};
@@ -49,15 +49,23 @@
 	let element;
 
 	export const roomPositions = () => {
+		if (!element) return [];
 		return Array.from(element.querySelectorAll('.room')).map((room) => {
 			const rect = room.getBoundingClientRect();
 			return {
+				width: rect.width,
+				height: rect.height,
 				id: room.getAttribute('id'),
 				x: rect.x + rect.width / 2,
 				y: rect.y + rect.height / 2
 			};
 		});
 	};
+
+	let positions = [];
+	$: {
+		console.log(positions);
+	}
 </script>
 
 <svg
@@ -2065,3 +2073,21 @@
 		</clipPath>
 	</defs>
 </svg>
+
+{#each positions as room}
+	<img
+		src="/assets/img/inventory.png"
+		alt="inventory"
+		style:left={`${room.x}px`}
+		style:top={`${room.y}px`}
+		class="fluidimg"
+	/>
+{/each}
+
+<style>
+	img {
+		max-width: 3%;
+		position: absolute;
+		transform: translate(-50%, -50%);
+	}
+</style>
