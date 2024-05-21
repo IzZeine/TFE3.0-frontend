@@ -27,13 +27,7 @@
 	let activeUsers = [];
 
 	const onUpdateUsers = (players) => {
-		activeUsers = players.map((player) => {
-			console.log(player);
-			return {
-				...player
-				//Faire ici des calculs eventuels
-			};
-		});
+		activeUsers = players.map((player) => ({ ...player, coucou: 'AAA' }));
 	};
 	onMount(() => {
 		socket.on('updateUsers', onUpdateUsers);

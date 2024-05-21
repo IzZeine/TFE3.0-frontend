@@ -18,10 +18,11 @@
 	};
 
 	onMount(async () => {
-
+		console.log('board')
 		gameID = sessionStorage.getItem('gameID');
 
 		if (gameID) {
+			console.log('has board game')
 			return goto(`/boardGame/${gameID}`);
 		}
 
