@@ -5,7 +5,6 @@
 
 	export let user;
 
-
 	const animOnPlayer = async (id, item) => {
 		/*
 		let itemImg = '/assets/img/' + item + '.png';
@@ -51,22 +50,9 @@
 		};
 	});
 
-
-
-	/*
-	for (let player of activeUsers) {
-		let target = 'room' + player.room + '_' + player.player;
-
-		let myPlayerDiv = document.querySelector('.' + player.player);
-		let targetDiv = document.querySelector('#' + target);
-
-		let targetBoundingClientRect = targetDiv.getBoundingClientRect();
-		let TargetX = targetBoundingClientRect.x;
-		let TargetY = targetBoundingClientRect.y;
-
-		myPlayerDiv.style.top = TargetY + 'px';
-		myPlayerDiv.style.left = TargetX + 'px';
-	}*/
+	$: {
+		console.log(user);
+	}
 
 	/*
 	let playerMove = (userId) => {
@@ -109,6 +95,17 @@
 	*/
 </script>
 
-<li class="userPawn {user.player}" id={user.id}>
+<li
+	class="userPawn {user.player}"
+	id={user.id}
+	style:left={`${user.roomInformations.x}px`}
+	style:top={`${user.roomInformations.y}px`}
+>
 	<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 </li>
+
+<style>
+	.userPawn {
+		transform: translate(-50%, -50%);
+	}
+</style>

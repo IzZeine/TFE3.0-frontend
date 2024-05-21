@@ -1,5 +1,5 @@
 <script>
-	import Player from '$lib/board/Player.svelte';
+	import Player from '$lib/board/game/Player.svelte';
 	import BoardGameSVG from '$lib/board/game/BoardGameSVG.svelte';
 	import Battles from '$lib/board/game/Battles.svelte';
 	import { socket } from '$lib/api/socketConnection.js';
@@ -26,9 +26,19 @@
 	//Game status
 	let activeUsers = [];
 
+	let boardElement;
+
 	const onUpdateUsers = (players) => {
-		activeUsers = players.map((player) => ({ ...player, coucou: 'AAA' }));
+		activeUsers = players.map((player) => {
+			return {
+				...player,
+				roomInformations: boardElement.roomPositions().find((roomPosition) => {
+					return roomPosition.id == `room${player.room}`;
+				})
+			};
+		});
 	};
+
 	onMount(() => {
 		socket.on('updateUsers', onUpdateUsers);
 		return () => {
@@ -44,7 +54,7 @@
 		{/each}
 	</ul>
 	<img class="fluidimg boardGameImg" src="/assets/img/boardgame.png" alt="boardgame" />
-	<BoardGameSVG />
+	<BoardGameSVG bind:this={boardElement} />
 	<Battles />
 </div>
 
