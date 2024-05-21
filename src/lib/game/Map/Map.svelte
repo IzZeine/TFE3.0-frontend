@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
 	import { fade, fly, blur, slide } from 'svelte/transition';
+	import Inventory from '$lib/game/Map/Inventory.svelte';
 
 	// export let data;
 	// const socket = data.socket;
@@ -46,8 +47,6 @@
 				socket.emit('joinGame', gameID);
 				socket.emit('getRooms', gameID);
 			}
-
-		updateInventory(user);
 
 		socket.on('updateUsers',async (data)=>{
 			user = await getUser(socket);
@@ -201,31 +200,9 @@
 		popupDiv.remove();
 	};
 
-	let updateInventory = (user) => {
-		let inventory = user.inventory;
-		if (!inventory) return;
-		myInventory = [];
-		inventory = inventory.split('/');
-		for (let item of inventory) {
-			item = JSON.parse(item);
-			myInventory.push(item);
-		}
 
-		countOfItems = compterObjetsIdentiques(myInventory);
-		countOfItems = Object.entries(countOfItems).map(([cle, valeur]) => ({ [cle]: valeur }));
-	};
 
-	let compterObjetsIdentiques = (array) => {
-		const compteur = {}; // Objet pour stocker les occurrences des objets
-		// Parcourir le tableau d'objets
-		array.forEach((item) => {
-			// Convertir l'objet en une chaîne JSON pour le représenter comme une clé
-			const cle = item.nameId;
-			// Incrémenter le compteur pour cette clé
-			compteur[cle] = (compteur[cle] || 0) + 1;
-		});
-		return compteur;
-	};
+
 
 	let disabledArrows = () => {
 		let topArrow = document.querySelector('#top');
@@ -346,6 +323,10 @@
 		cdElement.textContent = ''
 	}
 
+	function closeDialog(dialogId) {
+		
+	}
+
 	let useAbility = async(data) => {
 		let powerElement = document.querySelector('.--power');
 		powerElement.setAttribute('disabled', true);
@@ -406,6 +387,7 @@
 	}
 
 	let openDialog = (target) => {
+		/*
 		let dialogTarget = document.querySelector('.'+target)
 		if(target == 'dialog_power') randomRoomTP = getnumber()
 		let getItemBtn = document.querySelector('.getItemBtn');
@@ -414,11 +396,7 @@
 			getItemBtn.setAttribute('disabled', true);
 		}
 		dialogTarget.show()
-	}
-
-	let closeDialog = (target) => {
-		let dialogTarget = document.querySelector('.'+target)
-		dialogTarget.close()
+		*/
 	}
  
 	let getnumber = () =>{
@@ -562,86 +540,9 @@
 			{/if}
 		</div>
 
-		<dialog class="dialog dialog_item">
-			<div class="headerDialog">
-				<div class="dices">
-					<div class="dices">
-						{#if dice1 && dice2}
-							{#if nerfDices != 0}
-								<p class="h1 bonusDices nerfOfDices">{luckOfDices - nerfDices}</p>
-							{/if}
-							{#if luckOfDices != 0}
-								<p class="h1 bonusDices luckOfDices">+{luckOfDices}</p>
-							{/if}
-							<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1"/>
-							<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2"/>
-						{/if}
-					</div>
-				</div>
-			</div>
-			<div class="contentDialog">
-				<div class="itemInRoom">
-					{#if itemInRoom && itemInRoom != 'null'}
-						{#if itemInRoom.rarity == 'légendaire'}
-							<div class="animationLegendary"></div>
-						{/if}
-						<img
-							class="fluidimg itemInRoom"
-							src="/assets/img/{itemInRoom.nameId}.png"
-							alt={itemInRoom.nameId}
-						/>
-						<div class="itemInRoom_stats">
-							<p class="h1">{itemInRoom.name}</p>
-							<p>
-								Bonus : <span style="text-transform: uppercase;">{itemInRoom.type}</span> +{itemInRoom.bonus} 
-							</p>
-							<p>Condition : faire un {itemInRoom.condition}+</p>
-						</div>
-					{:else}
-						<p>Il n'y a pas d'item dans cette salle.</p>
-						<p>Continuez votre chemin!</p>
-					{/if}
-				</div>
-			</div>
-			<div class="footerDialog">
-				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_item")}>
-						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
-					</button>
-					<button class="getItemBtn actionButton" on:click={tryToGetItemInRoom}>
-						<img class="fluidimg" src="/assets/img/diceRoll.png" alt="Ax" />
-					</button>
-				</div>
-			</div>
-		</dialog>
+		<Item />
 
-		<dialog class="dialog dialog_inventory">
-			<div class="contentDialog">
-				{#if countOfItems}
-					<ul class="inventory">
-						{#each countOfItems as item, index}
-							<li class="inventory_item">
-								<img
-									class="fluidimg"
-									src="/assets/img/{Object.keys(countOfItems[index])[0]}.png"
-									alt={Object.keys(countOfItems[index])[0]}
-								/>
-								<p class="numOfItem">
-									<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
-								</p>
-							</li>
-						{/each}
-					</ul>
-				{/if}	
-			</div>
-			<div class="footerDialog">
-				<div class="actionButtons">
-					<button class="actionButton" on:click={() => closeDialog("dialog_inventory")}>
-						<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
-					</button>
-				</div>
-			</div>
-		</dialog>
+		<Inventory />
 
 		{#if user.hero == 'Rodeur'}
 		<dialog class="dialog dialog_power --rodeur">
