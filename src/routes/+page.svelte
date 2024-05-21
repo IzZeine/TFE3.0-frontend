@@ -35,7 +35,6 @@
 	}
 
 	onMount(async () => {
-
 		sessionID = sessionStorage.getItem('sessionID');
 		if (sessionID) {
 			goto('/game');
@@ -59,25 +58,26 @@
 
 <div class="homepage_container" style="margin: auto 0;">
 	<div class="homepage_content">
-	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
-	<form on:submit|preventDefault={onFormSubmit} class="form">
-		<div>
-			<label for="username" class="labelForm">Entrez votre pseudo :</label>
-			<input
-				type="text"
-				name="username"
-				id="username"
-				class="inputForm"
-				placeholder="ex : IzZeine"
-				maxlength="9"
-				autocomplete="off"
-				data-lpignore="true"
-				data-form-type="other"
-				required
-				bind:value={username}
-			/>
-		</div>
-		<button class="btnPrimary btnForm" disabled={isDirty(username)}>Jouer</button>
-	</form>
-</div>
+		<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
+		<form on:submit|preventDefault={onFormSubmit} class="form">
+			<div>
+				<label for="username" class="labelForm">Entrez votre pseudo :</label>
+				<input
+					type="text"
+					name="username"
+					id="username"
+					class="inputForm"
+					placeholder="ex : IzZeine"
+					maxlength="9"
+					autocomplete="off"
+					data-lpignore="true"
+					data-form-type="other"
+					required
+					bind:value={username}
+				/>
+			</div>
+			<button class="btnPrimary btnForm" disabled={isDirty(username)}>Jouer</button>
+		</form>
+		<a href="/board" class="btnPrimary">go to the board</a>
+	</div>
 </div>

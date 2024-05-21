@@ -1,4 +1,9 @@
 <script>
+	let closeDialog = () => {
+		console.log('close');
+	};
+
+	export let user = user;
 </script>
 
 <dialog class="dialog dialog_inventory">
@@ -7,14 +12,15 @@
 		<slot name="header" />
 	</div>
 	<div class="contentDialog">
-		<slot name="content" />
+		<p class="h2">{user.abilityName}</p>
+		<p>{user.ability}</p>
+		<slot name="usePower" />
 	</div>
 	<div class="footerDialog">
 		<div class="actionButtons">
 			<button class="actionButton" on:click={closeDialog}>
 				<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
 			</button>
-			<slot name="buttons" />
 		</div>
 	</div>
 </dialog>

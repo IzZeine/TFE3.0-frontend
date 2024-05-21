@@ -1,10 +1,26 @@
 <script>
+	//@ts-nocheck
 	import Dialog from './Dialog.svelte';
+
+	export let user = user;
+
+	let getnumber = () => {
+		let numbers = [];
+		while (numbers.length < 5) {
+			var r = Math.floor(Math.random() * 38) + 1;
+			while (r == 19) {
+				r = Math.floor(Math.random() * 38) + 1;
+			}
+			if (numbers.indexOf(r) === -1) numbers.push(r);
+		}
+		return numbers;
+	};
+
+	let randomRoomTP = getnumber();
 </script>
 
-<Dialog active={dialogActive == 'dialog_power'}>
-	<div class="headerDialog">
-		<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
+<Dialog {user}>
+	<slot name="header">
 		<ul class="roomChoice">
 			{#each randomRoomTP as room}
 				<li class="roomChoice_item">
@@ -12,10 +28,5 @@
 				</li>
 			{/each}
 		</ul>
-	</div>
-	<div class="contentDialog">
-		<p class="h2">{user.abilityName}</p>
-		<p>{user.ability}</p>
-		<!-- <button class="btnPrimary" on:click={useAbility}>Utiliser</button> -->
-	</div>
+	</slot>
 </Dialog>
