@@ -1,7 +1,12 @@
 <script>
-	let closeDialog = () => {
-		console.log('close');
-	};
+	//@ts-nocheck
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	function closeDialog() {
+		dispatch('closeDialog');
+	}
 
 	export let user = user;
 </script>
@@ -14,7 +19,7 @@
 	<div class="contentDialog">
 		<p class="h2">{user.abilityName}</p>
 		<p>{user.ability}</p>
-		<slot name="usePower" />
+		<slot name="footer" />
 	</div>
 	<div class="footerDialog">
 		<div class="actionButtons">

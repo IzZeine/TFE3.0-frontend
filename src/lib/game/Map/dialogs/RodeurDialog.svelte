@@ -19,8 +19,9 @@
 	let randomRoomTP = getnumber();
 </script>
 
-<Dialog {user}>
-	<slot name="header">
+<!-- l'event closeDialog est forwardé vers le composant GameDialogs https://learn.svelte.dev/tutorial/event-forwarding -->
+<Dialog {user} on:closeDialog>
+	<svelte:fragment name="header">
 		<ul class="roomChoice">
 			{#each randomRoomTP as room}
 				<li class="roomChoice_item">
@@ -28,5 +29,8 @@
 				</li>
 			{/each}
 		</ul>
-	</slot>
+	</svelte:fragment>
+	<svelte:fragment name="footer">
+		coucou le footer
+	</svelte:fragment>
 </Dialog>

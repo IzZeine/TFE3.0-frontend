@@ -1,3 +1,9 @@
+<script context="module">
+	import { writable } from 'svelte/store';
+	//Create a globally accessible object
+	export const positions = writable();
+</script>
+
 <script>
 	//@ts-nocheck
 	import { socket } from '$lib/api/socketConnection.js';
@@ -37,18 +43,7 @@
 		animInRoom(room, 'inventory');
 	};
 
-	onMount(() => {
-		socket.on('takeItemInRoom', onTakeItemInRoom);
-
-		positions = roomPositions();
-		return () => {
-			socket.off('takeItemInRoom', onTakeItemInRoom);
-		};
-	});
-
-	let element;
-
-	export const roomPositions = () => {
+	export const getRoomPositions = () => {
 		if (!element) return [];
 		return Array.from(element.querySelectorAll('.room')).map((room) => {
 			const rect = room.getBoundingClientRect();
@@ -62,10 +57,15 @@
 		});
 	};
 
-	let positions = [];
-	$: {
-		console.log(positions);
-	}
+	onMount(() => {
+		socket.on('takeItemInRoom', onTakeItemInRoom);
+		positions.set(getRoomPositions());
+		return () => {
+			socket.off('takeItemInRoom', onTakeItemInRoom);
+		};
+	});
+
+	let element;
 </script>
 
 <svg

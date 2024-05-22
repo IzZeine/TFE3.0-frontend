@@ -31,10 +31,7 @@
 	const onUpdateUsers = (players) => {
 		activeUsers = players.map((player) => {
 			return {
-				...player,
-				roomInformations: boardElement.roomPositions().find((roomPosition) => {
-					return roomPosition.id == `room${player.room}`;
-				})
+				...player
 			};
 		});
 	};

@@ -1,7 +1,9 @@
 <script>
+	//@ts-nocheck
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
 	import throttle from 'lodash/throttle.js';
+	import { positions } from './BoardGameSVG.svelte';
 
 	export let user;
 
@@ -52,8 +54,12 @@
 		};
 	});
 
+	let position = { x: 0, y: 0 };
 	$: {
-		console.log(user);
+		const roomPosition = $positions.find((roomPosition) => {
+			return roomPosition.id === `room${user.room}`;
+		});
+		position = roomPosition;
 	}
 
 	/*
@@ -101,8 +107,8 @@
 	bind:this={element}
 	class="userPawn {user.player}"
 	id={user.id}
-	style:left={`${user.roomInformations.x}px`}
-	style:top={`${user.roomInformations.y}px`}
+	style:left={`${position?.x}px`}
+	style:top={`${position?.y}px`}
 >
 	<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 </li>
