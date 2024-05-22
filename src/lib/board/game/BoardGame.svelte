@@ -29,7 +29,9 @@
 	let boardElement;
 
 	const onUpdateUsers = (players) => {
+		console.log('enter?');
 		activeUsers = players.map((player) => {
+			console.log(player);
 			return {
 				...player
 			};

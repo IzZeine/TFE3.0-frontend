@@ -78,6 +78,16 @@
 			</div>
 			<button class="btnPrimary btnForm" disabled={isDirty(username)}>Jouer</button>
 		</form>
-		<a href="/board" class="btnPrimary">go to the board</a>
+		<a href="/board" class="btnVersionPC">Aller sur la version PC</a>
 	</div>
 </div>
+
+<style>
+	.btnVersionPC {
+		position: absolute;
+		bottom: 30px;
+		padding: 6px;
+		border-bottom: solid 1px var(--txtGrey);
+		background-color: var(--BGTranspary);
+	}
+</style>

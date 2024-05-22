@@ -11,12 +11,16 @@
 		//set dialogId to "" to close;
 		//voir https://svelte.dev/repl/053c93e397ab4ccd8921d2beca238ffe?version=3.29.4
 		currentDialog = e.detail;
+		console.log(currentDialog);
 	}
 </script>
 
-<div>
-	<GameHeader {user} />
-	<GameArrows {user} />
-	<GameFooter {user} {currentDialog} on:openDialog={setDialog} />
-	<GameDialogs {user} {currentDialog} on:closeDialog={() => setDialog('')} />
+<div class="maxContent">
+	<div class="mapUserContainer">
+		<GameHeader {user} />
+		<GameArrows {user} />
+		<GameFooter {user} {currentDialog} on:openDialog={setDialog} />
+	</div>
 </div>
+
+<GameDialogs {user} {currentDialog} on:closeDialog={() => setDialog('')} />

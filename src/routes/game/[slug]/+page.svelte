@@ -1,4 +1,5 @@
 <script>
+	//@ts-nocheck
 	import { onMount } from 'svelte';
 	import { getHeroes, getItems, getUser, clearStorage } from '$lib';
 	import GameRules from '$lib/game/GameRules.svelte';

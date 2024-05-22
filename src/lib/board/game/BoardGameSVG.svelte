@@ -5,11 +5,10 @@
 </script>
 
 <script>
-	//@ts-nocheck
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
 
-	export let rooms;
+	// export let rooms;
 
 	let animInRoom = async (room, item) => {
 		/*

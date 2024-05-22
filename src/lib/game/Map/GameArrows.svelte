@@ -2,7 +2,7 @@
 	//@ts-nocheck
 	import { writable } from 'svelte/store';
 
-	const directions = ['up', 'down', 'left', 'right'];
+	const directions = ['top', 'bot', 'left', 'right'];
 	export let user;
 
 	const coolDownTime = 5000;
@@ -49,13 +49,35 @@
 	}
 </script>
 
-<div>
+<div class="directionsArrows">
 	{#each directions as direction}
-		<button disabled={canGoToDirection(direction)} on:click={() => goToDirection(direction)}>
-			{direction}
+		<button
+			class="directionArrow directionArrow_{direction}"
+			id={direction}
+			disabled={canGoToDirection(direction)}
+			on:click={() => goToDirection(direction)}
+		>
+			<img class="fluidimg directionArrow_img" src="/assets/img/{direction}.svg" alt={direction} />
 		</button>
 	{/each}
 	{#if $timer.running}
 		<div>Cooldown {`${$timer.elapsedTime}/${coolDownTime}`}</div>
 	{/if}
 </div>
+<!-- {#if isFixed} -->
+<h1
+	class="h2 directionSalle"
+	in:blur={{ y: 50, duration: mooveSpeed * 500 }}
+	out:blur={{ duration: mooveSpeed * 0 }}
+>
+	Salle {user.room}
+</h1>
+<!-- {:else} -->
+<h1
+	class="h2 directionSalle"
+	in:blur={{ y: 50, duration: mooveSpeed * 500 }}
+	out:blur={{ duration: 0 }}
+>
+	Mooving..
+</h1>
+<!-- {/if} -->

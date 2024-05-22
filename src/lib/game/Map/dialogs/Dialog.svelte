@@ -1,6 +1,8 @@
 <script>
-	//@ts-nocheck
+	import { fade, fly, blur, slide } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
+
+	export let currentDialog;
 
 	const dispatch = createEventDispatcher();
 
@@ -11,21 +13,29 @@
 	export let user = user;
 </script>
 
-<dialog class="dialog dialog_inventory">
-	<div class="headerDialog">
-		<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
-		<slot name="header" />
-	</div>
-	<div class="contentDialog">
-		<p class="h2">{user.abilityName}</p>
-		<p>{user.ability}</p>
-		<slot name="footer" />
-	</div>
-	<div class="footerDialog">
-		<div class="actionButtons">
-			<button class="actionButton" on:click={closeDialog}>
-				<img class="fluidimg" src="/assets/img/leave.svg" alt="Ax" />
-			</button>
+{#if currentDialog}
+	<dialog
+		class="dialog dialog_{currentDialog}"
+		open
+		in:blur={{ y: 50, duration: 5 }}
+		out:blur={{ duration: 5 }}
+	>
+		<div class="headerDialog">
+			<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
+			<slot name="header" />
 		</div>
-	</div>
-</dialog>
+		<div class="contentDialog">
+			<p class="h2">{user.abilityName}</p>
+			<p>{user.ability}</p>
+			<slot name="content" />
+		</div>
+		<div class="footerDialog">
+			<div class="actionButtons">
+				<button class="actionButton" on:click={closeDialog}>
+					<img class="fluidimg" src="/assets/img/leave.svg" alt="leave" />
+				</button>
+				<slot name="footer" />
+			</div>
+		</div>
+	</dialog>
+{/if}

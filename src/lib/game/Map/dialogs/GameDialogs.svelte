@@ -1,11 +1,13 @@
 <script>
-	//@ts-nocheck
-	import RodeurDialog from '$lib/game/Map/dialogs/RodeurDialog.svelte';
+	import { createEventDispatcher } from 'svelte';
+	import PowerDialogs from './PowerDialogs.svelte';
+	import Inventory from './Inventory.svelte';
+	import Item from './Item.svelte';
 
 	export let user;
 	export let currentDialog;
 
-	import { createEventDispatcher } from 'svelte';
+	console.log('le dialog', currentDialog);
 
 	const dispatch = createEventDispatcher();
 
@@ -14,11 +16,17 @@
 	}
 </script>
 
-{#if user.name === 'José' && currentDialog === 'inventory'}
+{user.hero}
+
+{#if currentDialog === 'power'}
 	<!-- Ici j'explicite le event handler mais j'aurais pu directement le forwarder à Map https://learn.svelte.dev/tutorial/event-forwarding -->
-	<RodeurDialog {user} on:closeDialog={closeDialog} />
+	<PowerDialogs {user} {currentDialog} on:closeDialog={closeDialog} />
 {/if}
-{#if user.name === 'Raoul' && currentDialog === 'inventory'}
+{#if currentDialog === 'inventory'}
 	<!-- Ici j'explicite le event handler mais j'aurais pu directement le forwarder à Map https://learn.svelte.dev/tutorial/event-forwarding -->
-	<RodeurDialog {user} on:closeDialog={closeDialog} />
+	<Inventory {user} {currentDialog} on:closeDialog={closeDialog} />
+{/if}
+{#if currentDialog === 'item'}
+	<!-- Ici j'explicite le event handler mais j'aurais pu directement le forwarder à Map https://learn.svelte.dev/tutorial/event-forwarding -->
+	<Item {user} {currentDialog} on:closeDialog={closeDialog} />
 {/if}

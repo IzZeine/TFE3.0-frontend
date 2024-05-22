@@ -5,7 +5,6 @@
 	import PlayerCard from '$lib/board/lobby/PlayerCard.svelte';
 
 	let activeUsers = [];
-	let numberOfColGrid = 6;
 	let winner = null;
 
 	export let game;
@@ -58,12 +57,19 @@
 </script>
 
 <div class="container">
-	<h1 class="h1">{game.name} ({game.statut})</h1>
-	<ul class="cardUserList" style={{ '--numberOfCols': numberOfColGrid }}>
-		{#each activeUsers as user}
+	<h1 class="h1">{game.name} <span class="h2">({game.statut})</span></h1>
+	<ul class="cardUserList">
+		{#each activeUsers as user, index}
+			{@const numberOfLi = 6 - activeUsers.length}
+			{@const isLast = index === activeUsers.length - 1}
 			<li>
 				<PlayerCard {user} {game} />
 			</li>
+			{#if isLast}
+				{#each { length: numberOfLi } as _, index}
+					<li class="cardUser-Empty"></li>
+				{/each}
+			{/if}
 		{/each}
 	</ul>
 

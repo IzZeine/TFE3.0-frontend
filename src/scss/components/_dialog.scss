@@ -11,12 +11,14 @@
 	background-color: var(--BGDialog);
 	color: var(--txtPrimary);
 
-	animation: fadeout 0.2s ease-in forwards;
+	// animation: fadeout 0.2s ease-in forwards;
+	position: absolute;
+	top: 0;
 }
 
 dialog[open] {
 	display: flex;
-	animation: fadein 0.2s ease-in forwards;
+	// animation: fadein 0.2s ease-in forwards;
 }
 
 @keyframes fadein {

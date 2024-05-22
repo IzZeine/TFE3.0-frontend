@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import Dialog from '$lib/game/Map/dialogs/Dialog.svelte';
 
+	export let user;
+
 	let myInventory = [];
 	let countOfItems = [];
 

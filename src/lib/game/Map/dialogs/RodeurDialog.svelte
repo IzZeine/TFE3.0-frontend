@@ -1,8 +1,11 @@
 <script>
-	//@ts-nocheck
 	import Dialog from './Dialog.svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	export let user = user;
+	export let currentDialog;
+
+	const dispatch = createEventDispatcher();
 
 	let getnumber = () => {
 		let numbers = [];
@@ -16,12 +19,16 @@
 		return numbers;
 	};
 
+	function useAbility(data) {
+		dispatch('useAbility');
+	}
+
 	let randomRoomTP = getnumber();
 </script>
 
 <!-- l'event closeDialog est forwardé vers le composant GameDialogs https://learn.svelte.dev/tutorial/event-forwarding -->
-<Dialog {user} on:closeDialog>
-	<svelte:fragment name="header">
+<Dialog {user} {currentDialog} on:closeDialog>
+	<svelte:fragment slot="header">
 		<ul class="roomChoice">
 			{#each randomRoomTP as room}
 				<li class="roomChoice_item">
@@ -29,8 +36,5 @@
 				</li>
 			{/each}
 		</ul>
-	</svelte:fragment>
-	<svelte:fragment name="footer">
-		coucou le footer
 	</svelte:fragment>
 </Dialog>

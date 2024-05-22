@@ -24,6 +24,7 @@ Homepage - Mobile
 
 .homepage_content {
 	display: flex;
+	align-items: center;
 	flex-direction: column;
 	height: 100%;
 	justify-content: center;
@@ -53,6 +54,7 @@ Homepage - Mobile
 
 .inputForm {
 	margin-top: 6px;
+	padding: 6px;
 	width: 100%;
 	height: 24px;
 	color: var(--txtPrimary);
@@ -100,7 +102,6 @@ Homepage - Mobile
 	border-bottom: solid 1px var(--txtPrimary);
 	color: var(--txtPrimary);
 	box-shadow: 3px 3px 6px var(--black);
-	width: 100%;
 }
 
 /*--------------------------------------------------------------------------
@@ -360,6 +361,7 @@ userMap
 }
 
 .directionArrow_img {
+	margin: auto;
 	pointer-events: none;
 }
 

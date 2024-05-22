@@ -14,12 +14,34 @@
 	function usePower() {
 		dispatch('openDialog', 'power');
 	}
+	function openItem() {
+		dispatch('openDialog', 'item');
+	}
 
-	$: inventoryBtnDisabled = user.atk > 1; //Mettre logique pour voir si inventaire ouvrable
-	$: powerBtnDisabled = user.atk > 1; //Mettre logique pour voir si power ouvrable
+	//Mettre logique pour voir si inventaire ouvrable
+	$: inventoryBtnDisabled = user.team == 'hero' || user.hero == 'Dragon' ? false : true;
+
+	//Mettre logique pour voir si power ouvrable
+	$: powerBtnDisabled = false;
+
+	//Mettre logique pour voir si item ouvrable
+	$: itemBtnDisabled = user.team == 'hero' || user.hero == 'Dragon' ? false : true;
 </script>
 
-<div>
-	<button disabled={inventoryBtnDisabled} on:click={openInventory}>Inventory</button>
-	<button disabled={powerBtnDisabled} on:click={usePower}>Power</button>
+<div class="sideBarUser">
+	<div class="actionButtons">
+		<button
+			class="actionButton --inventory"
+			disabled={inventoryBtnDisabled}
+			on:click={openInventory}
+		>
+			<img class="fluidimg" src="/assets/img/inventory.png" alt="inventory" />
+		</button>
+		<button class="actionButton --power" disabled={powerBtnDisabled} on:click={usePower}>
+			<img class="fluidimg" src="/assets/img/power.png" alt="power" />
+		</button>
+		<button class="actionButton --find" disabled={itemBtnDisabled} on:click={openItem}>
+			<img class="fluidimg" src="/assets/img/find.png" alt="find" />
+		</button>
+	</div>
 </div>
