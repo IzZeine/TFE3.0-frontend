@@ -2,6 +2,7 @@
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { socket } from '$lib/api/socketConnection';
 
 	export let user;
 
@@ -9,7 +10,7 @@
 	const directions = ['top', 'bot', 'left', 'right'];
 
 	let myRoom = user.room;
-	let directionsInMyRoom;
+	let directionsInMyRoom = roomsConnections[user.room];
 
 	const coolDownTime = 5000;
 
@@ -34,30 +35,44 @@
 			elapsedTime: 0,
 			_interval: setInterval(() => {
 				timer.update((t) => {
-					console.log(t);
-					t.elapsedTime = Date.now() - t.startedAt;
-					if (t.elapsedTime > coolDownTime) {
-						stopTimer();
-					}
+					return {
+						...t,
+						elapsedTime: Date.now() - t.startedAt
+					};
 				});
-			}, 1000) // accurate to 1/10th of a second
+			}, 100) // accurate to 1/10th of a second
 		});
+	}
+
+	$: {
+		if ($timer.elapsedTime > coolDownTime) {
+			stopTimer();
+		}
 	}
 
 	function canGoToDirection(direction) {
 		if ($timer.running) return false;
 		if (user.life <= 0) return false;
 		if (!myRoom) myRoom = user.room;
-		directionsInMyRoom = roomsConnections[user.room];
-		if (directionsInMyRoom?.[direction] == 'null') return true;
-		return false;
+		return !directionsInMyRoom?.[direction];
 	}
 
-	console.log(canGoToDirection('top'));
-
 	function goToDirection(direction) {
-		startTimer();
-		//Envoyer event au socket pour se deplacer
+		// startTimer();
+		let targetRoom = directionsInMyRoom[direction];
+		if (!targetRoom) return;
+		if (targetRoom == 19) {
+			// let hasKey = myInventory.some((item) => item.nameId === 'key');
+			// if (!hasKey) {
+			// 	popUp("You don't have the key");
+			// 	return;
+		}
+		socket.emit('askToChangeRoom', targetRoom, (response) => {
+			user = response.user;
+			console.log(user);
+			myRoom = user.room;
+			directionsInMyRoom = roomsConnections[user.room];
+		});
 	}
 
 	onMount(() => {});
