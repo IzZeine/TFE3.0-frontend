@@ -31,3 +31,16 @@ export async function getGame(fetch, gameId) {
 	//@TODO : return to the homepage if the game doesn't exist (and clear sessionStorage)
 	throw new Error(`Could not find game with id : ${gameId}`);
 }
+
+export async function getRoomsConnections(fetch) {
+	//TODO: refactor URL to get a single game with /game/{gameId}
+	const response = await callBackend(fetch, 'GET', `/roomsConnections`);
+	if (response.ok) {
+		const roomsConnections = response.data;
+		if (roomsConnections) {
+			return roomsConnections;
+		}
+	}
+	//@TODO : return to the homepage if the game doesn't exist (and clear sessionStorage)
+	throw new Error(`Could not find roomsConnections`);
+}

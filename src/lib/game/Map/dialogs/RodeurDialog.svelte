@@ -29,6 +29,7 @@
 <!-- l'event closeDialog est forwardé vers le composant GameDialogs https://learn.svelte.dev/tutorial/event-forwarding -->
 <Dialog {user} {currentDialog} on:closeDialog>
 	<svelte:fragment slot="header">
+		<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 		<ul class="roomChoice">
 			{#each randomRoomTP as room}
 				<li class="roomChoice_item">
@@ -36,5 +37,9 @@
 				</li>
 			{/each}
 		</ul>
+	</svelte:fragment>
+	<svelte:fragment slot="content">
+		<p class="h2">{user.abilityName}</p>
+		<p>{user.ability}</p>
 	</svelte:fragment>
 </Dialog>

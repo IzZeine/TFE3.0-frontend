@@ -1,9 +1,15 @@
 <script>
-	//@ts-nocheck
 	import { writable } from 'svelte/store';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
-	const directions = ['top', 'bot', 'left', 'right'];
 	export let user;
+
+	const roomsConnections = $page.data.roomsConnections;
+	const directions = ['top', 'bot', 'left', 'right'];
+
+	let myRoom = user.room;
+	let directionsInMyRoom;
 
 	const coolDownTime = 5000;
 
@@ -28,25 +34,33 @@
 			elapsedTime: 0,
 			_interval: setInterval(() => {
 				timer.update((t) => {
-					t.elapsedTime = Date.now() - t.startTime;
+					console.log(t);
+					t.elapsedTime = Date.now() - t.startedAt;
 					if (t.elapsedTime > coolDownTime) {
 						stopTimer();
 					}
 				});
-			}, 100) // accurate to 1/10th of a second
+			}, 1000) // accurate to 1/10th of a second
 		});
 	}
 
 	function canGoToDirection(direction) {
 		if ($timer.running) return false;
-		//voir si le user sais aller par la
-		return true;
+		if (user.life <= 0) return false;
+		if (!myRoom) myRoom = user.room;
+		directionsInMyRoom = roomsConnections[user.room];
+		if (directionsInMyRoom?.[direction] == 'null') return true;
+		return false;
 	}
+
+	console.log(canGoToDirection('top'));
 
 	function goToDirection(direction) {
 		startTimer();
 		//Envoyer event au socket pour se deplacer
 	}
+
+	onMount(() => {});
 </script>
 
 <div class="directionsArrows">
@@ -60,7 +74,7 @@
 			<img class="fluidimg directionArrow_img" src="/assets/img/{direction}.svg" alt={direction} />
 		</button>
 	{/each}
-	{#if $timer.running}
+	{#if $timer?.running}
 		<div>Cooldown {`${$timer.elapsedTime}/${coolDownTime}`}</div>
 	{/if}
 </div>

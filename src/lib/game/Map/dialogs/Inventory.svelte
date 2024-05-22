@@ -1,8 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
-	import Dialog from '$lib/game/Map/dialogs/Dialog.svelte';
+	import Dialog from './Dialog.svelte';
 
 	export let user;
+	export let currentDialog;
 
 	let myInventory = [];
 	let countOfItems = [];
@@ -38,21 +39,23 @@
 	});
 </script>
 
-<Dialog>
-	{#if countOfItems}
-		<ul class="inventory">
-			{#each countOfItems as item, index}
-				<li class="inventory_item">
-					<img
-						class="fluidimg"
-						src="/assets/img/{Object.keys(countOfItems[index])[0]}.png"
-						alt={Object.keys(countOfItems[index])[0]}
-					/>
-					<p class="numOfItem">
-						<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
-					</p>
-				</li>
-			{/each}
-		</ul>
-	{/if}
+<Dialog {user} {currentDialog} on:closeDialog>
+	<svelte:fragment slot="header">
+		{#if countOfItems}
+			<ul class="inventory">
+				{#each countOfItems as item, index}
+					<li class="inventory_item">
+						<img
+							class="fluidimg"
+							src="/assets/img/{Object.keys(countOfItems[index])[0]}.png"
+							alt={Object.keys(countOfItems[index])[0]}
+						/>
+						<p class="numOfItem">
+							<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
+						</p>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+	</svelte:fragment>
 </Dialog>

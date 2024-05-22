@@ -1,7 +1,7 @@
 <script>
 	import { socket } from '$lib/api/socketConnection';
 	import Dialog from './Dialog.svelte';
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	export let user = user;
 	export let currentDialog;

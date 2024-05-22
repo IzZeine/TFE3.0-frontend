@@ -18,9 +18,6 @@ export { getBoss };
 import { getItems } from './api/getItems.js';
 export { getItems };
 
-import { getRoomsConnections } from './api/getRoomsConnections.js';
-export { getRoomsConnections };
-
 import { getMyUrlForDev } from './api/getMyUrlForDev.js';
 export { getMyUrlForDev };
 
