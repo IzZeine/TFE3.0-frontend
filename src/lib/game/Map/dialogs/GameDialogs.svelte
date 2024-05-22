@@ -16,17 +16,12 @@
 	}
 </script>
 
-{user.hero}
-
 {#if currentDialog === 'power'}
-	<!-- Ici j'explicite le event handler mais j'aurais pu directement le forwarder à Map https://learn.svelte.dev/tutorial/event-forwarding -->
 	<PowerDialogs {user} {currentDialog} on:closeDialog={closeDialog} />
 {/if}
 {#if currentDialog === 'inventory'}
-	<!-- Ici j'explicite le event handler mais j'aurais pu directement le forwarder à Map https://learn.svelte.dev/tutorial/event-forwarding -->
 	<Inventory {user} {currentDialog} on:closeDialog={closeDialog} />
 {/if}
 {#if currentDialog === 'item'}
-	<!-- Ici j'explicite le event handler mais j'aurais pu directement le forwarder à Map https://learn.svelte.dev/tutorial/event-forwarding -->
 	<Item {user} {currentDialog} on:closeDialog={closeDialog} />
 {/if}

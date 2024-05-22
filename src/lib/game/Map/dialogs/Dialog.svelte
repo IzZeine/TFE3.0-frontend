@@ -21,12 +21,9 @@
 		out:blur={{ duration: 5 }}
 	>
 		<div class="headerDialog">
-			<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 			<slot name="header" />
 		</div>
 		<div class="contentDialog">
-			<p class="h2">{user.abilityName}</p>
-			<p>{user.ability}</p>
 			<slot name="content" />
 		</div>
 		<div class="footerDialog">
