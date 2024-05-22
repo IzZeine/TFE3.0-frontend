@@ -1,37 +1,28 @@
 // place files you want to import through the `$lib` alias in this folder.
 // @ts-nocheck
-import { getUser } from './js/getUsers';
+import { getUser } from './api/getUsers.js';
 export { getUser };
 
-import { clearStorage } from './js/clearStorage';
+import { clearStorage } from './api/clearStorage.js';
 export { clearStorage };
 
-import { clearDataBase } from './js/clearDataBase';
+import { clearDataBase } from './api/clearDataBase.js';
 export { clearDataBase };
 
-import { getHeroes } from './js/getHeroes';
+import { getHeroes } from './api/getHeroes.js';
 export { getHeroes };
 
-import { getBoss } from './js/getBoss';
+import { getBoss } from './api/getBoss.js';
 export { getBoss };
 
-import { getItems } from './js/getItems';
+import { getItems } from './api/getItems.js';
 export { getItems };
 
-import { getGame } from './js/getGame';
-export { getGame };
-
-import { getRoomsConnections } from './js/getRoomsConnections';
+import { getRoomsConnections } from './api/getRoomsConnections.js';
 export { getRoomsConnections };
 
-import { getMyUrlForDev } from './js/getMyUrlForDev';
+import { getMyUrlForDev } from './api/getMyUrlForDev.js';
 export { getMyUrlForDev };
 
-import { sleep } from './js/sleep';
+import { sleep } from './api/sleep.js';
 export { sleep };
-
-import { createAudio } from './js/createAudio';
-export { createAudio };
-
-import { createSound } from './js/createSound';
-export { createSound };

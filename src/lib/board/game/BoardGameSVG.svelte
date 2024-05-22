@@ -1,4 +1,75 @@
+<script context="module">
+	import { writable } from 'svelte/store';
+	//Create a globally accessible object
+	export const positions = writable();
+</script>
+
+<script>
+	//@ts-nocheck
+	import { socket } from '$lib/api/socketConnection.js';
+	import { onMount } from 'svelte';
+
+	export let rooms;
+
+	let animInRoom = async (room, item) => {
+		/*
+	let itemImg = '/assets/img/' + item + '.png';
+	let target = document.getElementById(room);
+	target.style.position = 'relative';
+
+	let itemDiv = document.body.appendChild(document.createElement('div'));
+	itemDiv.classList.add('anim', 'animInRoom', 'isActive');
+	let itemDivImg = itemDiv.appendChild(document.createElement('img'));
+	itemDivImg.classList.add('fluidimg');
+	itemDivImg.setAttribute('src', itemImg);
+
+	let targetBoundingClientRect = target.getBoundingClientRect();
+	let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width / 2;
+	let TargetY = targetBoundingClientRect.y + targetBoundingClientRect.height / 2;
+
+	itemDiv.style.top = TargetY + 'px';
+	itemDiv.style.left = TargetX + 'px';
+
+	await sleep(5);
+	itemDiv.remove();
+	*/
+	};
+
+	const onTakeItemInRoom = (room, boss) => {
+		if (boss) {
+			animInRoom(room, 'rock');
+			return;
+		}
+		animInRoom(room, 'inventory');
+	};
+
+	export const getRoomPositions = () => {
+		if (!element) return [];
+		return Array.from(element.querySelectorAll('.room')).map((room) => {
+			const rect = room.getBoundingClientRect();
+			return {
+				width: rect.width,
+				height: rect.height,
+				id: room.getAttribute('id'),
+				x: rect.x + rect.width / 2,
+				y: rect.y + rect.height / 2
+			};
+		});
+	};
+
+	onMount(() => {
+		socket.on('takeItemInRoom', onTakeItemInRoom);
+		positions.set(getRoomPositions());
+		return () => {
+			socket.off('takeItemInRoom', onTakeItemInRoom);
+		};
+	});
+
+	let element;
+</script>
+
 <svg
+	bind:this={element}
 	width="4000"
 	height="2250"
 	viewBox="0 0 4000 2250"
@@ -201,7 +272,7 @@
 			d="M3704.62 49.4972C3701.75 49.4972 3699.21 49.0059 3696.98 48.0234C3694.77 47.0291 3693.03 45.6619 3691.76 43.9219C3690.5 42.1818 3689.86 40.1813 3689.85 37.9205H3699.79C3699.8 38.6188 3700.01 39.2462 3700.43 39.8026C3700.86 40.3471 3701.44 40.7732 3702.17 41.081C3702.9 41.3887 3703.74 41.5426 3704.69 41.5426C3705.6 41.5426 3706.41 41.3828 3707.11 41.0632C3707.8 40.7318 3708.35 40.276 3708.74 39.696C3709.13 39.116 3709.32 38.4531 3709.31 37.7074C3709.32 36.9735 3709.09 36.3224 3708.63 35.7543C3708.18 35.1861 3707.55 34.7422 3706.73 34.4226C3705.92 34.103 3704.97 33.9432 3703.91 33.9432H3700.22V27.125H3703.91C3704.89 27.125 3705.76 26.9652 3706.5 26.6456C3707.26 26.326 3707.84 25.8821 3708.26 25.3139C3708.69 24.7457 3708.89 24.0947 3708.88 23.3608C3708.89 22.6506 3708.72 22.0232 3708.37 21.4787C3708.01 20.9342 3707.51 20.508 3706.87 20.2003C3706.25 19.8925 3705.52 19.7386 3704.69 19.7386C3703.79 19.7386 3702.99 19.8984 3702.28 20.218C3701.58 20.5376 3701.03 20.9815 3700.62 21.5497C3700.22 22.1179 3700.01 22.7689 3700 23.5028H3690.56C3690.57 21.2775 3691.18 19.3125 3692.39 17.608C3693.6 15.9034 3695.27 14.5658 3697.39 13.5952C3699.51 12.6245 3701.94 12.1392 3704.69 12.1392C3707.38 12.1392 3709.75 12.5949 3711.81 13.5064C3713.88 14.4178 3715.5 15.6726 3716.66 17.2706C3717.83 18.8568 3718.41 20.6738 3718.4 22.7216C3718.42 24.7576 3717.72 26.4266 3716.3 27.7287C3714.89 29.0308 3713.11 29.8002 3710.94 30.0369V30.321C3713.88 30.6406 3716.08 31.5402 3717.56 33.0199C3719.04 34.4877 3719.77 36.3343 3719.75 38.5597C3719.76 40.6903 3719.12 42.5784 3717.83 44.2237C3716.55 45.8691 3714.77 47.1593 3712.49 48.0945C3710.21 49.0296 3707.59 49.4972 3704.62 49.4972ZM3739 49.4972C3736.06 49.4972 3733.44 49.0414 3731.13 48.13C3728.84 47.2185 3727.03 45.9815 3725.7 44.419C3724.39 42.8565 3723.73 41.0928 3723.73 39.1278C3723.73 37.6245 3724.1 36.2514 3724.85 35.0085C3725.61 33.7656 3726.62 32.7358 3727.9 31.919C3729.18 31.0904 3730.61 30.5578 3732.18 30.321V30.0369C3730.11 29.6818 3728.4 28.7644 3727.07 27.2848C3725.74 25.7933 3725.08 24.0355 3725.08 22.0114C3725.08 20.1056 3725.68 18.4129 3726.89 16.9332C3728.1 15.4418 3729.75 14.2699 3731.84 13.4176C3733.94 12.5653 3736.32 12.1392 3739 12.1392C3741.67 12.1392 3744.06 12.5713 3746.15 13.4354C3748.25 14.2876 3749.9 15.4595 3751.11 16.951C3752.32 18.4306 3752.92 20.1174 3752.92 22.0114C3752.92 24.0473 3752.24 25.8052 3750.9 27.2848C3749.55 28.7644 3747.85 29.6818 3745.82 30.0369V30.321C3747.38 30.5578 3748.8 31.0904 3750.08 31.919C3751.36 32.7358 3752.37 33.7656 3753.13 35.0085C3753.89 36.2514 3754.27 37.6245 3754.27 39.1278C3754.27 41.0928 3753.61 42.8565 3752.28 44.419C3750.97 45.9815 3749.16 47.2185 3746.85 48.13C3744.55 49.0414 3741.93 49.4972 3739 49.4972ZM3739 42.679C3739.93 42.679 3740.76 42.4896 3741.48 42.1108C3742.21 41.732 3742.77 41.2112 3743.19 40.5483C3743.62 39.8736 3743.83 39.116 3743.83 38.2756C3743.83 37.4351 3743.62 36.6894 3743.19 36.0384C3742.77 35.3873 3742.21 34.8783 3741.48 34.5114C3740.76 34.1326 3739.93 33.9432 3739 33.9432C3738.08 33.9432 3737.25 34.1326 3736.51 34.5114C3735.79 34.8783 3735.22 35.3873 3734.79 36.0384C3734.38 36.6894 3734.17 37.4351 3734.17 38.2756C3734.17 39.116 3734.38 39.8677 3734.79 40.5305C3735.22 41.1934 3735.79 41.7202 3736.51 42.1108C3737.25 42.4896 3738.08 42.679 3739 42.679ZM3739 27.125C3739.83 27.125 3740.56 26.9534 3741.2 26.6101C3741.84 26.2668 3742.34 25.7933 3742.71 25.1896C3743.08 24.5859 3743.26 23.9053 3743.26 23.1477C3743.26 22.3902 3743.08 21.7214 3742.71 21.1413C3742.34 20.5495 3741.84 20.0878 3741.2 19.7564C3740.56 19.4131 3739.83 19.2415 3739 19.2415C3738.18 19.2415 3737.45 19.4131 3736.8 19.7564C3736.16 20.0878 3735.65 20.5495 3735.29 21.1413C3734.92 21.7214 3734.74 22.3902 3734.74 23.1477C3734.74 23.9053 3734.92 24.5859 3735.29 25.1896C3735.65 25.7815 3736.16 26.255 3736.8 26.6101C3737.45 26.9534 3738.18 27.125 3739 27.125Z"
 			fill="white"
 		/>
-		<g id="room0">
+		<g class="room" id="room0">
 			<circle
 				id="room0_player1"
 				cx="241"
@@ -251,7 +322,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room1">
+		<g class="room" id="room1">
 			<circle
 				id="room1_player1"
 				cx="305"
@@ -301,7 +372,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room2">
+		<g class="room" id="room2">
 			<circle
 				id="room2_player1"
 				cx="363"
@@ -351,7 +422,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room7">
+		<g class="room" id="room7">
 			<circle
 				id="room7_player1"
 				cx="45"
@@ -401,7 +472,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room3">
+		<g class="room" id="room3">
 			<circle
 				id="room3_player1"
 				cx="45"
@@ -451,7 +522,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room9">
+		<g class="room" id="room9">
 			<circle
 				id="room9_player1"
 				cx="45"
@@ -501,7 +572,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room16">
+		<g class="room" id="room16">
 			<circle
 				id="room16_player1"
 				cx="45"
@@ -551,7 +622,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room20">
+		<g class="room" id="room20">
 			<circle
 				id="room20_player1"
 				cx="45"
@@ -601,7 +672,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room13">
+		<g class="room" id="room13">
 			<circle
 				id="room13_player1"
 				cx="45"
@@ -651,7 +722,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room12">
+		<g class="room" id="room12">
 			<circle
 				id="room12_player1"
 				cx="45"
@@ -701,7 +772,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room17">
+		<g class="room" id="room17">
 			<circle
 				id="room17_player1"
 				cx="45"
@@ -751,7 +822,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room25">
+		<g class="room" id="room25">
 			<circle
 				id="room25_player1"
 				cx="45"
@@ -801,7 +872,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room33">
+		<g class="room" id="room33">
 			<circle
 				id="room33_player1"
 				cx="45"
@@ -851,7 +922,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room32">
+		<g class="room" id="room32">
 			<circle
 				id="room32_player1"
 				cx="45"
@@ -901,7 +972,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room37">
+		<g class="room" id="room37">
 			<circle
 				id="room37_player1"
 				cx="45"
@@ -951,7 +1022,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room36">
+		<g class="room" id="room36">
 			<circle
 				id="room36_player1"
 				cx="3560"
@@ -1001,7 +1072,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room8">
+		<g class="room" id="room8">
 			<circle
 				id="room8_player1"
 				cx="45"
@@ -1051,7 +1122,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room6">
+		<g class="room" id="room6">
 			<circle
 				id="room6_player1"
 				cx="45"
@@ -1101,7 +1172,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room15">
+		<g class="room" id="room15">
 			<circle
 				id="room15_player1"
 				cx="1444"
@@ -1151,7 +1222,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room22">
+		<g class="room" id="room22">
 			<circle
 				id="room22_player1"
 				cx="2649"
@@ -1201,7 +1272,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room26">
+		<g class="room" id="room26">
 			<circle
 				id="room26_player1"
 				cx="45"
@@ -1251,7 +1322,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room30">
+		<g class="room" id="room30">
 			<circle
 				id="room30_player1"
 				cx="45"
@@ -1301,7 +1372,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room34">
+		<g class="room" id="room34">
 			<circle
 				id="room34_player1"
 				cx="45"
@@ -1351,7 +1422,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room5">
+		<g class="room" id="room5">
 			<circle
 				id="room5_player1"
 				cx="741"
@@ -1401,7 +1472,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room14">
+		<g class="room" id="room14">
 			<circle
 				id="room14_player1"
 				cx="1694"
@@ -1451,7 +1522,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room23">
+		<g class="room" id="room23">
 			<circle
 				id="room23_player1"
 				cx="2585"
@@ -1501,7 +1572,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room19">
+		<g class="room" id="room19">
 			<circle
 				id="room19_player1"
 				cx="1966"
@@ -1551,7 +1622,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room28">
+		<g class="room" id="room28">
 			<circle
 				id="room28_player1"
 				cx="3060"
@@ -1601,7 +1672,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room27">
+		<g class="room" id="room27">
 			<circle id="room27_player1" cx="2963" cy="1447" r="45" fill="currentColor" />
 			<circle id="room27_player2" cx="2963" cy="1623" r="45" fill="currentColor" />
 			<circle id="room27_player3" cx="3074" cy="1623" r="45" fill="currentColor" />
@@ -1609,7 +1680,7 @@
 			<circle id="room27_player5" cx="3074" cy="1447" r="45" fill="currentColor" />
 			<circle id="room27_boss" cx="3125" cy="1535" r="45" fill="currentColor" />
 		</g>
-		<g id="room31">
+		<g class="room" id="room31">
 			<circle id="room31_player1" cx="3318" cy="1400" r="45" fill="currentColor" />
 			<circle id="room31_player2" cx="3322" cy="1580" r="45" fill="currentColor" />
 			<circle id="room31_player3" cx="3433" cy="1580" r="45" fill="currentColor" />
@@ -1617,7 +1688,7 @@
 			<circle id="room31_player5" cx="3429" cy="1400" r="45" fill="currentColor" />
 			<circle id="room31_boss" cx="3467" cy="1490" r="45" fill="currentColor" />
 		</g>
-		<g id="room35">
+		<g class="room" id="room35">
 			<circle id="room35_player1" cx="3673" cy="1438" r="45" fill="currentColor" />
 			<circle id="room35_player2" cx="3673" cy="1543" r="45" fill="currentColor" />
 			<circle id="room35_player3" cx="3755" cy="1585" r="45" fill="currentColor" />
@@ -1625,7 +1696,7 @@
 			<circle id="room35_player5" cx="3755" cy="1490" r="45" fill="currentColor" />
 			<circle id="room35_boss" cx="3840" cy="1438" r="45" fill="currentColor" />
 		</g>
-		<g id="room29">
+		<g class="room" id="room29">
 			<circle
 				id="room29_player1"
 				cx="2877"
@@ -1675,7 +1746,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room24">
+		<g class="room" id="room24">
 			<circle
 				id="room24_player1"
 				cx="2417"
@@ -1725,7 +1796,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room18">
+		<g class="room" id="room18">
 			<circle
 				id="room18_player1"
 				cx="1884"
@@ -1775,7 +1846,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room21">
+		<g class="room" id="room21">
 			<circle
 				id="room21_player1"
 				cx="2379"
@@ -1825,7 +1896,7 @@
 				fill="currentColor"
 			/>
 		</g>
-		<g id="room11">
+		<g class="room" id="room11">
 			<circle id="room11_player1" cx="1126" cy="1271" r="45" fill="currentColor" />
 			<circle id="room11_player2" cx="1126" cy="1483" r="45" fill="currentColor" />
 			<circle id="room11_player3" cx="1236" cy="1517" r="45" fill="currentColor" />
@@ -1833,7 +1904,7 @@
 			<circle id="room11_player5" cx="1236" cy="1305" r="45" fill="currentColor" />
 			<circle id="room11_boss" cx="1236" cy="1411" r="45" fill="currentColor" />
 		</g>
-		<g id="room10">
+		<g class="room" id="room10">
 			<circle id="room10_player1" cx="1375" cy="1747" r="45" fill="currentColor" />
 			<circle id="room10_player2" cx="1335" cy="1940" r="45" fill="currentColor" />
 			<circle id="room10_player3" cx="1445" cy="1940" r="45" fill="currentColor" />
@@ -1841,7 +1912,7 @@
 			<circle id="room10_player5" cx="1485" cy="1747" r="45" fill="currentColor" />
 			<circle id="room10_boss" cx="1438" cy="1841" r="45" fill="currentColor" />
 		</g>
-		<g id="room4">
+		<g class="room" id="room4">
 			<circle id="room4_player1" cx="340" cy="266" r="45" fill="currentColor" />
 			<circle id="room4_player2" cx="340" cy="478" r="45" fill="currentColor" />
 			<circle id="room4_player3" cx="471" cy="512" r="45" fill="currentColor" />
@@ -1849,7 +1920,7 @@
 			<circle id="room4_player5" cx="471" cy="300" r="45" fill="currentColor" />
 			<circle id="room4_boss" cx="471" cy="406" r="45" fill="currentColor" />
 		</g>
-		<g id="room38">
+		<g class="room" id="room38">
 			<circle
 				id="room38_player1"
 				cx="3858"
@@ -2002,3 +2073,21 @@
 		</clipPath>
 	</defs>
 </svg>
+
+{#each positions as room}
+	<img
+		src="/assets/img/inventory.png"
+		alt="inventory"
+		style:left={`${room.x}px`}
+		style:top={`${room.y}px`}
+		class="fluidimg"
+	/>
+{/each}
+
+<style>
+	img {
+		max-width: 3%;
+		position: absolute;
+		transform: translate(-50%, -50%);
+	}
+</style>

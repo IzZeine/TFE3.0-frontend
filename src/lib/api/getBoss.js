@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { getMyUrlForDev } from './getMyUrlForDev';
+import { getMyUrlForDev } from './getMyUrlForDev.js';
 
 async function getBoss() {
 	let url = getMyUrlForDev();

@@ -1,10 +1,10 @@
 <script>
   // @ts-nocheck
 	import { goto } from "$app/navigation";
-	import { clearDataBase } from "$lib/js/clearDataBase";
+	import { clearDataBase } from "$lib/api/clearDataBase.js";
 	import { onMount } from "svelte";
-	import { socket } from '$lib/js/socketConnection.js';
-	import { clearStorage } from "$lib/js/clearStorage";
+	import { socket } from '$lib/api/socketConnection.js';
+	import { clearStorage } from "$lib/api/clearStorage.js";
 
   export let winner = winner;
 
