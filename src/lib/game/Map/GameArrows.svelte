@@ -13,7 +13,6 @@
 
 	let myRoom = user.room;
 
-
 	const coolDownTime = 5000;
 
 	const defaultTimer = {
@@ -46,11 +45,13 @@
 		});
 	}
 
-
-
 	function canGoToDirection(direction) {
+		console.log(direction);
 		if ($timer.running) return false;
 		if (user.life <= 0) return false;
+		console.log(roomsConnections[user.room]);
+		directionsInMyRoom = roomsConnections[user.room];
+		console.log(directionsInMyRoom?.[direction]);
 		if (!myRoom) myRoom = user.room;
 		return !directionsInMyRoom?.[direction];
 	}
@@ -65,15 +66,19 @@
 			// 	popUp("You don't have the key");
 			// 	return;
 		}
-		socket.emit('askToChangeRoom', targetRoom, (response) => {
+		socket.emit('askToChangeRoom', targetRoom, async (response) => {
 			user = response.user;
 			console.log(user);
 			myRoom = user.room;
-			directionsInMyRoom = roomsConnections[user.room];
 		});
 	}
 
 	$: directionsInMyRoom = roomsConnections[user.room];
+	$: canGoTop = canGoToDirection('top');
+	$: canGoLeft = canGoToDirection('left');
+	$: canGoRight = canGoToDirection('right');
+	$: canGoBot = canGoToDirection('bot');
+
 	$: {
 		if ($timer.elapsedTime > coolDownTime) {
 			stopTimer();
@@ -82,16 +87,38 @@
 </script>
 
 <div class="directionsArrows">
-	{#each directions as direction}
-		<button
-			class="directionArrow directionArrow_{direction}"
-			id={direction}
-			disabled={canGoToDirection(direction)}
-			on:click={() => goToDirection(direction)}
-		>
-			<img class="fluidimg directionArrow_img" src="/assets/img/{direction}.svg" alt={direction} />
-		</button>
-	{/each}
+	<button
+		class="directionArrow directionArrow_top"
+		id="top"
+		disabled={canGoTop}
+		on:click={() => goToDirection('top')}
+	>
+		<img class="fluidimg directionArrow_img" src="/assets/img/top.svg" alt="top" />
+	</button>
+	<button
+		class="directionArrow directionArrow_left"
+		id="left"
+		disabled={canGoLeft}
+		on:click={() => goToDirection('left')}
+	>
+		<img class="fluidimg directionArrow_img" src="/assets/img/left.svg" alt="left" />
+	</button>
+	<button
+		class="directionArrow directionArrow_right"
+		id="right"
+		disabled={canGoRight}
+		on:click={() => goToDirection('right')}
+	>
+		<img class="fluidimg directionArrow_img" src="/assets/img/right.svg" alt="right" />
+	</button>
+	<button
+		class="directionArrow directionArrow_bot"
+		id="bot"
+		disabled={canGoBot}
+		on:click={() => goToDirection('bot')}
+	>
+		<img class="fluidimg directionArrow_img" src="/assets/img/bot.svg" alt="bot" />
+	</button>
 	{#if $timer?.running}
 		<div>Cooldown {`${$timer.elapsedTime}/${coolDownTime}`}</div>
 	{/if}

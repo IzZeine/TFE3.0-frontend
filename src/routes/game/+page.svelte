@@ -5,8 +5,6 @@
 	export let data;
 	let games = data.games;
 
-	console.log(data);
-
 	let updateGames = (data) => {
 		console.log('les games : ', data);
 		games = data;
@@ -29,12 +27,14 @@
 	<div class="activeGames">
 		<ul>
 			{#each games as game}
-				<li>
-					<a href="/game/{game.gameId}" class="btn-joinGames">
-						<span>{game.name}</span>
-						<span class="btn-joinGames_statut">{game.users.length}/6</span>
-					</a>
-				</li>
+				{#if game.statut === 'waiting'}
+					<li>
+						<a href="/game/{game.gameId}" class="btn-joinGames">
+							<span>{game.name}</span>
+							<span class="btn-joinGames_statut">{game.users.length}/6</span>
+						</a>
+					</li>
+				{/if}
 			{/each}
 		</ul>
 		<!-- <button class="btn-menuGames refresh" on:click={data.games}>
