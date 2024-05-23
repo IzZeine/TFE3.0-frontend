@@ -1,13 +1,13 @@
 <script>
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
 	import PlayerCard from '$lib/board/lobby/PlayerCard.svelte';
 
-	let activeUsers = [];
 	let winner = null;
 
 	export let game;
+
+	let activeUsers = game.users;
 	export let gameId;
 
 	let btnPlayDisabled = false;
@@ -16,6 +16,7 @@
 	let conditionHero = (currentValue) => currentValue.hero;
 
 	const onUpdateUsers = (data) => {
+		console.log('onUpdateUsers',data);
 		activeUsers = data;
 		if (activeUsers.length >= 2 && game.statut === 'waiting') {
 			btnCloseDisabled = false;
@@ -45,7 +46,6 @@
 	};
 
 	onMount(() => {
-		socket.emit('isActiveUsers', gameId);
 		socket.on('updateUsers', onUpdateUsers);
 		socket.on('endGame', onEndGame);
 

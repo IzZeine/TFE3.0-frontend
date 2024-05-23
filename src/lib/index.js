@@ -1,8 +1,5 @@
 // place files you want to import through the `$lib` alias in this folder.
 // @ts-nocheck
-import { getUser } from './api/getUsers.js';
-export { getUser };
-
 import { clearStorage } from './api/clearStorage.js';
 export { clearStorage };
 

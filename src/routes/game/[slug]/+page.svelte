@@ -1,12 +1,12 @@
 <script>
 	import { onMount } from 'svelte';
-	import { getHeroes, getItems, getUser, clearStorage } from '$lib';
 	import GameRules from '$lib/game/GameRules.svelte';
 	import ChooseHero from '$lib/game/ChooseHero.svelte';
 	import EndGame from '$lib/board/EndGame.svelte';
 	import Map from '$lib/game/Map/Map.svelte';
 	import { goto } from '$app/navigation';
 	import { socket } from '$lib/api/socketConnection.js';
+	import { getUser } from '$lib/api/getUsers.js';
 
 	export let data;
 	const { initialGameData, gameId } = data;
@@ -30,16 +30,6 @@
 
 		console.log('session Id :', sessionID);
 
-		//importer les heros
-		let listOfHeroes = await getHeroes();
-		//importer les items
-		let listOfItems = await getItems();
-
-		socket.on('updateUsers', async (data) => {
-			//user = await getUser(socket);
-			//if (!user) throw goto('/');
-		});
-
 		socket.on('endGame', (data) => {
 			winner = data;
 			console.log(data);
@@ -47,11 +37,6 @@
 
 		socket.on('updateGame', (data) => {
 			game = data;
-		});
-
-		// mettre à jour le user quand le hero a été choisi et enregistré dans la db
-		socket.on('registeredHero', async () => {
-			user = await getUser(socket);
 		});
 	});
 
