@@ -10,7 +10,7 @@
 	const directions = ['top', 'bot', 'left', 'right'];
 
 	let myRoom = user.room;
-	let directionsInMyRoom = roomsConnections[user.room];
+
 
 	const coolDownTime = 5000;
 
@@ -44,11 +44,7 @@
 		});
 	}
 
-	$: {
-		if ($timer.elapsedTime > coolDownTime) {
-			stopTimer();
-		}
-	}
+
 
 	function canGoToDirection(direction) {
 		if ($timer.running) return false;
@@ -75,7 +71,12 @@
 		});
 	}
 
-	onMount(() => {});
+	$: directionsInMyRoom = roomsConnections[user.room];
+	$: {
+		if ($timer.elapsedTime > coolDownTime) {
+			stopTimer();
+		}
+	}
 </script>
 
 <div class="directionsArrows">

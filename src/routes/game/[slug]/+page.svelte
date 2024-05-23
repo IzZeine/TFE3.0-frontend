@@ -17,24 +17,27 @@
 	let winner = null;
 
 	const updateGame = (data) => {
+		console.log('[game] update game', data);
+		console.log('[game] update gameu user', user);
 		user = data.users.find(({ id }) => id === user.id);
 		game = data;
 	};
 
+	const checkUser = async () => {};
+
 	onMount(async () => {
-		console.log(`onMount game : ${gameId}`);
-		// trouver l'utilisateur
-		user = await getUser(socket);
-		console.log('user', user);
-		if (user) {
-			socket.emit('joinGame', gameId);
-			socket.on('updateGame', updateGame);
-		} else {
+		console.log(`[game] onMount game : ${gameId}`);
+		socket.emit('joinGame', gameId);
+		await checkUser();
+		user = await getUser(gameId);
+		console.log('[game] user', user);
+		if (!user) {
 			console.log('no user go to create one');
 			sessionStorage.clear();
-			goto(`/game/${gameId}/user`);
+			await goto(`/game/${gameId}/user`);
+		} else {
+			socket.on('updateGame', updateGame);
 		}
-
 		return () => {
 			socket.off(updateGame);
 		};
@@ -47,15 +50,17 @@
 	}
 </script>
 
-{#if game.statut === 'waiting'}
-	<GameRules />
-{/if}
-{#if game.statut === 'closed'}
-	<ChooseHero {user} {heroes} {boss} on:ChooseHero={sentHeroToServer} />
-{/if}
-{#if game.statut === 'started'}
-	<Map {user} />
-{/if}
-{#if game.statut === 'ended'}
-	<EndGame {winner} />
+{#if user}
+	{#if game.statut === 'waiting'}
+		<GameRules />
+	{/if}
+	{#if game.statut === 'closed'}
+		<ChooseHero {user} {heroes} {boss} on:ChooseHero={sentHeroToServer} />
+	{/if}
+	{#if game.statut === 'started'}
+		<Map {user} />
+	{/if}
+	{#if game.statut === 'ended'}
+		<EndGame {winner} />
+	{/if}
 {/if}
