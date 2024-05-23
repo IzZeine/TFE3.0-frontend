@@ -7,7 +7,6 @@
 	import Audio from '$lib/audio/AudioPlayer.svelte';
 	import LobbyGame from '$lib/board/lobby/LobbyGame.svelte';
 
-	let activeUsers = [];
 	let winner = null;
 
 	// eslint-disable-next-line no-undef
@@ -51,7 +50,7 @@
 <Audio src="/assets/sounds/dungeon.mp3" loop={true} id="dungeon" volume={0.5} />
 
 {#if game.statut === 'started'}
-	<BoardGame {activeUsers} />
+	<BoardGame {game} />
 {:else if game.statut === 'ended'}
 	<EndGame {winner} />
 {:else}

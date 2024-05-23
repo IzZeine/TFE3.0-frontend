@@ -1,5 +1,4 @@
 <script>
-	//@ts-nocheck
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
 	import throttle from 'lodash/throttle.js';
@@ -48,6 +47,8 @@
 	};
 
 	onMount(() => {
+		console.log(element);
+
 		socket.on('usedPower', onUsedPower);
 		return () => {
 			socket.off('usedPower', onUsedPower);
@@ -56,7 +57,7 @@
 
 	let position = { x: 0, y: 0 };
 	$: {
-		const roomPosition = $positions.find((roomPosition) => {
+		const roomPosition = $positions?.find((roomPosition) => {
 			return roomPosition.id === `room${user.room}`;
 		});
 		position = roomPosition;
@@ -105,7 +106,7 @@
 
 <li
 	bind:this={element}
-	class="userPawn {user.player}"
+	class="userPawn"
 	id={user.id}
 	style:left={`${position?.x}px`}
 	style:top={`${position?.y}px`}

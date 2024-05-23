@@ -6,8 +6,6 @@
 
 	export let heroes, boss, user;
 	let selectedHero;
-	console.log('choose', user);
-	console.log('team', user.team);
 
 	$: {
 		if (user.team && !selectedHero) {

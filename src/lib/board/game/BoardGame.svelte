@@ -24,8 +24,9 @@
 */
 
 	//Game status
-	let activeUsers = [];
+	export let game;
 
+	let activeUsers = game.users;
 	let boardElement;
 
 	const onUpdateUsers = (players) => {

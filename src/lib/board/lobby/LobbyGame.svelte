@@ -9,14 +9,14 @@
 	let activeUsers = [];
 	export let gameId;
 
-	let btnPlayDisabled = false;
+	let btnPlayDisabled = true;
 	let btnCloseDisabled = true;
 
 	let conditionHero = (currentValue) => currentValue.hero;
 
 	$: {
 		activeUsers = game.users;
-		console.log('activeUsers')
+		console.log('activeUsers');
 		if (activeUsers.length >= 2 && game.statut === 'waiting') {
 			btnCloseDisabled = false;
 		}
@@ -51,12 +51,21 @@
 		{/each}
 	</ul>
 
-	{#if game.statut === 'closed'}
-		<button class="btnPrimary" disabled={btnPlayDisabled} on:click={startGame}>Jouer</button>
-		<button class="btnPrimary" disabled={btnPlayDisabled} on:click={openGame}>ouvrir</button>
-	{:else}
-		<button class="btnPrimary js-btn-close" disabled={btnCloseDisabled} on:click={closeGame}>
-			Fermer
-		</button>
-	{/if}
+	<div class="btnGame">
+		{#if game.statut === 'closed'}
+			<button class="btnPrimary" disabled={btnPlayDisabled} on:click={startGame}>Jouer</button>
+			<button class="btnPrimary" on:click={openGame}>ouvrir</button>
+		{:else}
+			<button class="btnPrimary js-btn-close" disabled={btnCloseDisabled} on:click={closeGame}>
+				Fermer
+			</button>
+		{/if}
+	</div>
 </div>
+
+<style>
+	.btnGame {
+		display: flex;
+		gap: 12px;
+	}
+</style>
