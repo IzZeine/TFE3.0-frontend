@@ -13,9 +13,7 @@
 
 	let game = initialGameData;
 
-	let sessionID = '';
 	let user = '';
-	let hero = '';
 	let winner = null;
 
 	onMount(async () => {
@@ -26,6 +24,7 @@
 			sessionStorage.clear();
 			return goto(`/game/${gameId}/user`);
 		}
+
 		socket.emit('joinGame', gameId);
 
 		socket.on('endGame', (data) => {
@@ -39,7 +38,7 @@
 	});
 
 	function sentHeroToServer(event) {
-		hero = event.detail.hero;
+		let hero = event.detail.hero;
 		socket.emit('selectedHero', hero);
 		socket.emit('playSound', 'power'); // @TODO : sound select
 	}

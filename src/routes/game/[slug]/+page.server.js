@@ -1,4 +1,4 @@
-import { getGame, getRoomsConnections, getHeroes, getBoss } from '$lib/api/actions.js';
+import { getRoomsConnections, getHeroes, getBoss } from '$lib/api/actions.js';
 
 export const load = async ({ params, fetch, parent }) => {
 	const { game } = await parent();

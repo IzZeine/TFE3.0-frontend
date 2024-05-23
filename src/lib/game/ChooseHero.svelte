@@ -5,7 +5,6 @@
 	export let heroes, boss, user;
 	let selectedHero;
 	console.log(user);
-	console.log(heroes);
 
 	if (user.team) {
 		if (user.team === 'hero') {
