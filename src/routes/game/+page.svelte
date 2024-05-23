@@ -1,5 +1,20 @@
 <script>
+	import { onMount } from 'svelte';
+	import { socket } from '$lib/api/socketConnection.js';
+
 	export let data;
+	let games = data.games;
+
+	onMount(() => {
+		socket.on('updateGames', (data) => {
+			console.log('les games : ', data);
+			games = data;
+		});
+
+		return () => {
+			socket.off('updateGames');
+		};
+	});
 </script>
 
 <div class="container">
@@ -9,7 +24,7 @@
 
 	<div class="activeGames">
 		<ul>
-			{#each data.games as game}
+			{#each games as game}
 				<li>
 					<a href="/game/{game.gameId}" class="btn-joinGames">
 						<span>{game.name}</span>
@@ -18,9 +33,9 @@
 				</li>
 			{/each}
 		</ul>
-		<button class="btn-menuGames refresh" on:click={data.games}>
+		<!-- <button class="btn-menuGames refresh" on:click={data.games}>
 			<img src="/assets/img/refresh.svg" alt="refresh" />
-		</button>
+		</button> -->
 	</div>
 </div>
 
