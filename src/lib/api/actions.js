@@ -16,20 +16,24 @@ export async function callBackend(fetch, method, url, data) {
 }
 
 export async function createGame(fetch, name) {
-	return callBackend(fetch, 'POST', '/creategame', { name });
+	return callBackend(fetch, 'POST', '/games', { name });
 }
 
 export async function getGame(fetch, gameId) {
+	const response = await callBackend(fetch, 'GET', `/games/${gameId}`);
+	if (response.ok) {
+		return response.data;
+	}
+	return null;
+}
+
+export async function getGames(fetch) {
 	//TODO: refactor URL to get a single game with /game/{gameId}
 	const response = await callBackend(fetch, 'GET', `/games`);
 	if (response.ok) {
-		const game = response.data.find((game) => game.gameId === gameId);
-		if (game) {
-			return game;
-		}
+		return response.data;
 	}
-	//@TODO : return to the homepage if the game doesn't exist (and clear sessionStorage)
-	throw new Error(`Could not find game with id : ${gameId}`);
+	return [];
 }
 
 export async function getRoomsConnections(fetch) {

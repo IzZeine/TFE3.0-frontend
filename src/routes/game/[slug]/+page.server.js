@@ -1,12 +1,13 @@
 import { getGame, getRoomsConnections } from '$lib/api/actions.js';
 
-export const load = async ({ params, fetch }) => {
+export const load = async ({ params, fetch, parent }) => {
+	const { game } = await parent();
 	const gameId = params.slug;
-	const initialGameData = await getGame(fetch, gameId);
+
 	const roomsConnections = await getRoomsConnections(fetch);
 
 	return {
-		initialGameData,
+		initialGameData: game,
 		gameId,
 		roomsConnections
 	};

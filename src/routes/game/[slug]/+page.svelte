@@ -19,27 +19,16 @@
 	let winner = null;
 
 	onMount(async () => {
-		sessionID = sessionStorage.getItem('sessionID') || '';
-		if (!sessionID) {
-			clearStorage();
-			goto('/');
-		}
-
 		// trouver l'utilisateur
 		user = await getUser(socket);
+		console.log('user', user);
 		if (!user) {
-			clearStorage();
-			goto('/');
+			sessionStorage.clear();
+			return goto(`/game/${gameId}/user`);
 		}
 		socket.emit('joinGame', gameId);
 
 		console.log('session Id :', sessionID);
-
-		// @TODO : deco intempestives...
-		socket.on('deco', () => {
-			alert('a lot of users');
-			clearStorage();
-		});
 
 		//importer les heros
 		let listOfHeroes = await getHeroes();
@@ -47,8 +36,8 @@
 		let listOfItems = await getItems();
 
 		socket.on('updateUsers', async (data) => {
-			user = await getUser(socket);
-			if (!user) throw goto('/');
+			//user = await getUser(socket);
+			//if (!user) throw goto('/');
 		});
 
 		socket.on('endGame', (data) => {

@@ -2,23 +2,23 @@
 
 async function getUser(socket) {
 	let sessionID = sessionStorage.getItem('sessionID');
-	try {
-		let userDataPromise = new Promise((resolve, reject) => {
-			socket.on('ThisIsYourUser', (data) => {
-				resolve(data); // Résoudre la promesse avec les données utilisateur
+	console.log('getUser', sessionID);
+	if (sessionID) {
+		try {
+			console.log('getMyUser', sessionID);
+			// Attendre que la promesse soit résolue avec les données utilisateur
+			return new Promise((resolve, reject) => {
+				socket.emit('getMyUser', sessionID, (user) => {
+					console.log('getMyUserResponse', user);
+					if (user) return resolve(user);
+					reject();
+				});
 			});
-		});
-
-		// Émettre la demande pour obtenir l'utilisateur
-		socket.emit('getMyUser', sessionID);
-
-		// Attendre que la promesse soit résolue avec les données utilisateur
-		let user = await userDataPromise;
-		return user;
-	} catch (error) {
-		console.error('Erreur lors de la récupération des utilisateurs :', error);
-		// Gérer l'erreur ici
+		} catch (error) {
+			console.error('Erreur lors de la récupération des utilisateurs :', error);
+		}
 	}
+	return null;
 }
 
 export { getUser };
