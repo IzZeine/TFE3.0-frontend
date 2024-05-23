@@ -1,5 +1,4 @@
 <script>
-	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
 	import PlayerCard from '$lib/board/lobby/PlayerCard.svelte';
 
@@ -7,7 +6,7 @@
 
 	export let game;
 
-	let activeUsers = game.users;
+	let activeUsers = [];
 	export let gameId;
 
 	let btnPlayDisabled = false;
@@ -15,9 +14,9 @@
 
 	let conditionHero = (currentValue) => currentValue.hero;
 
-	const onUpdateUsers = (data) => {
-		console.log('onUpdateUsers',data);
-		activeUsers = data;
+	$: {
+		activeUsers = game.users;
+		console.log('activeUsers')
 		if (activeUsers.length >= 2 && game.statut === 'waiting') {
 			btnCloseDisabled = false;
 		}
@@ -27,11 +26,7 @@
 		if (activeUsers.length >= 2 && activeUsers.every(conditionHero) && game.statut === 'closed') {
 			btnPlayDisabled = false;
 		}
-	};
-	const onEndGame = (data) => {
-		winner = data;
-		console.log(data);
-	};
+	}
 
 	const closeGame = () => {
 		socket.emit('closeGame', gameId);
@@ -44,16 +39,6 @@
 	const startGame = () => {
 		socket.emit('startGame', gameId);
 	};
-
-	onMount(() => {
-		socket.on('updateUsers', onUpdateUsers);
-		socket.on('endGame', onEndGame);
-
-		return () => {
-			socket.off('updateUsers', onUpdateUsers);
-			socket.off('endGame', onEndGame);
-		};
-	});
 </script>
 
 <div class="container">

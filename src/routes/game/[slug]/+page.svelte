@@ -47,21 +47,17 @@
 	}
 </script>
 
-{#if sessionID}
-	{#if user}
-		{#if game.statut === 'waiting'}
-			<GameRules />
-		{/if}
-		{#if game.statut === 'closed'}
-			<ChooseHero {user} on:ChooseHero={sentHeroToServer} />
-		{/if}
-		{#if game.statut === 'started'}
-			<Map {user} />
-		{/if}
-		{#if game.statut === 'ended'}
-			<EndGame {winner} />
-		{/if}
-	{/if}
+{#if game.statut === 'waiting'}
+	<GameRules />
+{/if}
+{#if game.statut === 'closed'}
+	<ChooseHero {user} on:ChooseHero={sentHeroToServer} />
+{/if}
+{#if game.statut === 'started'}
+	<Map {user} />
+{/if}
+{#if game.statut === 'ended'}
+	<EndGame {winner} />
 {/if}
 
 <!-- <button on:click={clearStorage}>Clear</button> -->

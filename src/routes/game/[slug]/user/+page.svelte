@@ -2,9 +2,9 @@
 	// @ts-nocheck
 
 	import { onMount } from 'svelte';
-	import { getUser } from '$lib';
 	import { goto } from '$app/navigation';
 	import { socket } from '$lib/api/socketConnection.js';
+	import { getUser } from '$lib/api/getUsers.js';
 
 	export let data;
 	let username = '';
@@ -17,6 +17,7 @@
 			socket.emit('createUser', { username, gameId: data.gameId }, async (user) => {
 				console.log('createUser response', user);
 				sessionStorage.setItem('sessionID', user.id);
+				console.log('created user', user);
 				if (user) {
 					return goto(`/game/${user.gameId}`);
 				}
@@ -32,9 +33,9 @@
 	}
 
 	onMount(async () => {
-		user = await getUser(socket);
+		user = await getUser();
 		if (user) {
-			goto(`/game/${gameID}`);
+			goto(`/game/${data.gameID}`);
 		}
 	});
 </script>

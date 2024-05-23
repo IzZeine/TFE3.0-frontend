@@ -26,25 +26,25 @@
 	];
 	*/
 
-	const onUpdateGame =  (data) => {
+	const onUpdateGame = (data) => {
+		console.log('onUpdateGame', data);
 		game = data;
-	}
-	const onEndGame =(data) => {
+	};
+	const onEndGame = (data) => {
 		winner = data;
 		console.log('onEndGame', data);
 	};
 
 	onMount(async () => {
-		socket.emit('isActiveUsers', gameId);
-		socket.on('updateGame',onUpdateGame);
-		socket.on('endGame',onEndGame);
-		return ()=>{
-			socket.off('updateGame', onUpdateGame)
-			socket.off('endGame', onEndGame)
-		}
+		console.log('joining game', game);
+		socket.emit('joinGame', game.gameId);
+		socket.on('updateGame', onUpdateGame);
+		socket.on('endGame', onEndGame);
+		return () => {
+			socket.off('updateGame', onUpdateGame);
+			socket.off('endGame', onEndGame);
+		};
 	});
-
-
 </script>
 
 <Audio src="/assets/sounds/dungeon.mp3" loop={true} id="dungeon" volume={0.5} />

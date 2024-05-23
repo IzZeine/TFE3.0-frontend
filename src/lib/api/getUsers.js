@@ -1,17 +1,18 @@
 // @ts-nocheck
 
-async function getUser(socket) {
+import { socket } from '$lib/api/socketConnection.js';
+
+async function getUser() {
 	let sessionID = sessionStorage.getItem('sessionID');
 	console.log('getUser', sessionID);
 	if (sessionID) {
 		try {
 			console.log('getMyUser', sessionID);
 			// Attendre que la promesse soit résolue avec les données utilisateur
-			return new Promise((resolve, reject) => {
+			return new Promise((resolve) => {
 				socket.emit('getMyUser', sessionID, (user) => {
 					console.log('getMyUserResponse', user);
-					if (user) return resolve(user);
-					reject();
+					return resolve(user);
 				});
 			});
 		} catch (error) {
