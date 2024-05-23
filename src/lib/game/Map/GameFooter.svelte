@@ -11,7 +11,7 @@
 	function openInventory() {
 		dispatch('openDialog', 'inventory');
 	}
-	function usePower() {
+	function openPower() {
 		dispatch('openDialog', 'power');
 	}
 	function openItem() {
@@ -37,7 +37,7 @@
 		>
 			<img class="fluidimg" src="/assets/img/inventory.png" alt="inventory" />
 		</button>
-		<button class="actionButton --power" disabled={powerBtnDisabled} on:click={usePower}>
+		<button class="actionButton --power" disabled={powerBtnDisabled} on:click={openPower}>
 			<img class="fluidimg" src="/assets/img/power.png" alt="power" />
 		</button>
 		<button class="actionButton --find" disabled={itemBtnDisabled} on:click={openItem}>
