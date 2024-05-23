@@ -60,7 +60,9 @@
 		const roomPosition = $positions?.find((roomPosition) => {
 			return roomPosition.id === `room${user.room}`;
 		});
-		position = roomPosition;
+		if (position) {
+			position = roomPosition;
+		}
 	}
 
 	/*
