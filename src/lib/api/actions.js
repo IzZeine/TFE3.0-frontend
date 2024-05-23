@@ -48,3 +48,19 @@ export async function getRoomsConnections(fetch) {
 	//@TODO : return to the homepage if the game doesn't exist (and clear sessionStorage)
 	throw new Error(`Could not find roomsConnections`);
 }
+
+export async function getHeroes(fetch) {
+	const response = await callBackend(fetch, 'GET', `/heroes`);
+	if (response.ok) {
+		return response.data;
+	}
+	return [];
+}
+
+export async function getBoss(fetch) {
+	const response = await callBackend(fetch, 'GET', `/boss`);
+	if (response.ok) {
+		return response.data;
+	}
+	return [];
+}

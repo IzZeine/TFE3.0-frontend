@@ -5,14 +5,18 @@
 	export let data;
 	let games = data.games;
 
+	console.log(data);
+
+	let updateGames = (data) => {
+		console.log('les games : ', data);
+		games = data;
+	};
+
 	onMount(() => {
-		socket.on('updateGames', (data) => {
-			console.log('les games : ', data);
-			games = data;
-		});
+		socket.on('updateGames', updateGames);
 
 		return () => {
-			socket.off('updateGames');
+			socket.off('updateGames', updateGames);
 		};
 	});
 </script>

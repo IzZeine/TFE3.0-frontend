@@ -1,29 +1,20 @@
 <script>
-	// @ts-nocheck
 	import { createEventDispatcher, onMount } from 'svelte';
 	import Carousel from 'svelte-carousel';
-	import { getHeroes, getBoss } from '$lib';
 
-	export let user = user;
-	let heroes = '';
-	let boss = '';
-	let selectedHero = '';
+	export let heroes, boss, user;
+	let selectedHero;
+	console.log(user);
+	console.log(heroes);
 
-	onMount(async () => {
-		heroes = await getHeroes(); // get Json
-		heroes = Object.values(heroes); // change Json to array
-		boss = await getBoss(); // get Json
-		boss = Object.values(boss); // change Json to array
-
-		if (user.team) {
-			if (user.team === 'hero') {
-				selectedHero = heroes[0];
-			}
-			if (user.team === 'boss') {
-				selectedHero = boss[0];
-			}
+	if (user.team) {
+		if (user.team === 'hero') {
+			selectedHero = heroes[0];
 		}
-	});
+		if (user.team === 'boss') {
+			selectedHero = boss[0];
+		}
+	}
 
 	const dispatch = createEventDispatcher();
 

@@ -9,7 +9,7 @@
 	import { getUser } from '$lib/api/getUsers.js';
 
 	export let data;
-	const { initialGameData, gameId } = data;
+	const { initialGameData, gameId, heroes, boss } = data;
 
 	let game = initialGameData;
 
@@ -28,14 +28,12 @@
 		}
 		socket.emit('joinGame', gameId);
 
-		console.log('session Id :', sessionID);
-
 		socket.on('endGame', (data) => {
 			winner = data;
-			console.log(data);
 		});
 
 		socket.on('updateGame', (data) => {
+			user = data.users.find(({ id }) => id === user.id);
 			game = data;
 		});
 	});
@@ -51,7 +49,7 @@
 	<GameRules />
 {/if}
 {#if game.statut === 'closed'}
-	<ChooseHero {user} on:ChooseHero={sentHeroToServer} />
+	<ChooseHero {user} {heroes} {boss} on:ChooseHero={sentHeroToServer} />
 {/if}
 {#if game.statut === 'started'}
 	<Map {user} />
@@ -59,5 +57,3 @@
 {#if game.statut === 'ended'}
 	<EndGame {winner} />
 {/if}
-
-<!-- <button on:click={clearStorage}>Clear</button> -->

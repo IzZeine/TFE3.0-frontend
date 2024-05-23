@@ -30,6 +30,7 @@
 		console.log('onUpdateGame', data);
 		game = data;
 	};
+
 	const onEndGame = (data) => {
 		winner = data;
 		console.log('onEndGame', data);

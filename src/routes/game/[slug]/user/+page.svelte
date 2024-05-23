@@ -68,8 +68,8 @@
 
 <style>
 	.btnVersionPC {
-		position: absolute;
-		bottom: 30px;
+		/* position: absolute;
+		bottom: 30px; */
 		padding: 6px;
 		border-bottom: solid 1px var(--txtGrey);
 		background-color: var(--BGTranspary);
