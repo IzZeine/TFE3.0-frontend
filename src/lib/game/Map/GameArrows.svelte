@@ -4,6 +4,8 @@
 	import { page } from '$app/stores';
 	import { socket } from '$lib/api/socketConnection';
 
+	let moveSpeed = 1000;
+
 	export let user;
 
 	const roomsConnections = $page.data.roomsConnections;
@@ -97,15 +99,15 @@
 <!-- {#if isFixed} -->
 <h1
 	class="h2 directionSalle"
-	in:blur={{ y: 50, duration: mooveSpeed * 500 }}
-	out:blur={{ duration: mooveSpeed * 0 }}
+	in:blur={{ y: 50, duration: moveSpeed * 500 }}
+	out:blur={{ duration: moveSpeed * 0 }}
 >
 	Salle {user.room}
 </h1>
 <!-- {:else} -->
 <h1
 	class="h2 directionSalle"
-	in:blur={{ y: 50, duration: mooveSpeed * 500 }}
+	in:blur={{ y: 50, duration: moveSpeed * 500 }}
 	out:blur={{ duration: 0 }}
 >
 	Mooving..

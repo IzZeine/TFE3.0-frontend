@@ -30,9 +30,8 @@
 	let boardElement;
 
 	const onUpdateUsers = (players) => {
-		console.log('enter?');
+		console.log('[boardGame] onUpdateusers', players);
 		activeUsers = players.map((player) => {
-			console.log(player);
 			return {
 				...player
 			};

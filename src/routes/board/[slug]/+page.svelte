@@ -26,13 +26,13 @@
 	*/
 
 	const onUpdateGame = (data) => {
-		console.log('onUpdateGame', data);
+		console.log('[board] onUpdateGame', data);
 		game = data;
 	};
 
 	const onEndGame = (data) => {
 		winner = data;
-		console.log('onEndGame', data);
+		console.log('[board] onEndGame', data);
 	};
 
 	onMount(async () => {
