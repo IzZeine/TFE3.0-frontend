@@ -1,21 +1,24 @@
 <script>
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import Carousel from 'svelte-carousel';
+
+	const dispatch = createEventDispatcher();
 
 	export let heroes, boss, user;
 	let selectedHero;
-	console.log(user);
+	console.log('choose', user);
+	console.log('team', user.team);
 
-	if (user.team) {
-		if (user.team === 'hero') {
-			selectedHero = heroes[0];
-		}
-		if (user.team === 'boss') {
-			selectedHero = boss[0];
+	$: {
+		if (user.team && !selectedHero) {
+			if (user.team === 'hero') {
+				selectedHero = heroes[0];
+			}
+			if (user.team === 'boss') {
+				selectedHero = boss[0];
+			}
 		}
 	}
-
-	const dispatch = createEventDispatcher();
 
 	function chooseHero() {
 		dispatch('ChooseHero', {

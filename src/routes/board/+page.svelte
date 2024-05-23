@@ -18,16 +18,16 @@
 	};
 
 	onMount(async () => {
-		console.log('board')
+		console.log('board');
 		gameID = sessionStorage.getItem('gameID');
 
 		if (gameID) {
-			console.log('has board game')
-			return goto(`/boardGame/${gameID}`);
+			console.log('has board game');
+			goto(`/boardGame/${gameID}`);
+		} else {
+			socket.on('connect', onConnect);
+			socket.on('updateUsersCount', updateUserCount);
 		}
-
-		socket.on('connect', onConnect);
-		socket.on('updateUsersCount', updateUserCount);
 
 		return () => {
 			socket.off('connect', onConnect);

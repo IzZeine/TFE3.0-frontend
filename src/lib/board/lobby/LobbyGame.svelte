@@ -44,17 +44,10 @@
 <div class="container">
 	<h1 class="h1">{game.name} <span class="h2">({game.statut})</span></h1>
 	<ul class="cardUserList">
-		{#each activeUsers as user, index}
-			{@const numberOfLi = 6 - activeUsers.length}
-			{@const isLast = index === activeUsers.length - 1}
+		{#each activeUsers as user}
 			<li>
 				<PlayerCard {user} {game} />
 			</li>
-			{#if isLast}
-				{#each { length: numberOfLi } as _, index}
-					<li class="cardUser-Empty"></li>
-				{/each}
-			{/if}
 		{/each}
 	</ul>
 

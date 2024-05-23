@@ -11,36 +11,39 @@
 	export let data;
 	const { initialGameData, gameId, heroes, boss } = data;
 
-	let game = initialGameData;
+	let game = { ...initialGameData };
 
 	let user = '';
 	let winner = null;
 
+	const updateGame = (data) => {
+		user = data.users.find(({ id }) => id === user.id);
+		game = data;
+	};
+
 	onMount(async () => {
+		console.log(`onMount game : ${gameId}`);
 		// trouver l'utilisateur
 		user = await getUser(socket);
 		console.log('user', user);
-		if (!user) {
+		if (user) {
+			socket.emit('joinGame', gameId);
+			socket.on('updateGame', updateGame);
+		} else {
+			console.log('no user go to create one');
 			sessionStorage.clear();
-			return goto(`/game/${gameId}/user`);
+			goto(`/game/${gameId}/user`);
 		}
 
-		socket.emit('joinGame', gameId);
-
-		socket.on('endGame', (data) => {
-			winner = data;
-		});
-
-		socket.on('updateGame', (data) => {
-			user = data.users.find(({ id }) => id === user.id);
-			game = data;
-		});
+		return () => {
+			socket.off(updateGame);
+		};
 	});
 
 	function sentHeroToServer(event) {
 		let hero = event.detail.hero;
 		socket.emit('selectedHero', hero);
-		socket.emit('playSound', 'power'); // @TODO : sound select
+		//socket.emit('playSound', 'power'); // @TODO : sound select
 	}
 </script>
 
