@@ -29,7 +29,7 @@ Homepage - Mobile
 	height: 100%;
 	justify-content: center;
 	background-image: url('/assets/img/cover.png');
-	background-position: bottom;
+	background-position: bottom left;
 	background-size: cover;
 }
 
@@ -199,6 +199,7 @@ Boardgame -Homepage
 	height: 100vh;
 	width: 100vw;
 	background-image: url('/assets/img/cover.png');
+	background-position: bottom left;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
