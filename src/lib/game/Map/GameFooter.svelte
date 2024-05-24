@@ -45,3 +45,10 @@
 		</button>
 	</div>
 </div>
+
+<style lang="scss">
+	.--inventory:disabled,
+	.--find:disabled {
+		display: none;
+	}
+</style>
