@@ -14,13 +14,38 @@
 
 	const dispatch = createEventDispatcher();
 
-	const useAbility = (data) => {
-		console.log('ability');
-	};
-
 	function closeDialog() {
 		dispatch('closeDialog');
 	}
+
+	const useAbility = (data) => {
+		console.log(data.detail);
+		return;
+		switch (user.hero) {
+			case 'Rodeur':
+				socket.emit('askToChangeRoom', data);
+				break;
+			case 'Chevalier':
+				socket.emit('moveFaster', data);
+				break;
+			case 'Necromancien':
+				socket.emit('saveUser', data.detail);
+				break;
+			case 'Druide':
+				socket.emit('healUser', data.detail);
+				break;
+			case 'Magicien':
+				break;
+			case 'Serpent':
+				socket.emit('nerfDices');
+				break;
+			case 'Golem':
+				socket.emit('getRock');
+				break;
+			default:
+				console.log('personne');
+		}
+	};
 </script>
 
 {#if user.hero === 'Rodeur'}

@@ -7,7 +7,7 @@
 	const dispatch = createEventDispatcher();
 
 	function useAbility(data) {
-		dispatch('useAbility');
+		dispatch('useAbility', { data });
 	}
 </script>
 
@@ -17,7 +17,7 @@
 		<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 		<ul class="userChoice">
 			{#each game.users as user}
-				{#if user.life < 3 && user.life > 0}
+				{#if user.life == 3 && user.life > 0}
 					<li class="userChoice_item">
 						<button class="userChoice_item-btn" on:click={() => useAbility(user)}>
 							<img class="fluidimg hero" src="/assets/img/{user.heroImg}" alt="heroDead" />

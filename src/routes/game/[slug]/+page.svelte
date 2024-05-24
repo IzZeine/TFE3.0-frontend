@@ -58,7 +58,7 @@
 		<ChooseHero {user} {heroes} {boss} on:ChooseHero={sentHeroToServer} />
 	{/if}
 	{#if game.statut === 'started'}
-		<Map {user} {items} />
+		<Map {user} {items} {game} />
 	{/if}
 	{#if game.statut === 'ended'}
 		<EndGame {winner} />
