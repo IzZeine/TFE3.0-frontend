@@ -21,10 +21,11 @@
 
 	const useAbility = (data) => {
 		console.log(data.detail);
-		return;
 		switch (user.hero) {
 			case 'Rodeur':
-				socket.emit('askToChangeRoom', data.detail);
+				socket.emit('askToChangeRoom', data.detail, async (response) => {
+					user = response.user;
+				});
 				break;
 			case 'Chevalier':
 				socket.emit('moveFaster');
@@ -50,10 +51,10 @@
 	};
 </script>
 
-{#if user.hero === 'Chevalier'}
+{#if user.hero === 'Rodeur'}
 	<RodeurDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
-{#if user.hero === ''}
+{#if user.hero === 'Chevalier'}
 	<KnightDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
 {#if user.hero === 'Druide'}
