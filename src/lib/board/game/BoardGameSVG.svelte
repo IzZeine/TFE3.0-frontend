@@ -8,8 +8,8 @@
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
 
-	// export let rooms;
 	let element;
+	let itemInRoomPositions = [];
 
 	let animInRoom = async (room, item) => {
 		/*
@@ -59,6 +59,7 @@
 
 	onMount(async () => {
 		positions.set(getRoomPositions());
+		itemInRoomPositions = $positions;
 		socket.on('takeItemInRoom', onTakeItemInRoom);
 		return () => {
 			socket.off('takeItemInRoom', onTakeItemInRoom);
@@ -2072,7 +2073,7 @@
 	</defs>
 </svg>
 
-<!-- {#each positions as room}
+{#each itemInRoomPositions as room}
 	<img
 		src="/assets/img/inventory.png"
 		alt="inventory"
@@ -2080,12 +2081,12 @@
 		style:top={`${room.y}px`}
 		class="fluidimg"
 	/>
-{/each} -->
+{/each}
 
-<!-- <style>
+<style>
 	img {
 		max-width: 3%;
 		position: absolute;
 		transform: translate(-50%, -50%);
 	}
-</style> -->
+</style>

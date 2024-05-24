@@ -112,6 +112,7 @@
 	id={user.id}
 	style:left={`${position?.x}px`}
 	style:top={`${position?.y}px`}
+	style:background-color={user.color}
 >
 	<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
 </li>
@@ -119,5 +120,6 @@
 <style>
 	.userPawn {
 		transform: translate(-50%, -50%);
+		border-radius: 100%;
 	}
 </style>
