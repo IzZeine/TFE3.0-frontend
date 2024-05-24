@@ -2,8 +2,7 @@
 	import Dialog from '../Dialog.svelte';
 	import { createEventDispatcher } from 'svelte';
 
-	export let user = user;
-	export let currentDialog;
+	export let user, currentDialog;
 
 	const dispatch = createEventDispatcher();
 

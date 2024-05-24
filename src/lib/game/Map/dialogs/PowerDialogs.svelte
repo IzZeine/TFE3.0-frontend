@@ -10,8 +10,7 @@
 
 	import { createEventDispatcher } from 'svelte';
 
-	export let user;
-	export let currentDialog;
+	export let user, currentDialog, game;
 
 	const dispatch = createEventDispatcher();
 
@@ -31,12 +30,19 @@
 	<KnightDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
 {#if user.hero === 'Druide'}
-	<DruideDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
+	<DruideDialog
+		{user}
+		{currentDialog}
+		{game}
+		on:closeDialog={closeDialog}
+		on:useAbility={useAbility}
+	/>
 {/if}
 {#if user.hero === 'Necromancien'}
 	<NecromancerDialog
 		{user}
 		{currentDialog}
+		{game}
 		on:closeDialog={closeDialog}
 		on:useAbility={useAbility}
 	/>

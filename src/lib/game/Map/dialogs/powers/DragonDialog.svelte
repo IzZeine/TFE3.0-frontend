@@ -1,15 +1,7 @@
 <script>
 	import Dialog from '../Dialog.svelte';
-	import { createEventDispatcher } from 'svelte';
 
-	export let user = user;
-	export let currentDialog;
-
-	const dispatch = createEventDispatcher();
-
-	function useAbility(data) {
-		dispatch('useAbility');
-	}
+	export let user, currentDialog;
 </script>
 
 <!-- l'event closeDialog est forwardé vers le composant GameDialogs https://learn.svelte.dev/tutorial/event-forwarding -->
@@ -20,6 +12,5 @@
 	<svelte:fragment slot="content">
 		<p class="h2">{user.abilityName}</p>
 		<p>{user.ability}</p>
-		<button class="btnPrimary" on:click={useAbility}>Utiliser</button>
 	</svelte:fragment>
 </Dialog>

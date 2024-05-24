@@ -16,7 +16,7 @@
 </script>
 
 {#if currentDialog === 'power'}
-	<PowerDialogs {user} {currentDialog} on:closeDialog={closeDialog} />
+	<PowerDialogs {user} {currentDialog} {game} on:closeDialog={closeDialog} />
 {/if}
 {#if currentDialog === 'inventory'}
 	<Inventory {user} {items} {currentDialog} on:closeDialog={closeDialog} />
