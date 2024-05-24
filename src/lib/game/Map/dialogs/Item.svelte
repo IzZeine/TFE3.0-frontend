@@ -3,9 +3,10 @@
 	import Dialog from './Dialog.svelte';
 	import { onMount } from 'svelte';
 
-	export let user = user;
+	export let user, items;
 	export let currentDialog;
 
+	let allRooms;
 	let myRoom = user.room;
 	let dice1 = 1,
 		dice2 = 1;
@@ -13,59 +14,36 @@
 	let luckOfDices = 0;
 	let itemInRoom;
 
+	let rollDice = async () => {
+		for (let i = 0; i < 5; i++) {
+			dice1 = Math.floor(Math.random() * 6) + 1;
+			dice2 = Math.floor(Math.random() * 6) + 1;
+		}
+		return dice1 + dice2;
+	};
+
 	let tryToGetItemInRoom = async () => {
-		let getItemBtn = document.querySelector('.getItemBtn');
-		let bonusDicesElement = document.querySelector('.bonusDices');
-		if (bonusDicesElement) bonusDicesElement.classList.add('isActive');
 		let condition = itemInRoom.condition;
 		let pointsDices = await rollDice();
 		pointsDices += luckOfDices - nerfDices;
 		if (pointsDices < condition) {
-			getItemBtn.setAttribute('disabled', true);
-			await sleep(1);
-			getItemBtn.removeAttribute('disabled');
-
-			if (bonusDicesElement) bonusDicesElement.classList.remove('isActive');
-
-			await sleep(0.2);
+			console.log('raté');
 			luckOfDices = 0;
-
 			return;
 		}
-		disabledArrows();
-		getItemBtn.setAttribute('disabled', true);
-		await sleep(1);
-		getItemBtn.removeAttribute('disabled');
-
-		if (bonusDicesElement) bonusDicesElement.classList.remove('.isActive');
+		console.log('réussi');
 		luckOfDices = 0;
-
-		let message =
-			'Vous avez gagné : \n' +
-			"<div class='itemInPopUpDiv'>" +
-			"<img class='fluidimg itemInPopUp' src='/assets/img/" +
-			itemInRoom.nameId +
-			".png'	alt={itemInRoom.nameId}/>" +
-			itemInRoom.name +
-			'</div>';
-		popUp(message);
-		displayArrowsDirections();
-		socket.emit('playSound', 'woosh');
+		// socket.emit('playSound', 'woosh');
 		socket.emit('getItemInRoom', myRoom);
 	};
 
 	onMount(() => {
+		socket.emit('getRooms', user.gameId);
 		socket.on('youAskedRooms', (rooms) => {
 			if (!user) return;
 			allRooms = rooms;
 			myRoom = allRooms[user.room];
-			itemInRoom = myRoom.item;
-			if (!itemInRoom || itemInRoom == 'null') {
-				let getItemBtn = document.querySelector('.getItemBtn');
-				getItemBtn.setAttribute('disabled', true);
-				return;
-			}
-			itemInRoom = JSON.parse(itemInRoom);
+			itemInRoom = items.find((item) => item.nameId === myRoom.itemId);
 		});
 	});
 
@@ -102,6 +80,7 @@
 				/>
 				<div class="itemInRoom_stats">
 					<p class="h1">{itemInRoom.name}</p>
+					<p class="h2">{itemInRoom.rarity}</p>
 					<p>
 						Bonus : <span style="text-transform: uppercase;">{itemInRoom.type}</span>
 						+{itemInRoom.bonus}

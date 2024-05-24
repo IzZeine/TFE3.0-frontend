@@ -4,7 +4,7 @@
 	import GameFooter from '$lib/game/Map/GameFooter.svelte';
 	import GameDialogs from '$lib/game/Map/dialogs/GameDialogs.svelte';
 
-	export let user;
+	export let user, items;
 
 	let currentDialog = '';
 	function setDialog(e) {
@@ -23,4 +23,4 @@
 	</div>
 </div>
 
-<GameDialogs {user} {currentDialog} on:closeDialog={() => setDialog('')} />
+<GameDialogs {user} {currentDialog} {items} on:closeDialog={() => setDialog('')} />

@@ -6,15 +6,6 @@ export { clearStorage };
 import { clearDataBase } from './api/clearDataBase.js';
 export { clearDataBase };
 
-import { getHeroes } from './api/getHeroes.js';
-export { getHeroes };
-
-import { getBoss } from './api/getBoss.js';
-export { getBoss };
-
-import { getItems } from './api/getItems.js';
-export { getItems };
-
 import { getMyUrlForDev } from './api/getMyUrlForDev.js';
 export { getMyUrlForDev };
 

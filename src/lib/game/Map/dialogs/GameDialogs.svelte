@@ -4,8 +4,7 @@
 	import Inventory from './Inventory.svelte';
 	import Item from './Item.svelte';
 
-	export let user;
-	export let currentDialog;
+	export let user, items, currentDialog;
 
 	console.log('le dialog', currentDialog);
 
@@ -20,8 +19,8 @@
 	<PowerDialogs {user} {currentDialog} on:closeDialog={closeDialog} />
 {/if}
 {#if currentDialog === 'inventory'}
-	<Inventory {user} {currentDialog} on:closeDialog={closeDialog} />
+	<Inventory {user} {items} {currentDialog} on:closeDialog={closeDialog} />
 {/if}
 {#if currentDialog === 'item'}
-	<Item {user} {currentDialog} on:closeDialog={closeDialog} />
+	<Item {user} {items} {currentDialog} on:closeDialog={closeDialog} />
 {/if}

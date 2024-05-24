@@ -9,7 +9,7 @@
 	import { getUser } from '$lib/api/getUsers.js';
 
 	export let data;
-	const { initialGameData, gameId, heroes, boss } = data;
+	const { initialGameData, gameId, heroes, boss, items } = data;
 
 	let game = { ...initialGameData };
 
@@ -58,7 +58,7 @@
 		<ChooseHero {user} {heroes} {boss} on:ChooseHero={sentHeroToServer} />
 	{/if}
 	{#if game.statut === 'started'}
-		<Map {user} />
+		<Map {user} {items} />
 	{/if}
 	{#if game.statut === 'ended'}
 		<EndGame {winner} />

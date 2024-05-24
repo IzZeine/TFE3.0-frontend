@@ -64,3 +64,11 @@ export async function getBoss(fetch) {
 	}
 	return [];
 }
+
+export async function getItems(fetch) {
+	const response = await callBackend(fetch, 'GET', `/items`);
+	if (response.ok) {
+		return response.data;
+	}
+	return [];
+}

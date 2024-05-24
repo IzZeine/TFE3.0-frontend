@@ -2,36 +2,23 @@
 	import { onMount } from 'svelte';
 	import Dialog from './Dialog.svelte';
 
-	export let user;
-	export let currentDialog;
+	export let user, currentDialog, items;
 
-	let myInventory = [];
+	let myInventory = user.inventory.split('/');
+	console.log(myInventory);
 	let countOfItems = [];
 
-	const compterObjetsIdentiques = (array) => {
-		const compteur = {}; // Objet pour stocker les occurrences des objets
-		// Parcourir le tableau d'objets
-		array.forEach((item) => {
-			// Convertir l'objet en une chaîne JSON pour le représenter comme une clé
-			const cle = item.nameId;
-			// Incrémenter le compteur pour cette clé
-			compteur[cle] = (compteur[cle] || 0) + 1;
+	function countOccurrences(arr) {
+		const counts = {};
+		arr.forEach((item) => {
+			counts[item] = (counts[item] || 0) + 1;
 		});
-		return compteur;
-	};
+		return Object.entries(counts).map(([name, count]) => ({ name, count }));
+	}
 
 	const updateInventory = (user) => {
-		let inventory = user.inventory;
-		if (!inventory) return;
-		myInventory = [];
-		inventory = inventory.split('/');
-		for (let item of inventory) {
-			item = JSON.parse(item);
-			myInventory.push(item);
-		}
-
-		countOfItems = compterObjetsIdentiques(myInventory);
-		countOfItems = Object.entries(countOfItems).map(([cle, valeur]) => ({ [cle]: valeur }));
+		countOfItems = countOccurrences(myInventory);
+		console.log(countOfItems);
 	};
 
 	onMount(() => {
@@ -43,15 +30,11 @@
 	<svelte:fragment slot="header">
 		{#if countOfItems}
 			<ul class="inventory">
-				{#each countOfItems as item, index}
+				{#each countOfItems as item}
 					<li class="inventory_item">
-						<img
-							class="fluidimg"
-							src="/assets/img/{Object.keys(countOfItems[index])[0]}.png"
-							alt={Object.keys(countOfItems[index])[0]}
-						/>
+						<img class="fluidimg" src="/assets/img/{item.name}.png" alt={item.name} />
 						<p class="numOfItem">
-							<span>{countOfItems[index][Object.keys(countOfItems[index])[0]]}</span>
+							<span>{item.count}</span>
 						</p>
 					</li>
 				{/each}
