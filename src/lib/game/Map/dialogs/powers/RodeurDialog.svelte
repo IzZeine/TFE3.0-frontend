@@ -19,7 +19,7 @@
 	};
 
 	function useAbility(data) {
-		dispatch('useAbility');
+		dispatch('useAbility', data);
 	}
 
 	let randomRoomTP = getnumber();
@@ -32,7 +32,12 @@
 		<ul class="roomChoice">
 			{#each randomRoomTP as room}
 				<li class="roomChoice_item">
-					<button class="roomChoice_item-btn" on:click={() => useAbility(room)}>{room}</button>
+					<button
+						class="roomChoice_item-btn"
+						on:click={() => {
+							useAbility(room);
+						}}>{room}</button
+					>
 				</li>
 			{/each}
 		</ul>

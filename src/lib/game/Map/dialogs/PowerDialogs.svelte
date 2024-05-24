@@ -9,6 +9,7 @@
 	import DragonDialog from './powers/DragonDialog.svelte';
 
 	import { createEventDispatcher } from 'svelte';
+	import { socket } from '$lib/api/socketConnection';
 
 	export let user, currentDialog, game;
 
@@ -23,10 +24,10 @@
 		return;
 		switch (user.hero) {
 			case 'Rodeur':
-				socket.emit('askToChangeRoom', data);
+				socket.emit('askToChangeRoom', data.detail);
 				break;
 			case 'Chevalier':
-				socket.emit('moveFaster', data);
+				socket.emit('moveFaster');
 				break;
 			case 'Necromancien':
 				socket.emit('saveUser', data.detail);
@@ -35,6 +36,7 @@
 				socket.emit('healUser', data.detail);
 				break;
 			case 'Magicien':
+				socket.emit('upDices');
 				break;
 			case 'Serpent':
 				socket.emit('nerfDices');
@@ -43,15 +45,15 @@
 				socket.emit('getRock');
 				break;
 			default:
-				console.log('personne');
+				console.log('nobody');
 		}
 	};
 </script>
 
-{#if user.hero === 'Rodeur'}
+{#if user.hero === 'Chevalier'}
 	<RodeurDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
-{#if user.hero === 'Chevalier'}
+{#if user.hero === ''}
 	<KnightDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
 {#if user.hero === 'Druide'}
