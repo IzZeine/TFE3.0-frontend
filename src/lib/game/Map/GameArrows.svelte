@@ -1,6 +1,6 @@
 <script>
 	import { writable } from 'svelte/store';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { page } from '$app/stores';
 	import { socket } from '$lib/api/socketConnection';
 
@@ -11,7 +11,7 @@
 	const roomsConnections = $page.data.roomsConnections;
 	const directions = ['top', 'bot', 'left', 'right'];
 
-	let myRoom = user.room;
+	$: myRoom = user.room;
 
 	const coolDownTime = 5000;
 
@@ -53,7 +53,7 @@
 		directionsInMyRoom = roomsConnections[user.room];
 		console.log(directionsInMyRoom?.[direction]);
 		if (!myRoom) myRoom = user.room;
-		return !directionsInMyRoom?.[direction];
+		return directionsInMyRoom?.[direction];
 	}
 
 	function goToDirection(direction) {
@@ -66,14 +66,18 @@
 			// 	popUp("You don't have the key");
 			// 	return;
 		}
+		myRoom = targetRoom;
+		console.log(targetRoom);
 		socket.emit('askToChangeRoom', targetRoom, async (response) => {
 			user = response.user;
 			console.log(user);
 			myRoom = user.room;
+			directionsInMyRoom = roomsConnections[user.room];
+			await tick();
 		});
 	}
 
-	$: directionsInMyRoom = roomsConnections[user.room];
+	$: directionsInMyRoom = roomsConnections[myRoom];
 	$: canGoTop = canGoToDirection('top');
 	$: canGoLeft = canGoToDirection('left');
 	$: canGoRight = canGoToDirection('right');
@@ -90,7 +94,7 @@
 	<button
 		class="directionArrow directionArrow_top"
 		id="top"
-		disabled={canGoTop}
+		disabled={!canGoTop}
 		on:click={() => goToDirection('top')}
 	>
 		<img class="fluidimg directionArrow_img" src="/assets/img/top.svg" alt="top" />
@@ -98,7 +102,7 @@
 	<button
 		class="directionArrow directionArrow_left"
 		id="left"
-		disabled={canGoLeft}
+		disabled={!canGoLeft}
 		on:click={() => goToDirection('left')}
 	>
 		<img class="fluidimg directionArrow_img" src="/assets/img/left.svg" alt="left" />
@@ -106,7 +110,7 @@
 	<button
 		class="directionArrow directionArrow_right"
 		id="right"
-		disabled={canGoRight}
+		disabled={!canGoRight}
 		on:click={() => goToDirection('right')}
 	>
 		<img class="fluidimg directionArrow_img" src="/assets/img/right.svg" alt="right" />
@@ -114,7 +118,7 @@
 	<button
 		class="directionArrow directionArrow_bot"
 		id="bot"
-		disabled={canGoBot}
+		disabled={!canGoBot}
 		on:click={() => goToDirection('bot')}
 	>
 		<img class="fluidimg directionArrow_img" src="/assets/img/bot.svg" alt="bot" />
