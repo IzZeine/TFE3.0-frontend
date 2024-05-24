@@ -1,5 +1,5 @@
 <script>
-	import Dialog from './Dialog.svelte';
+	import Dialog from '../Dialog.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	export let user = user;
