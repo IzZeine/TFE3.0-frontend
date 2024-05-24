@@ -1,6 +1,5 @@
 <script>
 	export let user;
-	let color = user.color;
 </script>
 
 <div class="headerMap">
@@ -47,5 +46,5 @@
 			</div>
 		</div>
 	</div>
-	<p class="cardHero_hero" style="--color:{color};">{user.hero}</p>
+	<p class="cardHero_hero" style:color={user.color}>{user.hero}</p>
 </div>

@@ -4,7 +4,7 @@
 	import Inventory from './Inventory.svelte';
 	import Item from './Item.svelte';
 
-	export let user, items, currentDialog;
+	export let user, items, currentDialog, game;
 
 	console.log('le dialog', currentDialog);
 
