@@ -1,8 +1,9 @@
 <script>
 	import Dialog from '../Dialog.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import { user } from '$lib/api/stores';
 
-	export let user, currentDialog, game;
+	export let currentDialog, game;
 
 	const dispatch = createEventDispatcher();
 
@@ -29,7 +30,7 @@
 		</ul>
 	</svelte:fragment>
 	<svelte:fragment slot="content">
-		<p class="h2">{user.abilityName}</p>
-		<p>{user.ability}</p>
+		<p class="h2">{$user.abilityName}</p>
+		<p>{$user.ability}</p>
 	</svelte:fragment>
 </Dialog>

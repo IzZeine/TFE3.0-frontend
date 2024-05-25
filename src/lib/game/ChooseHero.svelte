@@ -1,18 +1,19 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import Carousel from 'svelte-carousel';
+	import { user } from '$lib/api/stores';
 
 	const dispatch = createEventDispatcher();
 
-	export let heroes, boss, user;
+	export let heroes, boss;
 	let selectedHero;
 
 	$: {
-		if (user.team && !selectedHero) {
-			if (user.team === 'hero') {
+		if ($user.team && !selectedHero) {
+			if ($user.team === 'hero') {
 				selectedHero = heroes[0];
 			}
-			if (user.team === 'boss') {
+			if ($user.team === 'boss') {
 				selectedHero = boss[0];
 			}
 		}
@@ -34,26 +35,26 @@
 </script>
 
 <div class="chooseHero">
-	{#if user.team === 'hero'}
+	{#if $user.team === 'hero'}
 		<h1 class="h1">Tu es un hero !</h1>
 	{/if}
-	{#if user.team === 'boss'}
+	{#if $user.team === 'boss'}
 		<h1 class="h1">Tu es le boss !</h1>
 	{/if}
 	<h2 class="h2">Lequel choisis-tu ?</h2>
-	{#if heroes && boss && user.team}
+	{#if heroes && boss && $user.team}
 		<Carousel
 			bind:this={carousel}
 			on:pageChange={(event) => {
-				if (user.team === 'hero') {
+				if ($user.team === 'hero') {
 					selectedHero = heroes[event.detail];
 				}
-				if (user.team === 'boss') {
+				if ($user.team === 'boss') {
 					selectedHero = boss[event.detail];
 				}
 			}}
 		>
-			{#if user.team === 'hero'}
+			{#if $user.team === 'hero'}
 				{#each heroes as hero}
 					<div class="heroItem">
 						<img class="fluidimg heroImg" src="/assets/img/{hero.img}" alt={hero.name} />
@@ -61,7 +62,7 @@
 				{/each}
 			{/if}
 
-			{#if user.team == 'boss'}
+			{#if $user.team == 'boss'}
 				{#each boss as oneBoss}
 					<div class="heroItem">
 						<img class="fluidimg heroImg" src="/assets/img/{oneBoss.img}" alt={oneBoss.name} />
@@ -94,13 +95,13 @@
 		</Carousel>
 	{/if}
 
-	{#if user.team == 'hero'}
+	{#if $user.team == 'hero'}
 		<p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
 		<p class="abilityTitle">{selectedHero.abilityName}</p>
 		<p class="heroDescription">{selectedHero.ability}</p>
 	{/if}
 
-	{#if user.team == 'boss'}
+	{#if $user.team == 'boss'}
 		<p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
 		<p class="abilityTitle">{selectedHero.abilityName}</p>
 		<p class="heroDescription">{selectedHero.ability}</p>

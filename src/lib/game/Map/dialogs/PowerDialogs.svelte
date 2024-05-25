@@ -7,11 +7,12 @@
 	import GolemDialog from './powers/GolemDialog.svelte';
 	import SnakeDialog from './powers/SnakeDialog.svelte';
 	import DragonDialog from './powers/DragonDialog.svelte';
+	import { user } from '$lib/api/stores';
 
 	import { createEventDispatcher } from 'svelte';
 	import { socket } from '$lib/api/socketConnection';
 
-	export let user, currentDialog, game;
+	export let currentDialog, game;
 
 	const dispatch = createEventDispatcher();
 
@@ -21,10 +22,10 @@
 
 	const useAbility = (data) => {
 		console.log(data.detail);
-		switch (user.hero) {
+		switch ($user.hero) {
 			case 'Rodeur':
 				socket.emit('askToChangeRoom', data.detail, async (response) => {
-					user = response.user;
+					user.set(response.user);
 				});
 				break;
 			case 'Chevalier':
@@ -48,42 +49,36 @@
 			default:
 				console.log('nobody');
 		}
+		closeDialog();
 	};
 </script>
 
-{#if user.hero === 'Rodeur'}
-	<RodeurDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
+{#if $user.hero === 'Rodeur'}
+	<RodeurDialog {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
-{#if user.hero === 'Chevalier'}
-	<KnightDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
+{#if $user.hero === 'Chevalier'}
+	<KnightDialog {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
-{#if user.hero === 'Druide'}
-	<DruideDialog
-		{user}
-		{currentDialog}
-		{game}
-		on:closeDialog={closeDialog}
-		on:useAbility={useAbility}
-	/>
+{#if $user.hero === 'Druide'}
+	<DruideDialog {currentDialog} {game} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
-{#if user.hero === 'Necromancien'}
+{#if $user.hero === 'Necromancien'}
 	<NecromancerDialog
-		{user}
 		{currentDialog}
 		{game}
 		on:closeDialog={closeDialog}
 		on:useAbility={useAbility}
 	/>
 {/if}
-{#if user.hero === 'Magicien'}
-	<WizardDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
+{#if $user.hero === 'Magicien'}
+	<WizardDialog {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
-{#if user.hero === 'Golem'}
-	<GolemDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
+{#if $user.hero === 'Golem'}
+	<GolemDialog {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
-{#if user.hero === 'Serpent'}
-	<SnakeDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
+{#if $user.hero === 'Serpent'}
+	<SnakeDialog {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}
-{#if user.hero === 'Dragon'}
-	<DragonDialog {user} {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
+{#if $user.hero === 'Dragon'}
+	<DragonDialog {currentDialog} on:closeDialog={closeDialog} on:useAbility={useAbility} />
 {/if}

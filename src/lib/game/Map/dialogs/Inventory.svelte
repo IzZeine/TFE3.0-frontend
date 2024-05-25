@@ -1,11 +1,11 @@
 <script>
 	import { onMount } from 'svelte';
 	import Dialog from './Dialog.svelte';
+	import { user } from '$lib/api/stores';
 
-	export let user, currentDialog, items;
+	export let currentDialog, items;
 
-	let myInventory = user.inventory.split('/');
-	console.log(myInventory);
+	let myInventory = $user.inventory.split('/');
 	let countOfItems = [];
 
 	function countOccurrences(arr) {
@@ -16,17 +16,17 @@
 		return Object.entries(counts).map(([name, count]) => ({ name, count }));
 	}
 
-	const updateInventory = (user) => {
+	const updateInventory = () => {
 		countOfItems = countOccurrences(myInventory);
 		console.log(countOfItems);
 	};
 
 	onMount(() => {
-		updateInventory(user);
+		updateInventory();
 	});
 </script>
 
-<Dialog {user} {currentDialog} on:closeDialog>
+<Dialog {currentDialog} on:closeDialog>
 	<svelte:fragment slot="header">
 		{#if countOfItems}
 			<ul class="inventory">

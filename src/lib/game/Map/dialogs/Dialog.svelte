@@ -9,8 +9,6 @@
 	function closeDialog() {
 		dispatch('closeDialog');
 	}
-
-	export let user = user;
 </script>
 
 {#if currentDialog}

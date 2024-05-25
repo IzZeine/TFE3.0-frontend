@@ -4,7 +4,7 @@
 	import Inventory from './Inventory.svelte';
 	import Item from './Item.svelte';
 
-	export let user, items, currentDialog, game;
+	export let items, currentDialog, game;
 
 	console.log('le dialog', currentDialog);
 
@@ -16,11 +16,11 @@
 </script>
 
 {#if currentDialog === 'power'}
-	<PowerDialogs {user} {currentDialog} {game} on:closeDialog={closeDialog} />
+	<PowerDialogs {currentDialog} {game} on:closeDialog={closeDialog} />
 {/if}
 {#if currentDialog === 'inventory'}
-	<Inventory {user} {items} {currentDialog} on:closeDialog={closeDialog} />
+	<Inventory {items} {currentDialog} on:closeDialog={closeDialog} />
 {/if}
 {#if currentDialog === 'item'}
-	<Item {user} {items} {currentDialog} on:closeDialog={closeDialog} />
+	<Item {items} {currentDialog} on:closeDialog={closeDialog} />
 {/if}

@@ -1,8 +1,9 @@
 <script>
 	import Dialog from '../Dialog.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import { user } from '$lib/api/stores';
 
-	export let user, currentDialog;
+	export let currentDialog;
 
 	const dispatch = createEventDispatcher();
 
@@ -26,7 +27,7 @@
 </script>
 
 <!-- l'event closeDialog est forwardé vers le composant GameDialogs https://learn.svelte.dev/tutorial/event-forwarding -->
-<Dialog {user} {currentDialog} on:closeDialog>
+<Dialog {currentDialog} on:closeDialog>
 	<svelte:fragment slot="header">
 		<img class="fluidimg" src="/assets/img/boardgame.png" alt="plateau" />
 		<ul class="roomChoice">
@@ -43,7 +44,7 @@
 		</ul>
 	</svelte:fragment>
 	<svelte:fragment slot="content">
-		<p class="h2">{user.abilityName}</p>
-		<p>{user.ability}</p>
+		<p class="h2">{$user.abilityName}</p>
+		<p>{$user.ability}</p>
 	</svelte:fragment>
 </Dialog>

@@ -2,12 +2,12 @@
 	import { socket } from '$lib/api/socketConnection';
 	import Dialog from './Dialog.svelte';
 	import { onMount } from 'svelte';
+	import { user } from '$lib/api/stores';
 
-	export let user, items;
-	export let currentDialog;
+	export let items, currentDialog;
 
 	let allRooms;
-	let myRoom = user.room;
+	let myRoom = $user.room;
 	let dice1 = 1,
 		dice2 = 1;
 	let nerfDices = 0;
@@ -38,11 +38,11 @@
 	};
 
 	onMount(() => {
-		socket.emit('getRooms', user.gameId);
+		socket.emit('getRooms', $user.gameId);
 		socket.on('youAskedRooms', (rooms) => {
 			if (!user) return;
 			allRooms = rooms;
-			myRoom = allRooms[user.room];
+			myRoom = allRooms[$user.room];
 			itemInRoom = items.find((item) => item.nameId === myRoom.itemId);
 		});
 	});
@@ -50,7 +50,7 @@
 	$: getItemBtnDisabled = !itemInRoom;
 </script>
 
-<Dialog {user} {currentDialog} on:closeDialog>
+<Dialog {currentDialog} on:closeDialog>
 	<svelte:fragment slot="header">
 		<div class="dices">
 			<div class="dices">

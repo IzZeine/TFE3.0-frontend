@@ -1,17 +1,17 @@
 <script>
 	import { writable } from 'svelte/store';
-	import { onMount, tick } from 'svelte';
 	import { page } from '$app/stores';
 	import { socket } from '$lib/api/socketConnection';
+	import { user } from '$lib/api/stores';
 
 	let moveSpeed = 1000;
-
-	export let user;
 
 	const roomsConnections = $page.data.roomsConnections;
 	const directions = ['top', 'bot', 'left', 'right'];
 
-	$: myRoom = user.room;
+	$: myRoom = $user.room;
+	$: currentUser = $user;
+	$: directionsInMyRoom = roomsConnections[myRoom];
 
 	const coolDownTime = 5000;
 
@@ -45,13 +45,24 @@
 		});
 	}
 
-	function canGoToDirection(direction) {
-		console.log(direction);
+	let canGoTop;
+	let canGoLeft;
+	let canGoRight;
+	let canGoBot;
+
+	$: {
+		console.log(currentUser);
+		canGoTop = canGoToDirection(currentUser, 'top');
+		canGoLeft = canGoToDirection(currentUser, 'left');
+		canGoRight = canGoToDirection(currentUser, 'right');
+		canGoBot = canGoToDirection(currentUser, 'bot');
+	}
+
+	function canGoToDirection(user, direction) {
+		user = currentUser;
 		if ($timer.running) return false;
 		if (user.life <= 0) return false;
-		console.log(roomsConnections[user.room]);
 		directionsInMyRoom = roomsConnections[user.room];
-		console.log(directionsInMyRoom?.[direction]);
 		if (!myRoom) myRoom = user.room;
 		return directionsInMyRoom?.[direction];
 	}
@@ -69,19 +80,11 @@
 		myRoom = targetRoom;
 		console.log(targetRoom);
 		socket.emit('askToChangeRoom', targetRoom, async (response) => {
-			user = response.user;
-			console.log(user);
-			myRoom = user.room;
-			directionsInMyRoom = roomsConnections[user.room];
-			await tick();
+			user.set(response.user);
+			myRoom = $user.room;
+			directionsInMyRoom = roomsConnections[$user.room];
 		});
 	}
-
-	$: directionsInMyRoom = roomsConnections[myRoom];
-	$: canGoTop = canGoToDirection('top');
-	$: canGoLeft = canGoToDirection('left');
-	$: canGoRight = canGoToDirection('right');
-	$: canGoBot = canGoToDirection('bot');
 
 	$: {
 		if ($timer.elapsedTime > coolDownTime) {
@@ -90,50 +93,52 @@
 	}
 </script>
 
-<div class="directionsArrows">
-	<button
-		class="directionArrow directionArrow_top"
-		id="top"
-		disabled={!canGoTop}
-		on:click={() => goToDirection('top')}
-	>
-		<img class="fluidimg directionArrow_img" src="/assets/img/top.svg" alt="top" />
-	</button>
-	<button
-		class="directionArrow directionArrow_left"
-		id="left"
-		disabled={!canGoLeft}
-		on:click={() => goToDirection('left')}
-	>
-		<img class="fluidimg directionArrow_img" src="/assets/img/left.svg" alt="left" />
-	</button>
-	<button
-		class="directionArrow directionArrow_right"
-		id="right"
-		disabled={!canGoRight}
-		on:click={() => goToDirection('right')}
-	>
-		<img class="fluidimg directionArrow_img" src="/assets/img/right.svg" alt="right" />
-	</button>
-	<button
-		class="directionArrow directionArrow_bot"
-		id="bot"
-		disabled={!canGoBot}
-		on:click={() => goToDirection('bot')}
-	>
-		<img class="fluidimg directionArrow_img" src="/assets/img/bot.svg" alt="bot" />
-	</button>
-	{#if $timer?.running}
-		<div>Cooldown {`${$timer.elapsedTime}/${coolDownTime}`}</div>
-	{/if}
-</div>
+{#if user}
+	<div class="directionsArrows">
+		<button
+			class="directionArrow directionArrow_top"
+			id="top"
+			disabled={!canGoTop}
+			on:click={() => goToDirection('top')}
+		>
+			<img class="fluidimg directionArrow_img" src="/assets/img/top.svg" alt="top" />
+		</button>
+		<button
+			class="directionArrow directionArrow_left"
+			id="left"
+			disabled={!canGoLeft}
+			on:click={() => goToDirection('left')}
+		>
+			<img class="fluidimg directionArrow_img" src="/assets/img/left.svg" alt="left" />
+		</button>
+		<button
+			class="directionArrow directionArrow_right"
+			id="right"
+			disabled={!canGoRight}
+			on:click={() => goToDirection('right')}
+		>
+			<img class="fluidimg directionArrow_img" src="/assets/img/right.svg" alt="right" />
+		</button>
+		<button
+			class="directionArrow directionArrow_bot"
+			id="bot"
+			disabled={!canGoBot}
+			on:click={() => goToDirection('bot')}
+		>
+			<img class="fluidimg directionArrow_img" src="/assets/img/bot.svg" alt="bot" />
+		</button>
+		{#if $timer?.running}
+			<div>Cooldown {`${$timer.elapsedTime}/${coolDownTime}`}</div>
+		{/if}
+	</div>
+{/if}
 <!-- {#if isFixed} -->
 <h1
 	class="h2 directionSalle"
 	in:blur={{ y: 50, duration: moveSpeed * 500 }}
 	out:blur={{ duration: moveSpeed * 0 }}
 >
-	Salle {user.room}
+	Salle {$user.room}
 </h1>
 <!-- {:else} -->
 <h1
