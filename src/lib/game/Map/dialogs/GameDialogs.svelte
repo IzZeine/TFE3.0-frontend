@@ -7,8 +7,6 @@
 
 	export let items, currentDialog, game;
 
-	console.log('le dialog', currentDialog);
-
 	const dispatch = createEventDispatcher();
 
 	function closeDialog() {

@@ -17,10 +17,9 @@
 	let winner = null;
 
 	const updateGame = async (data) => {
-		console.log('[game] update game', data);
-		console.log('[game] update game user', $user);
+		// console.log('[game] update game', data);
+		// console.log('[game] update game user', $user);
 		user.set(data.users.find(({ id }) => id === $user.id));
-		console.log($user);
 		game = data;
 	};
 
@@ -29,7 +28,7 @@
 		socket.emit('joinGame', gameId);
 		user.set(await getUser(gameId));
 		console.log('[game] user', $user);
-		if (!user) {
+		if (!$user) {
 			console.log('no user go to create one');
 			sessionStorage.clear();
 			await goto(`/game/${gameId}/user`);

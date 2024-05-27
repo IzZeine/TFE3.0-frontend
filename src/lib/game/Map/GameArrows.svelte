@@ -51,7 +51,6 @@
 	let canGoBot;
 
 	$: {
-		console.log(currentUser);
 		canGoTop = canGoToDirection(currentUser, 'top');
 		canGoLeft = canGoToDirection(currentUser, 'left');
 		canGoRight = canGoToDirection(currentUser, 'right');
@@ -78,7 +77,6 @@
 			// 	return;
 		}
 		myRoom = targetRoom;
-		console.log(targetRoom);
 		socket.emit('askToChangeRoom', targetRoom, async (response) => {
 			user.set(response.user);
 			myRoom = $user.room;
