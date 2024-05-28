@@ -47,7 +47,7 @@
 				battleSended = true;
 				socket.emit('battle', playersInRoom, async (response) => {
 					console.log(response);
-					// battleSended = false;
+					battleSended = false;
 				});
 			}
 		}
