@@ -1,6 +1,5 @@
 <script context="module">
 	import { writable } from 'svelte/store';
-	//Create a globally accessible object
 	export const positions = writable();
 </script>
 

@@ -2,20 +2,21 @@
 	import Player from './Player.svelte';
 	import { positions } from './BoardGameSVG.svelte';
 	import { quintOut } from 'svelte/easing';
-	import { crossfade, slide } from 'svelte/transition';
+	import { crossfade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+	import { socket } from '$lib/api/socketConnection';
 
 	export let activeUsers, index;
 
 	let playersInRoom;
 	let columns;
 	let position = { x: 0, y: 0 };
+	let battleSended = false;
 
 	const [send, receive] = crossfade({
 		fallback(node, params) {
 			const style = getComputedStyle(node);
 			const transform = style.transform === 'none' ? '' : style.transform;
-			console.log(transform);
 
 			return {
 				duration: 600,
@@ -27,23 +28,28 @@
 		}
 	});
 
-	$: playersInRoom = activeUsers.map((user) => {
-		if (user.room == index) {
-			return {
-				...user
-			};
-		}
-	});
-
-	$: playersInRoom = playersInRoom.filter(Boolean);
-	$: columns = Math.min(playersInRoom.length, 3);
-
 	$: {
-		const roomPosition = $positions?.find((roomPosition) => {
-			return roomPosition.id === `room${index}`;
-		});
+		playersInRoom = activeUsers.filter((user) => user.room === index).map((user) => ({ ...user }));
+
+		const roomPosition = $positions?.find((roomPosition) => roomPosition.id === `room${index}`);
 		if (roomPosition) {
 			position = roomPosition;
+			if (position.width >= position.height) {
+				columns = Math.min(playersInRoom.length, 3);
+			} else {
+				columns = Math.min(playersInRoom.length, 2);
+			}
+		}
+
+		if (playersInRoom.length > 1) {
+			let battle = playersInRoom.find((user) => user.team === 'boss');
+			if (battle && !battleSended) {
+				battleSended = true;
+				socket.emit('battle', playersInRoom, async (response) => {
+					console.log(response);
+					// battleSended = false;
+				});
+			}
 		}
 	}
 </script>

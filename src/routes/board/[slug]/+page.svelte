@@ -26,7 +26,7 @@
 	*/
 
 	const onUpdateGame = (data) => {
-		console.log('[board] onUpdateGame', data);
+		// console.log('[board] onUpdateGame', data);
 		game = data;
 	};
 

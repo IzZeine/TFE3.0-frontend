@@ -14,7 +14,7 @@
 	let boardElement;
 
 	const onUpdateUsers = (players) => {
-		console.log('[boardGame] onUpdateusers', players);
+		// console.log('[boardGame] onUpdateusers', players);
 		activeUsers = players.map((player) => {
 			return {
 				...player
@@ -32,9 +32,6 @@
 
 <div class="boardGame">
 	<div class="usersPawnList">
-		<!-- {#each activeUsers as user}
-			<Player {user} />
-		{/each} -->
 		{#each { length: 39 } as _, index}
 			<Room {activeUsers} {index} />
 		{/each}
