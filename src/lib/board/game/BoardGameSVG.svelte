@@ -741,22 +741,3 @@
 		</clipPath>
 	</defs>
 </svg>
-
-<!-- {#each itemInRoomPositions as room}
-	<img
-		src="/assets/img/inventory.png"
-		alt="inventory"
-		style:left={`${room.x}px`}
-		style:top={`${room.y}px`}
-		class="fluidimg"
-	/>
-{/each}
-
-<style>
-	img {
-		max-width: 3%;
-		position: absolute;
-		transform: translate(-50%, -50%);
-		filter: drop-shadow(0 0 5px var(--txtPrimary));
-	}
-</style> -->

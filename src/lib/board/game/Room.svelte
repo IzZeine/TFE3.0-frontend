@@ -5,6 +5,7 @@
 	import { crossfade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { socket } from '$lib/api/socketConnection';
+	import { onMount } from 'svelte';
 
 	export let activeUsers, index;
 
@@ -12,6 +13,7 @@
 	let columns;
 	let position = { x: 0, y: 0 };
 	let battleSended = false;
+	let activeAnimation = ''; // default ''
 
 	const [send, receive] = crossfade({
 		fallback(node, params) {
@@ -52,6 +54,13 @@
 			}
 		}
 	}
+
+	onMount(() => {
+		socket.on('itemWasTaken', (data) => {
+			console.log(data.id - 1);
+			if (index == data.id - 1) activeAnimation = 'isActive';
+		});
+	});
 </script>
 
 <ul
@@ -63,11 +72,18 @@
 	style:width="{position.width}px"
 >
 	{#each playersInRoom as player (player.id)}
-		<li in:receive={{ key: player.id }} out:send={{ key: player.id }} animate:flip>
+		<li class="player" in:receive={{ key: player.id }} out:send={{ key: player.id }} animate:flip>
 			<Player {player} />
 		</li>
 	{/each}
 </ul>
+<img
+	src="/assets/img/inventory.png"
+	alt="inventory"
+	style:left={`${position.x + position.width / 2}px`}
+	style:top={`${position.y + position.height / 2}px`}
+	class="fluidimg itemInRoom {activeAnimation}"
+/>
 
 <style lang="scss">
 	.room {
@@ -78,7 +94,33 @@
 		justify-items: center;
 		gap: 6px;
 	}
-	li {
+	.player {
 		max-width: 60px;
+	}
+	.itemInRoom {
+		max-width: 3%;
+		opacity: 0;
+		position: absolute;
+		transform: translate(-50%, -50%);
+		filter: drop-shadow(0 0 5px var(--txtPrimary));
+	}
+
+	.itemInRoom.isActive {
+		animation: animUp 2s;
+	}
+
+	@keyframes animUp {
+		0% {
+			opacity: 0;
+			transform: translate(-50%, -50%) translateY(0px);
+		}
+		75% {
+			opacity: 1;
+			transform: translate(-50%, -50%) translateY(-15px);
+		}
+		100% {
+			opacity: 0;
+			transform: translate(-50%, -50%) translateY(-15px);
+		}
 	}
 </style>

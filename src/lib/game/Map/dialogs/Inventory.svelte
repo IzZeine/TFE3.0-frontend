@@ -9,6 +9,7 @@
 	let countOfItems = [];
 
 	function countOccurrences(arr) {
+		if (!$user.inventory) return;
 		const counts = {};
 		arr.forEach((item) => {
 			counts[item] = (counts[item] || 0) + 1;
@@ -18,7 +19,6 @@
 
 	const updateInventory = () => {
 		countOfItems = countOccurrences(myInventory);
-		console.log(countOfItems);
 	};
 
 	onMount(() => {
