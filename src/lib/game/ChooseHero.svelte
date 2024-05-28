@@ -107,5 +107,25 @@
 		<p class="heroDescription">{selectedHero.ability}</p>
 	{/if}
 
-	<button on:click={chooseHero} class="btnPrimary">Choisir</button>
+	<div class="footer">
+		<button on:click={chooseHero} class="btnPrimary">Choisir</button>
+		<p style:margin-top="12px">
+			Personnage actuel :
+			{#if $user.hero}
+				{$user.hero}
+			{:else}
+				...
+			{/if}
+		</p>
+	</div>
 </div>
+
+<style lang="scss">
+	.footer {
+		margin-top: auto;
+		button {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+</style>

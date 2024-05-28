@@ -4,29 +4,13 @@
 	import Battles from '$lib/board/game/Battles.svelte';
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
-
-	/*
-	socket.on('updateUsers', (data) => {
-		activeUsers = data;
-		let conditionHero = (currentValue) => currentValue.hero;
-		if (activeUsers.length >= 2 && game.statut == 'waiting') {
-			let btnClose = document.querySelector('.js-btn-close');
-			btnClose.removeAttribute('disabled');
-		}
-		if (activeUsers.length == 6 && game.statut == 'waiting') {
-			closeGame();
-		}
-		if (activeUsers.length >= 2 && activeUsers.every(conditionHero) && game.statut == 'closed') {
-			let btnPlay = document.querySelector('.js-btn-play');
-			btnPlay.removeAttribute('disabled');
-		}
-	});
-*/
+	import Room from './Room.svelte';
 
 	//Game status
 	export let game;
 
-	let activeUsers = game.users;
+	let activeUsers;
+	$: activeUsers = game.users;
 	let boardElement;
 
 	const onUpdateUsers = (players) => {
@@ -47,11 +31,14 @@
 </script>
 
 <div class="boardGame">
-	<ul class="usersPawnList">
-		{#each activeUsers as user}
+	<div class="usersPawnList">
+		<!-- {#each activeUsers as user}
 			<Player {user} />
+		{/each} -->
+		{#each { length: 39 } as _, index}
+			<Room {activeUsers} {index} />
 		{/each}
-	</ul>
+	</div>
 	<img class="fluidimg boardGameImg" src="/assets/img/boardgame.png" alt="boardgame" />
 	<BoardGameSVG bind:this={boardElement} />
 	<Battles />

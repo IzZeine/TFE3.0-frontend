@@ -11,29 +11,7 @@
 	let element;
 	let itemInRoomPositions = [];
 
-	let animInRoom = async (room, item) => {
-		/*
-	let itemImg = '/assets/img/' + item + '.png';
-	let target = document.getElementById(room);
-	target.style.position = 'relative';
-
-	let itemDiv = document.body.appendChild(document.createElement('div'));
-	itemDiv.classList.add('anim', 'animInRoom', 'isActive');
-	let itemDivImg = itemDiv.appendChild(document.createElement('img'));
-	itemDivImg.classList.add('fluidimg');
-	itemDivImg.setAttribute('src', itemImg);
-
-	let targetBoundingClientRect = target.getBoundingClientRect();
-	let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width / 2;
-	let TargetY = targetBoundingClientRect.y + targetBoundingClientRect.height / 2;
-
-	itemDiv.style.top = TargetY + 'px';
-	itemDiv.style.left = TargetX + 'px';
-
-	await sleep(5);
-	itemDiv.remove();
-	*/
-	};
+	let animInRoom = async (room, item) => {};
 
 	const onTakeItemInRoom = (room, boss) => {
 		if (boss) {
@@ -51,8 +29,8 @@
 				width: rect.width,
 				height: rect.height,
 				id: room.getAttribute('id'),
-				x: rect.x + rect.width / 2,
-				y: rect.y + rect.height / 2
+				x: rect.x,
+				y: rect.y
 			};
 		});
 	};
@@ -765,7 +743,7 @@
 	</defs>
 </svg>
 
-{#each itemInRoomPositions as room}
+<!-- {#each itemInRoomPositions as room}
 	<img
 		src="/assets/img/inventory.png"
 		alt="inventory"
@@ -780,5 +758,6 @@
 		max-width: 3%;
 		position: absolute;
 		transform: translate(-50%, -50%);
+		filter: drop-shadow(0 0 5px var(--txtPrimary));
 	}
-</style>
+</style> -->

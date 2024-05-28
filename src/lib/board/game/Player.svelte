@@ -2,9 +2,8 @@
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
 	import throttle from 'lodash/throttle.js';
-	import { positions } from './BoardGameSVG.svelte';
 
-	export let user;
+	export let player;
 
 	let element;
 
@@ -34,7 +33,7 @@
 	const throttleAnimPlayer = throttle(animOnPlayer, 5000);
 
 	const onUsedPower = (id, hero) => {
-		if (id === user.id) {
+		if (id === player.id) {
 			let img = 'power';
 			if (hero === 'Chevalier') img = 'potionSpeed';
 			if (hero === 'Druide') img = 'life';
@@ -47,79 +46,27 @@
 	};
 
 	onMount(() => {
-		console.log(element);
-
 		socket.on('usedPower', onUsedPower);
 		return () => {
 			socket.off('usedPower', onUsedPower);
 		};
 	});
-
-	let position = { x: 0, y: 0 };
-	$: {
-		const roomPosition = $positions?.find((roomPosition) => {
-			return roomPosition.id === `room${user.room}`;
-		});
-		if (roomPosition) {
-			position = roomPosition;
-		}
-	}
-
-	/*
-	let playerMove = (userId) => {
-		let userMove = activeUsers.find((id) => id.id === userId);
-		let target = 'room' + userMove.room + '_' + userMove.player;
-
-		let myPlayerDiv = document.querySelector('.' + userMove.player);
-		let targetDiv = document.querySelector('#' + target);
-
-		let targetBoundingClientRect = targetDiv.getBoundingClientRect();
-		let TargetX = targetBoundingClientRect.x;
-		let TargetY = targetBoundingClientRect.y;
-
-		myPlayerDiv.style.top = TargetY + 'px';
-		myPlayerDiv.style.left = TargetX + 'px';
-	};
-	*/
-	/*
-	let animOnPlayer = async (id, item) => {
-		let itemImg = '/assets/img/' + item + '.png';
-		let target = document.getElementById(id);
-		// target.style.position = 'relative'
-
-		let itemDiv = document.body.appendChild(document.createElement('div'));
-		itemDiv.classList.add('anim', 'animOnPlayer', 'isActive');
-		let itemDivImg = itemDiv.appendChild(document.createElement('img'));
-		itemDivImg.classList.add('fluidimg');
-		itemDivImg.setAttribute('src', itemImg);
-
-		let targetBoundingClientRect = target.getBoundingClientRect();
-		let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width / 2;
-		let TargetY = targetBoundingClientRect.y + targetBoundingClientRect.height / 2;
-
-		itemDiv.style.top = TargetY + 'px';
-		itemDiv.style.left = TargetX + 'px';
-
-		await sleep(5);
-		itemDiv.remove();
-	};
-	*/
 </script>
 
-<li
-	bind:this={element}
-	class="userPawn"
-	id={user.id}
-	style:left={`${position?.x}px`}
-	style:top={`${position?.y}px`}
-	style:background-color={user.color}
->
-	<img class="fluidimg userPawn_img" src="/assets/img/{user.heroImg}" alt="pawn icon" />
-</li>
+<div bind:this={element} class="userPawn" id={player.id}>
+	<img
+		class="fluidimg userPawn_img"
+		src="/assets/img/{player.heroImg}"
+		alt="pawn icon"
+		style:background-color={player.color}
+	/>
+</div>
 
-<style>
+<style lang="scss">
 	.userPawn {
-		transform: translate(-50%, -50%);
-		border-radius: 100%;
+		img {
+			border-radius: 100%;
+			filter: drop-shadow(0 0 5px var(--primary));
+		}
 	}
 </style>
