@@ -2,6 +2,7 @@
 	//@ts-nocheck
 	import { createEventDispatcher } from 'svelte';
 	import { user } from '$lib/api/stores';
+	import { moveCd } from '$lib/api/stores';
 
 	let inventoryBtnDisabled;
 	let powerBtnDisabled;
@@ -17,14 +18,18 @@
 		dispatch('openDialog', 'item');
 	}
 
-	//Mettre logique pour voir si inventaire ouvrable
-	$: inventoryBtnDisabled = $user.team == 'hero' || $user.hero == 'Dragon' ? false : true;
+	$: inventoryBtnDisabled =
+		($user.team == 'hero' || $user.hero == 'Dragon') && !$moveCd.running && $user.life > 0
+			? false
+			: true;
 
-	//Mettre logique pour voir si power ouvrable
-	$: powerBtnDisabled = false;
+	// $: powerBtnDisabled = $user.canUsePower && !$moveCd.running &&$user.life>0 ? false : true;
+	$: powerBtnDisabled = !$moveCd.running && $user.life > 0 ? false : true;
 
-	//Mettre logique pour voir si item ouvrable
-	$: itemBtnDisabled = $user.team == 'hero' || $user.hero == 'Dragon' ? false : true;
+	$: itemBtnDisabled =
+		($user.team == 'hero' || $user.hero == 'Dragon') && !$moveCd.running && $user.life > 0
+			? false
+			: true;
 </script>
 
 <div class="sideBarUser">
@@ -44,10 +49,3 @@
 		</button>
 	</div>
 </div>
-
-<style lang="scss">
-	.--inventory:disabled,
-	.--find:disabled {
-		display: none;
-	}
-</style>

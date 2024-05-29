@@ -37,10 +37,5 @@
 				{/if}
 			{/each}
 		</ul>
-		<!-- <button class="btn-menuGames refresh" on:click={data.games}>
-			<img src="/assets/img/refresh.svg" alt="refresh" />
-		</button> -->
 	</div>
 </div>
-
-<!-- <button on:click={clearStorage}>reset</button> -->

@@ -69,18 +69,5 @@
 			</div>
 			<button class="btnPrimary btnForm" disabled={isDirty(gameName)}>Jouer</button>
 		</form>
-		<!-- <button class="btnPrimary btnGamesOnline" on:click={askActiveGames}>Rejoindre</button> -->
 	</div>
-
-	<ul>
-		{#each activegames as game}
-			<li>
-				<a href="/boardGame/{game.gameId}">
-					{game.name}
-				</a>
-			</li>
-		{/each}
-	</ul>
 </div>
-
-<!-- <button on:click={()=> clearDataBase(socket)}>Reset dataBase</button> -->

@@ -1,49 +1,18 @@
 <script>
-	import { writable } from 'svelte/store';
 	import { page } from '$app/stores';
 	import { socket } from '$lib/api/socketConnection';
 	import { user } from '$lib/api/stores';
-
-	let moveSpeed = 1000;
+	import { blur } from 'svelte/transition';
+	import { moveCd, startTimer, stopTimer } from '$lib/api/stores';
 
 	const roomsConnections = $page.data.roomsConnections;
 	const directions = ['top', 'bot', 'left', 'right'];
 
+	$: moveSpeed = $user.speed * 1000;
 	$: myRoom = $user.room;
 	$: currentUser = $user;
+	$: cd = $moveCd;
 	$: directionsInMyRoom = roomsConnections[myRoom];
-
-	const coolDownTime = 5000;
-
-	const defaultTimer = {
-		running: false,
-		startedAt: null,
-		elapsedTime: null,
-		_interval: null
-	};
-
-	const timer = writable(defaultTimer);
-
-	function stopTimer() {
-		clearInterval(timer._interval);
-		timer.set(defaultTimer);
-	}
-
-	function startTimer() {
-		timer.set({
-			running: true,
-			startedAt: Date.now(),
-			elapsedTime: 0,
-			_interval: setInterval(() => {
-				timer.update((t) => {
-					return {
-						...t,
-						elapsedTime: Date.now() - t.startedAt
-					};
-				});
-			}, 100) // accurate to 1/10th of a second
-		});
-	}
 
 	let canGoTop;
 	let canGoLeft;
@@ -51,15 +20,14 @@
 	let canGoBot;
 
 	$: {
-		canGoTop = canGoToDirection(currentUser, 'top');
-		canGoLeft = canGoToDirection(currentUser, 'left');
-		canGoRight = canGoToDirection(currentUser, 'right');
-		canGoBot = canGoToDirection(currentUser, 'bot');
+		canGoTop = canGoToDirection(currentUser, 'top', cd);
+		canGoLeft = canGoToDirection(currentUser, 'left', cd);
+		canGoRight = canGoToDirection(currentUser, 'right', cd);
+		canGoBot = canGoToDirection(currentUser, 'bot', cd);
 	}
 
-	function canGoToDirection(user, direction) {
-		user = currentUser;
-		if ($timer.running) return false;
+	function canGoToDirection(user, direction, cd) {
+		if (cd.running) return false;
 		if (user.life <= 0) return false;
 		directionsInMyRoom = roomsConnections[user.room];
 		if (!myRoom) myRoom = user.room;
@@ -67,16 +35,14 @@
 	}
 
 	function goToDirection(direction) {
-		// startTimer();
 		let targetRoom = directionsInMyRoom[direction];
 		if (!targetRoom) return;
-		if (targetRoom == 19) {
-			// let hasKey = myInventory.some((item) => item.nameId === 'key');
-			// if (!hasKey) {
-			// 	popUp("You don't have the key");
-			// 	return;
+		if (targetRoom == 19 && !$user.hasKey) {
+			console.log("you don't have the key");
+			return;
 		}
 		myRoom = targetRoom;
+		startTimer();
 		socket.emit('askToChangeRoom', targetRoom, async (response) => {
 			user.set(response.user);
 			myRoom = $user.room;
@@ -85,7 +51,7 @@
 	}
 
 	$: {
-		if ($timer.elapsedTime > coolDownTime) {
+		if ($moveCd.elapsedTime > moveSpeed) {
 			stopTimer();
 		}
 	}
@@ -125,25 +91,22 @@
 		>
 			<img class="fluidimg directionArrow_img" src="/assets/img/bot.svg" alt="bot" />
 		</button>
-		{#if $timer?.running}
-			<div>Cooldown {`${$timer.elapsedTime}/${coolDownTime}`}</div>
-		{/if}
 	</div>
 {/if}
-<!-- {#if isFixed} -->
-<h1
-	class="h2 directionSalle"
-	in:blur={{ y: 50, duration: moveSpeed * 500 }}
-	out:blur={{ duration: moveSpeed * 0 }}
->
-	Salle {$user.room}
-</h1>
-<!-- {:else} -->
-<h1
-	class="h2 directionSalle"
-	in:blur={{ y: 50, duration: moveSpeed * 500 }}
-	out:blur={{ duration: 0 }}
->
-	Mooving..
-</h1>
-<!-- {/if} -->
+{#if !$moveCd.running}
+	<h1
+		class="h2 directionSalle"
+		in:blur={{ y: 50, duration: moveSpeed / 2 }}
+		out:blur={{ duration: 0 }}
+	>
+		Salle {$user.room}
+	</h1>
+{:else}
+	<h1
+		class="h2 directionSalle"
+		in:blur={{ y: 50, duration: moveSpeed / 2 }}
+		out:blur={{ duration: 0 }}
+	>
+		Déplacement..
+	</h1>
+{/if}

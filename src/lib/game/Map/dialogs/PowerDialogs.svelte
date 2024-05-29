@@ -21,34 +21,13 @@
 	}
 
 	const useAbility = (data) => {
-		console.log(data.detail);
-		switch ($user.hero) {
-			case 'Rodeur':
-				socket.emit('askToChangeRoom', data.detail, async (response) => {
-					user.set(response.user);
-				});
-				break;
-			case 'Chevalier':
-				socket.emit('moveFaster');
-				break;
-			case 'Necromancien':
-				socket.emit('saveUser', data.detail);
-				break;
-			case 'Druide':
-				socket.emit('healUser', data.detail);
-				break;
-			case 'Magicien':
-				socket.emit('upDices');
-				break;
-			case 'Serpent':
-				socket.emit('nerfDices');
-				break;
-			case 'Golem':
-				socket.emit('getRock');
-				break;
-			default:
-				console.log('nobody');
-		}
+		console.log(data);
+		let power = {
+			user: $user,
+			target: data.detail,
+			timestamp: Date.now()
+		};
+		socket.emit('usePower', power);
 		closeDialog();
 	};
 </script>

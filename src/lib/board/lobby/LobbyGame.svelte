@@ -1,6 +1,7 @@
 <script>
 	import { socket } from '$lib/api/socketConnection.js';
 	import PlayerCard from '$lib/board/lobby/PlayerCard.svelte';
+	import QrCode from '../QRCode.svelte';
 
 	let winner = null;
 
@@ -62,6 +63,8 @@
 		{/if}
 	</div>
 </div>
+
+<QrCode />
 
 <style>
 	.btnGame {

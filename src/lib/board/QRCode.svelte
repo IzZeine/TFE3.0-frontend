@@ -10,9 +10,9 @@
 			canvasEl,
 			url,
 			{
-				width: 160,
+				width: 120,
 				errorCorrectionLevel: 'medium',
-				color: { light: '#07061d', dark: '#FA73B4' },
+				color: { light: '#352e2d00', dark: '#f3a333' },
 				margin: 0
 			},
 			function (error) {
@@ -33,13 +33,11 @@
 		z-index: 99;
 		position: fixed;
 		bottom: 0;
-		padding: 0.5rem;
+		right: 0;
+		padding: 0;
 		margin: 1.5rem;
-		color: white;
+		color: var(--txtPrimary);
 		text-align: center;
-		&__code {
-			margin-bottom: 1rem;
-		}
 		&__label {
 			font-size: 1rem;
 		}

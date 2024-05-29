@@ -10,9 +10,9 @@
 	let myRoom = $user.room;
 	let dice1 = 1,
 		dice2 = 1;
-	let nerfDices = 0;
-	let luckOfDices = 0;
 	let itemInRoom;
+
+	$: luckOfDices = $user.luckDices;
 
 	let rollDice = async () => {
 		for (let i = 0; i < 5; i++) {
@@ -23,16 +23,16 @@
 	};
 
 	let tryToGetItemInRoom = async () => {
+		console.log(luckOfDices);
 		let condition = itemInRoom.condition;
 		let pointsDices = await rollDice();
-		pointsDices += luckOfDices - nerfDices;
+		pointsDices += luckOfDices;
+		console.log(pointsDices);
 		if (pointsDices < condition) {
 			console.log('raté');
-			luckOfDices = 0;
 			return;
 		}
 		console.log('réussi');
-		luckOfDices = 0;
 		// socket.emit('playSound', 'woosh');
 		socket.emit('getItemInRoom', myRoom);
 	};
@@ -55,11 +55,11 @@
 		<div class="dices">
 			<div class="dices">
 				{#if dice1 && dice2}
-					{#if nerfDices != 0}
-						<p class="h1 bonusDices nerfOfDices">{luckOfDices - nerfDices}</p>
+					{#if luckOfDices > 0}
+						<p class="h1 luckDices" style:color="green">+{luckOfDices}</p>
 					{/if}
-					{#if luckOfDices != 0}
-						<p class="h1 bonusDices luckOfDices">+{luckOfDices}</p>
+					{#if luckOfDices < 0}
+						<p class="h1 luckDices" style:color="red">{luckOfDices}</p>
 					{/if}
 					<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
 					<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
@@ -103,3 +103,10 @@
 		</button>
 	</svelte:fragment>
 </Dialog>
+
+<style>
+	.luckDices {
+		position: absolute;
+		bottom: -100%;
+	}
+</style>

@@ -11,7 +11,6 @@
 	let currentDialog = '';
 	function setDialog(e) {
 		currentDialog = e.detail;
-		console.log(currentDialog);
 	}
 </script>
 
