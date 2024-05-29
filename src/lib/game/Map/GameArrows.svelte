@@ -1,9 +1,8 @@
 <script>
 	import { page } from '$app/stores';
 	import { socket } from '$lib/api/socketConnection';
-	import { user } from '$lib/api/stores';
 	import { blur } from 'svelte/transition';
-	import { moveCd, startTimer, stopTimer } from '$lib/api/stores';
+	import { user, moveCd, startTimer, stopTimer } from '$lib/api/stores';
 
 	const roomsConnections = $page.data.roomsConnections;
 	const directions = ['top', 'bot', 'left', 'right'];
@@ -14,10 +13,7 @@
 	$: cd = $moveCd;
 	$: directionsInMyRoom = roomsConnections[myRoom];
 
-	let canGoTop;
-	let canGoLeft;
-	let canGoRight;
-	let canGoBot;
+	let canGoTop, canGoLeft, canGoRight, canGoBot;
 
 	$: {
 		canGoTop = canGoToDirection(currentUser, 'top', cd);
@@ -41,13 +37,16 @@
 			console.log("you don't have the key");
 			return;
 		}
-		myRoom = targetRoom;
 		startTimer();
+		myRoom = targetRoom;
 		socket.emit('askToChangeRoom', targetRoom, async (response) => {
 			user.set(response.user);
 			myRoom = $user.room;
 			directionsInMyRoom = roomsConnections[$user.room];
 		});
+		if ($user.hero == 'Golem') {
+			socket.emit('dropARock');
+		}
 	}
 
 	$: {

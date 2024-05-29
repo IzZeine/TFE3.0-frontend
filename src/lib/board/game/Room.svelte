@@ -13,7 +13,8 @@
 	let columns;
 	let position = { x: 0, y: 0 };
 	let battleSended = false;
-	let activeAnimation = ''; // default ''
+	let animItem = ''; // default ''
+	let animBattle = ''; // default ''
 
 	const [send, receive] = crossfade({
 		fallback(node, params) {
@@ -55,57 +56,89 @@
 		}
 	}
 
+	const onTakeItem = (data) => {
+		if (index == data.id - 1) animItem = 'isActive';
+	};
+
+	const onBattle = (data) => {
+		if (index == data) animBattle = 'isActive';
+	};
+
 	onMount(() => {
-		socket.on('itemWasTaken', (data) => {
-			console.log(data.id - 1);
-			if (index == data.id - 1) activeAnimation = 'isActive';
-		});
+		socket.on('itemWasTaken', onTakeItem);
+		socket.on('battle', onBattle);
+		return () => {
+			socket.off('itemWasTaken', onTakeItem);
+			socket.off('battle', onBattle);
+		};
 	});
 </script>
 
-<ul
-	class="room room_{index}"
-	style:grid-template-columns=" repeat({columns}, 1fr)"
+<div
+	class="room"
 	style:top="{position.y}px"
 	style:left="{position.x}px"
 	style:height="{position.height}px"
 	style:width="{position.width}px"
 >
-	{#each playersInRoom as player (player.id)}
-		<li class="player" in:receive={{ key: player.id }} out:send={{ key: player.id }} animate:flip>
-			<Player {player} />
-		</li>
-	{/each}
-</ul>
-<img
-	src="/assets/img/inventory.png"
-	alt="inventory"
-	style:left={`${position.x + position.width / 2}px`}
-	style:top={`${position.y + position.height / 2}px`}
-	class="fluidimg itemInRoom {activeAnimation}"
-/>
+	<ul class="playerList room_{index}" style:grid-template-columns=" repeat({columns}, 1fr)">
+		{#each playersInRoom as player (player.id)}
+			<li class="player" in:receive={{ key: player.id }} out:send={{ key: player.id }} animate:flip>
+				<Player {player} />
+			</li>
+		{/each}
+	</ul>
+	<div class="animContainer">
+		<img
+			src="/assets/img/inventory.png"
+			alt="inventory"
+			class="fluidimg imgAnim itemInRoom {animItem}"
+		/>
+		<img src="/assets/img/battle.png" alt="swords" class="fluidimg imgAnim battle {animBattle}" />
+	</div>
+</div>
 
 <style lang="scss">
 	.room {
 		position: absolute;
+	}
+	.playerList {
 		display: grid;
 		justify-content: center;
 		align-content: center;
 		justify-items: center;
 		gap: 6px;
+		width: 100%;
+		height: 100%;
 	}
 	.player {
 		max-width: 60px;
 	}
-	.itemInRoom {
-		max-width: 3%;
-		opacity: 0;
+
+	.animContainer {
+		width: 100%;
+		height: 100%;
+		transform: translate(0, -100%);
+	}
+
+	.imgAnim {
 		position: absolute;
+		top: 50%;
+		left: 50%;
 		transform: translate(-50%, -50%);
+		max-width: 3.5rem;
+		opacity: 0;
+	}
+
+	.itemInRoom {
 		filter: drop-shadow(0 0 5px var(--txtPrimary));
 	}
 
-	.itemInRoom.isActive {
+	.battle {
+		filter: drop-shadow(0 0 5px red);
+	}
+
+	.imgAnim.isActive {
 		animation: animUp 2s;
 	}
 

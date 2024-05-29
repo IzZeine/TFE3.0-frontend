@@ -1,47 +1,31 @@
 <script>
+	import { applyAction } from '$app/forms';
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
-	import throttle from 'lodash/throttle.js';
 
 	export let player;
 
 	let element;
+	let ownPower = 'power';
+	let otherPower = 'angel';
+	let activeAnimation = '';
 
-	const animOnPlayer = async (id, item) => {
-		/*
-		let itemImg = '/assets/img/' + item + '.png';
-		let target = document.getElementById(id);
-		// target.style.position = 'relative'
+	const onUsedPower = (data) => {
+		const { user, target } = data;
+		const powerImg = document.querySelector('.powerImg');
+		if (player.id == user.id) {
+			activeAnimation = 'isActive';
+			if (user.hero === 'Druide') ownPower = 'life';
+			if (user.hero === 'Necromancien') ownPower = 'angel';
+			if (user.hero === 'Magicien') ownPower = 'diceRoll';
+			if (user.hero === 'Chevalier') ownPower = 'potionSpeed';
+			if (user.hero === 'Serpent') ownPower = 'diceRoll';
+			if (user.hero === 'Rodeur') ownPower = 'power';
 
-		let itemDiv = document.body.appendChild(document.createElement('div'));
-		itemDiv.classList.add('anim', 'animOnPlayer', 'isActive');
-		let itemDivImg = itemDiv.appendChild(document.createElement('img'));
-		itemDivImg.classList.add('fluidimg');
-		itemDivImg.setAttribute('src', itemImg);
-
-		let targetBoundingClientRect = target.getBoundingClientRect();
-		let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width / 2;
-		let TargetY = targetBoundingClientRect.y + targetBoundingClientRect.height / 2;
-
-		itemDiv.style.top = TargetY + 'px';
-		itemDiv.style.left = TargetX + 'px';
-
-		itemDiv.remove();
-		*/
-	};
-
-	const throttleAnimPlayer = throttle(animOnPlayer, 5000);
-
-	const onUsedPower = (id, hero) => {
-		if (id === player.id) {
-			let img = 'power';
-			if (hero === 'Chevalier') img = 'potionSpeed';
-			if (hero === 'Druide') img = 'life';
-			if (hero === 'Magicien') img = 'diceRoll';
-			if (hero === 'Serpent') img = 'diceRoll';
-			if (hero === 'Rodeur') img = 'power';
-			if (hero === 'Necromancien') img = 'angel';
-			throttleAnimPlayer(id, img);
+			powerImg.addEventListener('animationend', () => {
+				activeAnimation = '';
+				powerImg.classList.remove('isActive'); // Supprime la classe d'animation
+			});
 		}
 	};
 
@@ -60,13 +44,43 @@
 		alt="pawn icon"
 		style:background-color={player.color}
 	/>
+	<img class="powerImg {activeAnimation}" src="/assets/img/{ownPower}.png" alt="power" />
+	<!-- <img class="powerImg" src="/assets/img/{otherPower}.png" alt="power" /> -->
 </div>
 
 <style lang="scss">
 	.userPawn {
-		img {
+		position: relative;
+		.userPawn_img {
 			border-radius: 100%;
 			filter: drop-shadow(0 0 5px var(--primary));
+		}
+	}
+	.powerImg {
+		opacity: 0;
+		max-width: 80%;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, 0);
+	}
+
+	.powerImg.isActive {
+		animation: animUp 2s;
+	}
+
+	@keyframes animUp {
+		0% {
+			opacity: 0;
+			transform: translate(-50%, 0) translateY(0px);
+		}
+		75% {
+			opacity: 1;
+			transform: translate(-50%, 0) translateY(-15px);
+		}
+		100% {
+			opacity: 0;
+			transform: translate(-50%, 0) translateY(-15px);
 		}
 	}
 </style>

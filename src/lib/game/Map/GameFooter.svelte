@@ -1,11 +1,11 @@
 <script>
 	//@ts-nocheck
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { user } from '$lib/api/stores';
 	import { moveCd } from '$lib/api/stores';
+	import { socket } from '$lib/api/socketConnection';
 
-	let inventoryBtnDisabled;
-	let powerBtnDisabled;
+	let powerCooldown;
 
 	const dispatch = createEventDispatcher();
 	function openInventory() {
@@ -19,17 +19,31 @@
 	}
 
 	$: inventoryBtnDisabled =
-		($user.team == 'hero' || $user.hero == 'Dragon') && !$moveCd.running && $user.life > 0
+		($user.team == 'hero' || $user.hero == 'Dragon' || $user.hero == 'Golem') &&
+		!$moveCd.running &&
+		$user.life > 0
 			? false
 			: true;
 
-	// $: powerBtnDisabled = $user.canUsePower && !$moveCd.running &&$user.life>0 ? false : true;
-	$: powerBtnDisabled = !$moveCd.running && $user.life > 0 ? false : true;
+	$: powerBtnDisabled = $user.canUsePower && !$moveCd.running && $user.life > 0 ? false : true;
+	// $: powerBtnDisabled = !$moveCd.running && $user.life > 0 ? false : true;
 
 	$: itemBtnDisabled =
 		($user.team == 'hero' || $user.hero == 'Dragon') && !$moveCd.running && $user.life > 0
 			? false
 			: true;
+
+	const onCoolDownPoser = (data) => {
+		powerCooldown = data;
+	};
+
+	onMount(() => {
+		socket.on('cooldownPower', onCoolDownPoser);
+		// n'affihce plus après le reload
+		return () => {
+			socket.off('cooldownPower', onCoolDownPoser);
+		};
+	});
 </script>
 
 <div class="sideBarUser">
@@ -43,9 +57,22 @@
 		</button>
 		<button class="actionButton --power" disabled={powerBtnDisabled} on:click={openPower}>
 			<img class="fluidimg" src="/assets/img/power.png" alt="power" />
+			{#if powerCooldown}
+				<p class="h1 powerCd">{powerCooldown}</p>
+			{/if}
 		</button>
 		<button class="actionButton --find" disabled={itemBtnDisabled} on:click={openItem}>
 			<img class="fluidimg" src="/assets/img/find.png" alt="find" />
 		</button>
 	</div>
 </div>
+
+<style>
+	.powerCd {
+		color: red;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+</style>
