@@ -21,7 +21,6 @@
 	}
 
 	const useAbility = (data) => {
-		console.log(data);
 		let power = {
 			user: $user,
 			target: data.detail,
