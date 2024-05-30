@@ -92,20 +92,29 @@
 		</button>
 	</div>
 {/if}
-{#if !$moveCd.running}
-	<h1
-		class="h2 directionSalle"
-		in:blur={{ y: 50, duration: moveSpeed / 2 }}
-		out:blur={{ duration: 0 }}
-	>
-		Salle {$user.room}
-	</h1>
-{:else}
-	<h1
-		class="h2 directionSalle"
-		in:blur={{ y: 50, duration: moveSpeed / 2 }}
-		out:blur={{ duration: 0 }}
-	>
-		Déplacement..
-	</h1>
-{/if}
+<div class="--mooving">
+	{#if !$moveCd.running}
+		<h1
+			class="h2 directionSalle"
+			in:blur={{ y: 50, duration: moveSpeed / 2 }}
+			out:blur={{ duration: 0 }}
+		>
+			Salle {$user.room}
+		</h1>
+	{:else}
+		<h1
+			class="h2 directionSalle"
+			in:blur={{ y: 50, duration: moveSpeed / 2 }}
+			out:blur={{ duration: 0 }}
+		>
+			Déplacement..
+		</h1>
+	{/if}
+</div>
+
+<style>
+	.--mooving {
+		display: flex;
+		justify-content: center;
+	}
+</style>

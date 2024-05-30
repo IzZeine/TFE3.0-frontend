@@ -56,6 +56,7 @@
 			filter: drop-shadow(0 0 5px var(--primary));
 		}
 	}
+
 	.powerImg {
 		opacity: 0;
 		max-width: 80%;

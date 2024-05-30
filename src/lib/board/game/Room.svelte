@@ -22,10 +22,11 @@
 			const transform = style.transform === 'none' ? '' : style.transform;
 
 			return {
-				duration: 600,
+				duration: 500,
 				easing: quintOut,
 				css: (t) => `
 					transform: ${transform} scale(${t});
+					opacity: ${t}
 				`
 			};
 		}
@@ -38,9 +39,9 @@
 		if (roomPosition) {
 			position = roomPosition;
 			if (position.width >= position.height) {
-				columns = Math.min(playersInRoom.length, 3);
+				columns = 3;
 			} else {
-				columns = Math.min(playersInRoom.length, 2);
+				columns = 2;
 			}
 		}
 
@@ -81,9 +82,14 @@
 	style:height="{position.height}px"
 	style:width="{position.width}px"
 >
-	<ul class="playerList room_{index}" style:grid-template-columns=" repeat({columns}, 1fr)">
+	<ul class="playerList room_{index}" style:grid-template-columns=" repeat({columns}, auto)">
 		{#each playersInRoom as player (player.id)}
-			<li class="player" in:receive={{ key: player.id }} out:send={{ key: player.id }} animate:flip>
+			<li
+				class="player"
+				in:receive={{ key: player.id }}
+				out:send={{ key: player.id }}
+				animate:flip={{ duration: 250 }}
+			>
 				<Player {player} />
 			</li>
 		{/each}
@@ -102,6 +108,7 @@
 	.room {
 		position: absolute;
 	}
+
 	.playerList {
 		display: grid;
 		justify-content: center;
@@ -111,6 +118,7 @@
 		width: 100%;
 		height: 100%;
 	}
+
 	.player {
 		max-width: 60px;
 	}
