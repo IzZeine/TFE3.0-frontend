@@ -58,6 +58,6 @@
 		<Map {items} {game} />
 	{/if}
 	{#if game.statut === 'ended'}
-		<EndGame {winner} />
+		<EndGame {winner} {game} />
 	{/if}
 {/if}

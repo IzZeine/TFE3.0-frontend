@@ -15,6 +15,7 @@
 	let battleSended = false;
 	let animItem = ''; // default ''
 	let animBattle = ''; // default ''
+	let animItemImg = 'inventory';
 
 	const [send, receive] = crossfade({
 		fallback(node, params) {
@@ -59,7 +60,10 @@
 	}
 
 	const onTakeItem = (data) => {
-		if (index == data.id - 1) animItem = 'isActive';
+		if (index == data.id - 1) {
+			if (data.itemId == 'key') animItemImg = 'key';
+			animItem = 'isActive';
+		}
 	};
 
 	const onBattle = (data) => {
@@ -97,7 +101,7 @@
 	</ul>
 	<div class="animContainer">
 		<img
-			src="/assets/img/inventory.png"
+			src="/assets/img/{animItemImg}.png"
 			alt="inventory"
 			class="fluidimg imgAnim itemInRoom {animItem}"
 		/>

@@ -86,10 +86,10 @@
 			align-items: center;
 			gap: 6px;
 			.hero {
-				// background-color: red;
+				background-color: red;
 			}
 			.hero-img {
-				// background-color: pink;
+				background-color: pink;
 				max-height: 100%;
 				width: auto;
 			}

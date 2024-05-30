@@ -11,10 +11,11 @@
 	let dice1 = 1,
 		dice2 = 1;
 	let itemInRoom;
+	let dicesAnim = '';
 
 	$: luckOfDices = $user.luckDices;
 
-	let rollDice = async () => {
+	let rollDices = async () => {
 		for (let i = 0; i < 5; i++) {
 			dice1 = Math.floor(Math.random() * 6) + 1;
 			dice2 = Math.floor(Math.random() * 6) + 1;
@@ -23,18 +24,21 @@
 	};
 
 	let tryToGetItemInRoom = async () => {
-		console.log(luckOfDices);
 		let condition = itemInRoom.condition;
-		let pointsDices = await rollDice();
+		let pointsDices = await rollDices();
+		dicesAnim = 'isActive';
 		pointsDices += luckOfDices;
 		console.log(pointsDices);
-		if (pointsDices < condition) {
-			console.log('raté');
-			return;
-		}
-		console.log('réussi');
+		setTimeout(async () => {
+			dicesAnim = '';
+			if (pointsDices < condition) {
+				console.log('raté');
+				return;
+			}
+			console.log('réussi');
+			socket.emit('getItemInRoom', myRoom);
+		}, 1000);
 		// socket.emit('playSound', 'woosh');
-		socket.emit('getItemInRoom', myRoom);
 	};
 
 	onMount(() => {
@@ -47,7 +51,7 @@
 		});
 	});
 
-	$: getItemBtnDisabled = !itemInRoom;
+	$: getItemBtnDisabled = !itemInRoom || dicesAnim == 'isActive' ? true : false;
 </script>
 
 <Dialog {currentDialog} on:closeDialog>
@@ -61,8 +65,8 @@
 					{#if luckOfDices < 0}
 						<p class="h1 luckDices" style:color="red">{luckOfDices}</p>
 					{/if}
-					<img class="fluidimg dice" src="/assets/img/dice{dice1}.png" alt="dice1" />
-					<img class="fluidimg dice" src="/assets/img/dice{dice2}.png" alt="dice2" />
+					<img class="fluidimg dice {dicesAnim}" src="/assets/img/dice{dice1}.png" alt="dice1" />
+					<img class="fluidimg dice {dicesAnim}" src="/assets/img/dice{dice2}.png" alt="dice2" />
 				{/if}
 			</div>
 		</div>
@@ -108,5 +112,26 @@
 	.luckDices {
 		position: absolute;
 		bottom: -100%;
+	}
+	.dice.isActive {
+		transition: 1s;
+		animation: animDices 1s;
+	}
+
+	@keyframes animDices {
+		0% {
+			opacity: 1;
+		}
+		25% {
+			opacity: 0.2;
+			transform: rotate(0.5turn) scale(0.2);
+		}
+		75% {
+			transform: rotate(1turn) scale(1.1);
+		}
+		100% {
+			opacity: 1;
+			transform: rotate(1turn) scale(1);
+		}
 	}
 </style>

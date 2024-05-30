@@ -1,39 +1,45 @@
 <script>
-  // @ts-nocheck
-	import { goto } from "$app/navigation";
-	import { clearDataBase } from "$lib/api/clearDataBase.js";
-	import { onMount } from "svelte";
+	import { clearDataBase } from '$lib/api/clearDataBase.js';
+	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
-	import { clearStorage } from "$lib/api/clearStorage.js";
 
-  export let winner = winner;
+	export let game;
+	let activeUsers;
+	// const winnerTeam = game.winner;
+	const winnerTeam = 'hero';
+	let winners = [];
 
-  onMount(async ()=> {
-    if (!winner) {
-      console.log(winner)
-      clearStorage()
-    }
-    console.log(winner)
-    if (!Array.isArray(winner)) {
-      winner = [winner];
-    }
-    console.log(winner)
-  })
+	onMount(async () => {
+		activeUsers = game.users;
+		console.log(game);
+		winners = activeUsers.filter((user) => user.team === winnerTeam).map((user) => ({ ...user }));
+		console.log(winners);
+	});
 </script>
 
 <div class="container">
-  {#if winner}
-    <div class="endgame">
-      <h1 class="h1 winner-team">L'equipe : <span>{winner[0].team}</span></h1>
-      <h2 class="h2">remporte la partie !</h2>
-      <ul class="winners">
-        {#each winner as player}
-        <li>
-          <img class="fluidimg" src="/assets/img/{player.heroImg}" alt="player">
-        </li>
-        {/each}
-      </ul>
-      <button class="btnPrimary" on:click={() => clearDataBase(socket)}>Quitter</button>
-    </div>
-  {/if}
+	{#if winnerTeam}
+		<div class="endgame">
+			<div>
+				<h1 class="h1 winner-team">L'equipe : <span>{winnerTeam}</span></h1>
+				<h2 class="h2" style:text-align="center">remporte la partie !</h2>
+			</div>
+			<ul class="winners">
+				{#each winners as player}
+					<li>
+						<img class="fluidimg" src="/assets/img/{player.heroImg}" alt="player" />
+					</li>
+				{/each}
+			</ul>
+			<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId)}>Quitter</button
+			>
+		</div>
+	{/if}
 </div>
+
+<style>
+	.container {
+		height: 100dvh;
+		box-sizing: border-box;
+	}
+</style>

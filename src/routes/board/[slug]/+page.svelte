@@ -52,7 +52,7 @@
 {#if game.statut === 'started'}
 	<BoardGame {game} />
 {:else if game.statut === 'ended'}
-	<EndGame {winner} />
+	<EndGame {game} />
 {:else}
 	<LobbyGame {game} {gameId} />
 {/if}

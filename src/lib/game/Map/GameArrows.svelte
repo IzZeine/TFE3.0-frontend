@@ -27,6 +27,7 @@
 	function canGoToDirection(user, direction, cd) {
 		if (cd.running) return false;
 		if (user.life <= 0) return false;
+		if (user.inBattle) return false;
 		directionsInMyRoom = roomsConnections[user.room];
 		if (!myRoom) myRoom = user.room;
 		let targetRoom = directionsInMyRoom?.[direction];
