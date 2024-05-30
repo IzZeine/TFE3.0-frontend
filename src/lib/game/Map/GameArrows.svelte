@@ -3,6 +3,7 @@
 	import { socket } from '$lib/api/socketConnection';
 	import { blur } from 'svelte/transition';
 	import { user, moveCd, startTimer, stopTimer } from '$lib/api/stores';
+	import { onMount } from 'svelte';
 
 	const roomsConnections = $page.data.roomsConnections;
 	const directions = ['top', 'bot', 'left', 'right'];
@@ -13,6 +14,7 @@
 	$: cd = $moveCd;
 	$: directionsInMyRoom = roomsConnections[myRoom];
 
+	let battleRoom;
 	let canGoTop, canGoLeft, canGoRight, canGoBot;
 
 	$: {
@@ -27,7 +29,9 @@
 		if (user.life <= 0) return false;
 		directionsInMyRoom = roomsConnections[user.room];
 		if (!myRoom) myRoom = user.room;
-		return directionsInMyRoom?.[direction];
+		let targetRoom = directionsInMyRoom?.[direction];
+		if (battleRoom == targetRoom) return false;
+		return targetRoom;
 	}
 
 	function goToDirection(direction) {
@@ -54,6 +58,22 @@
 			stopTimer();
 		}
 	}
+
+	const closeRoomForBattle = (data) => {
+		battleRoom = data;
+	};
+	const openRoomAfterBattle = (data) => {
+		battleRoom = null;
+	};
+
+	onMount(() => {
+		socket.on('battle', closeRoomForBattle);
+		socket.on('endedBattle', openRoomAfterBattle);
+		return () => {
+			socket.off('battle', closeRoomForBattle);
+			socket.off('endedBattle', openRoomAfterBattle);
+		};
+	});
 </script>
 
 {#if user}

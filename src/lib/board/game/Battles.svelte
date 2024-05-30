@@ -1,88 +1,104 @@
 <script>
 	import { socket } from '$lib/api/socketConnection.js';
-	import throttle from 'lodash/throttle.js';
 	import { onMount } from 'svelte';
+	import { blur } from 'svelte/transition';
 
-	export let battles;
+	export let activeUsers;
+	let boss, heroes, battle;
 
-	const animBattle = (item) => {};
-	const throttledAnimBattle = throttle(animBattle, 5000);
-
-	const animBattleEnded = () => {};
-	const throttledAnimBattleEnd = throttle(animBattleEnded, 5000);
+	boss = {
+		heroImg: 'dragon.png'
+	};
+	heroes = [
+		{
+			heroImg: 'knight.png'
+		},
+		{
+			heroImg: 'knight.png'
+		},
+		{
+			heroImg: 'knight.png'
+		},
+		{
+			heroImg: 'knight.png'
+		},
+		{
+			heroImg: 'knight.png'
+		}
+	];
 
 	const onBattle = (data) => {
-		let room = 'room' + data.room;
-		console.log(room);
-		throttledAnimBattle('battle');
+		battle = true;
+		boss = activeUsers.find((user) => user.room === data && user.team == 'boss');
+
+		heroes = activeUsers
+			.filter((user) => user.room === data && user.team == 'hero')
+			.map((user) => ({ ...user }));
+		console.log(data);
+		console.log(boss);
+		console.log(heroes);
+
+		// throttledAnimBattle('battle');
 	};
-	const onBattleEnd = (winner) => {
+	const onBattleEnd = (data) => {
+		battle = false;
+		const { winner } = data;
 		console.log(winner);
-		throttledAnimBattleEnd(winner);
+		// throttledAnimBattleEnd(winner);
 	};
 	onMount(() => {
 		socket.on('battle', onBattle);
-		socket.on('returnAtSpawn', onBattleEnd);
+		socket.on('endedBattle', onBattleEnd);
 		return () => {
 			socket.off('battle', onBattle);
-			socket.off('returnAtSpawn', onBattleEnd);
+			socket.off('endedBattle', onBattleEnd);
 		};
 	});
-
-	/*
-let animBattle = async (item) => {
-	console.log('animBattle');
-	let itemImg = '/assets/img/battle.png';
-	let target = document.querySelector('.boardGame');
-	target.style.position = 'relative';
-	console.log(target);
-
-	let itemDiv = document.body.appendChild(document.createElement('div'));
-	itemDiv.classList.add('anim', 'animBattle', 'isActive');
-	let itemDivImg1 = itemDiv.appendChild(document.createElement('img'));
-	itemDivImg1.classList.add('fluidimg', 'sword', '--1');
-	itemDivImg1.setAttribute('src', itemImg);
-
-	let itemDivImg2 = itemDiv.appendChild(document.createElement('img'));
-	itemDivImg2.classList.add('fluidimg', 'sword', '--2');
-	itemDivImg2.setAttribute('src', itemImg);
-
-	let targetBoundingClientRect = target.getBoundingClientRect();
-	let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width / 2;
-	let TargetY = targetBoundingClientRect.y + targetBoundingClientRect.height / 2;
-
-	itemDiv.style.top = TargetY + 'px';
-	itemDiv.style.left = TargetX + 'px';
-
-	await sleep(5);
-	itemDiv.remove();
-};
-
-let animBattleEnded = async (winner) => {
-	let itemImg = '/assets/img/' + winner.heroImg;
-	let crownImg = '/assets/img/crown.png';
-	let target = document.querySelector('.boardGame');
-	target.style.position = 'relative';
-	console.log(target);
-
-	let itemDiv = document.body.appendChild(document.createElement('div'));
-	itemDiv.classList.add('anim', 'animBattleEnded', 'isActive');
-	let itemDivCrownImg = itemDiv.appendChild(document.createElement('img'));
-	itemDivCrownImg.classList.add('fluidimg', '--crown');
-	itemDivCrownImg.setAttribute('src', crownImg);
-	let itemDivImg = itemDiv.appendChild(document.createElement('img'));
-	itemDivImg.classList.add('fluidimg', '--winner');
-	itemDivImg.setAttribute('src', itemImg);
-
-	let targetBoundingClientRect = target.getBoundingClientRect();
-	let TargetX = targetBoundingClientRect.x + targetBoundingClientRect.width / 2;
-	let TargetY = targetBoundingClientRect.y + targetBoundingClientRect.height / 2;
-
-	itemDiv.style.top = TargetY + 'px';
-	itemDiv.style.left = TargetX + 'px';
-
-	await sleep(5);
-	itemDiv.remove();
-};
-*/
 </script>
+
+{#if battle}
+	<div class="battle" in:blur={{ y: 50, duration: 500 }} out:blur={{ duration: 500 }}>
+		<img src="/assets/img/big{boss.heroImg}" alt="boss" class="boss fluidimg" />
+		<ul class="heroes">
+			{#each heroes as hero}
+				<li class="hero">
+					<img src="/assets/img/{hero.heroImg}" alt="hero" class="hero-img fluidimg" />
+				</li>
+			{/each}
+		</ul>
+		<img src="/assets/img/vs.png" alt="vs" class="vs fluidimg" />
+	</div>
+{/if}
+
+<style lang="scss">
+	.battle {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		align-items: center;
+		.heroes {
+			height: 100%;
+			display: flex;
+			// flex-direction: column;
+			align-items: center;
+			gap: 6px;
+			.hero {
+				// background-color: red;
+			}
+			.hero-img {
+				// background-color: pink;
+				max-height: 100%;
+				width: auto;
+			}
+		}
+		.vs {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+</style>

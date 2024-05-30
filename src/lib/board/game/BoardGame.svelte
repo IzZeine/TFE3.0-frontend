@@ -38,7 +38,7 @@
 	</div>
 	<img class="fluidimg boardGameImg" src="/assets/img/boardgame.png" alt="boardgame" />
 	<BoardGameSVG bind:this={boardElement} />
-	<Battles />
+	<Battles {activeUsers} />
 </div>
 
 <style>
