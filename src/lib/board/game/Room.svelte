@@ -60,7 +60,12 @@
 	}
 
 	const onTakeItem = (data) => {
-		if (index == data.id - 1) {
+		let id = data.id;
+		while (id > 39) {
+			id -= 39;
+		}
+		if (index == id - 1) {
+			console.log(index == id - 1 ? 'oui' : 'non');
 			if (data.itemId == 'key') animItemImg = 'key';
 			animItem = 'isActive';
 		}
@@ -119,7 +124,6 @@
 		justify-content: center;
 		align-content: center;
 		justify-items: center;
-		gap: 6px;
 		width: 100%;
 		height: 100%;
 	}

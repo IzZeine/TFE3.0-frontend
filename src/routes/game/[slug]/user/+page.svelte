@@ -32,11 +32,19 @@
 		return username === '';
 	}
 
-	onMount(async () => {
+	async function isUser() {
 		user = await getUser();
 		if (user) {
 			goto(`/game/${data.gameID}`);
 		}
+	}
+
+	onMount(async () => {
+		await isUser();
+		socket.on('updateGame', isUser);
+		return () => {
+			socket.off('updateGame', isUser);
+		};
 	});
 </script>
 

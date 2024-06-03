@@ -4,7 +4,7 @@
 	import { blur } from 'svelte/transition';
 
 	export let activeUsers;
-	let boss, heroes, battle;
+	let boss, heroes, battle, rows, columns;
 
 	boss = {
 		heroImg: 'dragon.png'
@@ -15,17 +15,22 @@
 		},
 		{
 			heroImg: 'knight.png'
-		},
-		{
-			heroImg: 'knight.png'
-		},
-		{
-			heroImg: 'knight.png'
-		},
-		{
-			heroImg: 'knight.png'
 		}
+		// {
+		// 	heroImg: 'knight.png'
+		// }
+		// {
+		// 	heroImg: 'knight.png'
+		// },
+		// {
+		// 	heroImg: 'knight.png'
+		// }
 	];
+
+	if (heroes.length > 3) {
+		rows = 3;
+		columns = 2;
+	}
 
 	const onBattle = (data) => {
 		battle = true;
@@ -59,7 +64,11 @@
 {#if battle}
 	<div class="battle" in:blur={{ y: 50, duration: 500 }} out:blur={{ duration: 500 }}>
 		<img src="/assets/img/big{boss.heroImg}" alt="boss" class="boss fluidimg" />
-		<ul class="heroes">
+		<ul
+			class="heroes"
+			style:grid-template-rows="repeat({rows},1fr)"
+			style:grid-template-columns="repeat({columns},1fr)"
+		>
 			{#each heroes as hero}
 				<li class="hero">
 					<img src="/assets/img/{hero.heroImg}" alt="hero" class="hero-img fluidimg" />
@@ -81,17 +90,18 @@
 		align-items: center;
 		.heroes {
 			height: 100%;
-			display: flex;
-			// flex-direction: column;
-			align-items: center;
-			gap: 6px;
+			margin-left: 10%;
+			display: grid;
 			.hero {
-				background-color: red;
+				position: relative;
+				height: 100%;
 			}
 			.hero-img {
-				background-color: pink;
+				position: absolute;
+				top: 50%;
+				// margin-left: 15%;
+				transform: translate(0, -50%);
 				max-height: 100%;
-				width: auto;
 			}
 		}
 		.vs {

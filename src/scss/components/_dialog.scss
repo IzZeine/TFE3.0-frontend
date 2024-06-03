@@ -118,34 +118,6 @@ Inventory
 }
 
 /*--------------------------------------------------------------------------
-Battle
---------------------------------------------------------------------------*/
-
-.dialog_battle {
-	.heroes {
-		display: flex;
-		justify-content: center;
-		.hero {
-			max-width: calc((100vw) / 5);
-		}
-	}
-	.contentDialog {
-		display: flex;
-		justify-content: center;
-		gap: 24px;
-		.left {
-			text-align: start;
-		}
-		.right {
-			text-align: end;
-		}
-	}
-	.footerDialog {
-		text-align: center;
-	}
-}
-
-/*--------------------------------------------------------------------------
 Power
 --------------------------------------------------------------------------*/
 
