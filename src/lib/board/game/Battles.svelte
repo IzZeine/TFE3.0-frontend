@@ -82,15 +82,17 @@
 <style lang="scss">
 	.battle {
 		position: absolute;
-		top: 0;
-		height: 100%;
-		width: 100%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		height: 50%;
+		width: 50%;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		align-items: center;
 		.heroes {
 			height: 100%;
-			margin-left: 10%;
+			margin-left: 15%;
 			display: grid;
 			.hero {
 				position: relative;
@@ -99,13 +101,13 @@
 			.hero-img {
 				position: absolute;
 				top: 50%;
-				// margin-left: 15%;
 				transform: translate(0, -50%);
 				max-height: 100%;
 			}
 		}
 		.vs {
 			position: absolute;
+			max-height: 100%;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);

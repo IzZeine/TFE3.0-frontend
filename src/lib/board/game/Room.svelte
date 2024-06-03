@@ -10,7 +10,7 @@
 	export let activeUsers, index;
 
 	let playersInRoom;
-	let columns;
+	let columns, maxWidth;
 	let position = { x: 0, y: 0 };
 	let battleSended = false;
 	let animItem = ''; // default ''
@@ -40,6 +40,7 @@
 		if (roomPosition) {
 			position = roomPosition;
 			if (position.width >= position.height) {
+				maxWidth = position.height;
 				columns = 3;
 			} else {
 				columns = 2;
@@ -96,6 +97,7 @@
 		{#each playersInRoom as player (player.id)}
 			<li
 				class="player"
+				style:max-width="{maxWidth}px"
 				in:receive={{ key: player.id }}
 				out:send={{ key: player.id }}
 				animate:flip={{ duration: 250 }}
@@ -116,7 +118,7 @@
 
 <style lang="scss">
 	.room {
-		position: absolute;
+		position: fixed;
 	}
 
 	.playerList {
@@ -126,10 +128,6 @@
 		justify-items: center;
 		width: 100%;
 		height: 100%;
-	}
-
-	.player {
-		max-width: 60px;
 	}
 
 	.animContainer {

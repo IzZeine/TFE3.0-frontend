@@ -4,13 +4,9 @@
 </script>
 
 <script>
-	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
 
 	let element;
-	let itemInRoomPositions = [];
-
-	let animInRoom = async (room, item) => {};
 
 	const onTakeItemInRoom = (room, boss) => {
 		if (boss) {
@@ -36,11 +32,6 @@
 
 	onMount(async () => {
 		positions.set(getRoomPositions());
-		itemInRoomPositions = $positions;
-		socket.on('takeItemInRoom', onTakeItemInRoom);
-		return () => {
-			socket.off('takeItemInRoom', onTakeItemInRoom);
-		};
 	});
 </script>
 
