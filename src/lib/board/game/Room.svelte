@@ -52,8 +52,6 @@
 			if (battle && !battleSended) {
 				battleSended = true;
 				socket.emit('battle', playersInRoom, async (response) => {
-					//winner
-					// console.log(response);
 					battleSended = false;
 				});
 			}

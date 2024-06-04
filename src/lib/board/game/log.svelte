@@ -3,7 +3,9 @@
 	import { crossfade } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 
-	let action;
+	let action, img;
+
+	let { type, user, room, item } = log;
 
 	const [send, receive] = crossfade({
 		fallback(node, params) {
@@ -35,18 +37,28 @@
 		};
 	}
 
-	switch (log.type) {
+	switch (type) {
 		case 'move':
-			action = `se déplace vers la salle ${log.target}`;
+			action = `se déplace vers la salle ${room}`;
 			break;
 		case 'item':
-			action = `à récupérer un item dans la salle ${log.target}`;
+			action = `a récupéré un item dans la salle ${room}`;
+			img = item;
 			break;
 		case 'key':
+			action = `a trouvé la clef du donjon dans la salle ${room}`;
+			img = item;
 			break;
 		case 'power':
+			action = `a utilisé son pouvoir '${user.abilityName}'`;
 			break;
-		case 'battle':
+		case 'battleStarted':
+			console.log(log);
+			action = `frappe quelqu'un dans la salle ${room}`;
+			img = 'battle';
+			break;
+		case 'battleEnded':
+			action = `remporte le combat`;
 			break;
 		default:
 			console.log('nothing');
@@ -54,9 +66,14 @@
 </script>
 
 <li class="log" in:receive out:sendTransition>
-	<span><img src="/assets/img/{log.user?.heroImg}" alt="userImg" class="fluidimg heroImg" /></span>
-	<span class="h2">{log.user?.username}</span>
-	<p>
+	<div class="header">
+		<span><img src="/assets/img/{user.heroImg}" alt="userImg" class="fluidimg heroImg" /></span>
+		<span class="h2">{user.username}</span>
+		{#if img}
+			<span><img src="/assets/img/{img}.png" alt="userImg" class="fluidimg heroImg" /></span>
+		{/if}
+	</div>
+	<p class="action">
 		{action}
 	</p>
 </li>
@@ -70,10 +87,15 @@
 		height: auto;
 	}
 	.log {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
 		background-color: var(--BGTranspary);
+		padding: 6px;
+	}
+	.header {
+		display: flex;
+		gap: 6px;
+		align-items: center;
+	}
+	.action {
 		padding: 6px;
 	}
 </style>

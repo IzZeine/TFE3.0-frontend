@@ -7,6 +7,7 @@
 	import Battle from '$lib/game/Map/dialogs/Battle.svelte';
 	import { user } from '$lib/api/stores';
 	import { onMount } from 'svelte';
+	import { socket } from '$lib/api/socketConnection';
 
 	export let items, game;
 

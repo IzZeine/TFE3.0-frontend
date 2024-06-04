@@ -4,28 +4,46 @@
 	import Log from './log.svelte';
 	import { logs } from '$lib/api/stores';
 
-	$: logsArray = [];
+	let logsArray = [];
 
-	let onUserMove = (data) => {
+	const createLog = (type, user, room, item) => {
+		console.log(type, user, room, item);
 		let log = {
-			type: 'move',
-			user: data,
-			target: data.room
+			type: type,
+			user: user,
+			room: room,
+			item: item
 		};
 		logsArray.push(log);
 		logs.set(logsArray);
 		sessionStorage.setItem('logs', JSON.stringify(logsArray));
 	};
 
+	let onUserMove = (data) => {
+		createLog('move', data, data.room);
+	};
+
 	let onItemTaken = (data) => {
-		let log = {
-			type: 'item',
-			user: data,
-			target: data.room
-		};
-		logsArray.push(log);
-		logs.set(logsArray);
-		sessionStorage.setItem('logs', JSON.stringify(logsArray));
+		let { user, item } = data;
+		if (item == 'key') {
+			createLog('key', user, user.room, item);
+			return;
+		}
+		createLog('item', user, user.room, item);
+	};
+
+	let onPowerUsed = (data) => {
+		createLog('power', data, data.room);
+	};
+
+	let onBattleStarted = (data) => {
+		createLog('battleStarted', data[0], data[0].room);
+	};
+
+	let onBattleEnded = (data) => {
+		let { room, winner } = data;
+		console.log(data);
+		createLog('battleEnded', winner[0], room);
 	};
 
 	let clearLogs = () => {
@@ -35,14 +53,22 @@
 	};
 
 	onMount(() => {
-		let getDataLogs = sessionStorage.getItem('logs');
-		logsArray = JSON.parse(getDataLogs);
-		logs.set(logsArray);
+		if (sessionStorage.getItem('logs')) {
+			let getDataLogs = sessionStorage.getItem('logs');
+			logsArray = JSON.parse(getDataLogs);
+			logs.set(logsArray);
+		}
 		socket.on('logMove', onUserMove);
 		socket.on('logItem', onItemTaken);
-		// @TODO la suite
+		socket.on('logPower', onPowerUsed);
+		socket.on('logBattle', onBattleStarted);
+		socket.on('logBattleEnded', onBattleEnded);
 		return () => {
 			socket.off('logMove', onUserMove);
+			socket.off('logItem', onItemTaken);
+			socket.off('logPower', onPowerUsed);
+			socket.off('logBattle', onBattleStarted);
+			socket.off('logBattleEnded', onBattleEnded);
 		};
 	});
 </script>
@@ -50,9 +76,11 @@
 <div class="logsContainer">
 	<div class="innerLogs">
 		<ul class="logs">
-			{#each $logs as log}
-				<Log {log} />
-			{/each}
+			{#if $logs}
+				{#each $logs as log}
+					<Log {log} />
+				{/each}
+			{/if}
 		</ul>
 		<button class="clearLogs" on:click={clearLogs}>clear</button>
 	</div>

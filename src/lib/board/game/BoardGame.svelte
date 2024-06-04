@@ -62,6 +62,7 @@
 		background-color: #0b0b0b;
 		box-sizing: border-box;
 		border: solid 3px var(--txtPrimary);
+		overflow: hidden;
 	}
 
 	.boardGame {
