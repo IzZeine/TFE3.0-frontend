@@ -25,6 +25,8 @@
 	}
 
 	function canGoToDirection(user, direction, cd) {
+		if (!user.yourTurn) return false;
+		if (user.pa <= 0) return false;
 		if (cd.running) return false;
 		if (user.life <= 0) return false;
 		if (user.inBattle) return false;
@@ -36,6 +38,7 @@
 	}
 
 	function goToDirection(direction) {
+		socket.emit('usePa', $user);
 		let targetRoom = directionsInMyRoom[direction];
 		if (!targetRoom) return;
 		if (targetRoom == 19 && !$user.hasKey) {

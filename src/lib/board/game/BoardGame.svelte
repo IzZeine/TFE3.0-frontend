@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import Room from './Room.svelte';
 	import Logs from './Logs.svelte';
+	import GameInfos from './GameInfos.svelte';
 
 	//Game status
 	export let game;
@@ -43,7 +44,10 @@
 		</div>
 		<Battles {activeUsers} />
 	</div>
-	<Logs />
+	<div class="right">
+		<GameInfos {activeUsers} {game} />
+		<Logs />
+	</div>
 </div>
 
 <style lang="scss">
@@ -62,7 +66,7 @@
 		background-color: #0b0b0b;
 		box-sizing: border-box;
 		border: solid 3px var(--txtPrimary);
-		overflow: hidden;
+		// overflow: hidden;
 	}
 
 	.boardGame {
@@ -73,5 +77,13 @@
 	.svgBoard {
 		position: absolute;
 		top: 0;
+	}
+
+	.right {
+		height: 100%;
+		display: grid;
+		grid-template-rows: 0.25fr 1fr;
+		border-left: solid 3px var(--txtPrimary);
+		overflow: hidden;
 	}
 </style>

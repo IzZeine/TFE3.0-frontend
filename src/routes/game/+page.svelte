@@ -12,7 +12,6 @@
 
 	onMount(() => {
 		socket.on('updateGames', updateGames);
-
 		return () => {
 			socket.off('updateGames', updateGames);
 		};

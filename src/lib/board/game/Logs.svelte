@@ -89,11 +89,11 @@
 <style lang="scss">
 	.logsContainer {
 		box-sizing: border-box;
-		border-left: solid 3px var(--txtPrimary);
 		height: 100%;
 		width: 100%;
 		padding: 1rem;
 		overflow: hidden;
+		padding-top: 0;
 
 		.innerLogs {
 			display: flex;
@@ -111,7 +111,7 @@
 			overflow: hidden;
 			overflow-wrap: break-word;
 			box-sizing: border-box;
-			padding: 2rem 2rem 0;
+			padding: 2rem 1rem 0;
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;

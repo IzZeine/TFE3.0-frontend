@@ -7,6 +7,8 @@
 	import { getUser } from '$lib/api/getUsers.js';
 
 	export let data;
+	let { gameId } = data;
+
 	let username = '';
 	let user = '';
 
@@ -32,18 +34,25 @@
 		return username === '';
 	}
 
-	async function isUser() {
-		user = await getUser();
+	async function isUser(data) {
+		user = await getUser(gameId);
 		if (user) {
 			goto(`/game/${data.gameID}`);
+			return;
+		}
+		if (data) {
+			let gameTarget = data.find((game) => (game.gameId = gameId));
+			if ((gameTarget.statut = 'closed')) {
+				goto(`/game`);
+			}
 		}
 	}
 
 	onMount(async () => {
 		await isUser();
-		socket.on('updateGame', isUser);
+		socket.on('updateGames', isUser);
 		return () => {
-			socket.off('updateGame', isUser);
+			socket.off('updateGames', isUser);
 		};
 	});
 </script>

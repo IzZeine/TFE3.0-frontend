@@ -41,15 +41,61 @@
 			<img class="fluidimg cardHero_img" src="/assets/img/{currentUser.heroImg}" alt="pawn icon" />
 		{/if}
 		<div class="cardHero_stats">
-			<div class="cardHero_stats-atk-def">
-				<div class="cardHero_stats-atk-def_atk">
-					<p>ATK: <span>{currentUser.atk}</span></p>
-				</div>
-				<div class="cardHero_stats-atk-def_def">
-					<p>DEF: <span>{currentUser.def}</span></p>
-				</div>
-			</div>
+			<ul class="actions">
+				{#each { length: currentUser.pa } as pa}
+					<li class="pa">
+						<img src="/assets/img/pa.png" class="fluidimg pa" alt="pa" />
+					</li>
+				{/each}
+			</ul>
 		</div>
 	</div>
-	<p class="cardHero_hero" style:color={currentUser.color}>{currentUser.hero}</p>
+	<p class="cardHero_hero" style="--color:{currentUser.color};">
+		{currentUser.hero}
+	</p>
+	<div class="cardHero_stats-atk-def">
+		<div class="cardHero_stats-atk-def_atk">
+			<p>ATK: <span>{currentUser.atk}</span></p>
+		</div>
+		<div class="cardHero_stats-atk-def_def">
+			<p>DEF: <span>{currentUser.def}</span></p>
+		</div>
+	</div>
 </div>
+
+<style lang="scss">
+	.actions {
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+		gap: 6px;
+		.pa {
+			max-width: 18px;
+		}
+	}
+	.cardHero_stats-atk-def {
+		display: flex;
+		gap: 12px;
+		justify-content: center;
+	}
+	.cardHero_hero {
+		color: var(--color);
+		position: relative;
+		width: fit-content;
+		margin: 0 auto;
+	}
+	.cardHero_hero::after,
+	.cardHero_hero::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		flex-direction: row;
+		background-color: var(--color);
+		height: 2px;
+		width: 30px;
+	}
+	.cardHero_hero::before {
+		transform: translate(-100%, 0);
+		left: -12px;
+	}
+</style>

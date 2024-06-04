@@ -36,7 +36,7 @@
 			socket.on('updateGame', updateGame);
 		}
 		return () => {
-			socket.off(updateGame);
+			socket.off('updateGame', updateGame);
 		};
 	});
 

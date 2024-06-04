@@ -24,6 +24,7 @@
 	};
 
 	let tryToGetItemInRoom = async () => {
+		socket.emit('usePa', $user);
 		let condition = itemInRoom.condition;
 		let pointsDices = await rollDices();
 		dicesAnim = 'isActive';
