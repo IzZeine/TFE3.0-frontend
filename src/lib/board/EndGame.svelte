@@ -2,6 +2,7 @@
 	import { clearDataBase } from '$lib/api/clearDataBase.js';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
+	import { user } from '$lib/api/stores';
 
 	export let game;
 	let activeUsers;
@@ -31,7 +32,8 @@
 					</li>
 				{/each}
 			</ul>
-			<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId)}>Quitter</button
+			<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId, $user)}
+				>Quitter</button
 			>
 		</div>
 	{/if}

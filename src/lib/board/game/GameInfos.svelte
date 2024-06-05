@@ -28,6 +28,11 @@
 								{/each}
 							</ul>
 						{/if}
+						{#if user.team == 'boss'}
+							<ul class="lifes">
+								<!-- <li><img src="/assets/img/life.png" class="fluidimg" alt="life" /></li> -->
+							</ul>
+						{/if}
 					</li>
 				{/each}
 			</ul>
@@ -63,9 +68,13 @@
 		text-align: center;
 	}
 	.players {
-		display: flex;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
 		gap: 6px;
 		.player {
+			display: grid;
+			grid-template-columns: 0.15fr 1fr;
+			align-items: center;
 			.--1 {
 				transition: 0.2s;
 				filter: drop-shadow(0 0 5px var(--primary));
@@ -74,7 +83,9 @@
 	}
 	.lifes {
 		display: flex;
+		flex-direction: column;
 		gap: 6px;
+		transform: translate(10px, 0);
 	}
 	.timerTurn {
 		position: absolute;

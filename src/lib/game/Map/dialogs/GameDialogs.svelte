@@ -4,6 +4,7 @@
 	import Inventory from './Inventory.svelte';
 	import { fade, fly, blur, slide } from 'svelte/transition';
 	import Item from './Item.svelte';
+	import { user } from '$lib/api/stores';
 
 	export let items, currentDialog, game;
 
@@ -14,7 +15,7 @@
 	}
 </script>
 
-{#if currentDialog}
+{#if currentDialog && $user.yourTurn}
 	<div class="dialog" in:blur={{ duration: 300 }} out:blur={{ duration: 300 }}>
 		{#if currentDialog === 'power'}
 			<PowerDialogs {currentDialog} {game} on:closeDialog={closeDialog} />
