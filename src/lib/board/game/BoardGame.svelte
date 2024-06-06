@@ -6,9 +6,10 @@
 	import Room from './Room.svelte';
 	import Logs from './Logs.svelte';
 	import GameInfos from './GameInfos.svelte';
+	import Settings from './settings.svelte';
 
 	//Game status
-	export let game;
+	export let game, roomsInfos;
 
 	let activeUsers;
 	$: activeUsers = game.users;
@@ -33,21 +34,22 @@
 
 <div class="game">
 	<div class="boardGame">
-		<img class="fluidimg" src="/assets/img/boardgame.png" alt="boardgame" />
-		<div class="rooms">
-			{#each { length: 39 } as _, index}
-				<Room {activeUsers} {index} />
-			{/each}
-		</div>
 		<div class="svgBoard">
+			<div class="rooms">
+				{#each { length: 39 } as _, index}
+					<Room {activeUsers} {index} />
+				{/each}
+			</div>
+			<img class="fluidimg" src="/assets/img/boardgame.png" alt="boardgame" />
 			<BoardGameSVG bind:this={boardElement} />
 		</div>
 		<Battles {activeUsers} />
 	</div>
 	<div class="right">
 		<GameInfos {activeUsers} {game} />
-		<Logs />
+		<Logs {roomsInfos} />
 	</div>
+	<Settings />
 </div>
 
 <style lang="scss">
@@ -70,13 +72,14 @@
 	}
 
 	.boardGame {
-		position: relative;
-		align-self: center;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.svgBoard {
-		position: absolute;
-		top: 0;
+		position: relative;
 	}
 
 	.right {
@@ -85,5 +88,9 @@
 		grid-template-rows: 0.25fr 1fr;
 		border-left: solid 3px var(--txtPrimary);
 		overflow: hidden;
+	}
+	.rooms {
+		position: absolute;
+		top: 0;
 	}
 </style>

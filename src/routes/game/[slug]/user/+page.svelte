@@ -18,11 +18,12 @@
 			// Envoyer le nom d'utilisateur au serveur pour créer l'utilisateur
 			socket.emit('createUser', { username, gameId: data.gameId }, async (user) => {
 				console.log('createUser response', user);
-				sessionStorage.setItem(`sessionID-${data.gameId}`, user.id);
 				console.log('created user', user);
 				if (user) {
+					sessionStorage.setItem(`sessionID-${data.gameId}`, user.id);
 					return goto(`/game/${user.gameId}`);
 				}
+				return goto(`/game`);
 			});
 		} catch (error) {
 			console.error('Error creating user:', error);

@@ -14,8 +14,6 @@
 
 	let game = { ...initialGameData };
 
-	let winner = null;
-
 	const updateGame = async (data) => {
 		// console.log('[game] update game', data);
 		// console.log('[game] update game user', $user);
@@ -58,6 +56,6 @@
 		<Map {items} {game} />
 	{/if}
 	{#if game.statut === 'ended'}
-		<EndGame {winner} {game} />
+		<EndGame {game} />
 	{/if}
 {/if}

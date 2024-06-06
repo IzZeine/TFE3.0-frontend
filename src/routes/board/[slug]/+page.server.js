@@ -1,4 +1,4 @@
-import { getGame } from '$lib/api/actions.js';
+import { getGame, getRoomsInfos } from '$lib/api/actions.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ params, fetch }) => {
@@ -7,8 +7,11 @@ export const load = async ({ params, fetch }) => {
 	if (!initialGameData) {
 		return redirect(301, '/board');
 	}
+	const roomsInfos = await getRoomsInfos(fetch);
+
 	return {
 		initialGameData,
-		gameId
+		gameId,
+		roomsInfos
 	};
 };

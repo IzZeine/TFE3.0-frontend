@@ -26,7 +26,7 @@
 			target: data.detail,
 			timestamp: Date.now()
 		};
-		socket.emit('usePa', $user);
+		socket.emit('usePa2', $user);
 		socket.emit('usePower', power);
 		closeDialog();
 	};

@@ -1,5 +1,5 @@
 <script>
-	export let log;
+	export let log, roomsInfos;
 	import { crossfade } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 
@@ -39,11 +39,15 @@
 
 	switch (type) {
 		case 'move':
-			action = `se déplace vers la salle ${room}`;
+			action = `se déplace vers ${roomsInfos[room].nameDirection} (${room})`;
 			break;
 		case 'item':
 			action = `a récupéré un item dans la salle ${room}`;
 			img = item;
+			break;
+		case 'rock':
+			action = `a ramassé un caillou dans la salle ${roomsInfos[room].nameDirection} (${room})`;
+			img = 'rock';
 			break;
 		case 'key':
 			action = `a trouvé la clef du donjon dans la salle ${room}`;
@@ -53,7 +57,6 @@
 			action = `a utilisé son pouvoir '${user.abilityName}'`;
 			break;
 		case 'battleStarted':
-			console.log(log);
 			action = `frappe quelqu'un dans la salle ${room}`;
 			img = 'battle';
 			break;

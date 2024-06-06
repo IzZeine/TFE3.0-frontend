@@ -8,7 +8,6 @@
 
 	let gameID;
 	let gameName = '';
-	let activegames = [];
 
 	const onConnect = () => {
 		console.log('connected');
@@ -27,6 +26,7 @@
 		} else {
 			socket.on('connect', onConnect);
 			socket.on('updateUsersCount', updateUserCount);
+			sessionStorage.clear();
 		}
 
 		return () => {

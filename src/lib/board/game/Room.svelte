@@ -64,8 +64,15 @@
 			id -= 39;
 		}
 		if (index == id - 1) {
-			console.log(index == id - 1 ? 'oui' : 'non');
 			if (data.itemId == 'key') animItemImg = 'key';
+			animItem = 'isActive';
+		}
+	};
+
+	const onTakeRock = (data) => {
+		if (index == data) {
+			console.log(data);
+			animItemImg = 'rock';
 			animItem = 'isActive';
 		}
 	};
@@ -76,9 +83,11 @@
 
 	onMount(() => {
 		socket.on('itemWasTaken', onTakeItem);
+		socket.on('takeRock', onTakeRock);
 		socket.on('battle', onBattle);
 		return () => {
 			socket.off('itemWasTaken', onTakeItem);
+			socket.off('takeRock', onTakeRock);
 			socket.off('battle', onBattle);
 		};
 	});

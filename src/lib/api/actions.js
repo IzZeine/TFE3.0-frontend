@@ -72,3 +72,11 @@ export async function getItems(fetch) {
 	}
 	return [];
 }
+
+export async function getRoomsInfos(fetch) {
+	const response = await callBackend(fetch, 'GET', `/roomsInfos`);
+	if (response.ok) {
+		return response.data;
+	}
+	return [];
+}

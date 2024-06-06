@@ -15,7 +15,7 @@
 	}
 </script>
 
-{#if currentDialog && $user.yourTurn}
+{#if currentDialog && (currentDialog == 'inventory' || $user.yourTurn)}
 	<div class="dialog" in:blur={{ duration: 300 }} out:blur={{ duration: 300 }}>
 		{#if currentDialog === 'power'}
 			<PowerDialogs {currentDialog} {game} on:closeDialog={closeDialog} />

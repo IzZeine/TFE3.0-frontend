@@ -8,13 +8,9 @@
 
 	let element;
 
-	const onTakeItemInRoom = (room, boss) => {
-		if (boss) {
-			animInRoom(room, 'rock');
-			return;
-		}
-		animInRoom(room, 'inventory');
-	};
+	const resizeObserver = new ResizeObserver((entries) => {
+		positions.set(getRoomPositions());
+	});
 
 	export const getRoomPositions = () => {
 		if (!element) return [];
@@ -31,18 +27,12 @@
 	};
 
 	onMount(async () => {
+		resizeObserver.observe(element);
 		positions.set(getRoomPositions());
 	});
 </script>
 
-<svg
-	bind:this={element}
-	width="4000"
-	height="2250"
-	viewBox="0 0 4000 2250"
-	fill="none"
-	xmlns="http://www.w3.org/2000/svg"
->
+<svg bind:this={element} viewBox="0 0 4000 2250" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<g id="BoardGame" clip-path="url(#clip0_646_2)">
 		<path
 			id="0"
@@ -732,3 +722,11 @@
 		</clipPath>
 	</defs>
 </svg>
+
+<style>
+	svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+</style>

@@ -4,10 +4,11 @@
 	import Log from './log.svelte';
 	import { logs } from '$lib/api/stores';
 
+	export let roomsInfos;
+
 	let logsArray = [];
 
 	const createLog = (type, user, room, item) => {
-		console.log(type, user, room, item);
 		let log = {
 			type: type,
 			user: user,
@@ -42,8 +43,11 @@
 
 	let onBattleEnded = (data) => {
 		let { room, winner } = data;
-		console.log(data);
 		createLog('battleEnded', winner[0], room);
+	};
+
+	let onTakeRock = (data) => {
+		createLog('rock', data, data.room);
 	};
 
 	let clearLogs = () => {
@@ -63,12 +67,15 @@
 		socket.on('logPower', onPowerUsed);
 		socket.on('logBattle', onBattleStarted);
 		socket.on('logBattleEnded', onBattleEnded);
+		socket.on('logRock', onTakeRock);
+
 		return () => {
 			socket.off('logMove', onUserMove);
 			socket.off('logItem', onItemTaken);
 			socket.off('logPower', onPowerUsed);
 			socket.off('logBattle', onBattleStarted);
 			socket.off('logBattleEnded', onBattleEnded);
+			socket.off('logRock', onTakeRock);
 		};
 	});
 </script>
@@ -78,7 +85,7 @@
 		<ul class="logs">
 			{#if $logs}
 				{#each $logs as log}
-					<Log {log} />
+					<Log {log} {roomsInfos} />
 				{/each}
 			{/if}
 		</ul>
@@ -125,6 +132,11 @@
 			margin-top: auto;
 			margin-bottom: 24px;
 			align-self: center;
+			transition: 0.2s;
+			&:hover {
+				background-color: var(--primary);
+				color: var(--black);
+			}
 		}
 	}
 </style>

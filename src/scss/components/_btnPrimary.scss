@@ -14,6 +14,7 @@ BTN PRIMARY
 	/* position: absolute; */
 	/* bottom: 60px; */
 	margin-top: 18px;
+	transition: 0.2s;
 }
 
 .btnPrimary:disabled {
@@ -29,4 +30,8 @@ BTN PRIMARY
 .btnPrimary:disabled:active {
 	box-shadow: 3px 3px 6px var(--black);
 	transform: none;
+}
+
+.btnPrimary:hover {
+	background-color: var(--black);
 }

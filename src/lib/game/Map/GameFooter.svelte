@@ -23,7 +23,7 @@
 			: true;
 
 	$: powerBtnDisabled =
-		$user.canUsePower && !$moveCd.running && $user.pa > 0 && $user.yourTurn && $user.life > 0
+		$user.canUsePower && !$moveCd.running && $user.pa >= 2 && $user.yourTurn && $user.life > 0
 			? false
 			: true;
 
@@ -47,6 +47,9 @@
 			<img class="fluidimg" src="/assets/img/inventory.png" alt="inventory" />
 		</button>
 		<button class="actionButton --power" disabled={powerBtnDisabled} on:click={openPower}>
+			{#if $user.cdPower > 0}
+				<p class="cdPower h1">{$user.cdPower}</p>
+			{/if}
 			<img class="fluidimg" src="/assets/img/power.png" alt="power" />
 		</button>
 		<button class="actionButton --find" disabled={itemBtnDisabled} on:click={openItem}>
@@ -54,3 +57,12 @@
 		</button>
 	</div>
 </div>
+
+<style>
+	.cdPower {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+</style>

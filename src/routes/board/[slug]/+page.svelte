@@ -12,7 +12,7 @@
 	// eslint-disable-next-line no-undef
 	export let data;
 
-	const { initialGameData, gameId } = data;
+	const { initialGameData, gameId, roomsInfos } = data;
 
 	let game = initialGameData;
 
@@ -50,7 +50,7 @@
 <Audio src="/assets/sounds/dungeon.mp3" loop={true} id="dungeon" volume={0.5} />
 
 {#if game.statut === 'started'}
-	<BoardGame {game} />
+	<BoardGame {game} {roomsInfos} />
 {:else if game.statut === 'ended'}
 	<EndGame {game} />
 {:else}

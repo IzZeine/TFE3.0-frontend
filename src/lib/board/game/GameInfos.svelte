@@ -16,11 +16,13 @@
 <div class="gameInfos">
 	<div class="innerInfos">
 		<div class="infos">
-			<p class="turns">Tour : {game.round}</p>
 			<ul class="players">
 				{#each activeUsers as user}
-					<li class="player">
-						<img src="/assets/img/{user.heroImg}" class="fluidimg --{user.yourTurn}" alt="hero" />
+					<li class="player --{user.yourTurn}">
+						<img src="/assets/img/{user.heroImg}" class="fluidimg" alt="hero" />
+						{#if user.life <= 0}
+							<img src="/assets/img/death.png" class="fluidimg death" alt="dead" />
+						{/if}
 						{#if user.team == 'hero'}
 							<ul class="lifes">
 								{#each { length: user.life } as life}
@@ -38,7 +40,16 @@
 			</ul>
 		</div>
 	</div>
-	<p class="timerTurn">{secTurn}</p>
+	<div class="coins timerTurn">
+		{#if secTurn >= 10}
+			<p class="">00:{secTurn}</p>
+		{:else}
+			<p class="">00:0{secTurn}</p>
+		{/if}
+	</div>
+	<div class="coins roundCount">
+		<p class="">T{game.round}</p>
+	</div>
 </div>
 
 <style lang="scss">
@@ -72,13 +83,26 @@
 		grid-template-columns: repeat(3, 1fr);
 		gap: 6px;
 		.player {
+			position: relative;
 			display: grid;
 			grid-template-columns: 0.15fr 1fr;
 			align-items: center;
-			.--1 {
+			transition: 0.2s;
+			opacity: 0.7;
+			filter: grayscale(0.8);
+			img {
 				transition: 0.2s;
+			}
+		}
+		.player.--1 {
+			opacity: 1;
+			filter: grayscale(0);
+			img {
 				filter: drop-shadow(0 0 5px var(--primary));
 			}
+		}
+		.death {
+			position: absolute;
 		}
 	}
 	.lifes {
@@ -87,15 +111,26 @@
 		gap: 6px;
 		transform: translate(10px, 0);
 	}
-	.timerTurn {
+	.coins {
 		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 60px;
+		height: 60px;
 		z-index: 9;
 		top: 0;
-		left: 0;
-		transform: translate(-50%, -50%);
 		margin: 1rem;
 		border: solid 1px var(--txtPrimary);
 		border-radius: 100%;
-		padding: 1rem;
+		background-color: #0b0b0b;
+	}
+	.timerTurn {
+		left: 0;
+		transform: translate(-50%, -50%);
+	}
+	.roundCount {
+		right: 0;
+		transform: translate(50%, -50%);
 	}
 </style>

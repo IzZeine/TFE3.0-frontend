@@ -16,15 +16,6 @@
 		{
 			heroImg: 'knight.png'
 		}
-		// {
-		// 	heroImg: 'knight.png'
-		// }
-		// {
-		// 	heroImg: 'knight.png'
-		// },
-		// {
-		// 	heroImg: 'knight.png'
-		// }
 	];
 
 	if (heroes.length > 3) {
@@ -111,6 +102,23 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
+		}
+	}
+
+	.boss {
+		animation: battleBoss 3s infinite;
+	}
+
+	@keyframes battleBoss {
+		0% {
+		}
+		49% {
+		}
+		50% {
+			opacity: 1;
+			transform: translate(50%, 0) scale(2);
+		}
+		100% {
 		}
 	}
 </style>
