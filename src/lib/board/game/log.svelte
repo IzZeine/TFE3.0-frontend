@@ -39,29 +39,30 @@
 
 	switch (type) {
 		case 'move':
-			action = `se déplace vers ${roomsInfos[room].nameDirection} (${room})`;
+			action = `se meut vers ${roomsInfos[room].nameDirection} (${room})`;
 			break;
 		case 'item':
-			action = `a récupéré un item dans la salle ${room}`;
+			action = `a rapiné un bien précieux dans ${roomsInfos[room].nameDirection} (${room})`;
 			img = item;
 			break;
 		case 'rock':
-			action = `a ramassé un caillou dans la salle ${roomsInfos[room].nameDirection} (${room})`;
+			action = `Quelle trouvaille! Une modeste cailloche`;
 			img = 'rock';
 			break;
 		case 'key':
-			action = `a trouvé la clef du donjon dans la salle ${room}`;
+			action = `a mis la main sur la préciaude clef du donjon dans ${roomsInfos[room].nameDirection} (${room})`;
 			img = item;
 			break;
 		case 'power':
-			action = `a utilisé son pouvoir '${user.abilityName}'`;
+			action = `a proféré un puissant enchantement '${user.abilityName}'`;
 			break;
 		case 'battleStarted':
-			action = `frappe quelqu'un dans la salle ${room}`;
+			action = `C'est un attrapoire ! il y a un ${user.hero} dans ${roomsInfos[room].nameDirection}`;
 			img = 'battle';
 			break;
 		case 'battleEnded':
-			action = `remporte le combat`;
+			img = 'death';
+			action = `Malaventure! Les héros s'esbignent prestement. Ils se sont pris une sacrée torgnole.`;
 			break;
 		default:
 			console.log('nothing');
@@ -70,8 +71,10 @@
 
 <li class="log" in:receive out:sendTransition>
 	<div class="header">
-		<span><img src="/assets/img/{user.heroImg}" alt="userImg" class="fluidimg heroImg" /></span>
-		<span class="h2">{user.username}</span>
+		{#if log.type != 'battleEnded'}
+			<span><img src="/assets/img/{user.heroImg}" alt="userImg" class="fluidimg heroImg" /></span>
+			<span class="h2">{user.username}</span>
+		{/if}
 		{#if img}
 			<span><img src="/assets/img/{img}.png" alt="userImg" class="fluidimg heroImg" /></span>
 		{/if}
