@@ -51,7 +51,7 @@
 		});
 	});
 
-	$: getItemBtnDisabled = !itemInRoom || dicesAnim == 'isActive' ? true : false;
+	$: getItemBtnDisabled = !itemInRoom || $user.pa <= 0 || dicesAnim == 'isActive' ? true : false;
 </script>
 
 <Dialog {currentDialog} on:closeDialog>

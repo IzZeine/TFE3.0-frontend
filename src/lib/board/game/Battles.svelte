@@ -90,7 +90,7 @@
 			display: grid;
 
 			.hero {
-				animation: battleHero 3s infinite;
+				animation: battleHero 2.8s infinite;
 				position: relative;
 				height: 100%;
 			}
@@ -107,15 +107,15 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			animation: battleVs 3s infinite;
+			animation: battleVs 2.8s infinite;
 		}
 	}
 
 	.boss {
-		animation: battleBoss 3s infinite;
+		animation: battleBoss 2.8s infinite;
 	}
 	.crown {
-		animation: battleCrown 3s infinite;
+		animation: battleCrown 2.8s infinite;
 		z-index: -1;
 		position: absolute;
 		max-width: 50%;

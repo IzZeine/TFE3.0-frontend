@@ -6,8 +6,7 @@
 
 	export let game;
 	let activeUsers;
-	// const winnerTeam = game.winner;
-	const winnerTeam = 'hero';
+	const winnerTeam = game.winner;
 	let winners = [];
 
 	onMount(async () => {
@@ -39,9 +38,42 @@
 	{/if}
 </div>
 
-<style>
+<style lang="scss">
 	.container {
 		height: 100dvh;
 		box-sizing: border-box;
+	}
+	.endgame {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		.winner-team {
+			span {
+				position: relative;
+			}
+			span::before {
+				content: '';
+				background-image: url('/assets/img/crown.png');
+				background-size: contain;
+				position: absolute;
+				left: 50%;
+				width: 30px;
+				height: 30px;
+				transform: translate(-50%, -75%);
+				@media (min-width: 750px) {
+					transform: translate(-50%, -50%);
+				}
+			}
+		}
+		.winners {
+			margin-top: 24px;
+			display: grid;
+			grid-template-columns: repeat(2, auto);
+			@media (min-width: 750px) {
+				display: flex;
+			}
+		}
 	}
 </style>
