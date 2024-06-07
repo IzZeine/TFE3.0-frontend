@@ -1,96 +1,51 @@
-<script>
-	// @ts-nocheck
+<div class="container">
+	<img class="fluidimg logo" src="/assets/img/logo.png" alt="logo" />
+	<ul>
+		<li><a href="/board" class="btnPrimary">Create game</a></li>
+		<li><a href="/game" class="btnPrimary">Join game</a></li>
+	</ul>
+</div>
 
-	import { onMount } from 'svelte';
-	import { getUser } from '$lib';
-	import { goto } from '$app/navigation';
-	import { socket } from '$lib/js/socketConnection';
-
-	// export let data;
-	// const socket = data.socket;
-
-	let sessionID = '';
-	let gameID = '';
-	let username = '';
-	let user = '';
-
-	const onFormSubmit = async () => {
-		try {
-			// Envoyer le nom d'utilisateur au serveur pour créer l'utilisateur
-			socket.emit('createUser', username, async (userId) => {
-				console.log('created user', userId);
-				sessionStorage.setItem('sessionID', userId);
-				user = await getUser(socket);
-				if (user) {
-					goto('/game');
-				}
-			});
-		} catch (error) {
-			console.error('Error creating user:', error);
+<style lang="scss">
+	.container {
+		box-sizing: border-box;
+		width: 100dvw;
+		height: 100dvh;
+		background-image: url('/assets/img/coverMobile.png');
+		background-position: bottom left;
+		background-size: cover;
+		background-repeat: no-repeat;
+		display: flex;
+		flex-direction: column;
+		@media (min-width: 500px) {
+			background-image: url('/assets/img/cover.png');
+			padding: 120px;
+			display: block;
 		}
-	};
-
-	// disabled btn if the input is empty
-	function isDirty(username) {
-		return username === '';
 	}
+	ul {
+		margin-top: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 30px;
 
-	let innerWidth;
-	const onResize = () => {
-		if (innerWidth > 500) {
-			goto('/boardGame');
+		@media (min-width: 500px) {
+			margin-top: 60px;
 		}
-	};
-
-	onMount(async () => {
-		onResize();
-
-		console.log('onMount')
-
-		sessionID = sessionStorage.getItem('sessionID');
-		if (sessionID) {
-			goto('/game');
+	}
+	li {
+		width: 100%;
+		@media (min-width: 500px) {
+			width: 200px;
 		}
-
-		gameID = sessionStorage.getItem('gameID');
-		if (gameID) {
-			goto(`/game/${gameID}`);
-		}
-
-		socket.on('connect', () => {
-			console.log('Connected to server');
-		});
-
-		user = await getUser(socket);
-		if (user) {
-			goto('/game');
-		}
-	});
-</script>
-
-<svelte:window on:resize={onResize} bind:innerWidth />
-
-<div class="homepage_container" style="margin: auto 0;">
-	<div class="homepage_content">
-	<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
-	<form on:submit|preventDefault={onFormSubmit} class="form">
-		<div>
-			<label for="username" class="labelForm">Entrez votre pseudo :</label>
-			<input
-				type="text"
-				name="username"
-				id="username"
-				class="inputForm"
-				placeholder="ex : IzZeine"
-				maxlength="9"
-				autocomplete="off"
-				data-lpignore="true"
-				data-form-type="other"
-				required
-				bind:value={username}
-			/>
-		</div>
-		<button class="btnPrimary btnForm" disabled={isDirty(username)}>Jouer</button>
-	</form>
-</div>
-</div>
+	}
+	a {
+		margin: 0;
+		display: block;
+		text-align: center;
+	}
+	img {
+		margin: 0 auto;
+	}
+</style>

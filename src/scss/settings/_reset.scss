@@ -10,10 +10,19 @@ Reset HTML
 	margin: 0;
 	padding: 0;
 	text-decoration: none;
+	background-color: unset;
 }
 a:focus,
 a:active,
 a:visited {
 	color: var(--txtPrimary);
 	text-decoration: none;
+}
+
+html {
+	cursor: url('/assets/img/cursor.svg'), auto;
+}
+
+button:hover {
+	cursor: url('/assets/img/pointer.svg'), auto;
 }

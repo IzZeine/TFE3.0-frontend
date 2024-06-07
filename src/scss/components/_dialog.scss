@@ -11,12 +11,14 @@
 	background-color: var(--BGDialog);
 	color: var(--txtPrimary);
 
-	animation: fadeout 0.2s ease-in forwards;
+	// animation: fadeout 0.2s ease-in forwards;
+	position: absolute;
+	top: 0;
 }
 
 dialog[open] {
 	display: flex;
-	animation: fadein 0.2s ease-in forwards;
+	// animation: fadein 0.2s ease-in forwards;
 }
 
 @keyframes fadein {
@@ -87,60 +89,6 @@ ITEM
 	color: green;
 }
 
-.animationLegendary {
-	z-index: 9;
-	position: absolute;
-	width: 100%;
-	padding-top: 100%; /* La hauteur est égale à 100% de la largeur */
-	animation: animLegendary 1s 0.2s steps(13);
-	background-size: contain;
-}
-
-@keyframes animLegendary {
-	0% {
-		background-image: url('/assets/img/animLegendary/frame_1.png');
-	}
-	8% {
-		background-image: url('/assets/img/animLegendary/frame_2.png');
-	}
-	15% {
-		background-image: url('/assets/img/animLegendary/frame_3.png');
-	}
-	23% {
-		background-image: url('/assets/img/animLegendary/frame_4.png');
-	}
-	31% {
-		background-image: url('/assets/img/animLegendary/frame_5.png');
-	}
-	38% {
-		background-image: url('/assets/img/animLegendary/frame_6.png');
-	}
-	46% {
-		background-image: url('/assets/img/animLegendary/frame_7.png');
-	}
-	54% {
-		background-image: url('/assets/img/animLegendary/frame_8.png');
-	}
-	62% {
-		background-image: url('/assets/img/animLegendary/frame_9.png');
-	}
-	69% {
-		background-image: url('/assets/img/animLegendary/frame_10.png');
-	}
-	77% {
-		background-image: url('/assets/img/animLegendary/frame_11.png');
-	}
-	85% {
-		background-image: url('/assets/img/animLegendary/frame_12.png');
-	}
-	92% {
-		background-image: url('/assets/img/animLegendary/frame_13.png');
-	}
-	100% {
-		background-image: url('/assets/img/animLegendary/frame_13.png');
-	}
-}
-
 /*--------------------------------------------------------------------------
 Inventory
 --------------------------------------------------------------------------*/
@@ -167,34 +115,6 @@ Inventory
 	position: absolute;
 	bottom: 0;
 	right: 0;
-}
-
-/*--------------------------------------------------------------------------
-Battle
---------------------------------------------------------------------------*/
-
-.dialog_battle {
-	.heroes {
-		display: flex;
-		justify-content: center;
-		.hero {
-			max-width: calc((100vw) / 5);
-		}
-	}
-	.contentDialog {
-		display: flex;
-		justify-content: center;
-		gap: 24px;
-		.left {
-			text-align: start;
-		}
-		.right {
-			text-align: end;
-		}
-	}
-	.footerDialog {
-		text-align: center;
-	}
 }
 
 /*--------------------------------------------------------------------------
@@ -232,14 +152,14 @@ Power --rodeur
 }
 
 /*--------------------------------------------------------------------------
-Power --death --druide
+Power --necromancer --druide
 --------------------------------------------------------------------------*/
 
 .userChoice {
 	margin-top: 12px;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(0, 0.33fr));
-	grid-template-rows: repeat(2, 1fr);
+	// grid-template-rows: repeat(2, 1fr);
 	gap: 12px;
 	justify-content: center;
 	// .hero {
@@ -265,4 +185,15 @@ Power --wizard
 .luckText {
 	margin-top: 12px;
 	text-align: center;
+}
+
+/*--------------------------------------------------------------------------
+Power --gelom
+--------------------------------------------------------------------------*/
+
+.inventory.-rock {
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+	margin-top: 24px;
 }

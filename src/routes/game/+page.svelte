@@ -1,80 +1,22 @@
 <script>
-	// @ts-nocheck
-
 	import { onMount } from 'svelte';
-	import { getMyUrlForDev, getUser } from '$lib';
-	import { goto } from '$app/navigation';
-	import { clearStorage } from '$lib';
-	import { socket } from '$lib/js/socketConnection.js';
+	import { socket } from '$lib/api/socketConnection.js';
 
-	// export let data;
-	// const socket = data.socket;
+	export let data;
+	let games = data.games;
 
-	let sessionID = '';
-	let user = '';
-	let gameID = '';
-	let OnlineUsers = 0;
-	let activeGames = [];
-	let url = getMyUrlForDev();
+	let updateGames = (data) => {
+		console.log('les games : ', data);
+		games = data;
+	};
 
-	onMount(async () => {
-		onResize();
-
-		sessionID = sessionStorage.getItem('sessionID');
-		console.log(sessionID);
-		if (!sessionID) {
-			clearStorage();
-			goto('/');
-		}
-
-		gameID = sessionStorage.getItem('gameID');
-		if (gameID) {
-			goto(`/game/${gameID}`);
-		}
-
-		socket.on('connect', async () => {
-			console.log('Connected to server');
-		});
-
-		// Écouter l'événement de réponse du serveur après la création d'utilisateur
-		socket.on('userCreated', (id) => {
-			sessionStorage.setItem('sessionID', id);
-		});
-
-		socket.on('updateUsersCount', (count) => {
-			OnlineUsers = count;
-		});
-
-		user = await getUser(socket);
-
-		if (!user) {
-			clearStorage();
-			goto('/');
-		}
-
-		askActiveGames();
+	onMount(() => {
+		socket.on('updateGames', updateGames);
+		return () => {
+			socket.off('updateGames', updateGames);
+		};
 	});
-
-	let joinGame = (id) => {
-		socket.emit('joinGame', id);
-		sessionStorage.setItem('gameID', id);
-	};
-
-	let askActiveGames = async () => {
-		const response = await fetch(`${url}/activegames`);
-		const activeGamesJson = await response.json();
-		activeGames = [...activeGamesJson];
-	};
-
-	let innerWidth;
-	const onResize = () => {
-		if (screen.width > 500) {
-			goto('/boardGame');
-		}
-	};
 </script>
-
-<svelte:window on:resize={onResize} bind:innerWidth />
 
 <div class="container">
 	<p class="h1" style="display: flex; text-align:center; margin-bottom:24px">
@@ -83,21 +25,16 @@
 
 	<div class="activeGames">
 		<ul>
-			{#each activeGames as game}
-				<li>
-					<a href="/game/{game.gameId}">
-						<button on:click={joinGame(game.gameId)} class="btn-joinGames">
-							<p>{game.name}</p>
-							<p class="btn-joinGames_statut">{game.users}/6</p>
-						</button>
-					</a>
-				</li>
+			{#each games as game}
+				{#if game.statut === 'waiting'}
+					<li>
+						<a href="/game/{game.gameId}" class="btn-joinGames">
+							<span>{game.name}</span>
+							<span class="btn-joinGames_statut">{game.users.length}/6</span>
+						</a>
+					</li>
+				{/if}
 			{/each}
 		</ul>
-		<button class="btn-menuGames refresh" on:click={askActiveGames}>
-			<img src="/assets/img/refresh.svg" alt="refresh" />
-		</button>
 	</div>
 </div>
-
-<button on:click={clearStorage}>reset</button>
