@@ -41,7 +41,6 @@
 	function sentHeroToServer(event) {
 		let hero = event.detail.hero;
 		socket.emit('selectedHero', hero);
-		//socket.emit('playSound', 'power'); // @TODO : sound select
 	}
 </script>
 

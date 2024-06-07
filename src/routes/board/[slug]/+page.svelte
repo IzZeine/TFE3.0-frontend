@@ -16,15 +16,6 @@
 
 	let game = initialGameData;
 
-	/*
-	const audioFiles = [
-		'/assets/sounds/dungeon.mp3',
-		'/assets/sounds/power.mp3',
-		'/assets/sounds/sword.mp3',
-		'/assets/sounds/woosh.mp3'
-	];
-	*/
-
 	const onUpdateGame = (data) => {
 		// console.log('[board] onUpdateGame', data);
 		game = data;
@@ -46,8 +37,6 @@
 		};
 	});
 </script>
-
-<Audio src="/assets/sounds/dungeon.mp3" loop={true} id="dungeon" volume={0.5} />
 
 {#if game.statut === 'started'}
 	<BoardGame {game} {roomsInfos} />

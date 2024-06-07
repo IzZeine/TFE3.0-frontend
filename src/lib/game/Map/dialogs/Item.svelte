@@ -39,7 +39,6 @@
 			console.log('réussi');
 			socket.emit('getItemInRoom', myRoom);
 		}, 1000);
-		// socket.emit('playSound', 'woosh');
 	};
 
 	onMount(() => {
