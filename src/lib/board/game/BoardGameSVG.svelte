@@ -8,10 +8,6 @@
 
 	let element;
 
-	const resizeObserver = new ResizeObserver((entries) => {
-		positions.set(getRoomPositions());
-	});
-
 	export const getRoomPositions = () => {
 		if (!element) return [];
 		return Array.from(element.querySelectorAll('.room')).map((room) => {
@@ -27,6 +23,9 @@
 	};
 
 	onMount(async () => {
+		const resizeObserver = new ResizeObserver((entries) => {
+			positions.set(getRoomPositions());
+		});
 		resizeObserver.observe(element);
 		positions.set(getRoomPositions());
 	});

@@ -4,7 +4,6 @@
 	import BoardGame from '$lib/board/game/BoardGame.svelte';
 	import EndGame from '$lib/board/EndGame.svelte';
 	import { socket } from '$lib/api/socketConnection.js';
-	import Audio from '$lib/audio/AudioPlayer.svelte';
 	import LobbyGame from '$lib/board/lobby/LobbyGame.svelte';
 
 	let winner = null;

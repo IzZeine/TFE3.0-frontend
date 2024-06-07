@@ -54,7 +54,10 @@
 
 {#if battle}
 	<div class="battle" in:blur={{ y: 50, duration: 500 }} out:blur={{ duration: 500 }}>
-		<img src="/assets/img/big{boss.heroImg}" alt="boss" class="boss fluidimg" />
+		<div class="boss">
+			<img src="/assets/img/big{boss.heroImg}" alt="boss" class="bossImg fluidimg" />
+			<img src="/assets/img/crown.png" class="fluidimg crown" alt="crown" />
+		</div>
 		<ul
 			class="heroes"
 			style:grid-template-rows="repeat({rows},1fr)"
@@ -85,7 +88,9 @@
 			height: 100%;
 			margin-left: 15%;
 			display: grid;
+
 			.hero {
+				animation: battleHero 3s infinite;
 				position: relative;
 				height: 100%;
 			}
@@ -102,23 +107,69 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
+			animation: battleVs 3s infinite;
 		}
 	}
 
 	.boss {
 		animation: battleBoss 3s infinite;
 	}
+	.crown {
+		animation: battleCrown 3s infinite;
+		z-index: -1;
+		position: absolute;
+		max-width: 50%;
+		top: 25%;
+		left: 50%;
+		transform: translate(-50%, 0);
+	}
 
 	@keyframes battleBoss {
 		0% {
 		}
-		49% {
-		}
 		50% {
+			transform: translate(0, 0) scale(1);
+		}
+		100% {
 			opacity: 1;
 			transform: translate(50%, 0) scale(2);
 		}
+	}
+	@keyframes battleCrown {
+		0% {
+		}
+		50% {
+			top: 25%;
+		}
 		100% {
+			top: -25%;
+		}
+	}
+	@keyframes battleHero {
+		0% {
+		}
+		50% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		100% {
+			opacity: 0;
+			transform: scale(0);
+		}
+	}
+	@keyframes battleVs {
+		0% {
+		}
+		45% {
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+		}
+		80% {
+			opacity: 0;
+			transform: translate(-50%, -50%) scale(0);
+		}
+		100% {
+			transform: translate(-50%, -50%) scale(0);
 		}
 	}
 </style>
