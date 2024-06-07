@@ -87,4 +87,7 @@
 			margin: 12px;
 		}
 	}
+	.numOfItem {
+		color: var(--txtPrimary);
+	}
 </style>
