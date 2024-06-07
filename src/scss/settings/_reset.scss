@@ -4,6 +4,7 @@ Reset HTML
 *,
 *:after,
 *:before {
+	color: var(--txtPrimary);
 	list-style: none;
 	outline: unset;
 	border: none;
@@ -12,6 +13,7 @@ Reset HTML
 	text-decoration: none;
 	background-color: unset;
 }
+a,
 a:focus,
 a:active,
 a:visited {
