@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	import GameRules from '$lib/game/GameRules.svelte';
 	import ChooseHero from '$lib/game/ChooseHero.svelte';
 	import EndGame from '$lib/board/EndGame.svelte';
 	import Map from '$lib/game/Map/Map.svelte';
@@ -8,6 +7,7 @@
 	import { socket } from '$lib/api/socketConnection.js';
 	import { getUser } from '$lib/api/getUsers.js';
 	import { user } from '$lib/api/stores.js';
+	import Wait from '$lib/game/Wait.svelte';
 
 	export let data;
 	const { initialGameData, gameId, heroes, boss, items } = data;
@@ -15,8 +15,6 @@
 	let game = { ...initialGameData };
 
 	const updateGame = async (data) => {
-		// console.log('[game] update game', data);
-		// console.log('[game] update game user', $user);
 		user.set(data.users.find(({ id }) => id === $user.id));
 		game = data;
 	};
@@ -46,7 +44,7 @@
 
 {#if user}
 	{#if game.statut === 'waiting'}
-		<GameRules />
+		<Wait />
 	{/if}
 	{#if game.statut === 'closed'}
 		<ChooseHero {heroes} {boss} on:ChooseHero={sentHeroToServer} />

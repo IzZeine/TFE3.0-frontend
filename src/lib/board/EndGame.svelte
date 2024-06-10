@@ -32,6 +32,9 @@
 				{/each}
 			</ul>
 			<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId, $user)}
+				>Rejouez</button
+			>
+			<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId, $user)}
 				>Quitter</button
 			>
 		</div>

@@ -4,7 +4,6 @@
 
 	let innerWidth = 0;
 	const onResize = () => {
-		console.log(innerWidth);
 		if (innerWidth < 500) {
 			goto('/');
 		}

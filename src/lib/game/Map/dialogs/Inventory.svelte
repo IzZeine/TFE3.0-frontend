@@ -60,6 +60,8 @@
 					</button>
 				</div>
 			{/if}
+		{:else}
+			<p class="noItems">Vous ne possédez guère de biens!</p>
 		{/if}
 	</svelte:fragment>
 </Dialog>
@@ -89,5 +91,8 @@
 	}
 	.numOfItem {
 		color: var(--txtPrimary);
+	}
+	.noItems {
+		text-align: center;
 	}
 </style>

@@ -7,16 +7,17 @@
 	import Logs from './Logs.svelte';
 	import GameInfos from './GameInfos.svelte';
 	import Settings from './settings.svelte';
+	import TurnsInfos from './TurnsInfos.svelte';
+	import EndGameInfos from './endGameInfos.svelte';
 
 	//Game status
 	export let game, roomsInfos;
 
 	let activeUsers;
 	$: activeUsers = game.users;
-	let boardElement;
+	let boardElement, columsRight;
 
 	const onUpdateUsers = (players) => {
-		// console.log('[boardGame] onUpdateusers', players);
 		activeUsers = players.map((player) => {
 			return {
 				...player
@@ -25,6 +26,12 @@
 	};
 
 	onMount(() => {
+		if (activeUsers.length < 4) {
+			columsRight = 0.25;
+		} else {
+			columsRight = 0.3;
+		}
+
 		socket.on('updateUsers', onUpdateUsers);
 		return () => {
 			socket.off('updateUsers', onUpdateUsers);
@@ -44,8 +51,11 @@
 			<BoardGameSVG bind:this={boardElement} />
 		</div>
 		<Battles {activeUsers} />
+		<TurnsInfos />
+		<EndGameInfos />
 	</div>
-	<div class="right">
+
+	<div class="right" style="grid-template-rows: {columsRight}fr 1fr;">
 		<GameInfos {activeUsers} {game} />
 		<Logs {roomsInfos} />
 	</div>
@@ -86,7 +96,6 @@
 	.right {
 		height: 100%;
 		display: grid;
-		grid-template-rows: 0.25fr 1fr;
 		border-left: solid 3px var(--txtPrimary);
 		overflow: hidden;
 	}

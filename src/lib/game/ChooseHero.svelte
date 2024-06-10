@@ -20,6 +20,7 @@
 	}
 
 	function chooseHero() {
+		console.log(selectedHero);
 		dispatch('ChooseHero', {
 			hero: selectedHero
 		});
@@ -95,14 +96,14 @@
 		</Carousel>
 	{/if}
 
-	{#if $user.team == 'hero'}
+	{#if selectedHero}
 		<p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
-		<p class="abilityTitle">{selectedHero.abilityName}</p>
-		<p class="heroDescription">{selectedHero.ability}</p>
-	{/if}
-
-	{#if $user.team == 'boss'}
-		<p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
+		<p class="stats">
+			<span>DEF:</span>
+			{selectedHero.baseLife}
+			<span>ATK:</span>
+			{selectedHero.baseAtk}
+		</p>
 		<p class="abilityTitle">{selectedHero.abilityName}</p>
 		<p class="heroDescription">{selectedHero.ability}</p>
 	{/if}
@@ -121,6 +122,43 @@
 </div>
 
 <style lang="scss">
+	.chooseHero {
+		box-sizing: border-box;
+		height: 100dvh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 30px;
+	}
+
+	.stats {
+		span {
+			font-weight: 400;
+		}
+	}
+
+	.heroImg {
+		width: 300px;
+	}
+	.arrowNavigate {
+		display: flex;
+	}
+
+	.arrowNavigate > button {
+		background-color: unset;
+	}
+	.arrowNavigate-item {
+		width: 24px;
+	}
+	.abilityTitle {
+		font-family: 'Source Serif 4', serif;
+		font-weight: 400;
+		margin-top: 12px;
+	}
+	.heroDescription {
+		text-align: center;
+		margin: 12px 0;
+	}
 	.footer {
 		margin-top: auto;
 		button {
