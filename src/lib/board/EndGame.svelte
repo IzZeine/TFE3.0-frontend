@@ -1,5 +1,6 @@
 <script>
-	import { clearDataBase } from '$lib/api/clearDataBase.js';
+	import { clearDataBase } from '$lib/api/endGame.js';
+	import { resetGame } from '$lib/api/endGame.js';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
 	import { user } from '$lib/api/stores';
@@ -31,12 +32,16 @@
 					</li>
 				{/each}
 			</ul>
-			<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId, $user)}
-				>Rejouez</button
-			>
-			<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId, $user)}
-				>Quitter</button
-			>
+			<div class="footer">
+				<button
+					class="btnPrimary"
+					enabled="false"
+					on:click={() => resetGame(socket, game.gameId, $user)}>Rejouez</button
+				>
+				<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId, $user)}
+					>Quitter</button
+				>
+			</div>
 		</div>
 	{/if}
 </div>
@@ -78,5 +83,9 @@
 				display: flex;
 			}
 		}
+	}
+	.footer {
+		display: flex;
+		gap: 12px;
 	}
 </style>

@@ -11,7 +11,7 @@
 	};
 	const onEndGameKey = (data) => {
 		animEnd = 'isActive';
-		msg = 'Les heros ont trouvés le clef et se sojnt enfuis!';
+		msg = 'Les heros ont trouves la clef et se sont enfuis!';
 	};
 	const onEndGameBattle = (data) => {
 		animEnd = 'isActive';
@@ -42,7 +42,6 @@
 		height: 100%;
 		transition: 0.2s;
 		background-color: var(--BGTranspary);
-		text-wrap: nowrap;
 		top: 0;
 		justify-content: center;
 		align-items: center;
