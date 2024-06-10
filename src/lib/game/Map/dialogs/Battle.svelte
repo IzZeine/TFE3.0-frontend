@@ -2,44 +2,13 @@
 	import { user } from '$lib/api/stores';
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
-	import { blur } from 'svelte/transition';
 
 	export let activeUsers;
-	let boss, heroes, battle, rows, columns, def, atk;
-
-	boss = {
-		hero: 'Serpent',
-		heroImg: 'dragon.png',
-		color: '#546581',
-		def: 50
-	};
-	heroes = [
-		{
-			heroImg: 'knight.png',
-			color: '#546581',
-			atk: 20
-		},
-		{
-			heroImg: 'knight.png',
-			color: '#546581',
-			atk: 20
-		}
-		// {
-		// 	heroImg: 'knight.png',
-		// color: '#546581'
-		// }
-		// {
-		// 	heroImg: 'knight.png',
-		// color: '#546581'
-		// },
-		// {
-		// 	heroImg: 'knight.png',
-		// color: '#546581'
-		// }
-	];
+	let boss, heroes, battle, def, atk;
 
 	const onBattle = (data) => {
-		if (activeUsers.find((player) => player.room === $user.room)) battle = true;
+		if (activeUsers.find((player) => player.room != $user.room)) return;
+		battle = true;
 		boss = activeUsers.find((user) => user.room === data && user.team == 'boss');
 		def = boss.def;
 
@@ -53,10 +22,6 @@
 			atk += hero.atk;
 			console.log(atk);
 		});
-		if (heroes.length > 3) {
-			rows = 3;
-			columns = 2;
-		}
 	};
 
 	const onBattleEnd = (data) => {

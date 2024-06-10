@@ -1,9 +1,10 @@
 <script>
 	import { socket } from '$lib/api/socketConnection';
 	import { onMount } from 'svelte';
+	import Timer from './Timer.svelte';
 
 	export let activeUsers, game;
-	$: secTurn = 20;
+	$: secTurn = 0;
 
 	const onSecTurn = (data) => {
 		secTurn = data;
@@ -40,12 +41,8 @@
 			</ul>
 		</div>
 	</div>
-	<div class="coins timerTurn">
-		{#if secTurn >= 10}
-			<p class="">00:{secTurn}</p>
-		{:else}
-			<p class="">00:0{secTurn}</p>
-		{/if}
+	<div class="coins timer">
+		<Timer />
 	</div>
 	<div class="coins roundCount">
 		<p class="">T{game.round}</p>
@@ -125,7 +122,7 @@
 		border-radius: 100%;
 		background-color: #0b0b0b;
 	}
-	.timerTurn {
+	.timer {
 		left: 0;
 		transform: translate(-50%, -50%);
 	}

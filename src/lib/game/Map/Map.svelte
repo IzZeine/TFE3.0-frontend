@@ -8,6 +8,8 @@
 	import { user } from '$lib/api/stores';
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection';
+	import TurnsInfos from '$lib/board/game/TurnsInfos.svelte';
+	import EndGameInfos from '$lib/board/game/endGameInfos.svelte';
 
 	export let items, game;
 
@@ -45,6 +47,8 @@
 			<GameFooter on:openDialog={setDialog} />
 		</div>
 		<Battle {activeUsers} />
+		<TurnsInfos />
+		<EndGameInfos />
 	</div>
 {/key}
 

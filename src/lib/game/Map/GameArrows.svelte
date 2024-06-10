@@ -4,6 +4,7 @@
 	import { blur } from 'svelte/transition';
 	import { user, moveCd, startTimer, stopTimer } from '$lib/api/stores';
 	import { onMount } from 'svelte';
+	import Timer from '$lib/board/game/Timer.svelte';
 
 	const roomsConnections = $page.data.roomsConnections;
 	const directions = ['top', 'bot', 'left', 'right'];
@@ -82,6 +83,9 @@
 
 {#if user}
 	<div class="directionsArrows">
+		<div class="timer">
+			<Timer />
+		</div>
 		<button
 			class="directionArrow directionArrow_top"
 			id="top"
@@ -140,5 +144,8 @@
 	.--mooving {
 		display: flex;
 		justify-content: center;
+	}
+	.timer {
+		grid-area: 2/2/2/2;
 	}
 </style>

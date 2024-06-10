@@ -90,7 +90,7 @@
 			display: grid;
 
 			.hero {
-				animation: battleHero 2.8s infinite;
+				animation: battleHero 4s;
 				position: relative;
 				height: 100%;
 			}
@@ -107,15 +107,15 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			animation: battleVs 2.8s infinite;
+			animation: battleVs 4s;
 		}
 	}
 
 	.boss {
-		animation: battleBoss 2.8s infinite;
+		animation: battleBoss 4s;
 	}
 	.crown {
-		animation: battleCrown 2.8s infinite;
+		animation: battleCrown 4s;
 		z-index: -1;
 		position: absolute;
 		max-width: 50%;
@@ -137,8 +137,10 @@
 	}
 	@keyframes battleCrown {
 		0% {
+			opacity: 0;
 		}
 		50% {
+			opacity: 1;
 			top: 25%;
 		}
 		100% {

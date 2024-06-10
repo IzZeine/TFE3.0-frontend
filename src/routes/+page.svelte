@@ -1,7 +1,15 @@
+<script>
+	let innerWidth;
+</script>
+
+<svelte:window bind:innerWidth />
+
 <div class="container">
 	<img class="fluidimg logo" src="/assets/img/logo.png" alt="logo" />
 	<ul>
-		<li><a href="/board" class="btnPrimary">Create game</a></li>
+		{#if innerWidth > 500}
+			<li><a href="/board" class="btnPrimary">Create game</a></li>
+		{/if}
 		<li><a href="/game" class="btnPrimary">Join game</a></li>
 	</ul>
 </div>
