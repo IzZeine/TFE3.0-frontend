@@ -1,4 +1,5 @@
 <script>
+	import { _ } from 'svelte-i18n';
 	let innerWidth;
 </script>
 
@@ -8,9 +9,9 @@
 	<img class="fluidimg logo" src="/assets/img/logo.png" alt="logo" />
 	<ul>
 		{#if innerWidth > 500}
-			<li><a href="/board" class="btnPrimary">Create game</a></li>
+			<li><a href="/board" class="btnPrimary">{$_('homepage.create')}</a></li>
 		{/if}
-		<li><a href="/game" class="btnPrimary">Join game</a></li>
+		<li><a href="/game" class="btnPrimary">{$_('homepage.join')}</a></li>
 	</ul>
 </div>
 
