@@ -227,7 +227,7 @@ Boardgame - Waiting users
 .cardUser-Empty,
 .cardUser {
 	border-bottom: solid 3px var(--txtPrimary);
-	background-color: var(--BGTranspary);
+	background-color: rgba(0, 0, 0, 0.5);
 	padding: 18px;
 	display: flex;
 	gap: 18px;

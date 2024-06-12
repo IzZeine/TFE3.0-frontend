@@ -36,7 +36,7 @@
 			<div class="footer">
 				<button
 					class="btnPrimary"
-					enabled="false"
+					disabled="true"
 					on:click={() => resetGame(socket, game.gameId, $user)}>{$_('common.replay')}</button
 				>
 				<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId, $user)}

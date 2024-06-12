@@ -72,4 +72,11 @@
 		display: flex;
 		gap: 12px;
 	}
+	.container {
+		box-sizing: border-box;
+		height: 100vh;
+		background-image: url('/assets/img/bgLobby.png');
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
 </style>
