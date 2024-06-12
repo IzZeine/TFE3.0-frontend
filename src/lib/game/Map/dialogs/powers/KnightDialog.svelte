@@ -2,6 +2,7 @@
 	import Dialog from '../Dialog.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { user } from '$lib/api/stores';
+	import { _ } from 'svelte-i18n';
 
 	export let currentDialog;
 
@@ -20,6 +21,6 @@
 	<svelte:fragment slot="content">
 		<p class="h2">{$user.abilityName}</p>
 		<p>{$user.ability}</p>
-		<button class="btnPrimary" on:click={useAbility}>Utiliser</button>
+		<button class="btnPrimary" on:click={useAbility}>{$_('mobile.map.power.use')}</button>
 	</svelte:fragment>
 </Dialog>

@@ -2,6 +2,7 @@
 	export let log, roomsInfos;
 	import { crossfade } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
+	import { _ } from 'svelte-i18n';
 
 	let action, img;
 
@@ -39,30 +40,30 @@
 
 	switch (type) {
 		case 'move':
-			action = `se meut vers ${roomsInfos[room].nameDirection} (${room})`;
+			action = $_('desktop.boardGame.log.move') + roomsInfos[room].nameDirection + ` (${room})`;
 			break;
 		case 'item':
-			action = `a rapiné un bien précieux dans ${roomsInfos[room].nameDirection} (${room})`;
+			action = $_('desktop.boardGame.log.item') + roomsInfos[room].nameDirection + ` (${room})`;
 			img = item;
 			break;
 		case 'rock':
-			action = `Quelle trouvaille! Une modeste cailloche`;
+			action = $_('desktop.boardGame.log.rock');
 			img = 'rock';
 			break;
 		case 'key':
-			action = `a mis la main sur la préciaude clef du donjon dans ${roomsInfos[room].nameDirection} (${room})`;
+			action = $_('desktop.boardGame.log.key') + roomsInfos[room].nameDirection + ` (${room})`;
 			img = item;
 			break;
 		case 'power':
-			action = `a proféré un puissant enchantement '${user.abilityName}'`;
+			action = $_('desktop.boardGame.log.power') + ` '${user.abilityName}'`;
 			break;
 		case 'battleStarted':
-			action = `C'est un attrapoire ! il y a un ${user.hero} dans ${roomsInfos[room].nameDirection}`;
+			action = $_('desktop.boardGame.log.battleStarted') + roomsInfos[room].nameDirection;
 			img = 'battle';
 			break;
 		case 'battleEnded':
 			img = 'death';
-			action = `Malaventure! Les héros s'esbignent prestement. Ils se sont pris une sacrée torgnole.`;
+			action = $_('desktop.boardGame.log.battleEnded');
 			break;
 		default:
 			console.log('nothing');

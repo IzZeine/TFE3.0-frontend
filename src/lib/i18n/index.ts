@@ -4,7 +4,7 @@ import { init, register } from 'svelte-i18n';
 const defaultLocale = 'fr';
 
 register('fr', () => import('$lib/lang/fr.json'));
-// register('en', () => import('./locales/de.json'))
+register('en', () => import('$lib/lang/en.json'))
 
 init({
 	fallbackLocale: defaultLocale,

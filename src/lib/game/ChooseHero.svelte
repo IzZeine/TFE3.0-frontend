@@ -2,6 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import Carousel from 'svelte-carousel';
 	import { user } from '$lib/api/stores';
+	import { _ } from 'svelte-i18n';
 
 	const dispatch = createEventDispatcher();
 
@@ -37,12 +38,12 @@
 
 <div class="chooseHero">
 	{#if $user.team === 'hero'}
-		<h1 class="h1">Tu es un hero !</h1>
+		<h1 class="h1">{$_('mobile.lobby.characters.titleHero')}</h1>
 	{/if}
 	{#if $user.team === 'boss'}
-		<h1 class="h1">Tu es le boss !</h1>
+		<h1 class="h1">{$_('mobile.lobby.characters.titleBoss')}</h1>
 	{/if}
-	<h2 class="h2">Lequel choisis-tu ?</h2>
+	<h2 class="h2">{$_('mobile.lobby.characters.subtitle')}</h2>
 	{#if heroes && boss && $user.team}
 		<Carousel
 			bind:this={carousel}
@@ -99,19 +100,19 @@
 	{#if selectedHero}
 		<p class="h1" style="color: {selectedHero.color};">{selectedHero.name}</p>
 		<p class="stats">
-			<span>DEF:</span>
-			{selectedHero.baseLife}
-			<span>ATK:</span>
 			{selectedHero.baseAtk}
+			<span>{$_('common.characters.atk')}</span>
+			{selectedHero.baseLife}
+			<span>{$_('common.characters.def')}</span>
 		</p>
 		<p class="abilityTitle">{selectedHero.abilityName}</p>
 		<p class="heroDescription">{selectedHero.ability}</p>
 	{/if}
 
 	<div class="footer">
-		<button on:click={chooseHero} class="btnPrimary">Choisir</button>
+		<button on:click={chooseHero} class="btnPrimary">{$_('mobile.lobby.characters.choose')}</button>
 		<p style:margin-top="12px">
-			Personnage actuel :
+			{$_('mobile.lobby.characters.currentCharacter')}
 			{#if $user.hero}
 				{$user.hero}
 			{:else}

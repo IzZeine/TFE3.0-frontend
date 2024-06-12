@@ -5,6 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { socket } from '$lib/api/socketConnection.js';
 	import { getUser } from '$lib/api/getUsers.js';
+	import { _ } from 'svelte-i18n';
 
 	export let data;
 	let { gameId } = data;
@@ -63,13 +64,13 @@
 		<img src="/assets/img/logo.png" class="fluidimg logoImg" alt="Logo" />
 		<form on:submit|preventDefault={onFormSubmit} class="form">
 			<div>
-				<label for="username" class="labelForm">Entrez votre pseudo :</label>
+				<label for="username" class="labelForm">{$_('mobile.create.formName')}:</label>
 				<input
 					type="text"
 					name="username"
 					id="username"
 					class="inputForm"
-					placeholder="ex : IzZeine"
+					placeholder={$_('mobile.create.inputExample')}
 					maxlength="9"
 					autocomplete="off"
 					data-lpignore="true"
@@ -78,9 +79,9 @@
 					bind:value={username}
 				/>
 			</div>
-			<button class="btnPrimary btnForm" disabled={isDirty(username)}>Jouer</button>
+			<button class="btnPrimary btnForm" disabled={isDirty(username)}>{$_('common.play')}</button>
 		</form>
-		<a href="/board" class="btnVersionPC">Aller sur la version PC</a>
+		<a href="/board" class="btnVersionPC">{$_('mobile.create.goToPc')}</a>
 	</div>
 </div>
 

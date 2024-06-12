@@ -1,5 +1,9 @@
+<script>
+	import { _ } from 'svelte-i18n';
+</script>
+
 <div class="container">
-	<div class="loader h1"></div>
+	<div class="loader h1">{$_('common.waiting')}</div>
 </div>
 
 <style>
@@ -16,9 +20,7 @@
 		background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
 		animation: loading 2s linear infinite;
 	}
-	.loader:before {
-		content: 'En attente...';
-	}
+
 	@keyframes loading {
 		to {
 			background-size: 100% 3px;

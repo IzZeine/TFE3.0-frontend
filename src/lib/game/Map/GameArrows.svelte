@@ -5,6 +5,7 @@
 	import { user, moveCd, startTimer, stopTimer } from '$lib/api/stores';
 	import { onMount } from 'svelte';
 	import Timer from '$lib/board/game/Timer.svelte';
+	import { _ } from 'svelte-i18n';
 
 	const roomsConnections = $page.data.roomsConnections;
 	const directions = ['top', 'bot', 'left', 'right'];
@@ -127,7 +128,8 @@
 			in:blur={{ y: 50, duration: moveSpeed / 2 }}
 			out:blur={{ duration: 0 }}
 		>
-			Salle {$user.room}
+			{$_('mobile.map.room')}
+			{$user.room}
 		</h1>
 	{:else}
 		<h1
@@ -135,7 +137,7 @@
 			in:blur={{ y: 50, duration: moveSpeed / 2 }}
 			out:blur={{ duration: 0 }}
 		>
-			Déplacement..
+			{$_('mobile.map.mooving')}
 		</h1>
 	{/if}
 </div>

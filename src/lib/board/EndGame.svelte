@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
 	import { user } from '$lib/api/stores';
+	import { _ } from 'svelte-i18n';
 
 	export let game;
 	let activeUsers;
@@ -22,8 +23,8 @@
 	{#if winnerTeam}
 		<div class="endgame">
 			<div>
-				<h1 class="h1 winner-team">L'equipe : <span>{winnerTeam}</span></h1>
-				<h2 class="h2" style:text-align="center">remporte la partie !</h2>
+				<h1 class="h1 winner-team">{$_('common.endGame.team')} : <span>{winnerTeam}</span></h1>
+				<h2 class="h2" style:text-align="center">{$_('common.endGame.win')}</h2>
 			</div>
 			<ul class="winners">
 				{#each winners as player}
@@ -36,10 +37,10 @@
 				<button
 					class="btnPrimary"
 					enabled="false"
-					on:click={() => resetGame(socket, game.gameId, $user)}>Rejouez</button
+					on:click={() => resetGame(socket, game.gameId, $user)}>{$_('common.replay')}</button
 				>
 				<button class="btnPrimary" on:click={() => clearDataBase(socket, game.gameId, $user)}
-					>Quitter</button
+					>{$_('common.leave')}</button
 				>
 			</div>
 		</div>

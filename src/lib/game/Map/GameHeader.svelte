@@ -1,5 +1,6 @@
 <script>
 	import { user } from '$lib/api/stores';
+	import { _ } from 'svelte-i18n';
 	$: currentUser = $user;
 </script>
 
@@ -55,10 +56,10 @@
 	</p>
 	<div class="cardHero_stats-atk-def">
 		<div class="cardHero_stats-atk-def_atk">
-			<p>ATK: <span>{currentUser.atk}</span></p>
+			<p><span>{currentUser.atk}</span> {$_('common.characters.atk')}</p>
 		</div>
 		<div class="cardHero_stats-atk-def_def">
-			<p>DEF: <span>{currentUser.def}</span></p>
+			<p><span>{currentUser.def}</span> {$_('common.characters.def')}</p>
 		</div>
 	</div>
 </div>

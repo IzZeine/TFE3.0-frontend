@@ -1,13 +1,13 @@
 {
   "homepage":{
-    "create": "Créer",
-    "join": "Rejoindre"
+    "create": "Create",
+    "join": "Join"
   },
   "common":{
-    "play": "Jouer",
-    "leave": "Quitter",
-    "replay" : "Rejouer",
-    "waiting": "En attente...",
+    "play": "Play",
+    "leave": "Leave",
+    "replay" : "Replay",
+    "waiting": "Waiting...",
     "characters": {
       "atk" : "ATK",
       "def" : "DEF"
@@ -21,66 +21,66 @@
     }
   },
   "error":{
-    "gameNameRequired": "Veuillez entrer un nom de partie",
-    "internalServerError": "Erreur interne du serveur",
-    "gameNameAlreadyExist": "Ce nom exist déjà"
+    "gameNameRequired": "Please enter gameName",
+    "internalServerError": "Internal server error",
+    "gameNameAlreadyExist": "This name already exist"
   },
   "mobile":{
     "lobby":{
-      "join": "Rejoindre une partie",
+      "join": "Join a game",
       "characters": {
-        "choose" : "Choisir",
-        "titleHero" : "Tu es un hero !",
-        "titleBoss" : "Tu es le boss !",
-        "subtitle" : "Lequel choisis-tu ?",
-        "currentCharacter": "Personnage actuel :"
+        "choose" : "Choose",
+        "titleHero" : "You are a hero !",
+        "titleBoss" : "You are the boss !",
+        "subtitle" : "Which one do you choose?",
+        "currentCharacter": "Current character :"
       }
     },
     "create":{
-      "formName" : "Entrez votre nom",
+      "formName" : "Enter your name",
       "inputExample" : "Ex : IzZeine",
-      "goToPc" : "Aller sur la version PC"
+      "goToPc" : "Go to PC version"
     },
     "map":{
-      "room" : "Salle",
-      "mooving": "Déplacement..",
+      "room" : "Room",
+      "mooving": "Moving..",
       "item": {
         "bonus" :"Bonus",
-        "condition": "Condition: faire un",
-        "noItem" : "Il n'y a pas d'item dans cette salle.",
-        "continue" : "Continuez votre chemin!"
+        "condition": "Condition: make a",
+        "noItem" : "There are no items in this room.",
+        "continue" : "Continue on your way!"
       },
       "inventory" :{
-        "noItem" : "Vous ne possédez guère de biens!"
+        "noItem" : "You have no item!"
       },
       "battle": {
-        "boss" : "Le méchant",
-        "heroes": "Les gentils",
-        "youFight" : "Vous combattez !"
+        "boss" : "The boss",
+        "heroes": "Heroes",
+        "youFight" : "You are fighting !"
       },
       "power": {
-        "use" : "Utiliser"
+        "use" : "Use"
       }
     }
   },
   "desktop":{
     "create":{
-      "formName" : "Entrez le nom de votre partie",
-      "inputExample" : "Ex : Ma partie"
+      "formName" : "Entrer your game name",
+      "inputExample" : "Ex : My game"
     },
     "lobby":{      
-      "open": "Ouvrir",
-      "close": "Fermer",
+      "open": "Open",
+      "close": "Close",
       "characters": {
         "atk" : "ATK",
         "def":"DEF",
-        "nobodyPower" : "Vous n'êtes encore personne dans ce monde, un moins que rien!"
+        "nobodyPower" : "You are still nobody in this world, less than nothing!"
       }
     },
     "boardGame":{
       "turn" : "T",
-      "turnInfos" : "TOUR :",
-      "clear" : "Effacer",
+      "turnInfos" : "TURN :",
+      "clear" : "Clear",
       "log":{
         "move" : "se meut vers ",
         "item": "a rapiné un bien précieux dans ",

@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
+	import { _ } from 'svelte-i18n';
 
 	export let data;
 	let games = data.games;
@@ -20,7 +21,7 @@
 
 <div class="container">
 	<p class="h1" style="display: flex; text-align:center; margin-bottom:24px">
-		Rejoindre une partie:
+		{$_('mobile.lobby.join')}:
 	</p>
 
 	<div class="activeGames">

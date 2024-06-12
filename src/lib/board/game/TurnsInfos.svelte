@@ -1,11 +1,11 @@
 <script>
 	import { socket } from '$lib/api/socketConnection';
 	import { onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	let turn;
 	let animTurn = '';
 	const changeTurn = (data) => {
-		navigator.vibrate(200);
 		console.log(data);
 		turn = data;
 		animTurn = 'isActive';
@@ -22,7 +22,7 @@
 </script>
 
 <div class="turnsInfos {animTurn}">
-	<p class="h1">TOUR : {turn}</p>
+	<p class="h1">{$_('desktop.boardGame.turnInfos')} {turn}</p>
 </div>
 
 <style lang="scss">
