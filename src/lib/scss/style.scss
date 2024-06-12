@@ -438,3 +438,13 @@ userMap
 		font-weight: 200;
 	}
 }
+
+.cost {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+.pa {
+	max-width: 12px;
+}
