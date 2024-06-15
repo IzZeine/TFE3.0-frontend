@@ -13,9 +13,7 @@
 
 	onMount(async () => {
 		activeUsers = game.users;
-		console.log(game);
 		winners = activeUsers.filter((user) => user.team === winnerTeam).map((user) => ({ ...user }));
-		console.log(winners);
 	});
 </script>
 

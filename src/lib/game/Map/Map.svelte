@@ -23,7 +23,6 @@
 	}
 
 	const onUpdateUsers = (players) => {
-		// console.log('[boardGame] onUpdateusers', players);
 		activeUsers = players.map((player) => {
 			return {
 				...player

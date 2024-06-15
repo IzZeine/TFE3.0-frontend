@@ -2,7 +2,6 @@ import { getMyUrlForDev } from '$lib';
 
 //Single way to make API requests
 export async function callBackend(fetch, method, url, data) {
-	console.log(method, `${getMyUrlForDev()}${url}`);
 	return fetch(`${getMyUrlForDev()}${url}`, {
 		method,
 		body: JSON.stringify(data),

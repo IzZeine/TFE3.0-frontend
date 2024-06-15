@@ -30,17 +30,10 @@
 		heroes = activeUsers
 			.filter((user) => user.room === data && user.team == 'hero')
 			.map((user) => ({ ...user }));
-		console.log(data);
-		console.log(boss);
-		console.log(heroes);
-
-		// throttledAnimBattle('battle');
 	};
 	const onBattleEnd = (data) => {
 		battle = false;
 		const { winner } = data;
-		console.log(winner);
-		// throttledAnimBattleEnd(winner);
 	};
 	onMount(() => {
 		socket.on('battle', onBattle);
@@ -115,7 +108,6 @@
 
 	.boss {
 		opacity: 0;
-
 		animation: battleBoss 4s;
 	}
 	.crown {

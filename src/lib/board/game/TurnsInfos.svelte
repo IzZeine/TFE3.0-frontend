@@ -6,7 +6,6 @@
 	let turn;
 	let animTurn = '';
 	const changeTurn = (data) => {
-		console.log(data);
 		turn = data;
 		animTurn = 'isActive';
 		setTimeout(function () {

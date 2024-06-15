@@ -64,11 +64,7 @@
 		});
 
 		socket.on('saveYou', async (id) => {
-			if (user.id != id) {
-				console.log('notYou');
-				return;
-			}
-			console.log('you are saved');
+			if (user.id != id) return;
 			let actionButtonsElement = document.querySelectorAll('.actionButton');
 			actionButtonsElement.forEach((btn) => {
 				btn.removeAttribute('disabled');

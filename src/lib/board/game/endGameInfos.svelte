@@ -38,6 +38,8 @@
 <style lang="scss">
 	.endGameInfos {
 		display: none;
+		text-align: center;
+		max-width: 70%;
 		position: absolute;
 		width: 100%;
 		height: 100%;

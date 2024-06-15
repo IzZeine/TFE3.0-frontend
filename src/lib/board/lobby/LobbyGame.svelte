@@ -16,7 +16,6 @@
 
 	$: {
 		activeUsers = game.users;
-		console.log('activeUsers');
 		if (activeUsers.length >= 2 && game.statut === 'waiting') {
 			btnCloseDisabled = false;
 		}

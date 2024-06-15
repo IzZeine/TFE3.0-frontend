@@ -7,29 +7,37 @@
 <div class="headerMap">
 	<div class="cardHero">
 		<div class="lifes">
-			<ul class="cardHero_stats-life">
-				{#each { length: currentUser.life } as _, index}
-					{@const numberOfLife = currentUser.life}
-					{@const isLast = index === currentUser.life - 1}
-					<li>
-						<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
-					</li>
-					{#if isLast}
-						{#each { length: 3 - numberOfLife } as _, index}
+			{#if $user.team === 'hero'}
+				<ul class="cardHero_stats-life">
+					{#each { length: currentUser.life } as _, index}
+						{@const numberOfLife = currentUser.life}
+						{@const isLast = index === currentUser.life - 1}
+						<li>
+							<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
+						</li>
+						{#if isLast}
+							{#each { length: 3 - numberOfLife } as _, index}
+								<li>
+									<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
+								</li>
+							{/each}
+						{/if}
+					{/each}
+					{#if currentUser.life <= 0}
+						{#each { length: 3 } as _}
 							<li>
 								<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
 							</li>
 						{/each}
 					{/if}
-				{/each}
-				{#if currentUser.life <= 0}
-					{#each { length: 3 } as _}
-						<li>
-							<img class="fluidimg" src="/assets/img/noLife.svg" alt="life" />
-						</li>
-					{/each}
-				{/if}
-			</ul>
+				</ul>
+			{:else}
+				<ul class="cardHero_stats-life">
+					<li>
+						<img class="fluidimg" src="/assets/img/life.svg" alt="life" />
+					</li>
+				</ul>
+			{/if}
 		</div>
 		{#if currentUser.life <= 0}
 			<img
