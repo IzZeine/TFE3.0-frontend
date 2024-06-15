@@ -30,14 +30,11 @@
 		let pointsDices = await rollDices();
 		dicesAnim = 'isActive';
 		pointsDices += luckOfDices;
-		console.log(pointsDices);
 		setTimeout(async () => {
 			dicesAnim = '';
 			if (pointsDices < condition) {
-				console.log('raté');
 				return;
 			}
-			console.log('réussi');
 			socket.emit('getItemInRoom', myRoom);
 		}, 1000);
 	};

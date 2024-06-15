@@ -20,12 +20,9 @@
 	};
 
 	onMount(async () => {
-		console.log(`[game] onMount game : ${gameId}`);
 		socket.emit('joinGame', gameId);
 		user.set(await getUser(gameId));
-		console.log('[game] user', $user);
 		if (!$user) {
-			console.log('no user go to create one');
 			sessionStorage.clear();
 			await goto(`/game/${gameId}/user`);
 		} else {

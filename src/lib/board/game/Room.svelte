@@ -71,7 +71,6 @@
 
 	const onTakeRock = (data) => {
 		if (index == data) {
-			console.log(data);
 			animItemImg = 'rock';
 			animItem = 'isActive';
 		}

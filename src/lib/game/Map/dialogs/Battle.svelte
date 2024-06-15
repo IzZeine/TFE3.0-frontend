@@ -8,7 +8,7 @@
 	let boss, heroes, battle, def, atk;
 
 	const onBattle = (data) => {
-		if (activeUsers.find((player) => player.room != $user.room)) return;
+		if (activeUsers.find((player) => data != $user.room)) return;
 		battle = true;
 		boss = activeUsers.find((user) => user.room === data && user.team == 'boss');
 		def = boss.def;
@@ -19,16 +19,13 @@
 
 		atk = 0;
 		heroes.forEach((hero) => {
-			console.log(hero.atk);
 			atk += hero.atk;
-			console.log(atk);
 		});
 	};
 
 	const onBattleEnd = (data) => {
 		battle = false;
 		const { winner } = data;
-		console.log(winner);
 	};
 
 	onMount(() => {

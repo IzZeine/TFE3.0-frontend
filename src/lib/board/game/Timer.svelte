@@ -7,7 +7,6 @@
 
 	$: {
 		if (secTurn <= 5) {
-			console.log('test');
 			color = 'red';
 		} else {
 			color = '--txtPrimary';
