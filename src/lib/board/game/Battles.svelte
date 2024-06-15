@@ -90,6 +90,7 @@
 			display: grid;
 
 			.hero {
+				opacity: 0;
 				animation: battleHero 4s;
 				position: relative;
 				height: 100%;
@@ -107,14 +108,18 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
+			opacity: 0;
 			animation: battleVs 4s;
 		}
 	}
 
 	.boss {
+		opacity: 0;
+
 		animation: battleBoss 4s;
 	}
 	.crown {
+		opacity: 0;
 		animation: battleCrown 4s;
 		z-index: -1;
 		position: absolute;
@@ -126,8 +131,10 @@
 
 	@keyframes battleBoss {
 		0% {
+			opacity: 1;
 		}
 		50% {
+			opacity: 1;
 			transform: translate(0, 0) scale(1);
 		}
 		100% {
@@ -144,11 +151,13 @@
 			top: 25%;
 		}
 		100% {
+			opacity: 1;
 			top: -25%;
 		}
 	}
 	@keyframes battleHero {
 		0% {
+			opacity: 1;
 		}
 		50% {
 			opacity: 1;
@@ -161,6 +170,7 @@
 	}
 	@keyframes battleVs {
 		0% {
+			opacity: 1;
 		}
 		45% {
 			opacity: 1;

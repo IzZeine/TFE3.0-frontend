@@ -3,6 +3,7 @@
 	import Dialog from './Dialog.svelte';
 	import { onMount } from 'svelte';
 	import { user } from '$lib/api/stores';
+	import { _ } from 'svelte-i18n';
 
 	export let items, currentDialog;
 
@@ -86,14 +87,15 @@
 					<p class="h1">{itemInRoom.name}</p>
 					<p class="h2">{itemInRoom.rarity}</p>
 					<p>
-						Bonus : <span style="text-transform: uppercase;">{itemInRoom.type}</span>
+						{$_('mobile.map.item.bonus')} :
+						<span style="text-transform: uppercase;">{itemInRoom.type}</span>
 						+{itemInRoom.bonus}
 					</p>
-					<p>Condition : faire un {itemInRoom.condition}+</p>
+					<p>{$_('mobile.map.item.condition')} {itemInRoom.condition}+</p>
 				</div>
 			{:else}
-				<p>Il n'y a pas d'item dans cette salle.</p>
-				<p>Continuez votre chemin!</p>
+				<p>{$_('mobile.map.item.noItem')}</p>
+				<p>{$_('mobile.map.item.continue')}</p>
 			{/if}
 		</div>
 	</svelte:fragment>

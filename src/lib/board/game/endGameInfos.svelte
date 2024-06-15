@@ -1,21 +1,22 @@
 <script>
 	import { socket } from '$lib/api/socketConnection';
 	import { onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	let animEnd = '';
 	let msg;
 
 	const onEndGameTurn = (data) => {
 		animEnd = 'isActive';
-		msg = 'Fin des tours ! Le boss remporte la victoire';
+		msg = $_('common.endGame.turns');
 	};
 	const onEndGameKey = (data) => {
 		animEnd = 'isActive';
-		msg = 'Les heros ont trouves la clef et se sont enfuis!';
+		msg = $_('common.endGame.key');
 	};
 	const onEndGameBattle = (data) => {
 		animEnd = 'isActive';
-		msg = "Ce combat a fort maltourné, il en est fini de l'exploration!";
+		msg = $_('common.endGame.battle');
 	};
 
 	onMount(() => {

@@ -1,0 +1,95 @@
+{
+  "homepage":{
+    "create": "Create",
+    "join": "Join"
+  },
+  "common":{
+    "play": "Play",
+    "leave": "Leave",
+    "replay" : "Replay",
+    "waiting": "Waiting...",
+    "characters": {
+      "atk" : "ATK",
+      "def" : "DEF"
+    },
+    "endGame": {
+      "turns": "Fin des tours ! Le boss remporte la victoire",
+      "key": "Les heros ont trouves la clef et se sont enfuis!",
+      "battle" : "Ce combat a fort maltourné, il en est fini de l'exploration!",
+      "team" : "L'équipe",
+      "win" : "remporte la partie!"
+    }
+  },
+  "error":{
+    "gameNameRequired": "Please enter gameName",
+    "internalServerError": "Internal server error",
+    "gameNameAlreadyExist": "This name already exist"
+  },
+  "mobile":{
+    "lobby":{
+      "join": "Join a game",
+      "characters": {
+        "choose" : "Choose",
+        "titleHero" : "You are a hero !",
+        "titleBoss" : "You are the boss !",
+        "subtitle" : "Which one do you choose?",
+        "currentCharacter": "Current character :"
+      }
+    },
+    "create":{
+      "formName" : "Enter your name",
+      "inputExample" : "Ex : IzZeine",
+      "goToPc" : "Go to PC version"
+    },
+    "map":{
+      "room" : "Room",
+      "mooving": "Moving..",
+      "item": {
+        "bonus" :"Bonus",
+        "condition": "Condition: make a",
+        "noItem" : "There are no items in this room.",
+        "continue" : "Continue on your way!"
+      },
+      "inventory" :{
+        "noItem" : "You have no item!"
+      },
+      "battle": {
+        "boss" : "The boss",
+        "heroes": "Heroes",
+        "youFight" : "You are fighting !"
+      },
+      "power": {
+        "use" : "Use"
+      }
+    }
+  },
+  "desktop":{
+    "create":{
+      "formName" : "Entrer your game name",
+      "inputExample" : "Ex : My game"
+    },
+    "lobby":{      
+      "open": "Open",
+      "close": "Close",
+      "characters": {
+        "atk" : "ATK",
+        "def":"DEF",
+        "nobodyPower" : "You are still nobody in this world, less than nothing!"
+      }
+    },
+    "boardGame":{
+      "turn" : "T",
+      "turnInfos" : "TURN :",
+      "clear" : "Clear",
+      "log":{
+        "move" : "se meut vers ",
+        "item": "a rapiné un bien précieux dans ",
+        "rock": "Quelle trouvaille! Une modeste cailloche",
+        "key": "a mis la main sur la préciaude clef du donjon dans ",
+        "power": "a proféré un puissant enchantement ",
+        "battleStarted": "C'est un attrapoire ! il y a une créature dans ",
+        "battleEnded": "Malaventure! Les héros s'esbignent prestement. Ils se sont pris une sacrée torgnole."
+      }
+    }
+  }
+}

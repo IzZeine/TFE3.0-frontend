@@ -1,0 +1,95 @@
+{
+  "homepage":{
+    "create": "Créer",
+    "join": "Rejoindre"
+  },
+  "common":{
+    "play": "Jouer",
+    "leave": "Quitter",
+    "replay" : "Rejouer",
+    "waiting": "En attente...",
+    "characters": {
+      "atk" : "ATK",
+      "def" : "DEF"
+    },
+    "endGame": {
+      "turns": "Fin des tours ! Le boss remporte la victoire",
+      "key": "Les heros ont trouves la clef et se sont enfuis!",
+      "battle" : "Ce combat a fort maltourné, il en est fini de l'exploration!",
+      "team" : "L'équipe",
+      "win" : "remporte la partie!"
+    }
+  },
+  "error":{
+    "gameNameRequired": "Veuillez entrer un nom de partie",
+    "internalServerError": "Erreur interne du serveur",
+    "gameNameAlreadyExist": "Ce nom exist déjà"
+  },
+  "mobile":{
+    "lobby":{
+      "join": "Rejoindre une partie",
+      "characters": {
+        "choose" : "Choisir",
+        "titleHero" : "Tu es un hero !",
+        "titleBoss" : "Tu es le boss !",
+        "subtitle" : "Lequel choisis-tu ?",
+        "currentCharacter": "Personnage actuel :"
+      }
+    },
+    "create":{
+      "formName" : "Entrez votre nom",
+      "inputExample" : "Ex : IzZeine",
+      "goToPc" : "Aller sur la version PC"
+    },
+    "map":{
+      "room" : "Salle",
+      "mooving": "Déplacement..",
+      "item": {
+        "bonus" :"Bonus",
+        "condition": "Condition: faire un",
+        "noItem" : "Il n'y a pas d'item dans cette salle.",
+        "continue" : "Continuez votre chemin!"
+      },
+      "inventory" :{
+        "noItem" : "Vous ne possédez guère de biens!"
+      },
+      "battle": {
+        "boss" : "Le méchant",
+        "heroes": "Les gentils",
+        "youFight" : "Vous combattez !"
+      },
+      "power": {
+        "use" : "Utiliser"
+      }
+    }
+  },
+  "desktop":{
+    "create":{
+      "formName" : "Entrez le nom de votre partie",
+      "inputExample" : "Ex : Ma partie"
+    },
+    "lobby":{      
+      "open": "Ouvrir",
+      "close": "Fermer",
+      "characters": {
+        "atk" : "ATK",
+        "def":"DEF",
+        "nobodyPower" : "Vous n'êtes encore personne dans ce monde, un moins que rien!"
+      }
+    },
+    "boardGame":{
+      "turn" : "T",
+      "turnInfos" : "TOUR :",
+      "clear" : "Effacer",
+      "log":{
+        "move" : "se meut vers ",
+        "item": "a rapiné un bien précieux dans ",
+        "rock": "Quelle trouvaille! Une modeste cailloche",
+        "key": "a mis la main sur la préciaude clef du donjon dans ",
+        "power": "a proféré un puissant enchantement ",
+        "battleStarted": "C'est un attrapoire ! il y a une créature dans ",
+        "battleEnded": "Malaventure! Les héros s'esbignent prestement. Ils se sont pris une sacrée torgnole."
+      }
+    }
+  }
+}

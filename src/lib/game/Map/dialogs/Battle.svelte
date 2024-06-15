@@ -2,6 +2,7 @@
 	import { user } from '$lib/api/stores';
 	import { socket } from '$lib/api/socketConnection.js';
 	import { onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	export let activeUsers;
 	let boss, heroes, battle, def, atk;
@@ -55,16 +56,16 @@
 		</div>
 		<div class="contentDialog">
 			<div class="right">
-				<p class="h2">Le méchant</p>
-				<p>DEF: {def}</p>
+				<p class="h2">{$_('mobile.map.battle.boss')}</p>
+				<p>{def} {$_('common.characters.def')}</p>
 			</div>
 			<div class="left">
-				<p class="h2">Les gentils</p>
-				<p>ATK: {atk}</p>
+				<p class="h2">{$_('mobile.map.battle.heroes')}</p>
+				<p>{atk} {$_('common.characters.atk')}</p>
 			</div>
 		</div>
 		<div class="footerDialog">
-			<p>Vous combattez !</p>
+			<p>{$_('mobile.map.battle.youFight')}</p>
 		</div>
 	</div>
 {/if}

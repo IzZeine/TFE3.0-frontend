@@ -2,6 +2,7 @@
 	import { socket } from '$lib/api/socketConnection';
 	import { onMount } from 'svelte';
 	import Timer from './Timer.svelte';
+	import { _ } from 'svelte-i18n';
 
 	export let activeUsers, game;
 	$: secTurn = 0;
@@ -45,7 +46,7 @@
 		<Timer />
 	</div>
 	<div class="coins roundCount">
-		<p class="">T{game.round}</p>
+		<p class="">{$_('desktop.boardGame.turn')}{game.round}</p>
 	</div>
 </div>
 
@@ -70,7 +71,7 @@
 		mask-repeat: repeat;
 	}
 	.infos {
-		padding: 0.5rem 1rem;
+		padding: 1.5rem;
 	}
 	.turns {
 		text-align: center;

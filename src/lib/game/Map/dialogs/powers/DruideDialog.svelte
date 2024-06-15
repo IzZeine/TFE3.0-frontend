@@ -31,5 +31,9 @@
 	<svelte:fragment slot="content">
 		<p class="h2">{$user.abilityName}</p>
 		<p>{$user.ability}</p>
+		<div class="cost">
+			<p>-2</p>
+			<img src="/assets/img/pa.png" class="fluidImg pa" alt="pa" />
+		</div>
 	</svelte:fragment>
 </Dialog>

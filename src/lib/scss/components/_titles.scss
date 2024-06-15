@@ -1,0 +1,22 @@
+/*--------------------------------------------------------------------------
+TITLES
+--------------------------------------------------------------------------*/
+.h1 {
+	font-family: 'Deutsch', serif;
+	letter-spacing: 0.2rem;
+	font-weight: 400;
+	color: var(--primary);
+	font-size: 24px;
+	@media (min-width: 750px) {
+		font-size: 60px;
+	}
+}
+
+.h2 {
+	font-family: 'Source Serif 4', serif;
+	font-weight: 600;
+	font-size: 16px;
+	@media (min-width: 750px) {
+		font-size: 30px;
+	}
+}

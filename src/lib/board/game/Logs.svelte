@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import Log from './log.svelte';
 	import { logs } from '$lib/api/stores';
+	import { _ } from 'svelte-i18n';
 
 	export let roomsInfos;
 
@@ -89,7 +90,7 @@
 				{/each}
 			{/if}
 		</ul>
-		<button class="clearLogs" on:click={clearLogs}>clear</button>
+		<button class="clearLogs" on:click={clearLogs}>{$_('desktop.boardGame.clear')}</button>
 	</div>
 </div>
 

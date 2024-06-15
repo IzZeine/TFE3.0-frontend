@@ -37,6 +37,7 @@
 		"dotenv": "^16.4.5",
 		"lodash": "^4.17.21",
 		"qrcode": "^1.5.3",
-		"socket.io-client": "^4.7.4"
+		"socket.io-client": "^4.7.4",
+		"svelte-i18n": "^4.0.0"
 	}
 }

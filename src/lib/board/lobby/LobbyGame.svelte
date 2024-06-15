@@ -2,8 +2,7 @@
 	import { socket } from '$lib/api/socketConnection.js';
 	import PlayerCard from '$lib/board/lobby/PlayerCard.svelte';
 	import QrCode from '../QRCode.svelte';
-
-	let winner = null;
+	import { _ } from 'svelte-i18n';
 
 	export let game;
 
@@ -54,11 +53,13 @@
 
 	<div class="btnGame">
 		{#if game.statut === 'closed'}
-			<button class="btnPrimary" disabled={btnPlayDisabled} on:click={startGame}>Jouer</button>
-			<button class="btnPrimary" on:click={openGame}>ouvrir</button>
+			<button class="btnPrimary" disabled={btnPlayDisabled} on:click={startGame}
+				>{$_('common.play')}</button
+			>
+			<button class="btnPrimary" on:click={openGame}>{$_('desktop.lobby.open')}</button>
 		{:else}
 			<button class="btnPrimary js-btn-close" disabled={btnCloseDisabled} on:click={closeGame}>
-				Fermer
+				{$_('desktop.lobby.close')}
 			</button>
 		{/if}
 	</div>
@@ -70,5 +71,12 @@
 	.btnGame {
 		display: flex;
 		gap: 12px;
+	}
+	.container {
+		box-sizing: border-box;
+		height: 100vh;
+		background-image: url('/assets/img/bgLobby.png');
+		background-size: cover;
+		background-repeat: no-repeat;
 	}
 </style>

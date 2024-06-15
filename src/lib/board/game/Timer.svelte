@@ -27,7 +27,7 @@
 	});
 </script>
 
-<div class="timerTurn" style="--color:{color}">
+<div class="timerTurn" style="--color:{secTurn <= 5 ? 'red' : '--txtPrimary'}">
 	{#if secTurn >= 10}
 		<p>0:{secTurn}</p>
 	{:else}

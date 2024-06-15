@@ -3,6 +3,7 @@
 	import Dialog from './Dialog.svelte';
 	import { user } from '$lib/api/stores';
 	import { blur } from 'svelte/transition';
+	import { _ } from 'svelte-i18n';
 
 	export let currentDialog, items;
 
@@ -61,7 +62,7 @@
 				</div>
 			{/if}
 		{:else}
-			<p class="noItems">Vous ne possédez guère de biens!</p>
+			<p class="noItems">{$_('mobile.map.inventory.noItem')}</p>
 		{/if}
 	</svelte:fragment>
 </Dialog>

@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/api/socketConnection.js';
 	import QRCode from '$lib/board/QRCode.svelte';
+	import { _ } from 'svelte-i18n';
+
 	export let form;
 
 	let gameID;
@@ -48,13 +50,13 @@
 		<img src="/assets/img/logo.png" class="fluidimg boardgame--home_logoImg" alt="Logo" />
 		<form method="post" class="gameNameForm">
 			<div class="gameNameForm_content">
-				<label for="gameName" class="gameNameLabel">Entrez le nom de votre partie :</label>
+				<label for="gameName" class="gameNameLabel">{$_('desktop.create.formName')}:</label>
 				<input
 					type="text"
 					name="gameName"
 					id="gameName"
 					class="inputForm"
-					placeholder="ex : IzZeine's game"
+					placeholder={$_('desktop.create.inputExample')}
 					maxlength="15"
 					size="20"
 					autocomplete="off"
@@ -64,10 +66,12 @@
 					bind:value={gameName}
 				/>
 				{#if form?.error}
-					<p class="errorCreateGame">{form.message}</p>
+					{#if form.message == 'gameNameAlreadyExist'}
+						<p class="errorCreateGame">{$_('error.gameNameAlreadyExist')}</p>
+					{/if}
 				{/if}
 			</div>
-			<button class="btnPrimary btnForm" disabled={isDirty(gameName)}>Jouer</button>
+			<button class="btnPrimary btnForm" disabled={isDirty(gameName)}>{$_('common.play')}</button>
 		</form>
 	</div>
 </div>

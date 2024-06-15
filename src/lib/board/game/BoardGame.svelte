@@ -15,7 +15,7 @@
 
 	let activeUsers;
 	$: activeUsers = game.users;
-	let boardElement, columsRight;
+	let boardElement;
 
 	const onUpdateUsers = (players) => {
 		activeUsers = players.map((player) => {
@@ -26,12 +26,6 @@
 	};
 
 	onMount(() => {
-		if (activeUsers.length < 4) {
-			columsRight = 0.25;
-		} else {
-			columsRight = 0.3;
-		}
-
 		socket.on('updateUsers', onUpdateUsers);
 		return () => {
 			socket.off('updateUsers', onUpdateUsers);
@@ -55,7 +49,7 @@
 		<EndGameInfos />
 	</div>
 
-	<div class="right" style="grid-template-rows: {columsRight}fr 1fr;">
+	<div class="right">
 		<GameInfos {activeUsers} {game} />
 		<Logs {roomsInfos} />
 	</div>
@@ -96,6 +90,7 @@
 	.right {
 		height: 100%;
 		display: grid;
+		grid-template-rows: auto 1fr;
 		border-left: solid 3px var(--txtPrimary);
 		overflow: hidden;
 	}

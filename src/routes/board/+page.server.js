@@ -18,7 +18,7 @@ export const actions = {
 			redirect(301, `/board/${gameId}`);
 		} else {
 			console.error('Failed to create game');
-			fail(400, { error: true, message: 'Ce nom existe déja' });
+			return fail(400, { error: true, message: 'gameNameAlreadyExist' });
 		}
 	}
 };
